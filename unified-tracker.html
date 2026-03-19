@@ -754,9 +754,9 @@
         <div class="tab-panel active" id="dashboard-panel">
             <div class="grid-4">
                 <div class="metric-card">
-                    <div class="metric-icon">📈</div>
-                    <div class="metric-value positive" id="dashPortfolioChange">+12.4%</div>
-                    <div class="metric-label">Portfolio 24h</div>
+                    <div class="metric-icon">❄️</div>
+                    <div class="metric-value negative" id="dashTopLoser">BULK</div>
+                    <div class="metric-label">Top Loser</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-icon">💎</div>
@@ -1125,13 +1125,19 @@
         function initDashboard() {
             document.getElementById('activeTokens').textContent = TOKENS.length;
             
-            const avgChange = TOKENS.reduce((sum, t) => sum + t.change24h, 0) / TOKENS.length;
-            const changeEl = document.getElementById('portfolioChange');
-            changeEl.textContent = (avgChange >= 0 ? '+' : '') + avgChange.toFixed(1) + '%';
-            changeEl.style.color = avgChange >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+            // Find top loser (lowest 24h change)
+            const validTokens = TOKENS.filter(t => t.price > 0);
+            const topLoser = validTokens.sort((a, b) => a.change24h - b.change24h)[0];
+            const topGainer = validTokens.sort((a, b) => b.change24h - a.change24h)[0];
             
-            document.getElementById('dashPortfolioChange').textContent = (avgChange >= 0 ? '+' : '') + avgChange.toFixed(1) + '%';
-            document.getElementById('dashPortfolioChange').className = 'metric-value ' + (avgChange >= 0 ? 'positive' : 'negative');
+            if (topLoser) {
+                document.getElementById('dashTopLoser').textContent = topLoser.symbol;
+                document.getElementById('dashTopLoser').className = 'metric-value negative';
+            }
+            
+            if (topGainer) {
+                document.getElementById('dashTopGainer').textContent = topGainer.symbol;
+            }
             
             // Render Top 5 Trending Tokens (sorted by 24h change)
             renderTrendingTokens();
