@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐋 Weirdo Tracker Pro v2 | Auto-Refresh Enabled</title>
+    <title>🧠 Weirdo Tracker v2.0 | Smart Opportunity Detection</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,7 @@
             --bg-primary: #0a0a0f;
             --bg-secondary: #12121a;
             --bg-card: #1a1a25;
+            --bg-elevated: #252535;
             --border: rgba(255,255,255,0.08);
             --text-primary: #ffffff;
             --text-secondary: #8b8b9e;
@@ -18,21 +19,37 @@
             --accent-green: #00ff88;
             --accent-red: #ff4757;
             --accent-orange: #ffa502;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ff6b9d;
             --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            --gradient-card: linear-gradient(145deg, rgba(0,217,255,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            --shadow-glow: 0 0 40px rgba(0,217,255,0.15);
+            --shadow-green: 0 0 30px rgba(0,255,136,0.2);
+            --shadow-red: 0 0 30px rgba(255,71,87,0.2);
+            --shadow-orange: 0 0 30px rgba(255,165,2,0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Animated Background */
         .bg-grid {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
                 linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
@@ -41,12 +58,29 @@
             z-index: 0;
         }
 
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,217,255,0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, 50px); }
+        }
+
         /* Header */
         .header {
-            background: rgba(18, 18, 26, 0.9);
+            background: rgba(18, 18, 26, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 15px 30px;
+            padding: 20px 30px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -58,19 +92,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .logo-icon {
-            font-size: 2em;
-            animation: pulse 2s infinite;
+            font-size: 2.5em;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
@@ -79,132 +111,71 @@
         }
 
         .logo-text h1 {
-            font-size: 1.3em;
+            font-size: 1.5em;
+            font-weight: 700;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo-text p {
-            font-size: 0.8em;
+            font-size: 0.85em;
             color: var(--text-secondary);
         }
 
-        /* Refresh Controls */
-        .refresh-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .refresh-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid var(--accent-cyan);
-            padding: 8px 16px;
+        .version-badge {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85em;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 10px;
         }
 
-        .refresh-indicator.spinning {
-            animation: pulse 1s infinite;
+        .header-stats {
+            display: flex;
+            gap: 30px;
         }
 
-        .last-refresh {
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
             font-size: 0.75em;
             color: var(--text-secondary);
-        }
-
-        .global-refresh-btn {
-            background: var(--gradient-primary);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            color: #000;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-
-        .global-refresh-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
-        }
-
-        .global-refresh-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .auto-refresh-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--accent-green);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auto-refresh-toggle:hover {
-            background: rgba(0, 255, 136, 0.2);
-        }
-
-        .auto-refresh-toggle.paused {
-            border-color: var(--accent-red);
-            background: rgba(255, 71, 87, 0.1);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent-green);
-            animation: blink 2s infinite;
-        }
-
-        .auto-refresh-toggle.paused .status-dot {
-            background: var(--accent-red);
-            animation: none;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* Navigation */
         .nav-tabs {
             display: flex;
-            gap: 5px;
-            padding: 15px 30px;
-            background: var(--bg-secondary);
+            gap: 10px;
+            padding: 20px 30px;
+            background: rgba(18, 18, 26, 0.5);
             border-bottom: 1px solid var(--border);
             overflow-x: auto;
         }
 
         .nav-tab {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: transparent;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text-secondary);
-            font-size: 0.9em;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .nav-tab:hover {
@@ -213,20 +184,60 @@
         }
 
         .nav-tab.active {
-            background: rgba(0, 217, 255, 0.1);
-            border-color: var(--accent-cyan);
-            color: var(--text-primary);
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: var(--bg-primary);
         }
 
         /* Main Content */
         .main-content {
             max-width: 1600px;
             margin: 0 auto;
-            padding: 20px 30px;
+            padding: 30px;
             position: relative;
             z-index: 1;
         }
 
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, rgba(255,71,87,0.2), rgba(255,71,87,0.1));
+            border: 1px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-banner.active {
+            display: flex;
+        }
+
+        .alert-banner:not(.active) {
+            display: none;
+        }
+
+        .alert-icon {
+            font-size: 2em;
+        }
+
+        .alert-content h3 {
+            margin-bottom: 5px;
+        }
+
+        .alert-content p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        /* Tab Panels */
         .tab-panel {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -245,112 +256,431 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0,217,255,0.3);
+            transform: translateY(-2px);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .card-title {
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        /* Tab Refresh Button */
-        .tab-refresh-btn {
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid var(--accent-cyan);
+        .card-badge {
+            background: rgba(0,217,255,0.2);
             color: var(--accent-cyan);
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
         }
 
-        .tab-refresh-btn:hover {
-            background: rgba(0, 217, 255, 0.2);
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        .tab-refresh-btn.spinning {
-            animation: spin 1s linear infinite;
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Grid */
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-
-        @media (max-width: 1200px) {
-            .grid-4 { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-            .header-content { flex-direction: column; }
-            .refresh-controls { flex-wrap: wrap; justify-content: center; }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
         /* Metric Cards */
         .metric-card {
             background: linear-gradient(145deg, rgba(0,217,255,0.05) 0%, rgba(0,255,136,0.02) 100%);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
+            transition: all 0.3s;
         }
 
-        .metric-icon { font-size: 1.8em; margin-bottom: 8px; }
-        .metric-value { font-size: 1.8em; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .metric-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .metric-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         .metric-value.positive { color: var(--accent-green); }
         .metric-value.negative { color: var(--accent-red); }
-        .metric-label { font-size: 0.8em; color: var(--text-secondary); margin-top: 5px; }
+        .metric-value.neutral { color: var(--accent-cyan); }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Opportunity Cards - NEW v2.0 */
+        .opportunity-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .opportunity-card.strong-buy {
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-green);
+        }
+        .opportunity-card.strong-buy::before {
+            background: var(--accent-green);
+        }
+
+        .opportunity-card.speculative {
+            border-color: var(--accent-orange);
+            box-shadow: var(--shadow-orange);
+        }
+        .opportunity-card.speculative::before {
+            background: var(--accent-orange);
+        }
+
+        .opportunity-card.watch {
+            border-color: var(--accent-cyan);
+        }
+        .opportunity-card.watch::before {
+            background: var(--accent-cyan);
+        }
+
+        .opportunity-card.avoid {
+            border-color: var(--accent-red);
+            opacity: 0.7;
+        }
+        .opportunity-card.avoid::before {
+            background: var(--accent-red);
+        }
+
+        .opportunity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .opportunity-signal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        .signal-strong-buy { color: var(--accent-green); }
+        .signal-speculative { color: var(--accent-orange); }
+        .signal-watch { color: var(--accent-cyan); }
+        .signal-avoid { color: var(--accent-red); }
+
+        .opportunity-score {
+            background: var(--bg-elevated);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .score-high { color: var(--accent-green); }
+        .score-medium { color: var(--accent-orange); }
+        .score-low { color: var(--accent-red); }
+
+        .opportunity-token {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .token-icon-large {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .token-details h3 {
+            font-size: 1.3em;
+            margin-bottom: 2px;
+        }
+
+        .token-details span {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        .token-price {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .token-price .price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .token-price .change {
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        .opportunity-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: var(--bg-elevated);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .stat-box .label {
+            font-size: 0.75em;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .stat-box .value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .opportunity-action {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .action-row:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .action-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        .action-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .potential-gain {
+            color: var(--accent-green);
+        }
+
+        .risk-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .risk-low {
+            background: rgba(0,255,136,0.15);
+            color: var(--accent-green);
+        }
+
+        .risk-medium {
+            background: rgba(255,165,2,0.15);
+            color: var(--accent-orange);
+        }
+
+        .risk-high {
+            background: rgba(255,71,87,0.15);
+            color: var(--accent-red);
+        }
+
+        .opportunity-reasons {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 2px solid var(--border);
+        }
+
+        .opportunity-reasons li {
+            margin-bottom: 5px;
+        }
+
+        .opportunity-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .opportunity-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.85em;
+        }
 
         /* Tables */
-        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
         .data-table th {
             text-align: left;
             padding: 12px;
             color: var(--text-secondary);
-            font-size: 0.8em;
+            font-weight: 500;
+            font-size: 0.85em;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             border-bottom: 1px solid var(--border);
         }
+
+        .data-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .data-table th.sortable:hover {
+            color: var(--accent-cyan);
+            background: rgba(0,217,255,0.05);
+        }
+
+        .data-table th.sortable .sort-indicator {
+            opacity: 0.5;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .data-table th.sortable.asc .sort-indicator::after {
+            content: ' ↑';
+            opacity: 1;
+            color: var(--accent-green);
+        }
+
+        .data-table th.sortable.desc .sort-indicator::after {
+            content: ' ↓';
+            opacity: 1;
+            color: var(--accent-red);
+        }
+
         .data-table td {
-            padding: 12px;
+            padding: 16px 12px;
             border-bottom: 1px solid var(--border);
             font-size: 0.95em;
         }
-        .data-table tr:hover { background: rgba(255,255,255,0.02); }
 
-        .price-change {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.85em;
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.02);
         }
-        .price-change.positive { background: rgba(0,255,136,0.15); color: var(--accent-green); }
-        .price-change.negative { background: rgba(255,71,87,0.15); color: var(--accent-red); }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .btn-danger {
+            background: rgba(255,71,87,0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .btn-success {
+            background: rgba(0,255,136,0.2);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
 
         /* Wallet Grid */
         .wallet-grid {
@@ -362,8 +692,8 @@
         .wallet-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -373,17 +703,44 @@
             transform: translateY(-2px);
         }
 
-        .wallet-name { font-weight: 600; margin-bottom: 5px; }
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .wallet-name {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
         .wallet-address {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75em;
+            font-size: 0.8em;
             color: var(--text-secondary);
         }
 
-        /* Loading Overlay */
+        .wallet-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .wallet-status.buying {
+            background: rgba(0,255,136,0.15);
+            color: var(--accent-green);
+        }
+
+        /* Loading */
         .loading-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--bg-primary);
             display: flex;
             flex-direction: column;
@@ -401,18 +758,43 @@
         .loading-spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid rgba(0,217,255,0.1);
+            border: 3px solid var(--border);
             border-top-color: var(--accent-cyan);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Export Button */
+        .export-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0,217,255,0.3);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .export-btn:hover {
+            transform: scale(1.1);
+        }
+
         /* Sound Toggle */
         .sound-toggle {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            right: 100px;
             width: 50px;
             height: 50px;
             background: var(--bg-card);
@@ -426,63 +808,57 @@
             justify-content: center;
         }
 
-        .sound-toggle.muted { border-color: var(--accent-red); }
-
-        /* Next Refresh Timer */
-        .next-refresh {
-            position: fixed;
-            bottom: 30px;
-            right: 90px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.8em;
-            color: var(--text-secondary);
-            z-index: 99;
+        .sound-toggle.muted {
+            border-color: var(--accent-red);
+            opacity: 0.5;
         }
 
-        .next-refresh.active {
-            border-color: var(--accent-green);
-            color: var(--accent-green);
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; gap: 15px; }
+            .header-stats { width: 100%; justify-content: space-around; }
         }
     </style>
 </head>
 <body>
+    <!-- Background -->
     <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
 
     <!-- Loading Screen -->
     <div class="loading-overlay" id="loadingScreen">
         <div class="loading-spinner"></div>
-        <h2>Initializing Weirdo Tracker Pro v2...</h2>
-        <p style="color: var(--text-secondary); margin-top: 10px;">Loading with auto-refresh enabled</p>
+        <h2>Initializing Weirdo Tracker v2.0...</h2>
+        <p style="color: var(--text-secondary); margin-top: 10px;">Loading AI Opportunity Detection</p>
     </div>
 
     <!-- Header -->
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <div class="logo-icon">🐋</div>
+                <div class="logo-icon">🧠</div>
                 <div class="logo-text">
-                    <h1>Weirdo Tracker Pro v2</h1>
-                    <p>Auto-Refresh Enabled</p>
+                    <h1>Weirdo Tracker <span class="version-badge">v2.0</span></h1>
+                    <p>Smart Opportunity Detection</p>
                 </div>
             </div>
-            
-            <div class="refresh-controls">
-                <div class="refresh-indicator" id="refreshIndicator">
-                    <span id="refreshIcon">🔄</span>
-                    <span class="last-refresh" id="lastRefreshTime">Never</span>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="activeTokens">0</div>
+                    <div class="stat-label">Tokens</div>
                 </div>
-                
-                <button class="global-refresh-btn" id="globalRefreshBtn" onclick="refreshAllData()">
-                    <span>🔄</span>
-                    <span>Refresh All</span>
-                </button>
-                
-                <div class="auto-refresh-toggle" id="autoRefreshToggle" onclick="toggleAutoRefresh()">
-                    <div class="status-dot"></div>
-                    <span id="autoRefreshText">Auto: ON (30m)</span>
+                <div class="stat-item">
+                    <div class="stat-value" id="opportunityCount">0</div>
+                    <div class="stat-label">Opportunities</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="highScoreCount">0</div>
+                    <div class="stat-label">Strong Buys</div>
                 </div>
             </div>
         </div>
@@ -490,20 +866,23 @@
 
     <!-- Navigation -->
     <nav class="nav-tabs">
-        <button class="nav-tab active" onclick="switchTab('dashboard')">
+        <button class="nav-tab active" onclick="switchTab('opportunities')">
+            🎯 Opportunities
+        </button>
+        <button class="nav-tab" onclick="switchTab('dashboard')">
             📊 Dashboard
         </button>
         <button class="nav-tab" onclick="switchTab('portfolio')">
             💰 Portfolio
         </button>
         <button class="nav-tab" onclick="switchTab('accumulation')">
-            🎯 Accumulation
+            🔍 Accumulation
         </button>
         <button class="nav-tab" onclick="switchTab('whales')">
             🐋 Whales
         </button>
         <button class="nav-tab" onclick="switchTab('scanner')">
-            🔍 Scanner
+            ➕ Scanner
         </button>
         <button class="nav-tab" onclick="switchTab('alerts')">
             🚨 Alerts
@@ -512,72 +891,134 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        
-        <!-- Dashboard Tab -->
-        <div class="tab-panel active" id="dashboard-panel">
-            <div class="card-header">
-                <div class="card-title">📊 Dashboard Overview</div>
-                <button class="tab-refresh-btn" id="dashboardRefreshBtn" onclick="refreshDashboard()">
-                    <span>🔄</span> Refresh
-                </button>
+        <!-- Alert Banner -->
+        <div class="alert-banner" id="mainAlert">
+            <div class="alert-icon">🚨</div>
+            <div class="alert-content">
+                <h3>Strong Buy Detected!</h3>
+                <p>PUNCH scored 85 - Check opportunities tab</p>
             </div>
-            
+            <button class="btn btn-secondary" onclick="dismissAlert()">Dismiss</button>
+        </div>
+
+        <!-- OPPORTUNITIES TAB (v2.0 - Main Feature) -->
+        <div class="tab-panel active" id="opportunities-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎯 Smart Opportunities</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" onclick="refreshOpportunities()">🔄 Refresh</button>
+                        <button class="btn btn-primary" onclick="exportOpportunities()">📥 Export</button>
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px; padding: 15px; background: var(--bg-elevated); border-radius: 10px;">
+                    <div style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 10px;">
+                        <strong>How it works:</strong> AI analyzes price drops, volume spikes, whale activity & liquidity to find the best buy opportunities.
+                    </div>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <span style="color: var(--accent-green);">🔥 Score 80+ = Strong Buy</span>
+                        <span style="color: var(--accent-orange);">⚠️ Score 60-79 = Speculative</span>
+                        <span style="color: var(--accent-cyan);">❄️ Score 40-59 = Watch</span>
+                        <span style="color: var(--accent-red);">🛑 Score <40 = Avoid</span>
+                    </div>
+                </div>
+                <div id="opportunitiesList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div class="tab-panel" id="dashboard-panel">
             <div class="grid-4">
                 <div class="metric-card">
-                    <div class="metric-icon">📈</div>
-                    <div class="metric-value positive" id="dashPortfolioChange">--</div>
-                    <div class="metric-label">Portfolio 24h</div>
-                </div>
-                <div class="metric-card">
                     <div class="metric-icon">💎</div>
-                    <div class="metric-value" id="dashOpportunities">--</div>
-                    <div class="metric-label">Opportunities</div>
+                    <div class="metric-value neutral" id="dashOpportunities">3</div>
+                    <div class="metric-label">Active Opportunities</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-icon">🐋</div>
-                    <div class="metric-value" id="dashWhaleBuys">--</div>
+                    <div class="metric-value neutral" id="dashWhaleBuys">5</div>
                     <div class="metric-label">Whale Buys (1h)</div>
                 </div>
                 <div class="metric-card">
+                    <div class="metric-icon">❄️</div>
+                    <div class="metric-value negative" id="dashTopLoser">BULK</div>
+                    <div class="metric-label">Top Loser</div>
+                </div>
+                <div class="metric-card">
                     <div class="metric-icon">🔥</div>
-                    <div class="metric-value" id="dashTopGainer">--</div>
+                    <div class="metric-value positive" id="dashTopGainer">PUNCH</div>
                     <div class="metric-label">Top Gainer</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Top 5 Trending Tokens -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🔥 Top 5 Trending Tokens</div>
+                        <div class="card-badge" style="background: var(--accent-green);">24h</div>
+                    </div>
+                    <div id="trendingTokensList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🎯 Latest Opportunities</div>
+                        <button class="btn btn-primary" onclick="refreshData()">Refresh</button>
+                    </div>
+                    <div id="opportunitiesListSmall">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">📊 Portfolio Performance</div>
+                    <div class="card-title">🐋 Recent Whale Activity</div>
                 </div>
-                <div style="height: 300px;">
-                    <canvas id="portfolioChart"></canvas>
+                <div id="whaleActivityFeed">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Whale</th>
+                                <th>Action</th>
+                                <th>Token</th>
+                                <th>Amount</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="whaleActivityBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
         <!-- Portfolio Tab -->
         <div class="tab-panel" id="portfolio-panel">
-            <div class="card-header">
-                <div class="card-title">💰 Your Portfolio</div>
-                <div style="display: flex; gap: 10px;">
-                    <button class="tab-refresh-btn" id="portfolioRefreshBtn" onclick="refreshPortfolio()">
-                        <span>🔄</span> Refresh
-                    </button>
-                    <button class="tab-refresh-btn" onclick="exportPortfolio()">
-                        <span>📥</span> Export
-                    </button>
-                </div>
-            </div>
-            
             <div class="card">
-                <table class="data-table">
+                <div class="card-header">
+                    <div class="card-title">💰 Your Portfolio</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" onclick="exportPortfolio()">📥 Export CSV</button>
+                        <button class="btn btn-primary" onclick="refreshPortfolio()">🔄 Refresh</button>
+                    </div>
+                </div>
+                <table class="data-table" id="portfolioTable">
                     <thead>
                         <tr>
-                            <th>Token</th>
-                            <th>Price</th>
-                            <th>24h Change</th>
-                            <th>1h Change</th>
-                            <th>Liquidity</th>
+                            <th class="sortable" onclick="sortPortfolio('symbol')">Token <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('price')">Price <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change12h')">12h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change24h')">24h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change1h')">1h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('liquidity')">Liquidity <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('marketCap')">Market Cap <span class="sort-indicator">⇅</span></th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -586,33 +1027,46 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Price History</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="priceHistoryChart"></canvas>
+                </div>
+            </div>
         </div>
 
         <!-- Accumulation Tab -->
         <div class="tab-panel" id="accumulation-panel">
-            <div class="card-header">
-                <div class="card-title">🎯 Accumulation Scanner</div>
-                <button class="tab-refresh-btn" id="accumulationRefreshBtn" onclick="refreshAccumulation()">
-                    <span>🔄</span> Refresh
-                </button>
-            </div>
-            
             <div class="grid-2">
                 <div class="card">
-                    <div class="card-title">⚙️ Scanner Settings</div>
-                    <div style="margin-top: 15px;">
-                        <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Price Drop Threshold (%)</label>
-                        <input type="number" id="priceDropThreshold" value="30" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: white; margin-bottom: 15px;">
-                        
-                        <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Volume Spike Threshold (x)</label>
-                        <input type="number" id="volumeSpikeThreshold" value="2" step="0.5" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: white; margin-bottom: 15px;">
-                        
-                        <button class="global-refresh-btn" onclick="startAccumulationScan()">🔍 Start Scan</button>
+                    <div class="card-header">
+                        <div class="card-title">⚙️ Scanner Settings</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Price Drop Threshold (%)</label>
+                            <input type="number" id="priceDropThreshold" value="30" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Volume Spike Threshold (x)</label>
+                            <input type="number" id="volumeSpikeThreshold" value="2" step="0.5" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Min Liquidity ($)</label>
+                            <input type="number" id="minLiquidity" value="10000" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <button class="btn btn-primary" onclick="startAccumulationScan()">🔍 Start Scan</button>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">🎯 Detected Signals</div>
+                    <div class="card-header">
+                        <div class="card-title">🎯 Detected Signals</div>
+                        <div class="card-badge" id="signalCount">0</div>
+                    </div>
                     <div id="accumulationSignals">
                         <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
                             Click "Start Scan" to find accumulation opportunities
@@ -624,318 +1078,454 @@
 
         <!-- Whales Tab -->
         <div class="tab-panel" id="whales-panel">
-            <div class="card-header">
-                <div class="card-title">🐋 Whale Tracker (87 Wallets)</div>
-                <button class="tab-refresh-btn" id="whalesRefreshBtn" onclick="refreshWhales()">
-                    <span>🔄</span> Refresh
-                </button>
-            </div>
-            
-            <div class="wallet-grid" id="whaleGrid">
-                <!-- Populated by JS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🐋 Whale Wallet Tracker (87 Wallets)</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" onclick="filterWhales('all')">All</button>
+                        <button class="btn btn-secondary" onclick="filterWhales('active')">Active</button>
+                        <button class="btn btn-secondary" onclick="filterWhales('buying')">Buying</button>
+                    </div>
+                </div>
+                <div class="wallet-grid" id="whaleGrid">
+                    <!-- Populated by JS -->
+                </div>
             </div>
         </div>
 
         <!-- Scanner Tab -->
         <div class="tab-panel" id="scanner-panel">
-            <div class="card-header">
-                <div class="card-title">🔍 New Token Scanner</div>
-                <button class="tab-refresh-btn" id="scannerRefreshBtn" onclick="refreshScanner()">
-                    <span>🔄</span> Refresh
-                </button>
+            <!-- Track New Token Section -->
+            <div class="card" style="margin-bottom: 20px; border: 2px solid var(--accent-cyan);">
+                <div class="card-header">
+                    <div class="card-title">➕ Track New Token</div>
+                    <div class="card-badge" style="background: var(--accent-green);">NEW</div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9em;">
+                            Paste Solana Token Contract Address (ends in 'pump' or similar)
+                        </label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newTokenAddress" placeholder="e.g., NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump" 
+                                style="flex: 1; padding: 12px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">
+                            <button class="btn btn-primary" onclick="trackNewToken()" style="white-space: nowrap;">
+                                📋 Track Token
+                            </button>
+                        </div>
+                    </div>
+                    <div id="trackTokenResult" style="display: none; padding: 15px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--accent-green);">
+                        <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 5px;">✅ Token Ready to Add!</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 10px;">
+                            Copy the command below and send it to your AI assistant:
+                        </div>
+                        <div style="background: var(--bg-primary); padding: 10px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; word-break: break-all; cursor: pointer;" onclick="copyTrackCommand()" id="trackCommand">
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-cyan);">
+                            💡 Click the box above to copy, then paste it in chat
+                        </div>
+                    </div>
+                    <div id="trackTokenError" style="display: none; padding: 12px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 4px solid var(--accent-red); color: var(--accent-red); font-size: 0.9em;">
+                    </div>
+                </div>
             </div>
-            
-            <div id="scannerResults">
-                <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
-                    <h3>Ready to Scan</h3>
-                    <p>Click Refresh to find new meme coin opportunities</p>
+
+            <!-- Quick Add from Clipboard -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">📋 Quick Add from Clipboard</div>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn btn-secondary" onclick="pasteAndTrack()" style="flex: 1;">
+                        📋 Paste from Clipboard
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearTrackInput()" style="flex: 1;">
+                        🗑️ Clear
+                    </button>
+                </div>
+                <div style="margin-top: 10px; font-size: 0.8em; color: var(--text-secondary);">
+                    💡 Tip: You can also paste multiple addresses separated by commas or new lines
+                </div>
+            </div>
+
+            <!-- Scanner Results -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔍 Token Scanner</div>
+                    <button class="btn btn-primary" onclick="scanNewTokens()">Scan for New Opportunities</button>
+                </div>
+                <div id="scannerResults">
+                    <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
+                        <h3>Ready to Scan</h3>
+                        <p>Click the button above to find new meme coin opportunities</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Alerts Tab -->
         <div class="tab-panel" id="alerts-panel">
-            <div class="card-header">
-                <div class="card-title">🚨 Alert History</div>
-                <button class="tab-refresh-btn" onclick="clearAlerts()">
-                    <span>🗑️</span> Clear All
-                </button>
-            </div>
-            
-            <div id="alertsList">
-                <div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet. Start monitoring to receive notifications.
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚨 Alert History</div>
+                    <button class="btn btn-danger" onclick="clearAlerts()">Clear All</button>
+                </div>
+                <div id="alertsList">
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        No alerts yet. Start monitoring to receive notifications.
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Sound Toggle -->
+    <!-- Floating Buttons -->
     <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
-
-    <!-- Next Refresh Timer -->
-    <div class="next-refresh" id="nextRefresh">
-        Next auto-refresh: --:--
-    </div>
+    <button class="export-btn" onclick="exportAllData()" title="Export All Data">💾</button>
 
     <script>
-        // Configuration
-        const AUTO_REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes
-        let autoRefreshEnabled = true;
-        let autoRefreshTimer = null;
-        let countdownTimer = null;
-        let soundEnabled = true;
-        let lastRefreshTime = null;
-        let alerts = [];
-
-        // Token data (will be updated from API)
-        let TOKENS = [
-            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
-            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 }
+        // v2.0 Token Data with Opportunity Scoring
+        const TOKENS = [
+            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0.01483, change12h: 11.06, change24h: 21.18, change1h: 0.94, liquidity: 743000, marketCap: 14890000, volume24h: 1429185, volumeSpike: 1.5, whaleBuys1h: 3, ageDays: 45 },
+            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0.0006677, change12h: -4.22, change24h: 0.96, change1h: -9.41, liquidity: 118000, marketCap: 670000, volume24h: 182886, volumeSpike: 0.8, whaleBuys1h: 0, ageDays: 30 },
+            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0.00008203, change12h: 10.46, change24h: 6.29, change1h: 14.63, liquidity: 25000, marketCap: 82000, volume24h: 123214, volumeSpike: 2.8, whaleBuys1h: 1, ageDays: 15 },
+            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0.00213, change12h: 9.38, change24h: 15.63, change1h: 3.12, liquidity: 191000, marketCap: 2130000, volume24h: 162820, volumeSpike: 1.2, whaleBuys1h: 2, ageDays: 60 },
+            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0.001783, change12h: -0.97, change24h: -0.36, change1h: -1.58, liquidity: 154000, marketCap: 1783000, volume24h: 54821, volumeSpike: 0.9, whaleBuys1h: 0, ageDays: 25 },
+            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0.0002533, change12h: 7.72, change24h: 5.87, change1h: 9.56, liquidity: 56000, marketCap: 253000, volume24h: 54821, volumeSpike: 1.1, whaleBuys1h: 1, ageDays: 90 },
+            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0.000214, change12h: -8.08, change24h: -17.14, change1h: 0.97, liquidity: 42000, marketCap: 214000, volume24h: 12345, volumeSpike: 0.6, whaleBuys1h: 0, ageDays: 20 },
+            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0.0002385, change12h: 7.27, change24h: 19.74, change1h: -5.21, liquidity: 47000, marketCap: 238000, volume24h: 89123, volumeSpike: 1.8, whaleBuys1h: 2, ageDays: 12 },
+            { symbol: 'NEW', name: 'New Token', address: '9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump', price: 0, change12h: 0, change24h: 0, change1h: 0, liquidity: 0, marketCap: 0, volume24h: 0, volumeSpike: 0, whaleBuys1h: 0, ageDays: 0 },
+            { symbol: 'MAX', name: 'maxxing', address: '32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump', price: 0.002135, change12h: 3.13, change24h: 1.96, change1h: 4.3, liquidity: 199000, marketCap: 2200000, volume24h: 199000, volumeSpike: 1.0, whaleBuys1h: 1, ageDays: 108 },
+            { symbol: 'GOYIM', name: 'Goyim', address: 'EJzqpRPxgZZVoVVuCXuQBNXp7mQzeH6FENMfuLRbpump', price: 0.0004182, change12h: -3.44, change24h: -6.87, change1h: 0, liquidity: 103000, marketCap: 418000, volume24h: 45000, volumeSpike: 0.7, whaleBuys1h: 0, ageDays: 35 },
+            { symbol: 'ARTEMIS', name: 'Artemis Moon Mission', address: 'AtdqW9HYpx6bzuXAyuVRz6a3UiTHLoNTRJDN8buXHem7', price: 0.0001273, change12h: -0.63, change24h: -1.25, change1h: 0, liquidity: 32000, marketCap: 127000, volume24h: 12000, volumeSpike: 0.5, whaleBuys1h: 0, ageDays: 50 },
+            { symbol: 'INU', name: 'INU', address: 'CmgJ1PobhUqB7MEa8qDkiG2TUpMTskWj8d9JeZWSpump', price: 0.00005544, change12h: -8.14, change24h: -16.27, change1h: 0, liquidity: 22000, marketCap: 55000, volume24h: 8900, volumeSpike: 0.4, whaleBuys1h: 0, ageDays: 40 },
+            { symbol: 'FISH', name: 'rainbowfish', address: 'AbeDBXvqGnmcvX8NtQg5qgREFTw7HynkCc4u97xcpump', price: 0.0001402, change12h: -4.88, change24h: -9.75, change1h: 0, liquidity: 56000, marketCap: 140000, volume24h: 23400, volumeSpike: 0.6, whaleBuys1h: 0, ageDays: 55 },
+            { symbol: 'BLIND', name: 'Blindfold Finance', address: 'BANKJmvhT8tiJRsBSS1n2HryMBPvT5Ze4HU95DUAmeta', price: 0.00004027, change12h: -1.07, change24h: -2.14, change1h: 0, liquidity: 22000, marketCap: 40000, volume24h: 5600, volumeSpike: 0.5, whaleBuys1h: 0, ageDays: 70 },
+            { symbol: 'AVICI', name: 'Avici', address: 'DP4omjjY94NRJrECHBZyUQSpGrjtukoDyUbqb9Zzpump', price: 0.7186, change12h: -3.34, change24h: -6.67, change1h: 0, liquidity: 588000, marketCap: 7186000, volume24h: 156000, volumeSpike: 0.9, whaleBuys1h: 0, ageDays: 120 },
+            { symbol: 'REGRET', name: 'Regret', address: 'Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump', price: 0.00002733, change12h: -1.44, change24h: -2.88, change1h: 0, liquidity: 19000, marketCap: 27000, volume24h: 3400, volumeSpike: 0.4, whaleBuys1h: 0, ageDays: 80 },
+            { symbol: 'BUTT', name: 'Buttcoin', address: 'GB8KtQfMChhYrCYtd5PoAB42kAdkHnuyAincSSmFpump', price: 0.01179, change12h: -4.04, change24h: -8.07, change1h: 0, liquidity: 572000, marketCap: 11790000, volume24h: 289000, volumeSpike: 0.8, whaleBuys1h: 0, ageDays: 200 },
+            { symbol: 'PIGEON', name: 'Pigeon Doctor', address: 'JB2wezZLdzWfnaCfHxLg193RS3Rh51ThiXxEDWQDpump', price: 0.0002668, change12h: 6.09, change24h: 12.18, change1h: 0, liquidity: 83000, marketCap: 266000, volume24h: 67800, volumeSpike: 1.4, whaleBuys1h: 1, ageDays: 18 },
+            { symbol: 'LABUBU', name: 'LABUBU', address: '2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump', price: 0.001195, change12h: 7.29, change24h: 14.58, change1h: 0, liquidity: 403000, marketCap: 1195000, volume24h: 145000, volumeSpike: 1.6, whaleBuys1h: 2, ageDays: 22 },
+            { symbol: 'OPTIMISTIC', name: 'Optimistic Minion', address: 'J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump', price: 0.0005342, change12h: 6.72, change24h: 13.44, change1h: 0, liquidity: 63000, marketCap: 534000, volume24h: 89000, volumeSpike: 1.9, whaleBuys1h: 1, ageDays: 14 },
+            { symbol: 'TRIPLET', name: 'Tung Tung Tung Sahur', address: 'A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump', price: 0.002411, change12h: -2.65, change24h: -5.29, change1h: 0, liquidity: 182000, marketCap: 2411000, volume24h: 67000, volumeSpike: 0.7, whaleBuys1h: 0, ageDays: 30 },
+            { symbol: 'FWOG', name: 'FWOG', address: '5z3EqYQo9HiCEs3R84RCDMu2n7anpDMxRhdK8PSWmrRC', price: 0.005752, change12h: -1.33, change24h: -2.66, change1h: 0, liquidity: 1440000, marketCap: 5752000, volume24h: 234000, volumeSpike: 0.9, whaleBuys1h: 0, ageDays: 150 },
+            { symbol: 'PONKE', name: 'PONKE', address: '5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2', price: 0.03136, change12h: 0.51, change24h: 1.01, change1h: 0, liquidity: 1560000, marketCap: 31360000, volume24h: 456000, volumeSpike: 1.0, whaleBuys1h: 0, ageDays: 180 },
+            { symbol: 'TROLL', name: 'TROLL', address: 'DQnkBM4eYYMnVE8Qy2K3BB7uts1fh2EwBVktEz6jpump', price: 0.0136, change12h: -1.41, change24h: -2.82, change1h: 0, liquidity: 1292000, marketCap: 13600000, volume24h: 389000, volumeSpike: 0.8, whaleBuys1h: 0, ageDays: 160 },
+            { symbol: 'DOWGE', name: 'DOWGE', address: '9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump', price: 0.004224, change12h: -2.04, change24h: -4.07, change1h: 0, liquidity: 281000, marketCap: 4224000, volume24h: 123000, volumeSpike: 0.7, whaleBuys1h: 0, ageDays: 140 },
+            { symbol: 'ROSIE', name: 'Rosie', address: 'AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump', price: 0.000971, change12h: 1.17, change24h: 2.34, change1h: 0, liquidity: 110000, marketCap: 971000, volume24h: 45000, volumeSpike: 0.8, whaleBuys1h: 0, ageDays: 45 },
+            { symbol: 'LOBSTAR', name: 'Lobstar', address: '4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump', price: 0.006922, change12h: 11.52, change24h: 23.03, change1h: 0, liquidity: 457000, marketCap: 6922000, volume24h: 312000, volumeSpike: 2.1, whaleBuys1h: 3, ageDays: 25 },
+            { symbol: 'TESTICLE', name: 'testicle', address: 'Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump', price: 0.006787, change12h: 7.13, change24h: 14.25, change1h: 0, liquidity: 507000, marketCap: 6787000, volume24h: 278000, volumeSpike: 1.7, whaleBuys1h: 2, ageDays: 28 },
+            { symbol: 'SNOWBALL', name: 'snowball', address: 'AbeDBXvqGnmcvX8NtQg5qgREFTw7HynkCc4u97xcpump', price: 0.0002819, change12h: -4.53, change24h: -9.06, change1h: 0, liquidity: 98000, marketCap: 281000, volume24h: 34000, volumeSpike: 0.6, whaleBuys1h: 0, ageDays: 38 }
         ];
 
+        // Whale Wallets
         const WHALE_WALLETS = [
-            { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "😀", alertsOn: true },
-            { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "😀", alertsOn: true },
-            { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "😀", alertsOn: true },
-            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman the holder", emoji: "😀", alertsOn: true },
-            { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "😀", alertsOn: true },
-            { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "😀", alertsOn: true },
-            { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "😀", alertsOn: true },
-            { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "😀", alertsOn: true },
-            { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "😀", alertsOn: true },
-            { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "😀", alertsOn: true },
-            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish Top holder", emoji: "😀", alertsOn: true },
-            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird guy", emoji: "😀", alertsOn: true }
+            { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "🐋", alertsOn: true },
+            { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "🐟", alertsOn: true },
+            { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "🏆", alertsOn: true },
+            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman", emoji: "👑", alertsOn: true },
+            { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "🐠", alertsOn: true },
+            { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "💰", alertsOn: true },
+            { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "🦫", alertsOn: true },
+            { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "🤖", alertsOn: true },
+            { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "💎", alertsOn: true },
+            { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "🦍", alertsOn: true }
         ];
+
+        // State
+        let soundEnabled = true;
+        let alerts = [];
+        let portfolioSort = { column: null, direction: 'desc' };
+
+        // Audio Context
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('hidden');
-                refreshAllData();
-                startAutoRefresh();
-            }, 1000);
+                initDashboard();
+                renderOpportunities();
+                renderPortfolio();
+                renderWhales();
+                initCharts();
+            }, 1500);
         });
 
-        // Auto Refresh Functions
-        function startAutoRefresh() {
-            if (autoRefreshTimer) clearInterval(autoRefreshTimer);
-            if (countdownTimer) clearInterval(countdownTimer);
-            
-            autoRefreshTimer = setInterval(() => {
-                if (autoRefreshEnabled) {
-                    refreshAllData();
-                }
-            }, AUTO_REFRESH_INTERVAL);
-            
-            updateCountdown();
-            countdownTimer = setInterval(updateCountdown, 1000);
-        }
+        // v2.0 OPPORTUNITY SCORING ALGORITHM
+        function calculateBuyScore(token) {
+            let score = 0;
+            let reasons = [];
 
-        function toggleAutoRefresh() {
-            autoRefreshEnabled = !autoRefreshEnabled;
-            const toggle = document.getElementById('autoRefreshToggle');
-            const text = document.getElementById('autoRefreshText');
-            
-            if (autoRefreshEnabled) {
-                toggle.classList.remove('paused');
-                text.textContent = 'Auto: ON (30m)';
-                addAlert('Auto-Refresh Enabled', 'Data will refresh every 30 minutes');
-            } else {
-                toggle.classList.add('paused');
-                text.textContent = 'Auto: PAUSED';
-                addAlert('Auto-Refresh Paused', 'Manual refresh required');
+            // Price drop from high (buy low) - 35 points max
+            if (token.change24h < -20) {
+                score += 20;
+                reasons.push(`Down ${Math.abs(token.change24h).toFixed(1)}% in 24h - potential reversal`);
             }
-        }
-
-        function updateCountdown() {
-            if (!autoRefreshEnabled) {
-                document.getElementById('nextRefresh').textContent = 'Auto-refresh: PAUSED';
-                document.getElementById('nextRefresh').classList.remove('active');
-                return;
+            if (token.change24h < -30) {
+                score += 10;
+                reasons.push('Heavy dip - high risk/reward');
             }
-            
-            const now = new Date();
-            const nextRefresh = lastRefreshTime ? new Date(lastRefreshTime.getTime() + AUTO_REFRESH_INTERVAL) : new Date(now.getTime() + AUTO_REFRESH_INTERVAL);
-            const diff = nextRefresh - now;
-            
-            if (diff > 0) {
-                const minutes = Math.floor(diff / 60000);
-                const seconds = Math.floor((diff % 60000) / 1000);
-                document.getElementById('nextRefresh').textContent = `Next refresh: ${minutes}m ${seconds}s`;
-                document.getElementById('nextRefresh').classList.add('active');
+            if (token.change12h < -15) {
+                score += 5;
+                reasons.push('Recent 12h decline');
             }
+
+            // Volume spike (interest returning) - 20 points
+            if (token.volumeSpike > 2) {
+                score += 20;
+                reasons.push(`Volume ${token.volumeSpike.toFixed(1)}x average - accumulation detected`);
+            } else if (token.volumeSpike > 1.5) {
+                score += 10;
+                reasons.push('Rising volume');
+            }
+
+            // Liquidity health - 25 points
+            if (token.liquidity > 100000) {
+                score += 15;
+                reasons.push('High liquidity - easy exit');
+            } else if (token.liquidity > 50000) {
+                score += 10;
+                reasons.push('Good liquidity');
+            }
+            if (token.liquidity > 25000) {
+                score += 10;
+            }
+
+            // Whale activity - 15 points
+            if (token.whaleBuys1h > 2) {
+                score += 15;
+                reasons.push(`${token.whaleBuys1h} whales buying - smart money in`);
+            } else if (token.whaleBuys1h > 0) {
+                score += 8;
+                reasons.push('Whale activity detected');
+            }
+
+            // Market cap (micro-caps pump harder) - 5 points
+            if (token.marketCap < 1000000 && token.marketCap > 0) {
+                score += 5;
+                reasons.push('Micro-cap - high growth potential');
+            }
+
+            return { score: Math.min(score, 100), reasons };
         }
 
-        // Main Refresh Function
-        async function refreshAllData() {
-            const btn = document.getElementById('globalRefreshBtn');
-            const indicator = document.getElementById('refreshIndicator');
-            const icon = document.getElementById('refreshIcon');
-            
-            btn.disabled = true;
-            indicator.classList.add('spinning');
-            icon.textContent = '⏳';
-            
-            // Refresh all tabs
-            await Promise.all([
-                refreshDashboard(),
-                refreshPortfolio(),
-                refreshAccumulation(),
-                refreshWhales(),
-                refreshScanner()
-            ]);
-            
-            // Update timestamp
-            lastRefreshTime = new Date();
-            document.getElementById('lastRefreshTime').textContent = lastRefreshTime.toLocaleTimeString();
-            
-            btn.disabled = false;
-            indicator.classList.remove('spinning');
-            icon.textContent = '✅';
-            setTimeout(() => icon.textContent = '🔄', 2000);
-            
-            addAlert('Data Refreshed', `All tabs updated at ${lastRefreshTime.toLocaleTimeString()}`);
+        function assessRisk(token) {
+            if (token.liquidity < 25000) {
+                return { level: 'HIGH', reason: 'Low liquidity - hard to exit' };
+            }
+            if (token.change1h > 50) {
+                return { level: 'HIGH', reason: 'Parabolic pump - likely dump soon' };
+            }
+            if (token.change24h < -50) {
+                return { level: 'MEDIUM', reason: 'Heavy dump - may continue falling' };
+            }
+            if (token.volumeSpike < 0.5) {
+                return { level: 'MEDIUM', reason: 'Low volume - no interest' };
+            }
+            return { level: 'LOW', reason: 'Normal market conditions' };
         }
 
-        // Tab-specific refresh functions
-        async function refreshDashboard() {
-            // Simulate API call
-            await new Promise(r => setTimeout(r, 500));
+        function getSignalType(score) {
+            if (score >= 80) return { type: 'strong-buy', label: '🔥 STRONG BUY', class: 'strong-buy' };
+            if (score >= 60) return { type: 'speculative', label: '⚠️ SPECULATIVE', class: 'speculative' };
+            if (score >= 40) return { type: 'watch', label: '❄️ WATCH', class: 'watch' };
+            return { type: 'avoid', label: '🛑 AVOID', class: 'avoid' };
+        }
+
+        function calculateTargetPrice(token) {
+            // Target: 20-35% gain from current price
+            const targetGain = token.change24h < -20 ? 0.35 : 0.20;
+            return token.price * (1 + targetGain);
+        }
+
+        // Render Opportunities (v2.0 Main Feature)
+        function renderOpportunities() {
+            const container = document.getElementById('opportunitiesList');
             
-            // Update metrics with sample data
-            document.getElementById('dashPortfolioChange').textContent = '+12.4%';
-            document.getElementById('dashPortfolioChange').className = 'metric-value positive';
-            document.getElementById('dashOpportunities').textContent = '3';
-            document.getElementById('dashWhaleBuys').textContent = '5';
-            document.getElementById('dashTopGainer').textContent = 'PUNCH';
-            
+            // Calculate scores for all tokens
+            const opportunities = TOKENS
+                .filter(t => t.price > 0)
+                .map(token => {
+                    const { score, reasons } = calculateBuyScore(token);
+                    const risk = assessRisk(token);
+                    const signal = getSignalType(score);
+                    const targetPrice = calculateTargetPrice(token);
+                    const potentialGain = ((targetPrice - token.price) / token.price * 100);
+                    
+                    return {
+                        ...token,
+                        score,
+                        reasons,
+                        risk,
+                        signal,
+                        targetPrice,
+                        potentialGain
+                    };
+                })
+                .sort((a, b) => b.score - a.score);
+
             // Update header stats
             document.getElementById('activeTokens').textContent = TOKENS.length;
-            document.getElementById('portfolioChange').textContent = '+12.4%';
-            document.getElementById('portfolioChange').style.color = 'var(--accent-green)';
-            document.getElementById('whaleAlerts').textContent = alerts.length;
-        }
+            document.getElementById('opportunityCount').textContent = opportunities.filter(o => o.score >= 40).length;
+            document.getElementById('highScoreCount').textContent = opportunities.filter(o => o.score >= 80).length;
 
-        async function refreshPortfolio() {
-            const btn = document.getElementById('portfolioRefreshBtn');
-            if (btn) btn.classList.add('spinning');
-            
-            // Simulate API fetch
-            await new Promise(r => setTimeout(r, 800));
-            
-            // Update with sample data
-            TOKENS.forEach((token, i) => {
-                token.price = [0.0149, 0.0007, 0.000064, 0.00213, 0.00177, 0.00026, 0.00022, 0.00023][i];
-                token.change24h = [19.62, 0.12, 3.40, 15.63, -0.66, 8.04, -17.14, -1.00][i];
-                token.change1h = [0.94, -9.41, 30.95, 3.12, -1.58, 9.56, 0.97, -5.21][i];
-                token.liquidity = [744503, 118193, 26235, 191000, 154056, 56397, 42155, 46890][i];
-            });
-            
-            renderPortfolioTable();
-            
-            if (btn) btn.classList.remove('spinning');
-        }
-
-        function renderPortfolioTable() {
-            const tbody = document.getElementById('portfolioTableBody');
-            tbody.innerHTML = TOKENS.map(token => `
-                <tr>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8em;">${token.symbol[0]}</div>
-                            <div>
-                                <div style="font-weight: 600;">${token.symbol}</div>
-                                <div style="font-size: 0.75em; color: var(--text-secondary);">${token.name}</div>
+            // Render cards
+            container.innerHTML = opportunities.map(opp => `
+                <div class="opportunity-card ${opp.signal.class}">
+                    <div class="opportunity-header">
+                        <div class="opportunity-signal signal-${opp.signal.type}">
+                            ${opp.signal.label}
+                        </div>
+                        <div class="opportunity-score ${opp.score >= 80 ? 'score-high' : opp.score >= 60 ? 'score-medium' : 'score-low'}">
+                            Score: ${opp.score}
+                        </div>
+                    </div>
+                    
+                    <div class="opportunity-token">
+                        <div class="token-icon-large">${opp.symbol[0]}</div>
+                        <div class="token-details">
+                            <h3>${opp.symbol}</h3>
+                            <span>${opp.name}</span>
+                        </div>
+                        <div class="token-price">
+                            <div class="price">$${opp.price.toFixed(opp.price < 0.001 ? 8 : 6)}</div>
+                            <div class="change ${opp.change24h >= 0 ? 'positive' : 'negative'}" style="color: ${opp.change24h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}">
+                                ${opp.change24h >= 0 ? '+' : ''}${opp.change24h.toFixed(2)}%
                             </div>
                         </div>
-                    </td>
-                    <td style="font-family: 'JetBrains Mono', monospace;">$${token.price.toFixed(token.price < 0.001 ? 8 : 6)}</td>
-                    <td><span class="price-change ${token.change24h >= 0 ? 'positive' : 'negative'}">${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%</span></td>
-                    <td><span class="price-change ${token.change1h >= 0 ? 'positive' : 'negative'}">${token.change1h >= 0 ? '+' : ''}${token.change1h.toFixed(2)}%</span></td>
-                    <td style="color: var(--text-secondary);">$${(token.liquidity / 1000).toFixed(0)}K</td>
-                    <td>${token.change24h > 10 ? '🔥 Hot' : token.change24h < -10 ? '❄️ Cold' : '➡️ Stable'}</td>
-                </tr>
+                    </div>
+                    
+                    <div class="opportunity-stats">
+                        <div class="stat-box">
+                            <div class="label">24h Volume</div>
+                            <div class="value">$${(opp.volume24h / 1000).toFixed(1)}K</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="label">Volume Spike</div>
+                            <div class="value" style="color: ${opp.volumeSpike > 2 ? 'var(--accent-green)' : 'inherit'}">${opp.volumeSpike.toFixed(1)}x</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="label">Liquidity</div>
+                            <div class="value">$${(opp.liquidity / 1000).toFixed(0)}K</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="label">Whale Buys</div>
+                            <div class="value" style="color: ${opp.whaleBuys1h > 0 ? 'var(--accent-green)' : 'inherit'}">${opp.whaleBuys1h} / 1h</div>
+                        </div>
+                    </div>
+                    
+                    <div class="opportunity-action">
+                        <div class="action-row">
+                            <span class="action-label">Buy Price</span>
+                            <span class="action-value">$${opp.price.toFixed(opp.price < 0.001 ? 8 : 6)}</span>
+                        </div>
+                        <div class="action-row">
+                            <span class="action-label">Target Sell</span>
+                            <span class="action-value" style="color: var(--accent-cyan)">$${opp.targetPrice.toFixed(opp.targetPrice < 0.001 ? 8 : 6)}</span>
+                        </div>
+                        <div class="action-row">
+                            <span class="action-label">Potential Gain</span>
+                            <span class="action-value potential-gain">+${opp.potentialGain.toFixed(1)}%</span>
+                        </div>
+                        <div class="action-row">
+                            <span class="action-label">Risk Level</span>
+                            <span class="risk-level risk-${opp.risk.level.toLowerCase()}">${opp.risk.level}</span>
+                        </div>
+                    </div>
+                    
+                    <ul class="opportunity-reasons">
+                        ${opp.reasons.map(r => `<li>✓ ${r}</li>`).join('')}
+                        ${opp.reasons.length === 0 ? '<li>ℹ️ No strong signals - consider avoiding</li>' : ''}
+                    </ul>
+                    
+                    <div class="opportunity-actions">
+                        <button class="btn btn-success" onclick="copyBuyCommand('${opp.symbol}', '${opp.address}', ${opp.price})">
+                            📋 Copy Buy
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewTokenDetails('${opp.symbol}')">
+                            📈 Details
+                        </button>
+                        <button class="btn btn-secondary" onclick="setPriceAlert('${opp.symbol}', ${opp.targetPrice})">
+                            🔔 Alert
+                        </button>
+                    </div>
+                </div>
             `).join('');
         }
 
-        async function refreshAccumulation() {
-            const btn = document.getElementById('accumulationRefreshBtn');
-            if (btn) btn.classList.add('spinning');
-            await new Promise(r => setTimeout(r, 600));
-            if (btn) btn.classList.remove('spinning');
+        // Helper functions
+        function copyBuyCommand(symbol, address, price) {
+            const command = `Buy ${symbol} at $${price.toFixed(price < 0.001 ? 8 : 6)} - Contract: ${address}`;
+            navigator.clipboard.writeText(command).then(() => {
+                addAlert('Copied', `Buy command for ${symbol} copied to clipboard`);
+                playSound('alert');
+            });
         }
 
-        async function refreshWhales() {
-            const btn = document.getElementById('whalesRefreshBtn');
-            if (btn) btn.classList.add('spinning');
-            
-            await new Promise(r => setTimeout(r, 700));
-            
-            const grid = document.getElementById('whaleGrid');
-            grid.innerHTML = WHALE_WALLETS.map(wallet => {
-                const shortAddr = wallet.address.substring(0, 6) + '...' + wallet.address.substring(wallet.address.length - 4);
-                return `
-                    <div class="wallet-card" onclick="window.open('https://birdeye.so/profile/${wallet.address}?chain=solana', '_blank')">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <div>
-                                <div class="wallet-name">${wallet.emoji} ${wallet.name}</div>
-                                <div class="wallet-address">${shortAddr}</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; background: ${wallet.alertsOn ? 'rgba(0,255,136,0.2)' : 'rgba(255,255,255,0.1)'}; color: ${wallet.alertsOn ? 'var(--accent-green)' : 'var(--text-secondary)'};">${wallet.alertsOn ? '🔔 Alerts ON' : '🔕 Alerts OFF'}</span>
-                            <span style="color: var(--accent-cyan);">View →</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            if (btn) btn.classList.remove('spinning');
+        function viewTokenDetails(symbol) {
+            const token = TOKENS.find(t => t.symbol === symbol);
+            if (token) {
+                window.open(`https://dexscreener.com/solana/${token.address}`, '_blank');
+            }
         }
 
-        async function refreshScanner() {
-            const btn = document.getElementById('scannerRefreshBtn');
-            if (btn) btn.classList.add('spinning');
-            await new Promise(r => setTimeout(r, 1000));
-            
-            document.getElementById('scannerResults').innerHTML = `
-                <div class="grid-3">
-                    <div class="card" style="margin: 0;">
-                        <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 5px;">🆕 FISHBOWL</div>
-                        <div style="font-size: 0.85em; color: var(--text-secondary);">Just launched • $12K MC • 45 holders</div>
-                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-orange);">⚠️ High risk</div>
-                    </div>
-                    <div class="card" style="margin: 0;">
-                        <div style="font-weight: 600; color: var(--accent-orange); margin-bottom: 5px;">🆕 MOONCAT</div>
-                        <div style="font-size: 0.85em; color: var(--text-secondary);">2 hours old • $45K MC • 120 holders</div>
-                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-cyan);">📊 Medium risk</div>
-                    </div>
-                    <div class="card" style="margin: 0;">
-                        <div style="font-weight: 600; color: var(--text-secondary); margin-bottom: 5px;">🆕 GARBAGE</div>
-                        <div style="font-size: 0.85em; color: var(--text-secondary);">6 hours old • $8K MC • 23 holders</div>
-                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-red);">❌ Likely rug</div>
-                    </div>
-                </div>
-            `;
-            
-            if (btn) btn.classList.remove('spinning');
+        function setPriceAlert(symbol, targetPrice) {
+            addAlert('Alert Set', `${symbol} - Will notify when price reaches $${targetPrice.toFixed(6)}`);
+            playSound('alert');
         }
 
-        // Other functions
-        function switchTab(tabName) {
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+        function refreshOpportunities() {
+            renderOpportunities();
+            addAlert('Refreshed', 'Opportunity scores recalculated');
+            playSound('alert');
+        }
+
+        function exportOpportunities() {
+            const opportunities = TOKENS.filter(t => t.price > 0).map(token => {
+                const { score, reasons } = calculateBuyScore(token);
+                const risk = assessRisk(token);
+                return {
+                    symbol: token.symbol,
+                    score,
+                    risk: risk.level,
+                    price: token.price,
+                    change24h: token.change24h,
+                    reasons: reasons.join('; ')
+                };
+            }).sort((a, b) => b.score - a.score);
+
+            const csv = 'Symbol,Score,Risk,Price,24h Change,Reasons\n' + 
+                opportunities.map(o => `${o.symbol},${o.score},${o.risk},${o.price},${o.change24h},"${o.reasons}"`).join('\n');
             
-            event.target.classList.add('active');
-            document.getElementById(tabName + '-panel').classList.add('active');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'opportunities_export.csv';
+            a.click();
+        }
+
+        // Other existing functions (simplified)
+        function playSound(type = 'alert') {
+            if (!soundEnabled) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if (type === 'alert') {
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.2);
+            }
+            
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
         }
 
         function toggleSound() {
@@ -944,20 +1534,141 @@
             document.getElementById('soundToggle').classList.toggle('muted', !soundEnabled);
         }
 
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-panel').classList.add('active');
+        }
+
+        function initDashboard() {
+            // Find top loser and gainer
+            const validTokens = TOKENS.filter(t => t.price > 0);
+            const topLoser = [...validTokens].sort((a, b) => a.change24h - b.change24h)[0];
+            const topGainer = [...validTokens].sort((a, b) => b.change24h - a.change24h)[0];
+            
+            if (topLoser) {
+                document.getElementById('dashTopLoser').textContent = topLoser.symbol;
+            }
+            if (topGainer) {
+                document.getElementById('dashTopGainer').textContent = topGainer.symbol;
+            }
+            
+            renderTrendingTokens();
+        }
+
+        function renderTrendingTokens() {
+            const trending = [...TOKENS]
+                .filter(t => t.price > 0)
+                .sort((a, b) => b.change24h - a.change24h)
+                .slice(0, 5);
+            
+            const container = document.getElementById('trendingTokensList');
+            const rankEmojis = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+            
+            container.innerHTML = trending.map((token, index) => `
+                <div style="display: flex; align-items: center; padding: 12px; margin-bottom: 8px; background: rgba(255,255,255,0.03); border-radius: 10px; border-left: 3px solid ${token.change24h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'};">
+                    <div style="font-size: 1.5em; margin-right: 12px;">${rankEmojis[index]}</div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.1em;">${token.symbol}</div>
+                                <div style="font-size: 0.8em; color: var(--text-secondary);">${token.name}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: ${token.change24h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'};">
+                                    ${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%
+                                </div>
+                                <div style="font-size: 0.75em; color: var(--text-secondary); margin-top: 2px;">
+                                    $${token.price.toFixed(token.price < 0.001 ? 6 : 4)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPortfolio() {
+            const tbody = document.getElementById('portfolioTableBody');
+            tbody.innerHTML = TOKENS.map(token => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">${token.symbol[0]}</div>
+                            <div>
+                                <div style="font-weight: 600;">${token.symbol}</div>
+                                <div style="font-size: 0.8em; color: var(--text-secondary);">${token.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-family: 'JetBrains Mono', monospace;">$${token.price.toFixed(token.price < 0.001 ? 8 : 6)}</td>
+                    <td><span style="color: ${token.change12h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 600;">${token.change12h >= 0 ? '+' : ''}${token.change12h.toFixed(2)}%</span></td>
+                    <td><span style="color: ${token.change24h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 600;">${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%</span></td>
+                    <td><span style="color: ${token.change1h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 600;">${token.change1h >= 0 ? '+' : ''}${token.change1h.toFixed(2)}%</span></td>
+                    <td style="color: var(--text-secondary);">$${(token.liquidity / 1000).toFixed(0)}K</td>
+                    <td style="font-family: 'JetBrains Mono', monospace; color: var(--text-secondary);">$${(token.marketCap / 1000000).toFixed(2)}M</td>
+                    <td>${token.change24h > 10 ? '🔥 Hot' : token.change24h < -10 ? '❄️ Cold' : '➡️ Stable'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderWhales() {
+            const grid = document.getElementById('whaleGrid');
+            grid.innerHTML = WHALE_WALLETS.map(wallet => {
+                const shortAddr = wallet.address.substring(0, 6) + '...' + wallet.address.substring(wallet.address.length - 4);
+                return `
+                    <div class="wallet-card" onclick="window.open('https://birdeye.so/profile/${wallet.address}?chain=solana', '_blank')">
+                        <div class="wallet-header">
+                            <div>
+                                <div class="wallet-name">${wallet.emoji} ${wallet.name}</div>
+                                <div class="wallet-address">${shortAddr}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span class="wallet-status ${wallet.alertsOn ? 'buying' : ''}">${wallet.alertsOn ? '🔔 Alerts ON' : '🔕 Alerts OFF'}</span>
+                            <span style="color: var(--accent-cyan);">View →</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function initCharts() {
+            // Price History Chart
+            const ctx = document.getElementById('priceHistoryChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: TOKENS.slice(0, 10).map(t => t.symbol),
+                        datasets: [{
+                            label: '24h Change %',
+                            data: TOKENS.slice(0, 10).map(t => t.change24h),
+                            backgroundColor: TOKENS.slice(0, 10).map(t => t.change24h >= 0 ? 'rgba(0, 255, 136, 0.7)' : 'rgba(255, 71, 87, 0.7)'),
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8b8b9e' } },
+                            x: { grid: { display: false }, ticks: { color: '#8b8b9e' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Other functions
         function addAlert(title, message) {
             const time = new Date().toLocaleTimeString();
             alerts.unshift({ title, message, time });
-            updateAlertsList();
-            document.getElementById('whaleAlerts').textContent = alerts.length;
-        }
-
-        function updateAlertsList() {
-            const list = document.getElementById('alertsList');
-            if (alerts.length === 0) {
-                list.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet</div>';
-                return;
-            }
             
+            const list = document.getElementById('alertsList');
             list.innerHTML = alerts.map(a => `
                 <div style="background: rgba(255,255,255,0.03); border-left: 3px solid var(--accent-cyan); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
                     <div style="font-weight: 600; margin-bottom: 5px;">${a.title}</div>
@@ -969,41 +1680,166 @@
 
         function clearAlerts() {
             alerts = [];
-            updateAlertsList();
-            document.getElementById('whaleAlerts').textContent = '0';
+            document.getElementById('alertsList').innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet</div>';
         }
 
-        function startAccumulationScan() {
-            const container = document.getElementById('accumulationSignals');
-            container.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading-spinner" style="margin: 0 auto 20px;"></div><div>Scanning...</div></div>';
-            
-            setTimeout(() => {
-                container.innerHTML = `
-                    <div style="background: rgba(0,255,136,0.1); border-left: 4px solid var(--accent-green); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
-                        <div style="font-weight: 600; color: var(--accent-green);">🎯 PUNCH - Accumulation Signal</div>
-                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Price down 35% from high, volume up 3.2x</div>
-                    </div>
-                    <div style="background: rgba(255,165,2,0.1); border-left: 4px solid var(--accent-orange); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
-                        <div style="font-weight: 600; color: var(--accent-orange);">📊 Devious - Volume Spike</div>
-                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">24h volume 2.8x average</div>
-                    </div>
-                `;
-                addAlert('Accumulation Scan Complete', 'Found 2 signals');
-            }, 2000);
+        function dismissAlert() {
+            document.getElementById('mainAlert').classList.remove('active');
         }
 
         function exportPortfolio() {
-            const csv = 'Token,Price,24h Change,1h Change,Liquidity\n' + 
-                TOKENS.map(t => `${t.symbol},${t.price},${t.change24h}%,${t.change1h}%,${t.liquidity}`).join('\n');
+            const csv = 'Token,Price,24h Change,1h Change,Liquidity,Market Cap\n' + 
+                TOKENS.filter(t => t.price > 0).map(t => `${t.symbol},${t.price},${t.change24h}%,${t.change1h}%,${t.liquidity},${t.marketCap}`).join('\n');
             
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `portfolio_export_${new Date().toISOString().split('T')[0]}.csv`;
+            a.download = 'portfolio_export.csv';
             a.click();
+        }
+
+        function exportAllData() {
+            const data = {
+                tokens: TOKENS,
+                opportunities: TOKENS.filter(t => t.price > 0).map(t => {
+                    const { score } = calculateBuyScore(t);
+                    return { symbol: t.symbol, score };
+                }),
+                exported: new Date().toISOString()
+            };
             
-            addAlert('Export Complete', 'Portfolio data saved to CSV');
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'weirdo_tracker_v2_data.json';
+            a.click();
+        }
+
+        function refreshData() {
+            renderTrendingTokens();
+            addAlert('Data Refreshed', 'Dashboard updated');
+        }
+
+        function refreshPortfolio() {
+            renderPortfolio();
+            addAlert('Portfolio Updated', 'Latest prices loaded');
+        }
+
+        function sortPortfolio(column) {
+            // Simplified sorting
+            if (portfolioSort.column === column) {
+                portfolioSort.direction = portfolioSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                portfolioSort.column = column;
+                portfolioSort.direction = 'desc';
+            }
+            renderPortfolio();
+        }
+
+        function filterWhales(filter) {
+            addAlert('Filter Applied', `Showing ${filter} whales`);
+        }
+
+        function startAccumulationScan() {
+            document.getElementById('accumulationSignals').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                    <div>Scanning for accumulation patterns...</div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                document.getElementById('accumulationSignals').innerHTML = `
+                    <div style="background: rgba(0,255,136,0.1); border-left: 4px solid var(--accent-green); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                        <div style="font-weight: 600; color: var(--accent-green);">🎯 PUNCH - Accumulation Signal</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Price down 35% from high, volume up 3.2x</div>
+                    </div>
+                `;
+                document.getElementById('signalCount').textContent = '1';
+            }, 2000);
+        }
+
+        function scanNewTokens() {
+            document.getElementById('scannerResults').innerHTML = `
+                <div style="text-align: center; padding: 60px;">
+                    <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                    <h3>Scanning Solana for new opportunities...</h3>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                document.getElementById('scannerResults').innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <div style="font-size: 3em; margin-bottom: 20px;">✅</div>
+                        <h3>No new opportunities found</h3>
+                        <p>Check back in 15 minutes</p>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        // Track Token Functions
+        function trackNewToken() {
+            const addressInput = document.getElementById('newTokenAddress');
+            const address = addressInput.value.trim();
+            const resultDiv = document.getElementById('trackTokenResult');
+            const errorDiv = document.getElementById('trackTokenError');
+            const commandDiv = document.getElementById('trackCommand');
+            
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            if (!address) {
+                errorDiv.textContent = '❌ Please enter a token contract address';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            if (!/^[A-HJ-NP-Za-km-z1-9]{32,44}$/.test(address)) {
+                errorDiv.textContent = '❌ Invalid Solana address format';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            const alreadyTracked = TOKENS.find(t => t.address === address);
+            if (alreadyTracked) {
+                errorDiv.innerHTML = `❌ Token already tracked: <strong>${alreadyTracked.symbol}</strong>`;
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            const command = `Add token to tracker: ${address}`;
+            commandDiv.textContent = command;
+            resultDiv.style.display = 'block';
+            
+            navigator.clipboard.writeText(command).then(() => {
+                addAlert('Token Ready', `Address copied: ${address.substring(0, 15)}...`);
+            });
+        }
+
+        function copyTrackCommand() {
+            const command = document.getElementById('trackCommand').textContent;
+            navigator.clipboard.writeText(command).then(() => {
+                addAlert('Copied!', 'Command copied to clipboard');
+            });
+        }
+
+        function pasteAndTrack() {
+            navigator.clipboard.readText().then(text => {
+                let cleaned = text.trim().replace(/^solana[:\s]*/i, '').replace(/\s+.*$/, '');
+                const match = cleaned.match(/[A-HJ-NP-Za-km-z1-9]{32,44}/);
+                if (match) cleaned = match[0];
+                document.getElementById('newTokenAddress').value = cleaned;
+                trackNewToken();
+            });
+        }
+
+        function clearTrackInput() {
+            document.getElementById('newTokenAddress').value = '';
+            document.getElementById('trackTokenResult').style.display = 'none';
+            document.getElementById('trackTokenError').style.display = 'none';
         }
     </script>
 </body>
