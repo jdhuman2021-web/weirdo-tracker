@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 Weirdo Tracker v2.0 | Complete Edition</title>
+    <title>🧠 Weirdo Tracker v2.1 | Complete Edition</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: #0a0a0f; color: white; min-height: 100vh; }
-        .header { background: #12121a; padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .header { background: #12121a; padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .logo { display: flex; align-items: center; gap: 15px; }
         .logo-icon { font-size: 2.5em; }
         .version { background: linear-gradient(135deg, #8b5cf6, #ff6b9d); padding: 4px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 700; }
@@ -17,7 +17,7 @@
         .stat-label { font-size: 0.75em; color: #8b8b9e; }
         
         .nav { display: flex; gap: 10px; padding: 20px; background: #12121a; border-bottom: 1px solid #333; overflow-x: auto; }
-        .nav button { padding: 12px 24px; background: #1a1a25; border: 1px solid #333; color: white; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 0.3s; }
+        .nav button { padding: 12px 24px; background: #1a1a25; border: 1px solid #333; color: white; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; }
         .nav button:hover { border-color: #00d9ff; }
         .nav button.active { background: linear-gradient(135deg, #00d9ff, #00ff88); color: #0a0a0f; border-color: transparent; }
         
@@ -27,7 +27,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .card { background: #1a1a25; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .card-title { font-size: 1.2em; font-weight: 600; }
         .card-badge { background: rgba(0,217,255,0.2); color: #00d9ff; padding: 4px 12px; border-radius: 20px; font-size: 0.75em; }
         
@@ -41,7 +41,6 @@
         .metric-value.negative { color: #ff4757; }
         .metric-label { font-size: 0.85em; color: #8b8b9e; margin-top: 5px; }
         
-        /* Opportunity Cards */
         .opportunity-card { border: 2px solid; border-radius: 16px; padding: 20px; margin-bottom: 15px; position: relative; overflow: hidden; }
         .opportunity-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
         .strong-buy { border-color: #00ff88; box-shadow: 0 0 30px rgba(0,255,136,0.2); }
@@ -57,13 +56,9 @@
         .score-medium { color: #ffa502; }
         .score-low { color: #ff4757; }
         
-        .risk-low { background: rgba(0,255,136,0.15); color: #00ff88; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        .risk-medium { background: rgba(255,165,2,0.15); color: #ffa502; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        .risk-high { background: rgba(255,71,87,0.15); color: #ff4757; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        
         .token-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #00d9ff, #00ff88); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2em; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95em; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
         th { color: #8b8b9e; cursor: pointer; user-select: none; }
         th:hover { color: #00d9ff; background: rgba(0,217,255,0.05); }
@@ -95,13 +90,13 @@
         
         .export-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #00d9ff, #00ff88); border: none; border-radius: 50%; font-size: 1.5em; cursor: pointer; box-shadow: 0 10px 40px rgba(0,217,255,0.3); z-index: 99; }
         
-        @media (max-width: 768px) { .grid-2, .grid-4 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .grid-2, .grid-4 { grid-template-columns: 1fr; } .header { flex-direction: column; gap: 15px; } }
     </style>
 </head>
 <body>
     <div class="loading" id="loadingScreen">
         <div class="spinner"></div>
-        <h2>🧠 Weirdo Tracker v2.0</h2>
+        <h2>🧠 Weirdo Tracker v2.1</h2>
         <p style="color: #8b8b9e;">Loading 29 tokens, 87 whale wallets, AI opportunity detection...</p>
     </div>
 
@@ -109,7 +104,7 @@
         <div class="logo">
             <div class="logo-icon">🧠</div>
             <div>
-                <h1>Weirdo Tracker <span class="version">v2.0 Complete</span></h1>
+                <h1>Weirdo Tracker <span class="version">v2.1 Complete</span></h1>
                 <p style="color: #8b8b9e;">Smart Opportunity Detection</p>
             </div>
         </div>
@@ -226,21 +221,23 @@
                         <button class="btn btn-primary" onclick="refreshPortfolio()">🔄 Refresh</button>
                     </div>
                 </div>
-                <table id="portfolioTable">
-                    <thead>
-                        <tr>
-                            <th onclick="sortPortfolio('symbol')">Token ↕</th>
-                            <th onclick="sortPortfolio('change1h')">1h ↕</th>
-                            <th onclick="sortPortfolio('change12h')">12h ↕</th>
-                            <th onclick="sortPortfolio('change24h')">24h ↕</th>
-                            <th onclick="sortPortfolio('change7d')">1W ↕</th>
-                            <th onclick="sortPortfolio('liquidity')">Liquidity ↕</th>
-                            <th onclick="sortPortfolio('marketCap')">MCap ↕</th>
-                            <th onclick="sortPortfolio('status')">Status ↕</th>
-                        </tr>
-                    </thead>
-                    <tbody id="portfolioBody"></tbody>
-                </table>
+                <div style="overflow-x: auto;">
+                    <table id="portfolioTable">
+                        <thead>
+                            <tr>
+                                <th onclick="sortPortfolio('symbol')">Token ↕</th>
+                                <th onclick="sortPortfolio('change1h')">1h ↕</th>
+                                <th onclick="sortPortfolio('change12h')">12h ↕</th>
+                                <th onclick="sortPortfolio('change24h')">24h ↕</th>
+                                <th onclick="sortPortfolio('change7d')">1W ↕</th>
+                                <th onclick="sortPortfolio('liquidity')">Liq ↕</th>
+                                <th onclick="sortPortfolio('marketCap')">MCap ↕</th>
+                                <th onclick="sortPortfolio('status')">Status ↕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolioBody"></tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="card">
@@ -403,20 +400,20 @@
             { symbol: 'NEW', name: 'New Token', address: '9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump', change1h: 0, change12h: 0, change24h: 0, change7d: 0, liquidity: 0, marketCap: 0, volumeSpike: 0, whaleBuys1h: 0 }
         ];
 
-        // WHALE WALLETS - All 87
+        // WHALE WALLETS - Sample of 20 (would be 87 in full version)
         const WHALE_WALLETS = [
             { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "🐋", alertsOn: true },
             { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "🐟", alertsOn: true },
             { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "🏆", alertsOn: true },
-            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman the holder", emoji: "👑", alertsOn: true },
+            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman", emoji: "👑", alertsOn: true },
             { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "🐠", alertsOn: true },
             { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "💰", alertsOn: true },
             { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "🦫", alertsOn: true },
             { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "🤖", alertsOn: true },
             { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "💎", alertsOn: true },
             { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "🦍", alertsOn: true },
-            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish Top holder", emoji: "🌈", alertsOn: true },
-            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird guy", emoji: "🐦", alertsOn: true },
+            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish", emoji: "🌈", alertsOn: true },
+            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird", emoji: "🐦", alertsOn: true },
             { address: "AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51", name: "70 mill", emoji: "💵", alertsOn: true },
             { address: "AXduaBoy8C9ScaNCrkkZoUtLV8CWD96TEqUUhRqv5wEF", name: "Mr Patient", emoji: "⏳", alertsOn: true },
             { address: "J3jfq8o7951raAZ1J1kRUEGzgTgTBDR4hyMhnyuDMqp6", name: "Alpha Cno 1", emoji: "🎯", alertsOn: true },
@@ -425,29 +422,24 @@
             { address: "5t8JEn6xyLCXFm5jehbQUj3eBbgiVYUFwtL9PmCJRY9D", name: "BANKR guy", emoji: "🏦", alertsOn: true },
             { address: "DtjYbZntc2mEm1UrZHNcKguak6h6QM4S5xobnwFgg92Y", name: "Files", emoji: "📁", alertsOn: true },
             { address: "GNrmKZCxYyNiSUsjduwwPJzhed3LATjciiKVuSGrsHEC", name: "GIANNNNN", emoji: "🌟", alertsOn: true }
-            // Note: Adding all 87 would make this very long. In practice, you'd load from JSON file
         ];
 
         let currentSort = { column: null, direction: 'desc' };
         let alerts = [];
         let portfolioChart = null;
 
-        // AI SCORING ALGORITHM
+        // AI SCORING
         function calculateScore(token) {
             let score = 0;
-            let reasons = [];
-            
-            if (token.change24h < -20) { score += 20; reasons.push(`Down ${Math.abs(token.change24h).toFixed(1)}% - potential reversal`); }
-            if (token.change24h < -30) { score += 10; reasons.push('Heavy dip opportunity'); }
-            if (token.change12h < -15) { score += 5; }
-            if (token.volumeSpike > 2) { score += 20; reasons.push(`Volume ${token.volumeSpike}x - accumulation`); }
-            if (token.volumeSpike > 1.5) { score += 10; }
-            if (token.liquidity > 100000) { score += 15; reasons.push('High liquidity'); }
-            if (token.liquidity > 50000) { score += 10; }
-            if (token.whaleBuys1h > 0) { score += 15; reasons.push(`${token.whaleBuys1h} whale buy(s)`); }
-            if (token.marketCap < 1000000 && token.marketCap > 0) { score += 5; }
-            
-            return { score: Math.min(score, 100), reasons };
+            if (token.change24h < -20) score += 20;
+            if (token.change24h < -30) score += 10;
+            if (token.volumeSpike > 2) score += 20;
+            else if (token.volumeSpike > 1.5) score += 10;
+            if (token.liquidity > 100000) score += 15;
+            else if (token.liquidity > 50000) score += 10;
+            if (token.whaleBuys1h > 0) score += 15;
+            if (token.marketCap < 1000000 && token.marketCap > 0) score += 5;
+            return Math.min(score, 100);
         }
 
         function getRisk(token) {
@@ -472,10 +464,10 @@
 
         // RENDER FUNCTIONS
         function renderOpportunities() {
-            const opportunities = TOKENS.filter(t => t.price > 0 || t.change24h !== 0).map(t => {
-                const { score, reasons } = calculateScore(t);
+            const opportunities = TOKENS.filter(t => t.change24h !== 0 || t.liquidity > 0).map(t => {
+                const score = calculateScore(t);
                 const risk = getRisk(t);
-                return { ...t, score, reasons, risk };
+                return { ...t, score, risk };
             }).sort((a, b) => b.score - a.score);
 
             document.getElementById('statTokens').textContent = TOKENS.length;
@@ -486,19 +478,19 @@
                 const signal = getSignal(opp.score);
                 return `
                     <div class="opportunity-card ${signal.class}">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                             <span style="font-weight: 700; font-size: 1.1em;">${signal.label}</span>
                             <span class="${opp.score >= 80 ? 'score-high' : opp.score >= 60 ? 'score-medium' : 'score-low'}" style="font-size: 1.2em; font-weight: 700;">Score: ${opp.score}</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                             <div class="token-icon">${opp.symbol[0]}</div>
-                            <div>
+                            <div style="flex: 1;">
                                 <div style="font-size: 1.3em; font-weight: 600;">${opp.symbol}</div>
                                 <div style="color: #8b8b9e;">${opp.name}</div>
                             </div>
-                            <div style="margin-left: auto; text-align: right;">
-                                <div style="font-size: 1.1em; font-weight: 600;">$${opp.change24h >= 0 ? '+' : ''}${opp.change24h.toFixed(2)}% (24h)</div>
-                                <div style="color: #8b8b9e; font-size: 0.9em;">${opp.change1h > 0 ? '+' : ''}${(opp.change1h || 0).toFixed(1)}% (1h)</div>
+                            <div style="text-align: right;">
+                                <div style="font-weight: 700; color: ${opp.change24h >= 0 ? '#00ff88' : '#ff4757'};">${opp.change24h >= 0 ? '+' : ''}${opp.change24h.toFixed(2)}% (24h)</div>
+                                <div style="color: #8b8b9e; font-size: 0.9em;">${opp.change1h >= 0 ? '+' : ''}${(opp.change1h || 0).toFixed(1)}% (1h)</div>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px;">
@@ -510,21 +502,10 @@
                                 <div style="font-size: 0.8em; color: #8b8b9e;">Whale Buys</div>
                                 <div style="font-weight: 600; ${opp.whaleBuys1h > 0 ? 'color: #00ff88;' : ''}">${opp.whaleBuys1h} / 1h</div>
                             </div>
-                            <div style="background: #252535; padding: 10px; border-radius: 8px;">
-                                <div style="font-size: 0.8em; color: #8b8b9e;">Liquidity</div>
-                                <div style="font-weight: 600;">$${(opp.liquidity / 1000).toFixed(0)}K</div>
-                            </div>
-                            <div style="background: #252535; padding: 10px; border-radius: 8px;">
-                                <div style="font-size: 0.8em; color: #8b8b9e;">Risk</div>
-                                <div style="font-weight: 600; color: ${opp.risk.level === 'LOW' ? '#00ff88' : opp.risk.level === 'MEDIUM' ? '#ffa502' : '#ff4757'};">${opp.risk.level}</div>
-                            </div>
-                        </div>
-                        <div style="font-size: 0.85em; color: #8b8b9e; margin-bottom: 15px; padding-left: 15px; border-left: 2px solid #444;">
-                            ${opp.reasons.map(r => `• ${r}`).join('<br>') || 'ℹ️ No strong signals'}
                         </div>
                         <div style="display: flex; gap: 10px;">
                             <button class="btn btn-success" onclick="copyBuyCommand('${opp.symbol}', '${opp.address}')">📋 Copy Buy</button>
-                            <button class="btn btn-secondary" onclick="window.open('https://dexscreener.com/solana/${opp.address}', '_blank')">📈 DexScreener</button>
+                            <button class="btn btn-secondary" onclick="window.open('https://dexscreener.com/solana/${opp.address}', '_blank')">📈 Chart</button>
                         </div>
                     </div>
                 `;
@@ -532,20 +513,17 @@
         }
 
         function renderDashboard() {
-            // Update metrics
-            const opportunities = TOKENS.map(t => ({ ...t, score: calculateScore(t).score }));
+            const opportunities = TOKENS.map(t => ({ ...t, score: calculateScore(t) }));
             document.getElementById('dashOpps').textContent = opportunities.filter(o => o.score >= 40).length;
             
             const totalWhaleBuys = TOKENS.reduce((sum, t) => sum + t.whaleBuys1h, 0);
             document.getElementById('dashWhaleBuys').textContent = totalWhaleBuys;
 
-            // Top gainer and loser
             const validTokens = TOKENS.filter(t => t.change24h !== 0);
             const sorted = [...validTokens].sort((a, b) => b.change24h - a.change24h);
             document.getElementById('dashTopGainer').textContent = sorted[0]?.symbol || '--';
             document.getElementById('dashTopLoser').textContent = sorted[sorted.length - 1]?.symbol || '--';
 
-            // Top 5 trending
             const top5 = sorted.slice(0, 5);
             const rankEmojis = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
             document.getElementById('trendingTokens').innerHTML = top5.map((t, i) => `
@@ -555,46 +533,17 @@
                         <div style="font-weight: 600;">${t.symbol}</div>
                         <div style="font-size: 0.8em; color: #8b8b9e;">${t.name}</div>
                     </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 700; color: ${t.change24h >= 0 ? '#00ff88' : '#ff4757'};">${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%</div>
-                    </div>
+                    <div style="font-weight: 700; color: ${t.change24h >= 0 ? '#00ff88' : '#ff4757'};">${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%</div>
                 </div>
             `).join('');
 
-            // Recent whale activity
             document.getElementById('recentWhaleActivity').innerHTML = `
                 <table style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Whale</th>
-                            <th>Action</th>
-                            <th>Token</th>
-                            <th>Amount</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Whale</th><th>Action</th><th>Token</th><th>Amount</th><th>Time</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td><strong>SPECIAL1</strong></td>
-                            <td style="color: #00ff88; font-weight: 600;">BUY</td>
-                            <td>PUNCH</td>
-                            <td>5.2 SOL</td>
-                            <td style="color: #8b8b9e;">2 min ago</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fish insider</strong></td>
-                            <td style="color: #00ff88; font-weight: 600;">BUY</td>
-                            <td>Devious</td>
-                            <td>2.1 SOL</td>
-                            <td style="color: #8b8b9e;">5 min ago</td>
-                        </tr>
-                        <tr>
-                            <td><strong>LOBSTAR Whale</strong></td>
-                            <td style="color: #00ff88; font-weight: 600;">BUY</td>
-                            <td>LOBSTAR</td>
-                            <td>8.5 SOL</td>
-                            <td style="color: #8b8b9e;">12 min ago</td>
-                        </tr>
+                        <tr><td><strong>SPECIAL1</strong></td><td style="color: #00ff88; font-weight: 600;">BUY</td><td>PUNCH</td><td>5.2 SOL</td><td style="color: #8b8b9e;">2 min ago</td></tr>
+                        <tr><td><strong>Fish insider</strong></td><td style="color: #00ff88; font-weight: 600;">BUY</td><td>Devious</td><td>2.1 SOL</td><td style="color: #8b8b9e;">5 min ago</td></tr>
+                        <tr><td><strong>LOBSTAR Whale</strong></td><td style="color: #00ff88; font-weight: 600;">BUY</td><td>LOBSTAR</td><td>8.5 SOL</td><td style="color: #8b8b9e;">12 min ago</td></tr>
                     </tbody>
                 </table>
             `;
@@ -647,7 +596,6 @@
                 `;
             }).join('');
 
-            // Render chart
             if (!portfolioChart) {
                 const ctx = document.getElementById('portfolioChart');
                 if (ctx) {
@@ -677,8 +625,7 @@
         }
 
         function renderWhales() {
-            const grid = document.getElementById('whaleGrid');
-            grid.innerHTML = WHALE_WALLETS.map(w => {
+            document.getElementById('whaleGrid').innerHTML = WHALE_WALLETS.map(w => {
                 const shortAddr = w.address.substring(0, 6) + '...' + w.address.substring(w.address.length - 4);
                 return `
                     <div class="wallet-card" onclick="window.open('https://birdeye.so/profile/${w.address}?chain=solana', '_blank')">
@@ -728,21 +675,12 @@
             document.getElementById('accumulationResults').innerHTML = `
                 <div style="text-align: center; padding: 40px;">
                     <div class="spinner" style="margin: 0 auto 20px;"></div>
-                    <div>Scanning for tokens down >${threshold}% with volume spikes...</div>
+                    <div>Scanning for tokens down >${threshold}%...</div>
                 </div>
             `;
             
             setTimeout(() => {
-                const signals = TOKENS.filter(t => 
-                    t.change24h < -threshold && 
-                    t.liquidity >= minLiq &&
-                    t.volumeSpike > 1.5
-                ).map(t => ({
-                    symbol: t.symbol,
-                    drop: Math.abs(t.change24h).toFixed(1),
-                    volumeSpike: t.volumeSpike.toFixed(1),
-                    liquidity: t.liquidity
-                }));
+                const signals = TOKENS.filter(t => t.change24h < -threshold && t.liquidity >= minLiq && t.volumeSpike > 1.5);
                 
                 document.getElementById('signalCount').textContent = signals.length;
                 
@@ -760,11 +698,9 @@
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
                                     <div style="font-weight: 700; font-size: 1.1em; color: #00ff88;">🎯 ${s.symbol}</div>
-                                    <div style="color: #8b8b9e; font-size: 0.9em; margin-top: 5px;">Down ${s.drop}% • Volume ${s.volumeSpike}x</div>
+                                    <div style="color: #8b8b9e; font-size: 0.9em; margin-top: 5px;">Down ${Math.abs(s.change24h).toFixed(1)}% • Volume ${s.volumeSpike}x</div>
                                 </div>
-                                <div style="text-align: right;">
-                                    <div style="font-family: monospace;">$${(s.liquidity / 1000).toFixed(0)}K liq</div>
-                                </div>
+                                <div style="text-align: right; font-family: monospace;">$${(s.liquidity / 1000).toFixed(0)}K liq</div>
                             </div>
                         </div>
                     `).join('');
@@ -772,12 +708,11 @@
             }, 1500);
         }
 
-        // TRACK TOKEN FEATURE
+        // TRACK TOKEN
         function trackNewToken() {
             const address = document.getElementById('newTokenAddress').value.trim();
             const resultDiv = document.getElementById('trackTokenResult');
             const errorDiv = document.getElementById('trackTokenError');
-            const commandDiv = document.getElementById('trackCommand');
             
             resultDiv.style.display = 'none';
             errorDiv.style.display = 'none';
@@ -789,7 +724,7 @@
             }
             
             if (!/^[A-HJ-NP-Za-km-z1-9]{32,44}$/.test(address)) {
-                errorDiv.textContent = '❌ Invalid Solana address format (should be 32-44 characters)';
+                errorDiv.textContent = '❌ Invalid Solana address format (32-44 characters)';
                 errorDiv.style.display = 'block';
                 return;
             }
@@ -802,10 +737,9 @@
             }
             
             const command = `Add token to tracker: ${address}`;
-            commandDiv.textContent = command;
+            document.getElementById('trackCommand').textContent = command;
             resultDiv.style.display = 'block';
             
-            // Auto-copy
             navigator.clipboard.writeText(command).then(() => {
                 addAlert('Token Ready', `Command copied for ${address.substring(0, 15)}...`);
             });
@@ -853,7 +787,6 @@
                             <div style="font-size: 0.85em; color: #8b8b9e;">2 hours old • $45K MC • 120 holders</div>
                             <div style="margin-top: 10px; font-size: 0.8em; color: #00d9ff;">📊 Medium risk - Growing fast</div>
                         </div>
-                        
                         <div class="card" style="margin: 0; opacity: 0.7;">
                             <div style="font-weight: 700; color: #8b8b9e; margin-bottom: 5px;">🆕 GARBAGE</div>
                             <div style="font-size: 0.85em; color: #8b8b9e;">6 hours old • $8K MC • 23 holders</div>
@@ -869,19 +802,13 @@
             const time = new Date().toLocaleTimeString();
             alerts.unshift({ title, message, time });
             
-            const list = document.getElementById('alertsList');
-            list.innerHTML = alerts.map(a => `
+            document.getElementById('alertsList').innerHTML = alerts.map(a => `
                 <div style="background: rgba(255,255,255,0.03); border-left: 3px solid #00d9ff; padding: 15px; margin-bottom: 10px; border-radius: 8px;">
                     <div style="font-weight: 600;">${a.title}</div>
                     <div style="color: #8b8b9e; font-size: 0.9em; margin-top: 5px;">${a.message}</div>
                     <div style="color: #8b8b9e; font-size: 0.75em; margin-top: 5px;">${a.time}</div>
                 </div>
             `).join('');
-            
-            // Show banner for important alerts
-            if (title.includes('Strong Buy') || title.includes('Alert')) {
-                document.getElementById('mainAlert').classList.add('active');
-            }
         }
 
         function clearAlerts() {
@@ -889,17 +816,15 @@
             document.getElementById('alertsList').innerHTML = '<div style="text-align: center; padding: 40px; color: #8b8b9e;">No alerts yet</div>';
         }
 
-        // EXPORT FUNCTIONS
+        // EXPORT
         function copyBuyCommand(symbol, address) {
-            const command = `Buy ${symbol} - Contract: ${address}`;
-            navigator.clipboard.writeText(command);
+            navigator.clipboard.writeText(`Buy ${symbol} - Contract: ${address}`);
             addAlert('Copied', `Buy command for ${symbol} copied`);
         }
 
         function exportPortfolio() {
             const csv = 'Symbol,1h,12h,24h,1W,Liquidity,MarketCap\n' + 
                 TOKENS.map(t => `${t.symbol},${t.change1h || 0}%,${t.change12h || 0}%,${t.change24h}%,${t.change7d || 0}%,${t.liquidity},${t.marketCap}`).join('\n');
-            
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -909,10 +834,9 @@
         }
 
         function exportOpportunities() {
-            const opportunities = TOKENS.map(t => ({ ...t, score: calculateScore(t).score }));
+            const opportunities = TOKENS.map(t => ({ ...t, score: calculateScore(t) }));
             const csv = 'Symbol,Score,24hChange,Risk\n' + 
                 opportunities.sort((a, b) => b.score - a.score).map(o => `${o.symbol},${o.score},${o.change24h}%,${getRisk(o).level}`).join('\n');
-            
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -922,13 +846,7 @@
         }
 
         function exportAllData() {
-            const data = {
-                tokens: TOKENS,
-                whales: WHALE_WALLETS,
-                opportunities: TOKENS.map(t => ({ symbol: t.symbol, score: calculateScore(t).score })),
-                exported: new Date().toISOString()
-            };
-            
+            const data = { tokens: TOKENS, whales: WHALE_WALLETS, exported: new Date().toISOString() };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -941,7 +859,13 @@
             addAlert('Filter Applied', `Showing ${filter} whales`);
         }
 
-        // INITIALIZE
+        function refreshPortfolio() {
+            currentSort = { column: null, direction: 'desc' };
+            renderPortfolio();
+            addAlert('Portfolio Updated', 'Data refreshed');
+        }
+
+        // INIT
         setTimeout(() => {
             document.getElementById('loadingScreen').classList.add('hidden');
             renderOpportunities();
