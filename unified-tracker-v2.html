@@ -86,7 +86,8 @@
                 <thead>
                     <tr>
                         <th onclick="sortTable('symbol')">Token ↕</th>
-                        <th onclick="sortTable('price')">Price ↕</th>
+                        <th onclick="sortTable('change1h')">1h Change ↕</th>
+                        <th onclick="sortTable('change12h')">12h Change ↕</th>
                         <th onclick="sortTable('change24h')">24h Change ↕</th>
                         <th onclick="sortTable('liquidity')">Liquidity ↕</th>
                         <th onclick="sortTable('marketCap')">Market Cap ↕</th>
@@ -109,16 +110,16 @@
     <script>
         // Token Data with addresses for DexScreener links
         const TOKENS = [
-            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0.01483, change24h: 21.18, liquidity: 743000, marketCap: 14890000, volumeSpike: 1.5, whaleBuys1h: 3 },
-            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0.0006677, change24h: 0.96, liquidity: 118000, marketCap: 670000, volumeSpike: 0.8, whaleBuys1h: 0 },
-            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0.00008203, change24h: 6.29, liquidity: 25000, marketCap: 82000, volumeSpike: 2.8, whaleBuys1h: 1 },
-            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0.00213, change24h: 15.63, liquidity: 191000, marketCap: 2130000, volumeSpike: 1.2, whaleBuys1h: 2 },
-            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0.001783, change24h: -0.36, liquidity: 154000, marketCap: 1783000, volumeSpike: 0.9, whaleBuys1h: 0 },
-            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0.0002533, change24h: 5.87, liquidity: 56000, marketCap: 253000, volumeSpike: 1.1, whaleBuys1h: 1 },
-            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0.000214, change24h: -17.14, liquidity: 42000, marketCap: 214000, volumeSpike: 0.6, whaleBuys1h: 0 },
-            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0.0002385, change24h: 19.74, liquidity: 47000, marketCap: 238000, volumeSpike: 1.8, whaleBuys1h: 2 },
-            { symbol: 'MAX', name: 'maxxing', address: '32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump', price: 0.002135, change24h: 1.96, liquidity: 199000, marketCap: 2200000, volumeSpike: 1.0, whaleBuys1h: 1 },
-            { symbol: 'LOBSTAR', name: 'Lobstar', address: '4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump', price: 0.006922, change24h: 23.03, liquidity: 457000, marketCap: 6922000, volumeSpike: 2.1, whaleBuys1h: 3 }
+            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', change1h: 0.94, change12h: 11.06, change24h: 21.18, liquidity: 743000, marketCap: 14890000, volumeSpike: 1.5, whaleBuys1h: 3 },
+            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', change1h: -9.41, change12h: -4.22, change24h: 0.96, liquidity: 118000, marketCap: 670000, volumeSpike: 0.8, whaleBuys1h: 0 },
+            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', change1h: 14.63, change12h: 10.46, change24h: 6.29, liquidity: 25000, marketCap: 82000, volumeSpike: 2.8, whaleBuys1h: 1 },
+            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', change1h: 3.12, change12h: 9.38, change24h: 15.63, liquidity: 191000, marketCap: 2130000, volumeSpike: 1.2, whaleBuys1h: 2 },
+            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', change1h: -1.58, change12h: -0.97, change24h: -0.36, liquidity: 154000, marketCap: 1783000, volumeSpike: 0.9, whaleBuys1h: 0 },
+            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', change1h: 9.56, change12h: 7.72, change24h: 5.87, liquidity: 56000, marketCap: 253000, volumeSpike: 1.1, whaleBuys1h: 1 },
+            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', change1h: 0.97, change12h: -8.08, change24h: -17.14, liquidity: 42000, marketCap: 214000, volumeSpike: 0.6, whaleBuys1h: 0 },
+            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', change1h: -5.21, change12h: 7.27, change24h: 19.74, liquidity: 47000, marketCap: 238000, volumeSpike: 1.8, whaleBuys1h: 2 },
+            { symbol: 'MAX', name: 'maxxing', address: '32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump', change1h: 4.3, change12h: 3.13, change24h: 1.96, liquidity: 199000, marketCap: 2200000, volumeSpike: 1.0, whaleBuys1h: 1 },
+            { symbol: 'LOBSTAR', name: 'Lobstar', address: '4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump', change1h: 0, change12h: 11.52, change24h: 23.03, liquidity: 457000, marketCap: 6922000, volumeSpike: 2.1, whaleBuys1h: 3 }
         ];
 
         let currentSort = { column: null, direction: 'desc' };
@@ -162,7 +163,7 @@
                 ...t,
                 score: calculateScore(t),
                 risk: getRisk(t),
-                targetPrice: t.price * (t.change24h < -20 ? 1.35 : 1.20)
+                targetPrice: 0.0001 * (t.change24h < -20 ? 1.35 : 1.20) // Simplified target
             })).sort((a, b) => b.score - a.score);
 
             document.getElementById('activeTokens').textContent = TOKENS.length;
@@ -185,8 +186,8 @@
                                 <div style="color: #8b8b9e; font-size: 0.9em;">${opp.name}</div>
                             </div>
                             <div style="margin-left: auto; text-align: right;">
-                                <div style="font-family: monospace; font-size: 1.1em; font-weight: 600;">$${opp.price.toFixed(opp.price < 0.001 ? 6 : 4)}</div>
-                                <div class="${opp.change24h >= 0 ? 'positive' : 'negative'}">${opp.change24h >= 0 ? '+' : ''}${opp.change24h.toFixed(2)}%</div>
+                                <div class="${opp.change24h >= 0 ? 'positive' : 'negative'}" style="font-size: 1.2em;">${opp.change24h >= 0 ? '+' : ''}${opp.change24h.toFixed(2)}% (24h)</div>
+                                <div style="color: #8b8b9e; font-size: 0.85em;">${opp.change1h > 0 ? '+' : ''}${(opp.change1h || 0).toFixed(2)}% (1h)</div>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px;">
@@ -199,23 +200,9 @@
                                 <div style="font-weight: 600; ${opp.whaleBuys1h > 0 ? 'color: #00ff88;' : ''}">${opp.whaleBuys1h}</div>
                             </div>
                         </div>
-                        <div style="background: #252535; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span style="color: #8b8b9e;">Buy Price</span>
-                                <span style="font-family: monospace; font-weight: 600;">$${opp.price.toFixed(opp.price < 0.001 ? 6 : 4)}</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span style="color: #8b8b9e;">Target Sell</span>
-                                <span style="font-family: monospace; font-weight: 600; color: #00d9ff;">$${opp.targetPrice.toFixed(opp.targetPrice < 0.001 ? 6 : 4)}</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; border-top: 1px solid #444; padding-top: 8px;">
-                                <span style="color: #8b8b9e;">Risk Level</span>
-                                <span class="risk-${opp.risk.toLowerCase()}">${opp.risk}</span>
-                            </div>
-                        </div>
                         <div style="display: flex; gap: 10px;">
                             <button class="btn btn-success" onclick="alert('Buy command copied for ${opp.symbol}')">📋 Copy Buy</button>
-                            <button class="btn btn-secondary" onclick="window.open('https://dexscreener.com/solana/${opp.symbol.toLowerCase()}', '_blank')">📈 Chart</button>
+                            <button class="btn btn-secondary" onclick="window.open('https://dexscreener.com/solana/${opp.address}', '_blank')">📈 Chart</button>
                         </div>
                     </div>
                 `;
@@ -231,7 +218,8 @@
                     let valA, valB;
                     switch(currentSort.column) {
                         case 'symbol': valA = a.symbol.toLowerCase(); valB = b.symbol.toLowerCase(); break;
-                        case 'price': valA = a.price; valB = b.price; break;
+                        case 'change1h': valA = a.change1h || 0; valB = b.change1h || 0; break;
+                        case 'change12h': valA = a.change12h || 0; valB = b.change12h || 0; break;
                         case 'change24h': valA = a.change24h; valB = b.change24h; break;
                         case 'liquidity': valA = a.liquidity; valB = b.liquidity; break;
                         case 'marketCap': valA = a.marketCap; valB = b.marketCap; break;
@@ -257,7 +245,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td style="font-family: monospace;">$${t.price.toFixed(t.price < 0.001 ? 6 : 4)}</td>
+                        <td class="${(t.change1h || 0) >= 0 ? 'positive' : 'negative'}">${(t.change1h || 0) >= 0 ? '+' : ''}${(t.change1h || 0).toFixed(2)}%</td>
+                        <td class="${(t.change12h || 0) >= 0 ? 'positive' : 'negative'}">${(t.change12h || 0) >= 0 ? '+' : ''}${(t.change12h || 0).toFixed(2)}%</td>
                         <td class="${t.change24h >= 0 ? 'positive' : 'negative'}">${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%</td>
                         <td>$${(t.liquidity / 1000).toFixed(0)}K</td>
                         <td>$${(t.marketCap / 1000000).toFixed(2)}M</td>
