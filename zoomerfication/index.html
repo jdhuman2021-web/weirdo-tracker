@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$Zoomerfication - The Meme Coin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Outfit:wght@400;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 4rem;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .ticker {
+            font-size: 2rem;
+            color: #feca57;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+        
+        .mascot {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            background: #ff9ff3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            animation: bounce 1s ease infinite;
+            box-shadow: 0 0 50px #ff9ff380;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #48dbfb;
+            margin: 30px 0;
+            line-height: 1.6;
+        }
+        
+        .slang-box {
+            background: #2d3436;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #feca57;
+        }
+        
+        .slang-box h2 {
+            color: #feca57;
+            margin-bottom: 20px;
+        }
+        
+        .slang {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .slang-word {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            animation: pulse 2s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .price-box {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        
+        .price-change {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+        
+        .what-is {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .what-is h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .what-is p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+        
+        .cta:hover {
+            transform: scale(1.1);
+        }
+        
+        footer {
+            margin-top: 50px;
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+        
+        .vibe-meter {
+            margin: 30px 0;
+        }
+        
+        .vibe-meter h3 {
+            color: #ff9ff3;
+            margin-bottom: 10px;
+        }
+        
+        .meter {
+            background: #2d3436;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .meter-fill {
+            background: linear-gradient(90deg, #00ff87, #60efff);
+            height: 100%;
+            width: 42069%;
+            animation: slide 2s ease-out;
+        }
+        
+        @keyframes slide {
+            from { width: 0%; }
+            to { width: 99%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mascot">🌱</div>
+        
+        <h1>Zoomerfication</h1>
+        <div class="ticker">$ZOOMERFICATION</div>
+        
+        <p class="tagline">
+            Finna change the game no cap 🧢<br>
+            This coin is bussin fr fr 🔥
+        </p>
+        
+        <div class="vibe-meter">
+            <h3>Vibe Check 🔥</h3>
+            <div class="meter">
+                <div class="meter-fill"></div>
+            </div>
+        </div>
+        
+        <div class="what-is">
+            <h2>Wait, Wait, Wait... What is This?</h2>
+            <p>
+                Zoomerfication is what happens when you give historical figures, movie characters, 
+                and basically ANYONE a <strong>Zoomer Perm</strong> (the broccoli haircut) and make them 
+                speak pure Gen Z slang. Deadass. No cap. It's a whole vibe. 💀
+            </p>
+        </div>
+        
+        <div class="slang-box">
+            <h2>Our Core Values 🔑</h2>
+            <div class="slang">
+                <span class="slang-word">no cap</span>
+                <span class="slang-word">fr fr</span>
+                <span class="slang-word">bussin</span>
+                <span class="slang-word">sheeeesh</span>
+                <span class="slang-word">let's gooo</span>
+                <span class="slang-word">deadass</span>
+                <span class="slang-word">rn</span>
+                <span class="slang-word">slay</span>
+                <span class="slang-word"> vibes</span>
+                <span class="slang-word">lowkey</span>
+                <span class="slang-word">highkey</span>
+                <span class="slang-word">GOAT</span>
+            </div>
+        </div>
+        
+        <div class="price-box">
+            <div class="price">$0.00000001</div>
+            <div class="price-change">📈 +42069% today (no cap)</div>
+        </div>
+        
+        <button class="cta" onclick="alert('SYKE! This is a meme coin! 🚀')">
+            Buy Now (if you vibe with it)
+        </button>
+        
+        <p style="margin-top: 20px; color: #888;">
+            Contract: Coming when we figure out Solana (or whatever chain is bussin rn)
+        </p>
+        
+        <footer>
+            <p>Not financial advice. This is a joke. Don't take this seriously.</p>
+            <p>Made with 💀 and zero brain cells</p>
+            <p>© 2026 Zoomerfication — let's gooo 🌊</p>
+        </footer>
+    </div>
+</body>
+</html>

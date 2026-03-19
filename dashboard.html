@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weirdo Portfolio Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            border: 1px solid #2a2a4a;
+        }
+        .header h1 { 
+            font-size: 28px; 
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .header p { color: #888; font-size: 14px; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #2a2a4a;
+        }
+        .stat-card .value { font-size: 24px; font-weight: bold; color: #4ade80; }
+        .stat-card .label { font-size: 12px; color: #888; margin-top: 5px; }
+        
+        .filters-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: #4ade80; color: #4ade80; }
+        .filter-btn.active { background: #4ade80; color: #000; border-color: #4ade80; }
+        
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+        
+        .token-card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #2a2a4a;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .token-card:hover { transform: translateY(-2px); border-color: #4ade80; }
+        .token-card.failed { opacity: 0.5; }
+        
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .token-name { font-size: 18px; font-weight: bold; color: #fff; }
+        .token-symbol { 
+            background: #4ade80; 
+            color: #000; 
+            padding: 3px 10px; 
+            border-radius: 12px; 
+            font-size: 12px; 
+            font-weight: bold;
+        }
+        .token-source { font-size: 11px; color: #666; margin-top: 4px; }
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .token-metric { text-align: center; }
+        .token-metric .value { font-size: 16px; font-weight: 600; color: #fff; }
+        .token-metric .label { font-size: 11px; color: #666; }
+        
+        .price-change {
+            text-align: center;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .price-change.positive { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+        .price-change.negative { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        
+        .narrative {
+            font-size: 12px;
+            color: #888;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #2a2a4a;
+            line-height: 1.5;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status-badge.active { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .status-badge.failed { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        
+        .alert-box {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid #4ade80;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #4ade80;
+        }
+        
+        @media (max-width: 600px) {
+            .tokens-grid { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🪙 Weirdo Portfolio</h1>
+        <p>Last updated: March 17, 2026</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <div class="value">10</div>
+            <div class="label">Total Tokens</div>
+        </div>
+        <div class="stat-card">
+            <div class="value">$19.6M</div>
+            <div class="label">Total Market Cap</div>
+        </div>
+        <div class="stat-card">
+            <div class="value">$4.8M</div>
+            <div class="label">24h Volume</div>
+        </div>
+        <div class="stat-card">
+            <div class="value">44.2K</div>
+            <div class="label">Total Holders</div>
+        </div>
+    </div>
+    
+    <div class="filters-bar">
+        <button class="filter-btn active" onclick="filterTokens('all')">All</button>
+        <button class="filter-btn" onclick="filterTokens('active')">Active</button>
+        <button class="filter-btn" onclick="filterTokens('alerts')">With Alerts</button>
+    </div>
+    
+    <div class="tokens-grid" id="tokensGrid"></div>
+    
+    <script>
+        const tokens = [
+            {
+                symbol: "PUNCH",
+                name: "パンチ",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 18530000,
+                liquidity: 627255,
+                volume_24h: 1274232,
+                price_change_24h: 92.64,
+                price_change_1h: 5.95,
+                holders: 24300,
+                age_days: 28,
+                narrative: "Japanese meme, went viral",
+                alert: "🚀 PUMP +92.64% in 24h!"
+            },
+            {
+                symbol: "JUICE",
+                name: "JUICE",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 1941122,
+                liquidity: 169518,
+                volume_24h: 12792,
+                price_change_24h: -6.99,
+                price_change_1h: 0.35,
+                holders: 1400,
+                age_days: 55,
+                narrative: "31x pump, strong holder growth"
+            },
+            {
+                symbol: "HODL",
+                name: "HODL",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 1973605,
+                liquidity: 183941,
+                volume_24h: 109804,
+                price_change_24h: -9.01,
+                price_change_1h: -0.64,
+                holders: 2900,
+                age_days: 14,
+                narrative: "Classic crypto meme, 34x pump"
+            },
+            {
+                symbol: "JELLYBEAN",
+                name: "Jellybean",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 842000,
+                liquidity: 67200,
+                volume_24h: 543000,
+                price_change_24h: 64.39,
+                price_change_1h: 5.3,
+                holders: 6100,
+                age_days: 33,
+                narrative: "Peaked at 7.9M, retraced 89%, recovery play",
+                alert: "🚀 +64.39% in 24h!"
+            },
+            {
+                symbol: "BULK",
+                name: "bulk",
+                source: "Rick",
+                status: "active",
+                market_cap: 350000,
+                liquidity: 27700,
+                volume_24h: 60100,
+                price_change_24h: -0.5,
+                price_change_1h: 0,
+                holders: 445,
+                age_days: 112,
+                narrative: "Has website + Twitter"
+            },
+            {
+                symbol: "PIZZA",
+                name: "Bitcoin Pizza",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 163077,
+                liquidity: 46067,
+                volume_24h: 38910,
+                price_change_24h: -10.11,
+                price_change_1h: 7.09,
+                holders: 2800,
+                age_days: 12,
+                narrative: "Bitcoin Pizza Day meme"
+            },
+            {
+                symbol: "DEVP",
+                name: "Devious MF",
+                source: "Rick",
+                status: "active",
+                market_cap: 88056,
+                liquidity: 25292,
+                volume_24h: 532568,
+                price_change_24h: 127,
+                price_change_1h: -2.14,
+                holders: 483,
+                age_days: 0.54,
+                narrative: "Fresh token, strong early momentum"
+            },
+            {
+                symbol: "UNSW",
+                name: "Dog Cancer Cure",
+                source: "Rick",
+                status: "active",
+                market_cap: 34175,
+                liquidity: 15123,
+                volume_24h: 166704,
+                price_change_24h: -13.8,
+                price_change_1h: 12.13,
+                holders: 225,
+                age_days: 0.5,
+                narrative: "Dog meme"
+            },
+            {
+                symbol: "BLUECOLLAR",
+                name: "Blue Collar",
+                source: "Weirdo",
+                status: "active",
+                market_cap: 53000,
+                liquidity: 11400,
+                volume_24h: 91700,
+                price_change_24h: -49.65,
+                price_change_1h: -7.0,
+                holders: 444,
+                age_days: 0.015,
+                narrative: "Trending #3 on Pump",
+                alert: "⚠️ Down 49.65%"
+            },
+            {
+                symbol: "HAMSTER",
+                name: "Hamster",
+                source: "Weirdo",
+                status: "failed",
+                market_cap: 8155,
+                liquidity: 8040,
+                volume_24h: 106874,
+                price_change_24h: -90.72,
+                price_change_1h: 0,
+                holders: 492,
+                age_days: 1,
+                narrative: "Crashed 91%",
+                alert: "💀 FAILED"
+            }
+        ];
+        
+        function formatNum(n) {
+            if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+            if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+            return n.toString();
+        }
+        
+        function formatAge(days) {
+            if (days < 1) return Math.round(days*24) + 'h';
+            if (days < 30) return Math.round(days) + 'd';
+            return Math.round(days/30) + 'mo';
+        }
+        
+        function renderTokens(filter = 'all') {
+            const grid = document.getElementById('tokensGrid');
+            let filtered = tokens;
+            
+            if (filter === 'active') filtered = tokens.filter(t => t.status === 'active');
+            if (filter === 'alerts') filtered = tokens.filter(t => t.alert);
+            
+            grid.innerHTML = filtered.map(t => `
+                <div class="token-card ${t.status}">
+                    <div class="token-header">
+                        <div>
+                            <div class="token-name">${t.name}</div>
+                            <div class="token-source">${t.source} • ${formatAge(t.age_days)} old</div>
+                        </div>
+                        <span class="status-badge ${t.status}">${t.status.toUpperCase()}</span>
+                    </div>
+                    
+                    <div class="token-grid">
+                        <div class="token-metric">
+                            <div class="value">$${formatNum(t.market_cap)}</div>
+                            <div class="label">Market Cap</div>
+                        </div>
+                        <div class="token-metric">
+                            <div class="value">$${formatNum(t.liquidity)}</div>
+                            <div class="label">Liquidity</div>
+                        </div>
+                        <div class="token-metric">
+                            <div class="value">$${formatNum(t.volume_24h)}</div>
+                            <div class="label">24h Volume</div>
+                        </div>
+                        <div class="token-metric">
+                            <div class="value">${formatNum(t.holders)}</div>
+                            <div class="label">Holders</div>
+                        </div>
+                    </div>
+                    
+                    <div class="price-change ${t.price_change_24h >= 0 ? 'positive' : 'negative'}">
+                        ${t.price_change_24h >= 0 ? '▲' : '▼'} ${Math.abs(t.price_change_24h).toFixed(1)}% (24h)
+                    </div>
+                    
+                    ${t.alert ? `<div class="alert-box">${t.alert}</div>` : ''}
+                    
+                    <div class="narrative">${t.narrative}</div>
+                </div>
+            `).join('');
+        }
+        
+        function filterTokens(type) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTokens(type);
+        }
+        
+        renderTokens();
+    </script>
+</body>
+</html>

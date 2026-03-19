@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Own AI Assistant | OpenClaw Setup £300</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,0,110,0.1) 0%, transparent 50%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #ff006e 50%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(255,0,110,0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #0a0a0f;
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,255,255,0.3);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #ff006e;
+        }
+
+        .cta-secondary:hover {
+            background: #ff006e;
+        }
+
+        /* What You Get Section */
+        .features {
+            padding: 100px 20px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 60px;
+            color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff006e;
+            box-shadow: 0 20px 40px rgba(255,0,110,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #a0a0a0;
+            font-size: 1rem;
+        }
+
+        /* How It Works */
+        .process {
+            padding: 100px 20px;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(255,0,110,0.4);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: #a0a0a0;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 20px;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .faq-item {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .faq-answer {
+            padding: 0 30px 25px;
+            color: #a0a0a0;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .contact-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .contact-button:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #ff006e;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-button {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Unlock the Ultimate Power of AI</h1>
+            <p class="hero-subtitle">Get your own personal AI assistant that works 24/7. I set up OpenClaw for you — fully configured, custom skills, and ready to supercharge your life.</p>
+            <div class="price-tag">£300</div>
+            <div>
+                <a href="#contact" class="cta-button">Book Your Setup</a>
+                <a href="#features" class="cta-button cta-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Get -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">What You Get</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Full Installation</h3>
+                    <p>Complete OpenClaw setup on your system. I handle all the technical stuff so you don't have to.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Custom Skills</h3>
+                    <p>Tailored automations for your needs — crypto tracking, job alerts, research, or whatever you want.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Platform Integration</h3>
+                    <p>Connect Telegram, Discord, WhatsApp, email — your AI assistant lives where you do.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Training & Onboarding</h3>
+                    <p>I'll show you how to use it, create new skills, and get the most out of your AI.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Ongoing Support</h3>
+                    <p>Questions after setup? I've got you covered. Support included.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Your data stays on your machine. No cloud. No subscriptions. Full control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Book a Call</h3>
+                    <p>DM me on Telegram or email. We'll discuss what you need and how OpenClaw can help.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>I Build It</h3>
+                    <p>Remote or in-person (London). I install, configure, and create custom skills for you.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>You Rule</h3>
+                    <p>Your AI assistant is live. I'll train you on how to use it and create new automations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    What is OpenClaw?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    OpenClaw is an open-source AI assistant platform. Unlike ChatGPT or Claude, it runs on YOUR computer, connects to YOUR apps (Telegram, Discord, etc.), and can be customized with skills for anything you need.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    Do I need technical knowledge?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Nope! That's why you hire me. I handle all the technical setup. You just tell me what you want your AI to do, and I make it happen.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    What's included in the £300?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Everything: OpenClaw installation, configuration, up to 3 custom skills, platform integration (Telegram/Discord/WhatsApp), training session, and 30 days of support. No hidden fees.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    Can you do remote setup?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! Most setups are done remotely via screen sharing. If you're in London, I can also do in-person. Either way works.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    What can my AI assistant do?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Almost anything: track crypto prices, monitor job boards, manage your calendar, send reminders, research topics, automate messages, and way more. If you can describe it, we can probably automate it.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    Is my data safe?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely. OpenClaw runs locally on your machine. Your data never leaves your computer unless you explicitly set it up that way. You're in full control.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Ready to Get Started?</h2>
+            <p style="color: #a0a0a0; font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Book a free 15-minute call to discuss your needs. No commitment required.</p>
+            
+            <div class="contact-options">
+                <a href="https://t.me/hotelindia80" class="contact-button" target="_blank">
+                    <span>📱</span> DM on Telegram
+                </a>
+                <a href="mailto:your@email.com" class="contact-button">
+                    <span>✉️</span> Send Email
+                </a>
+                <a href="#" class="contact-button" onclick="alert('Payment link coming soon!'); return false;">
+                    <span>💳</span> Pay £300 Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 OpenClaw Setup Service. Not affiliated with OpenClaw project.</p>
+        </div>
+    </footer>
+</body>
+</html>

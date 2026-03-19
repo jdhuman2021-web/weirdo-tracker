@@ -1,0 +1,46 @@
+{
+  "tracked_contracts": [
+    {
+      "address": "CXjctbA7ENQgZf1FnMLJJUGKp92gAJdMcyEhXeZppump",
+      "symbol": "HAMSTER",
+      "name": "Hamster",
+      "added_at": "2026-03-16T15:18:00Z",
+      "source": "Rick Telegram group",
+      "initial_data": {
+        "price_usd": 0.0001605,
+        "market_cap": 160000,
+        "fdv": 486000,
+        "liquidity": 17000,
+        "volume_24h": 366000,
+        "age_days": 1,
+        "holders": 492,
+        "fresh_wallets_1d": 4,
+        "fresh_wallets_7d": 11
+      }
+    },
+    {
+      "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
+      "symbol": "PUNCH",
+      "name": "パンチ",
+      "added_at": "2026-03-16T15:20:00Z",
+      "source": "Rick Telegram group",
+      "initial_data": {
+        "price_usd": 0.011,
+        "market_cap": 11000000,
+        "fdv": 49500000,
+        "liquidity": 293000,
+        "volume_24h": 1900000,
+        "age_days": 28,
+        "holders": 24300,
+        "fresh_wallets_1d": 2,
+        "fresh_wallets_7d": 7
+      }
+    }
+  ],
+  "tracked_wallets": [],
+  "alert_thresholds": {
+    "price_change_1h": 20,
+    "volume_spike": 2.0,
+    "holder_growth": 10
+  }
+}
