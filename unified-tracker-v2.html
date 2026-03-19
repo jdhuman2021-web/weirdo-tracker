@@ -1019,7 +1019,7 @@
                             <th class="sortable" onclick="sortPortfolio('change1h')">1h Change <span class="sort-indicator">⇅</span></th>
                             <th class="sortable" onclick="sortPortfolio('liquidity')">Liquidity <span class="sort-indicator">⇅</span></th>
                             <th class="sortable" onclick="sortPortfolio('marketCap')">Market Cap <span class="sort-indicator">⇅</span></th>
-                            <th>Status</th>
+                            <th class="sortable" onclick="sortPortfolio('status')">Status <span class="sort-indicator">⇅</span></th>
                         </tr>
                     </thead>
                     <tbody id="portfolioTableBody">
@@ -1590,9 +1590,105 @@
             `).join('');
         }
 
+        // Portfolio Sorting State
+        let portfolioSort = { column: null, direction: 'desc' };
+        let portfolioTokens = [...TOKENS]; // Copy for sorting
+
+        function getStatusValue(token) {
+            // Returns numeric value for status sorting: Hot (3) > Stable (2) > Cold (1)
+            if (token.change24h > 10) return 3; // Hot
+            if (token.change24h < -10) return 1; // Cold
+            return 2; // Stable
+        }
+
+        function getStatusLabel(token) {
+            const val = getStatusValue(token);
+            if (val === 3) return '🔥 Hot';
+            if (val === 1) return '❄️ Cold';
+            return '➡️ Stable';
+        }
+
+        function sortPortfolio(column) {
+            if (portfolioSort.column === column) {
+                // Toggle direction
+                portfolioSort.direction = portfolioSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                // New column
+                portfolioSort.column = column;
+                // Default: desc for numbers, asc for text, desc for status (Hot first)
+                portfolioSort.direction = column === 'symbol' ? 'asc' : 'desc';
+            }
+
+            // Apply sorting
+            portfolioTokens.sort((a, b) => {
+                let valA, valB;
+                
+                switch(column) {
+                    case 'symbol':
+                        valA = a.symbol.toLowerCase();
+                        valB = b.symbol.toLowerCase();
+                        break;
+                    case 'price':
+                        valA = a.price;
+                        valB = b.price;
+                        break;
+                    case 'change12h':
+                        valA = a.change12h || 0;
+                        valB = b.change12h || 0;
+                        break;
+                    case 'change24h':
+                        valA = a.change24h;
+                        valB = b.change24h;
+                        break;
+                    case 'change1h':
+                        valA = a.change1h;
+                        valB = b.change1h;
+                        break;
+                    case 'liquidity':
+                        valA = a.liquidity;
+                        valB = b.liquidity;
+                        break;
+                    case 'marketCap':
+                        valA = a.marketCap || 0;
+                        valB = b.marketCap || 0;
+                        break;
+                    case 'status':
+                        valA = getStatusValue(a);
+                        valB = getStatusValue(b);
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (typeof valA === 'string') {
+                    return portfolioSort.direction === 'asc' 
+                        ? valA.localeCompare(valB) 
+                        : valB.localeCompare(valA);
+                }
+                
+                return portfolioSort.direction === 'asc' ? valA - valB : valB - valA;
+            });
+
+            renderPortfolio();
+            updateSortIndicators();
+        }
+
+        function updateSortIndicators() {
+            document.querySelectorAll('#portfolioTable th.sortable').forEach(th => {
+                th.classList.remove('asc', 'desc');
+                const onclickAttr = th.getAttribute('onclick');
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/sortPortfolio\('(.+?)'\)/);
+                    if (match && match[1] === portfolioSort.column) {
+                        th.classList.add(portfolioSort.direction);
+                    }
+                }
+            });
+        }
+
         function renderPortfolio() {
             const tbody = document.getElementById('portfolioTableBody');
-            tbody.innerHTML = TOKENS.map(token => `
+            tbody.innerHTML = portfolioTokens.map(token => `
                 <tr>
                     <td>
                         <div style="display: flex; align-items: center; gap: 12px;">
@@ -1609,7 +1705,7 @@
                     <td><span style="color: ${token.change1h >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 600;">${token.change1h >= 0 ? '+' : ''}${token.change1h.toFixed(2)}%</span></td>
                     <td style="color: var(--text-secondary);">$${(token.liquidity / 1000).toFixed(0)}K</td>
                     <td style="font-family: 'JetBrains Mono', monospace; color: var(--text-secondary);">$${(token.marketCap / 1000000).toFixed(2)}M</td>
-                    <td>${token.change24h > 10 ? '🔥 Hot' : token.change24h < -10 ? '❄️ Cold' : '➡️ Stable'}</td>
+                    <td>${getStatusLabel(token)}</td>
                 </tr>
             `).join('');
         }
@@ -1723,19 +1819,12 @@
         }
 
         function refreshPortfolio() {
+            // Reset to original order
+            portfolioTokens = [...TOKENS];
+            portfolioSort = { column: null, direction: 'desc' };
             renderPortfolio();
+            updateSortIndicators();
             addAlert('Portfolio Updated', 'Latest prices loaded');
-        }
-
-        function sortPortfolio(column) {
-            // Simplified sorting
-            if (portfolioSort.column === column) {
-                portfolioSort.direction = portfolioSort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                portfolioSort.column = column;
-                portfolioSort.direction = 'desc';
-            }
-            renderPortfolio();
         }
 
         function filterWhales(filter) {
