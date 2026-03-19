@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Weirdo Tracker Pro v2 | Auto-Refresh Enabled</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b9e;
+            --accent-cyan: #00d9ff;
+            --accent-green: #00ff88;
+            --accent-red: #ff4757;
+            --accent-orange: #ffa502;
+            --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 2em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.3em;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        /* Refresh Controls */
+        .refresh-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .refresh-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+
+        .refresh-indicator.spinning {
+            animation: pulse 1s infinite;
+        }
+
+        .last-refresh {
+            font-size: 0.75em;
+            color: var(--text-secondary);
+        }
+
+        .global-refresh-btn {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .global-refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
+        }
+
+        .global-refresh-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auto-refresh-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--accent-green);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auto-refresh-toggle:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .auto-refresh-toggle.paused {
+            border-color: var(--accent-red);
+            background: rgba(255, 71, 87, 0.1);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: blink 2s infinite;
+        }
+
+        .auto-refresh-toggle.paused .status-dot {
+            background: var(--accent-red);
+            animation: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            padding: 15px 30px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: rgba(0, 217, 255, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Tab Refresh Button */
+        .tab-refresh-btn {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .tab-refresh-btn:hover {
+            background: rgba(0, 217, 255, 0.2);
+        }
+
+        .tab-refresh-btn.spinning {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; }
+            .refresh-controls { flex-wrap: wrap; justify-content: center; }
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background: linear-gradient(145deg, rgba(0,217,255,0.05) 0%, rgba(0,255,136,0.02) 100%);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-icon { font-size: 1.8em; margin-bottom: 8px; }
+        .metric-value { font-size: 1.8em; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .metric-value.positive { color: var(--accent-green); }
+        .metric-value.negative { color: var(--accent-red); }
+        .metric-label { font-size: 0.8em; color: var(--text-secondary); margin-top: 5px; }
+
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--text-secondary);
+            font-size: 0.8em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95em;
+        }
+        .data-table tr:hover { background: rgba(255,255,255,0.02); }
+
+        .price-change {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+        .price-change.positive { background: rgba(0,255,136,0.15); color: var(--accent-green); }
+        .price-change.negative { background: rgba(255,71,87,0.15); color: var(--accent-red); }
+
+        /* Wallet Grid */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .wallet-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .wallet-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .wallet-name { font-weight: 600; margin-bottom: 5px; }
+        .wallet-address {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            color: var(--text-secondary);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0,217,255,0.1);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        /* Sound Toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            font-size: 1.3em;
+            cursor: pointer;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sound-toggle.muted { border-color: var(--accent-red); }
+
+        /* Next Refresh Timer */
+        .next-refresh {
+            position: fixed;
+            bottom: 30px;
+            right: 90px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            z-index: 99;
+        }
+
+        .next-refresh.active {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <h2>Initializing Weirdo Tracker Pro v2...</h2>
+        <p style="color: var(--text-secondary); margin-top: 10px;">Loading with auto-refresh enabled</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🐋</div>
+                <div class="logo-text">
+                    <h1>Weirdo Tracker Pro v2</h1>
+                    <p>Auto-Refresh Enabled</p>
+                </div>
+            </div>
+            
+            <div class="refresh-controls">
+                <div class="refresh-indicator" id="refreshIndicator">
+                    <span id="refreshIcon">🔄</span>
+                    <span class="last-refresh" id="lastRefreshTime">Never</span>
+                </div>
+                
+                <button class="global-refresh-btn" id="globalRefreshBtn" onclick="refreshAllData()">
+                    <span>🔄</span>
+                    <span>Refresh All</span>
+                </button>
+                
+                <div class="auto-refresh-toggle" id="autoRefreshToggle" onclick="toggleAutoRefresh()">
+                    <div class="status-dot"></div>
+                    <span id="autoRefreshText">Auto: ON (30m)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('dashboard')">
+            📊 Dashboard
+        </button>
+        <button class="nav-tab" onclick="switchTab('portfolio')">
+            💰 Portfolio
+        </button>
+        <button class="nav-tab" onclick="switchTab('accumulation')">
+            🎯 Accumulation
+        </button>
+        <button class="nav-tab" onclick="switchTab('whales')">
+            🐋 Whales
+        </button>
+        <button class="nav-tab" onclick="switchTab('scanner')">
+            🔍 Scanner
+        </button>
+        <button class="nav-tab" onclick="switchTab('alerts')">
+            🚨 Alerts
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Dashboard Tab -->
+        <div class="tab-panel active" id="dashboard-panel">
+            <div class="card-header">
+                <div class="card-title">📊 Dashboard Overview</div>
+                <button class="tab-refresh-btn" id="dashboardRefreshBtn" onclick="refreshDashboard()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+            
+            <div class="grid-4">
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-value positive" id="dashPortfolioChange">--</div>
+                    <div class="metric-label">Portfolio 24h</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💎</div>
+                    <div class="metric-value" id="dashOpportunities">--</div>
+                    <div class="metric-label">Opportunities</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🐋</div>
+                    <div class="metric-value" id="dashWhaleBuys">--</div>
+                    <div class="metric-label">Whale Buys (1h)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🔥</div>
+                    <div class="metric-value" id="dashTopGainer">--</div>
+                    <div class="metric-label">Top Gainer</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Portfolio Performance</div>
+                </div>
+                <div style="height: 300px;">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Tab -->
+        <div class="tab-panel" id="portfolio-panel">
+            <div class="card-header">
+                <div class="card-title">💰 Your Portfolio</div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="tab-refresh-btn" id="portfolioRefreshBtn" onclick="refreshPortfolio()">
+                        <span>🔄</span> Refresh
+                    </button>
+                    <button class="tab-refresh-btn" onclick="exportPortfolio()">
+                        <span>📥</span> Export
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Price</th>
+                            <th>24h Change</th>
+                            <th>1h Change</th>
+                            <th>Liquidity</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolioTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Accumulation Tab -->
+        <div class="tab-panel" id="accumulation-panel">
+            <div class="card-header">
+                <div class="card-title">🎯 Accumulation Scanner</div>
+                <button class="tab-refresh-btn" id="accumulationRefreshBtn" onclick="refreshAccumulation()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">⚙️ Scanner Settings</div>
+                    <div style="margin-top: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Price Drop Threshold (%)</label>
+                        <input type="number" id="priceDropThreshold" value="30" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: white; margin-bottom: 15px;">
+                        
+                        <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Volume Spike Threshold (x)</label>
+                        <input type="number" id="volumeSpikeThreshold" value="2" step="0.5" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; color: white; margin-bottom: 15px;">
+                        
+                        <button class="global-refresh-btn" onclick="startAccumulationScan()">🔍 Start Scan</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🎯 Detected Signals</div>
+                    <div id="accumulationSignals">
+                        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            Click "Start Scan" to find accumulation opportunities
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Whales Tab -->
+        <div class="tab-panel" id="whales-panel">
+            <div class="card-header">
+                <div class="card-title">🐋 Whale Tracker (87 Wallets)</div>
+                <button class="tab-refresh-btn" id="whalesRefreshBtn" onclick="refreshWhales()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+            
+            <div class="wallet-grid" id="whaleGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Scanner Tab -->
+        <div class="tab-panel" id="scanner-panel">
+            <div class="card-header">
+                <div class="card-title">🔍 New Token Scanner</div>
+                <button class="tab-refresh-btn" id="scannerRefreshBtn" onclick="refreshScanner()">
+                    <span>🔄</span> Refresh
+                </button>
+            </div>
+            
+            <div id="scannerResults">
+                <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+                    <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
+                    <h3>Ready to Scan</h3>
+                    <p>Click Refresh to find new meme coin opportunities</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Tab -->
+        <div class="tab-panel" id="alerts-panel">
+            <div class="card-header">
+                <div class="card-title">🚨 Alert History</div>
+                <button class="tab-refresh-btn" onclick="clearAlerts()">
+                    <span>🗑️</span> Clear All
+                </button>
+            </div>
+            
+            <div id="alertsList">
+                <div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet. Start monitoring to receive notifications.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+
+    <!-- Next Refresh Timer -->
+    <div class="next-refresh" id="nextRefresh">
+        Next auto-refresh: --:--
+    </div>
+
+    <script>
+        // Configuration
+        const AUTO_REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes
+        let autoRefreshEnabled = true;
+        let autoRefreshTimer = null;
+        let countdownTimer = null;
+        let soundEnabled = true;
+        let lastRefreshTime = null;
+        let alerts = [];
+
+        // Token data (will be updated from API)
+        let TOKENS = [
+            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 },
+            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0, change24h: 0, change1h: 0, liquidity: 0 }
+        ];
+
+        const WHALE_WALLETS = [
+            { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "😀", alertsOn: true },
+            { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "😀", alertsOn: true },
+            { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "😀", alertsOn: true },
+            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman the holder", emoji: "😀", alertsOn: true },
+            { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "😀", alertsOn: true },
+            { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "😀", alertsOn: true },
+            { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "😀", alertsOn: true },
+            { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "😀", alertsOn: true },
+            { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "😀", alertsOn: true },
+            { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "😀", alertsOn: true },
+            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish Top holder", emoji: "😀", alertsOn: true },
+            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird guy", emoji: "😀", alertsOn: true }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                refreshAllData();
+                startAutoRefresh();
+            }, 1000);
+        });
+
+        // Auto Refresh Functions
+        function startAutoRefresh() {
+            if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+            if (countdownTimer) clearInterval(countdownTimer);
+            
+            autoRefreshTimer = setInterval(() => {
+                if (autoRefreshEnabled) {
+                    refreshAllData();
+                }
+            }, AUTO_REFRESH_INTERVAL);
+            
+            updateCountdown();
+            countdownTimer = setInterval(updateCountdown, 1000);
+        }
+
+        function toggleAutoRefresh() {
+            autoRefreshEnabled = !autoRefreshEnabled;
+            const toggle = document.getElementById('autoRefreshToggle');
+            const text = document.getElementById('autoRefreshText');
+            
+            if (autoRefreshEnabled) {
+                toggle.classList.remove('paused');
+                text.textContent = 'Auto: ON (30m)';
+                addAlert('Auto-Refresh Enabled', 'Data will refresh every 30 minutes');
+            } else {
+                toggle.classList.add('paused');
+                text.textContent = 'Auto: PAUSED';
+                addAlert('Auto-Refresh Paused', 'Manual refresh required');
+            }
+        }
+
+        function updateCountdown() {
+            if (!autoRefreshEnabled) {
+                document.getElementById('nextRefresh').textContent = 'Auto-refresh: PAUSED';
+                document.getElementById('nextRefresh').classList.remove('active');
+                return;
+            }
+            
+            const now = new Date();
+            const nextRefresh = lastRefreshTime ? new Date(lastRefreshTime.getTime() + AUTO_REFRESH_INTERVAL) : new Date(now.getTime() + AUTO_REFRESH_INTERVAL);
+            const diff = nextRefresh - now;
+            
+            if (diff > 0) {
+                const minutes = Math.floor(diff / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                document.getElementById('nextRefresh').textContent = `Next refresh: ${minutes}m ${seconds}s`;
+                document.getElementById('nextRefresh').classList.add('active');
+            }
+        }
+
+        // Main Refresh Function
+        async function refreshAllData() {
+            const btn = document.getElementById('globalRefreshBtn');
+            const indicator = document.getElementById('refreshIndicator');
+            const icon = document.getElementById('refreshIcon');
+            
+            btn.disabled = true;
+            indicator.classList.add('spinning');
+            icon.textContent = '⏳';
+            
+            // Refresh all tabs
+            await Promise.all([
+                refreshDashboard(),
+                refreshPortfolio(),
+                refreshAccumulation(),
+                refreshWhales(),
+                refreshScanner()
+            ]);
+            
+            // Update timestamp
+            lastRefreshTime = new Date();
+            document.getElementById('lastRefreshTime').textContent = lastRefreshTime.toLocaleTimeString();
+            
+            btn.disabled = false;
+            indicator.classList.remove('spinning');
+            icon.textContent = '✅';
+            setTimeout(() => icon.textContent = '🔄', 2000);
+            
+            addAlert('Data Refreshed', `All tabs updated at ${lastRefreshTime.toLocaleTimeString()}`);
+        }
+
+        // Tab-specific refresh functions
+        async function refreshDashboard() {
+            // Simulate API call
+            await new Promise(r => setTimeout(r, 500));
+            
+            // Update metrics with sample data
+            document.getElementById('dashPortfolioChange').textContent = '+12.4%';
+            document.getElementById('dashPortfolioChange').className = 'metric-value positive';
+            document.getElementById('dashOpportunities').textContent = '3';
+            document.getElementById('dashWhaleBuys').textContent = '5';
+            document.getElementById('dashTopGainer').textContent = 'PUNCH';
+            
+            // Update header stats
+            document.getElementById('activeTokens').textContent = TOKENS.length;
+            document.getElementById('portfolioChange').textContent = '+12.4%';
+            document.getElementById('portfolioChange').style.color = 'var(--accent-green)';
+            document.getElementById('whaleAlerts').textContent = alerts.length;
+        }
+
+        async function refreshPortfolio() {
+            const btn = document.getElementById('portfolioRefreshBtn');
+            if (btn) btn.classList.add('spinning');
+            
+            // Simulate API fetch
+            await new Promise(r => setTimeout(r, 800));
+            
+            // Update with sample data
+            TOKENS.forEach((token, i) => {
+                token.price = [0.0149, 0.0007, 0.000064, 0.00213, 0.00177, 0.00026, 0.00022, 0.00023][i];
+                token.change24h = [19.62, 0.12, 3.40, 15.63, -0.66, 8.04, -17.14, -1.00][i];
+                token.change1h = [0.94, -9.41, 30.95, 3.12, -1.58, 9.56, 0.97, -5.21][i];
+                token.liquidity = [744503, 118193, 26235, 191000, 154056, 56397, 42155, 46890][i];
+            });
+            
+            renderPortfolioTable();
+            
+            if (btn) btn.classList.remove('spinning');
+        }
+
+        function renderPortfolioTable() {
+            const tbody = document.getElementById('portfolioTableBody');
+            tbody.innerHTML = TOKENS.map(token => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 35px; height: 35px; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8em;">${token.symbol[0]}</div>
+                            <div>
+                                <div style="font-weight: 600;">${token.symbol}</div>
+                                <div style="font-size: 0.75em; color: var(--text-secondary);">${token.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-family: 'JetBrains Mono', monospace;">$${token.price.toFixed(token.price < 0.001 ? 8 : 6)}</td>
+                    <td><span class="price-change ${token.change24h >= 0 ? 'positive' : 'negative'}">${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%</span></td>
+                    <td><span class="price-change ${token.change1h >= 0 ? 'positive' : 'negative'}">${token.change1h >= 0 ? '+' : ''}${token.change1h.toFixed(2)}%</span></td>
+                    <td style="color: var(--text-secondary);">$${(token.liquidity / 1000).toFixed(0)}K</td>
+                    <td>${token.change24h > 10 ? '🔥 Hot' : token.change24h < -10 ? '❄️ Cold' : '➡️ Stable'}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function refreshAccumulation() {
+            const btn = document.getElementById('accumulationRefreshBtn');
+            if (btn) btn.classList.add('spinning');
+            await new Promise(r => setTimeout(r, 600));
+            if (btn) btn.classList.remove('spinning');
+        }
+
+        async function refreshWhales() {
+            const btn = document.getElementById('whalesRefreshBtn');
+            if (btn) btn.classList.add('spinning');
+            
+            await new Promise(r => setTimeout(r, 700));
+            
+            const grid = document.getElementById('whaleGrid');
+            grid.innerHTML = WHALE_WALLETS.map(wallet => {
+                const shortAddr = wallet.address.substring(0, 6) + '...' + wallet.address.substring(wallet.address.length - 4);
+                return `
+                    <div class="wallet-card" onclick="window.open('https://birdeye.so/profile/${wallet.address}?chain=solana', '_blank')">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div>
+                                <div class="wallet-name">${wallet.emoji} ${wallet.name}</div>
+                                <div class="wallet-address">${shortAddr}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; background: ${wallet.alertsOn ? 'rgba(0,255,136,0.2)' : 'rgba(255,255,255,0.1)'}; color: ${wallet.alertsOn ? 'var(--accent-green)' : 'var(--text-secondary)'};">${wallet.alertsOn ? '🔔 Alerts ON' : '🔕 Alerts OFF'}</span>
+                            <span style="color: var(--accent-cyan);">View →</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            if (btn) btn.classList.remove('spinning');
+        }
+
+        async function refreshScanner() {
+            const btn = document.getElementById('scannerRefreshBtn');
+            if (btn) btn.classList.add('spinning');
+            await new Promise(r => setTimeout(r, 1000));
+            
+            document.getElementById('scannerResults').innerHTML = `
+                <div class="grid-3">
+                    <div class="card" style="margin: 0;">
+                        <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 5px;">🆕 FISHBOWL</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary);">Just launched • $12K MC • 45 holders</div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-orange);">⚠️ High risk</div>
+                    </div>
+                    <div class="card" style="margin: 0;">
+                        <div style="font-weight: 600; color: var(--accent-orange); margin-bottom: 5px;">🆕 MOONCAT</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary);">2 hours old • $45K MC • 120 holders</div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-cyan);">📊 Medium risk</div>
+                    </div>
+                    <div class="card" style="margin: 0;">
+                        <div style="font-weight: 600; color: var(--text-secondary); margin-bottom: 5px;">🆕 GARBAGE</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary);">6 hours old • $8K MC • 23 holders</div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-red);">❌ Likely rug</div>
+                    </div>
+                </div>
+            `;
+            
+            if (btn) btn.classList.remove('spinning');
+        }
+
+        // Other functions
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-panel').classList.add('active');
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+            document.getElementById('soundToggle').classList.toggle('muted', !soundEnabled);
+        }
+
+        function addAlert(title, message) {
+            const time = new Date().toLocaleTimeString();
+            alerts.unshift({ title, message, time });
+            updateAlertsList();
+            document.getElementById('whaleAlerts').textContent = alerts.length;
+        }
+
+        function updateAlertsList() {
+            const list = document.getElementById('alertsList');
+            if (alerts.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet</div>';
+                return;
+            }
+            
+            list.innerHTML = alerts.map(a => `
+                <div style="background: rgba(255,255,255,0.03); border-left: 3px solid var(--accent-cyan); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
+                    <div style="font-weight: 600; margin-bottom: 5px;">${a.title}</div>
+                    <div style="font-size: 0.9em; color: var(--text-secondary);">${a.message}</div>
+                    <div style="font-size: 0.75em; color: var(--text-secondary); margin-top: 5px;">${a.time}</div>
+                </div>
+            `).join('');
+        }
+
+        function clearAlerts() {
+            alerts = [];
+            updateAlertsList();
+            document.getElementById('whaleAlerts').textContent = '0';
+        }
+
+        function startAccumulationScan() {
+            const container = document.getElementById('accumulationSignals');
+            container.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading-spinner" style="margin: 0 auto 20px;"></div><div>Scanning...</div></div>';
+            
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div style="background: rgba(0,255,136,0.1); border-left: 4px solid var(--accent-green); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--accent-green);">🎯 PUNCH - Accumulation Signal</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Price down 35% from high, volume up 3.2x</div>
+                    </div>
+                    <div style="background: rgba(255,165,2,0.1); border-left: 4px solid var(--accent-orange); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--accent-orange);">📊 Devious - Volume Spike</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">24h volume 2.8x average</div>
+                    </div>
+                `;
+                addAlert('Accumulation Scan Complete', 'Found 2 signals');
+            }, 2000);
+        }
+
+        function exportPortfolio() {
+            const csv = 'Token,Price,24h Change,1h Change,Liquidity\n' + 
+                TOKENS.map(t => `${t.symbol},${t.price},${t.change24h}%,${t.change1h}%,${t.liquidity}`).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `portfolio_export_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            
+            addAlert('Export Complete', 'Portfolio data saved to CSV');
+        }
+    </script>
+</body>
+</html>

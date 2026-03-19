@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weirdo Portfolio Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1em;
+        }
+
+        .last-update {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .positive { color: #00ff88; }
+        .negative { color: #ff4757; }
+        .neutral { color: #ffa502; }
+
+        .alerts-section {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .alerts-section.active {
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 71, 87, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 71, 87, 0.6); }
+        }
+
+        .alerts-title {
+            color: #ff4757;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-item {
+            background: rgba(255, 71, 87, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tokens-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .tokens-table {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #00d9ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .token-symbol {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        .token-name {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .price {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .change {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .change.positive {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .change.negative {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+        }
+
+        .liquidity {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .momentum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .momentum-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .momentum-title {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .momentum-title.gainers { color: #00ff88; }
+        .momentum-title.losers { color: #ff4757; }
+
+        .momentum-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .momentum-item:last-child {
+            border-bottom: none;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: block;
+            margin: 30px auto;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.4);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #00d9ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .tokens-section {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            th, td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🪙 Weirdo Portfolio</h1>
+            <div class="subtitle">Solana Meme Token Tracker</div>
+            <div class="last-update" id="lastUpdate">Last updated: Never</div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Active Tokens</div>
+                <div class="stat-value neutral" id="activeTokens">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Portfolio 24h Change</div>
+                <div class="stat-value" id="portfolioChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Liquidity</div>
+                <div class="stat-value neutral" id="totalLiquidity">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Top Performer</div>
+                <div class="stat-value positive" id="topPerformer">-</div>
+            </div>
+        </div>
+
+        <div class="alerts-section" id="alertsSection">
+            <div class="alerts-title">🚨 Price Alerts</div>
+            <div id="alertsList"></div>
+        </div>
+
+        <div class="chart-container">
+            <div class="section-title">📊 Portfolio Performance (24h)</div>
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <div class="tokens-section">
+            <div class="tokens-table">
+                <div class="section-title">💰 Token Prices</div>
+                <div id="tokensTableContainer">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div>Loading portfolio data...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tokens-table">
+                <div class="section-title">📈 Live Momentum</div>
+                <div id="momentumContainer">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div>Loading momentum data...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="momentum-grid">
+            <div class="momentum-card">
+                <div class="momentum-title gainers">
+                    🚀 Top Gainers (24h)
+                </div>
+                <div id="gainersList"></div>
+            </div>
+            <div class="momentum-card">
+                <div class="momentum-title losers">
+                    📉 Top Losers (24h)
+                </div>
+                <div id="losersList"></div>
+            </div>
+        </div>
+
+        <button class="refresh-btn" onclick="fetchPortfolioData()">
+            🔄 Refresh Data
+        </button>
+    </div>
+
+    <script>
+        // Token configuration
+        const TOKENS = [
+            { address: "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump", symbol: "PUNCH", name: "パンチ" },
+            { address: "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump", symbol: "Jellybean", name: "Jellybean" },
+            { address: "CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump", symbol: "Devious", name: "Devious MF" },
+            { address: "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump", symbol: "HODL", name: "HODL" },
+            { address: "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump", symbol: "JUICE", name: "JUICE" },
+            { address: "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump", symbol: "PIZZA", name: "Bitcoin Pizza" },
+            { address: "F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump", symbol: "BULK", name: "bulk" },
+            { address: "3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump", symbol: "Momo-chan", name: "モモちゃん" }
+        ];
+
+        let chartInstance = null;
+
+        async function fetchTokenData(token) {
+            try {
+                const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${token.address}`);
+                const data = await response.json();
+                if (data.pairs && data.pairs.length > 0) {
+                    const pair = data.pairs[0];
+                    return {
+                        symbol: token.symbol,
+                        name: token.name,
+                        address: token.address,
+                        price: parseFloat(pair.priceUsd),
+                        priceChange24h: pair.priceChange?.h24 || 0,
+                        priceChange1h: pair.priceChange?.h1 || 0,
+                        liquidity: pair.liquidity?.usd || 0,
+                        volume24h: pair.volume?.h24 || 0,
+                        marketCap: pair.marketCap || 0
+                    };
+                }
+            } catch (error) {
+                console.error(`Error fetching ${token.symbol}:`, error);
+            }
+            return null;
+        }
+
+        async function fetchPortfolioData() {
+            const refreshBtn = document.querySelector('.refresh-btn');
+            refreshBtn.textContent = '⏳ Loading...';
+            refreshBtn.disabled = true;
+
+            const results = [];
+            for (const token of TOKENS) {
+                const data = await fetchTokenData(token);
+                if (data) results.push(data);
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            updateDashboard(results);
+            
+            refreshBtn.textContent = '🔄 Refresh Data';
+            refreshBtn.disabled = false;
+            document.getElementById('lastUpdate').textContent = `Last updated: ${new Date().toLocaleString()}`;
+        }
+
+        function updateDashboard(data) {
+            updateStats(data);
+            updateAlerts(data);
+            updateTokensTable(data);
+            updateMomentum(data);
+            updateChart(data);
+        }
+
+        function updateStats(data) {
+            document.getElementById('activeTokens').textContent = data.length;
+            
+            const avgChange = data.reduce((sum, t) => sum + t.priceChange24h, 0) / data.length;
+            const changeEl = document.getElementById('portfolioChange');
+            changeEl.textContent = `${avgChange >= 0 ? '+' : ''}${avgChange.toFixed(2)}%`;
+            changeEl.className = `stat-value ${avgChange >= 0 ? 'positive' : 'negative'}`;
+            
+            const totalLiq = data.reduce((sum, t) => sum + t.liquidity, 0);
+            document.getElementById('totalLiquidity').textContent = `$${(totalLiq / 1000000).toFixed(2)}M`;
+            
+            const topPerformer = data.reduce((max, t) => t.priceChange24h > max.priceChange24h ? t : max, data[0]);
+            document.getElementById('topPerformer').textContent = `${topPerformer.symbol} (${topPerformer.priceChange24h >= 0 ? '+' : ''}${topPerformer.priceChange24h.toFixed(1)}%)`;
+        }
+
+        function updateAlerts(data) {
+            const alertsSection = document.getElementById('alertsSection');
+            const alertsList = document.getElementById('alertsList');
+            const alerts = [];
+            
+            data.forEach(token => {
+                if (Math.abs(token.priceChange24h) > 50) {
+                    alerts.push({
+                        token: token.symbol,
+                        change: token.priceChange24h,
+                        severity: token.priceChange24h > 0 ? 'positive' : 'negative',
+                        message: `${token.priceChange24h > 0 ? '🚀' : '📉'} ${token.symbol}: ${token.priceChange24h.toFixed(1)}% in 24h`
+                    });
+                }
+            });
+            
+            if (alerts.length > 0) {
+                alertsSection.classList.add('active');
+                alertsList.innerHTML = alerts.map(a => `
+                    <div class="alert-item">
+                        <span>${a.message}</span>
+                        <span class="${a.severity}">${a.change > 0 ? '↗' : '↘'}</span>
+                    </div>
+                `).join('');
+            } else {
+                alertsSection.classList.remove('active');
+            }
+        }
+
+        function updateTokensTable(data) {
+            const container = document.getElementById('tokensTableContainer');
+            
+            const sortedData = [...data].sort((a, b) => b.liquidity - a.liquidity);
+            
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Price</th>
+                            <th>24h Change</th>
+                            <th>1h Change</th>
+                            <th>Liquidity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sortedData.map(token => `
+                            <tr>
+                                <td>
+                                    <div class="token-symbol">${token.symbol}</div>
+                                    <div class="token-name">${token.name}</div>
+                                </td>
+                                <td class="price">$${token.price.toFixed(token.price < 0.001 ? 8 : 6)}</td>
+                                <td>
+                                    <span class="change ${token.priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                        ${token.priceChange24h >= 0 ? '+' : ''}${token.priceChange24h.toFixed(2)}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="change ${token.priceChange1h >= 0 ? 'positive' : 'negative'}">
+                                        ${token.priceChange1h >= 0 ? '+' : ''}${token.priceChange1h.toFixed(2)}%
+                                    </span>
+                                </td>
+                                <td class="liquidity">$${(token.liquidity / 1000).toFixed(0)}K</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function updateMomentum(data) {
+            const container = document.getElementById('momentumContainer');
+            
+            const sortedByChange = [...data].sort((a, b) => b.priceChange24h - a.priceChange24h);
+            
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Token</th>
+                            <th>Momentum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${sortedByChange.map((token, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td class="token-symbol">${token.symbol}</td>
+                                <td>
+                                    <span class="change ${token.priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                        ${token.priceChange24h >= 0 ? '▲' : '▼'} ${Math.abs(token.priceChange24h).toFixed(2)}%
+                                    </span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function updateMomentumCards(data) {
+            const gainers = [...data].filter(t => t.priceChange24h > 0).sort((a, b) => b.priceChange24h - a.priceChange24h).slice(0, 5);
+            const losers = [...data].filter(t => t.priceChange24h < 0).sort((a, b) => a.priceChange24h - b.priceChange24h).slice(0, 5);
+            
+            document.getElementById('gainersList').innerHTML = gainers.map(t => `
+                <div class="momentum-item">
+                    <span><strong>${t.symbol}</strong> ${t.name}</span>
+                    <span class="positive">+${t.priceChange24h.toFixed(2)}%</span>
+                </div>
+            `).join('') || '<div style="color: #666;">No gainers today</div>';
+            
+            document.getElementById('losersList').innerHTML = losers.map(t => `
+                <div class="momentum-item">
+                    <span><strong>${t.symbol}</strong> ${t.name}</span>
+                    <span class="negative">${t.priceChange24h.toFixed(2)}%</span>
+                </div>
+            `).join('') || '<div style="color: #666;">No losers today</div>';
+        }
+
+        function updateChart(data) {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            
+            const sortedData = [...data].sort((a, b) => b.priceChange24h - a.priceChange24h);
+            
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sortedData.map(t => t.symbol),
+                    datasets: [{
+                        label: '24h Change (%)',
+                        data: sortedData.map(t => t.priceChange24h),
+                        backgroundColor: sortedData.map(t => t.priceChange24h >= 0 ? 'rgba(0, 255, 136, 0.7)' : 'rgba(255, 71, 87, 0.7)'),
+                        borderColor: sortedData.map(t => t.priceChange24h >= 0 ? '#00ff88' : '#ff4757'),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#888',
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#888'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateMomentum(data) {
+            updateTokensTable(data);
+            updateMomentumCards(data);
+        }
+
+        // Auto-refresh every 60 seconds
+        setInterval(fetchPortfolioData, 60000);
+        
+        // Initial load
+        fetchPortfolioData();
+    </script>
+</body>
+</html>

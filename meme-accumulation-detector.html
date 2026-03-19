@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Coin Accumulation Detector</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #1a1a2e, #16213e);
+            padding: 20px;
+            border-bottom: 2px solid #00d9ff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .stat-pill.alert {
+            background: rgba(255, 71, 87, 0.2);
+            border-color: #ff4757;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(255, 71, 87, 0.4); }
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-banner.active {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-icon {
+            font-size: 2em;
+        }
+
+        .alert-text {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .dismiss-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Opportunity Cards */
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .opp-card {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .opp-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .opp-card.accumulation {
+            border-color: #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .opp-card.volume-spike {
+            border-color: #ffa502;
+            box-shadow: 0 0 30px rgba(255, 165, 2, 0.2);
+        }
+
+        .opp-card.dead {
+            opacity: 0.5;
+            border-color: #333;
+        }
+
+        .signal-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .signal-badge.accumulation {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .signal-badge.volume {
+            background: #ffa502;
+            color: #000;
+        }
+
+        .signal-badge.recovery {
+            background: #00d9ff;
+            color: #000;
+        }
+
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .token-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 3px;
+        }
+
+        .token-address {
+            font-size: 0.75em;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .price-main {
+            font-size: 1.6em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .metric {
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.75em;
+            color: #888;
+            margin-bottom: 3px;
+        }
+
+        .metric-value {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .metric-value.positive { color: #00ff88; }
+        .metric-value.negative { color: #ff4757; }
+        .metric-value.warning { color: #ffa502; }
+
+        .volume-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .volume-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+
+        .volume-fill.spike {
+            background: linear-gradient(90deg, #ffa502, #ff4757);
+            animation: shimmer 1s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-chart {
+            background: rgba(0, 217, 255, 0.2);
+            color: #00d9ff;
+        }
+
+        .btn-dex {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Scanner Panel */
+        .scanner-panel {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .scanner-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scanner-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        .control-group input, .control-group select {
+            background: #0a0a0f;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+
+        .scan-btn {
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        /* Sound Toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a1a2e;
+            border: 2px solid #00d9ff;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            z-index: 1000;
+        }
+
+        .sound-toggle.muted {
+            border-color: #ff4757;
+            opacity: 0.5;
+        }
+
+        /* Status Indicators */
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-dot.active { background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+        .status-dot.warning { background: #ffa502; box-shadow: 0 0 10px #ffa502; }
+        .status-dot.dead { background: #333; }
+
+        /* Add Token Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            background: #0a0a0f;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+            border-left: 4px solid #00ff88;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
+            min-width: 300px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .toast-message {
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Meme Coin Accumulation Detector</h1>
+        <div class="header-stats">
+            <div class="stat-pill" id="scanStatus">🔍 Scanner: Idle</div>
+            <div class="stat-pill" id="tokenCount">📊 Tokens: 0</div>
+            <div class="stat-pill" id="oppsFound">💎 Opportunities: 0</div>
+            <div class="stat-pill alert" id="alertsCount" style="display:none">🚨 Alerts: 0</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Alert Banner -->
+        <div class="alert-banner" id="alertBanner">
+            <div class="alert-icon">🚨</div>
+            <div class="alert-text">
+                <div class="alert-title" id="alertTitle">Accumulation Detected!</div>
+                <div id="alertMessage">Multiple tokens showing accumulation signals</div>
+            </div>
+            <button class="dismiss-btn" onclick="dismissAlert()">Dismiss</button>
+        </div>
+
+        <!-- Scanner Panel -->
+        <div class="scanner-panel">
+            <div class="scanner-title">⚙️ Scanner Configuration</div>
+            <div class="scanner-controls">
+                <div class="control-group">
+                    <label>Price Drop Threshold (%)</label>
+                    <input type="number" id="priceDropThreshold" value="30" min="10" max="90">
+                </div>
+                <div class="control-group">
+                    <label>Volume Spike Threshold (x)</label>
+                    <input type="number" id="volumeSpikeThreshold" value="2" min="1.5" max="10" step="0.5">
+                </div>
+                <div class="control-group">
+                    <label>Min Liquidity ($)</label>
+                    <input type="number" id="minLiquidity" value="10000" min="1000" step="1000">
+                </div>
+                <div class="control-group">
+                    <label>Auto-Scan Interval</label>
+                    <select id="scanInterval">
+                        <option value="0">Manual Only</option>
+                        <option value="30" selected>Every 30 sec</option>
+                        <option value="60">Every 1 min</option>
+                        <option value="300">Every 5 min</option>
+                    </select>
+                </div>
+                <button class="scan-btn" onclick="startScan()">🔍 Start Scan</button>
+            </div>
+        </div>
+
+        <!-- Opportunities Grid -->
+        <div class="opportunities-grid" id="opportunitiesGrid">
+            <!-- Cards will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Sound Toggle -->
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Add Token Modal -->
+    <div class="modal-overlay" id="addTokenModal">
+        <div class="modal">
+            <h2>➕ Add New Token</h2>
+            <input type="text" id="newTokenAddress" placeholder="Solana Contract Address...">
+            <input type="text" id="newTokenSymbol" placeholder="Token Symbol (e.g., PEPE)">
+            <input type="text" id="newTokenName" placeholder="Token Name">
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-chart" onclick="addToken()">Add Token</button>
+                <button class="btn" onclick="closeModal()" style="background:#333;color:#fff">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Token Database - Can be expanded
+        let TOKENS = [
+            { address: "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump", symbol: "PUNCH", name: "パンチ", added: Date.now() },
+            { address: "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump", symbol: "Jellybean", name: "Jellybean", added: Date.now() },
+            { address: "CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump", symbol: "Devious", name: "Devious MF", added: Date.now() },
+            { address: "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump", symbol: "HODL", name: "HODL", added: Date.now() },
+            { address: "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump", symbol: "JUICE", name: "JUICE", added: Date.now() },
+            { address: "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump", symbol: "PIZZA", name: "Bitcoin Pizza", added: Date.now() },
+            { address: "F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump", symbol: "BULK", name: "bulk", added: Date.now() },
+            { address: "3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump", symbol: "Momo-chan", name: "モモちゃん", added: Date.now() }
+        ];
+
+        // History tracking for volume comparison
+        const VOLUME_HISTORY = {};
+        let SOUND_ENABLED = true;
+        let SCAN_INTERVAL = null;
+
+        // Audio Context for alerts
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playAlertSound(type = 'accumulation') {
+            if (!SOUND_ENABLED) return;
+            
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            if (type === 'accumulation') {
+                // Success sound - ascending
+                oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+                oscillator.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.3);
+            } else if (type === 'volume') {
+                // Alert sound - pulse
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime + 0.2);
+            }
+            
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            
+            oscillator.type = 'sine';
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        }
+
+        async function fetchTokenData(token) {
+            try {
+                const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${token.address}`);
+                const data = await response.json();
+                
+                if (data.pairs && data.pairs.length > 0) {
+                    const pair = data.pairs[0];
+                    return {
+                        ...token,
+                        price: parseFloat(pair.priceUsd) || 0,
+                        priceChange24h: pair.priceChange?.h24 || 0,
+                        priceChange1h: pair.priceChange?.h1 || 0,
+                        volume24h: pair.volume?.h24 || 0,
+                        volume6h: pair.volume?.h6 || 0,
+                        volume1h: pair.volume?.h1 || 0,
+                        liquidity: pair.liquidity?.usd || 0,
+                        marketCap: pair.marketCap || 0,
+                        txns24h: pair.txns?.h24 || 0,
+                        fdv: pair.fdv || 0,
+                        timestamp: Date.now()
+                    };
+                }
+            } catch (error) {
+                console.error(`Error fetching ${token.symbol}:`, error);
+            }
+            return null;
+        }
+
+        function detectAccumulation(data) {
+            const priceDropThreshold = parseFloat(document.getElementById('priceDropThreshold').value);
+            const volumeSpikeThreshold = parseFloat(document.getElementById('volumeSpikeThreshold').value);
+            const minLiquidity = parseFloat(document.getElementById('minLiquidity').value);
+
+            const opportunities = [];
+
+            data.forEach(token => {
+                if (!token || token.liquidity < minLiquidity) return;
+
+                const signals = [];
+                let signalStrength = 0;
+
+                // Check 1: Price at local low (dropped significantly)
+                if (token.priceChange24h <= -priceDropThreshold) {
+                    signals.push('price_drop');
+                    signalStrength += 1;
+                }
+
+                // Check 2: Volume spike
+                const avgVolume = token.volume6h ? token.volume6h / 6 : token.volume24h / 24;
+                const currentVolume = token.volume1h;
+                const volumeMultiplier = avgVolume > 0 ? currentVolume / avgVolume : 0;
+
+                if (volumeMultiplier >= volumeSpikeThreshold) {
+                    signals.push('volume_spike');
+                    signalStrength += 2;
+                }
+
+                // Check 3: Recovery from 1h low but still down 24h (potential reversal)
+                if (token.priceChange1h > 0 && token.priceChange24h < -10) {
+                    signals.push('recovery_bounce');
+                    signalStrength += 1;
+                }
+
+                // Check 4: High transaction count relative to market cap (accumulation activity)
+                if (token.txns24h > 100 && token.marketCap < 1000000) {
+                    signals.push('high_activity');
+                    signalStrength += 1;
+                }
+
+                if (signals.length > 0) {
+                    opportunities.push({
+                        ...token,
+                        signals,
+                        signalStrength,
+                        volumeMultiplier: volumeMultiplier.toFixed(1),
+                        isDead: token.liquidity < 10000 || token.volume24h < 1000
+                    });
+                }
+
+                // Store volume history
+                if (!VOLUME_HISTORY[token.symbol]) {
+                    VOLUME_HISTORY[token.symbol] = [];
+                }
+                VOLUME_HISTORY[token.symbol].push({
+                    timestamp: Date.now(),
+                    volume: token.volume24h
+                });
+                // Keep last 20 data points
+                if (VOLUME_HISTORY[token.symbol].length > 20) {
+                    VOLUME_HISTORY[token.symbol].shift();
+                }
+            });
+
+            return opportunities.sort((a, b) => b.signalStrength - a.signalStrength);
+        }
+
+        function renderOpportunities(opportunities) {
+            const grid = document.getElementById('opportunitiesGrid');
+            
+            if (opportunities.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #666;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
+                        <div style="font-size: 1.2em;">No accumulation signals detected</div>
+                        <div style="margin-top: 10px; font-size: 0.9em;">Adjust scanner thresholds or wait for market movement</div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = opportunities.map(opp => {
+                const signalClass = opp.signals.includes('accumulation') ? 'accumulation' : 
+                                   opp.signals.includes('volume_spike') ? 'volume-spike' : 
+                                   opp.isDead ? 'dead' : '';
+                
+                const badgeText = opp.signals.includes('volume_spike') ? 'Volume Spike' :
+                                  opp.signals.includes('recovery_bounce') ? 'Recovery' :
+                                  opp.signals.includes('price_drop') ? 'Price Drop' : 'Signal';
+
+                const badgeClass = opp.signals.includes('volume_spike') ? 'volume' :
+                                   opp.signals.includes('recovery_bounce') ? 'recovery' : 'accumulation';
+
+                return `
+                    <div class="opp-card ${signalClass}">
+                        <div class="signal-badge ${badgeClass}">${badgeText}</div>
+                        <div class="token-header">
+                            <div class="token-info">
+                                <h3>${opp.symbol}</h3>
+                                <div class="token-address">${opp.address.substring(0, 20)}...</div>
+                            </div>
+                            <div class="price-main ${opp.priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                $${opp.price.toFixed(opp.price < 0.001 ? 8 : 6)}
+                            </div>
+                        </div>
+                        
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <div class="metric-label">24h Change</div>
+                                <div class="metric-value ${opp.priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                    ${opp.priceChange24h >= 0 ? '+' : ''}${opp.priceChange24h.toFixed(2)}%
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">1h Change</div>
+                                <div class="metric-value ${opp.priceChange1h >= 0 ? 'positive' : 'negative'}">
+                                    ${opp.priceChange1h >= 0 ? '+' : ''}${opp.priceChange1h.toFixed(2)}%
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Volume Spike</div>
+                                <div class="metric-value ${parseFloat(opp.volumeMultiplier) >= 2 ? 'warning' : ''}">
+                                    ${opp.volumeMultiplier}x
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">Liquidity</div>
+                                <div class="metric-value">
+                                    $${(opp.liquidity / 1000).toFixed(0)}K
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-label">24h Volume</div>
+                            <div class="volume-bar">
+                                <div class="volume-fill ${parseFloat(opp.volumeMultiplier) >= 2 ? 'spike' : ''}" 
+                                     style="width: ${Math.min(100, (opp.volume24h / 1000000) * 100)}%"></div>
+                            </div>
+                            <div style="font-size: 0.8em; color: #666; margin-top: 3px;">
+                                $${(opp.volume24h / 1000).toFixed(0)}K
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                            <div style="font-size: 0.8em; color: #888; margin-bottom: 5px;">Detected Signals:</div>
+                            <div style="font-size: 0.85em;">
+                                ${opp.signals.map(s => {
+                                    const icons = {
+                                        'price_drop': '📉',
+                                        'volume_spike': '📊',
+                                        'recovery_bounce': '↗️',
+                                        'high_activity': '⚡'
+                                    };
+                                    return `<span style="margin-right: 10px;">${icons[s] || '🔹'} ${s.replace('_', ' ')}</span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-chart" onclick="viewChart('${opp.symbol}')">📊 Chart</button>
+                            <a class="btn btn-dex" href="https://dexscreener.com/solana/${opp.address}" target="_blank">🚀 Trade</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showAlert(title, message) {
+            const banner = document.getElementById('alertBanner');
+            document.getElementById('alertTitle').textContent = title;
+            document.getElementById('alertMessage').textContent = message;
+            banner.classList.add('active');
+            
+            // Auto-dismiss after 10 seconds
+            setTimeout(() => {
+                banner.classList.remove('active');
+            }, 10000);
+        }
+
+        function dismissAlert() {
+            document.getElementById('alertBanner').classList.remove('active');
+        }
+
+        function showToast(title, message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message}</div>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        async function startScan() {
+            const scanBtn = document.querySelector('.scan-btn');
+            scanBtn.textContent = '⏳ Scanning...';
+            scanBtn.disabled = true;
+            document.getElementById('scanStatus').textContent = '🔍 Scanner: Running';
+
+            const results = [];
+            for (const token of TOKENS) {
+                const data = await fetchTokenData(token);
+                if (data) results.push(data);
+                await new Promise(r => setTimeout(r, 100));
+            }
+
+            const opportunities = detectAccumulation(results);
+            renderOpportunities(opportunities);
+
+            // Update stats
+            document.getElementById('tokenCount').textContent = `📊 Tokens: ${results.length}`;
+            document.getElementById('oppsFound').textContent = `💎 Opportunities: ${opportunities.length}`;
+
+            // Alerts
+            const accumulationSignals = opportunities.filter(o => o.signals.includes('volume_spike') || o.signals.includes('recovery_bounce'));
+            if (accumulationSignals.length > 0) {
+                document.getElementById('alertsCount').style.display = 'block';
+                document.getElementById('alertsCount').textContent = `🚨 Alerts: ${accumulationSignals.length}`;
+                
+                if (accumulationSignals.length >= 2) {
+                    showAlert(
+                        'Accumulation Detected!',
+                        `${accumulationSignals.length} tokens showing accumulation signals`
+                    );
+                    playAlertSound('accumulation');
+                }
+
+                accumulationSignals.forEach(opp => {
+                    showToast(
+                        `${opp.symbol} Alert`,
+                        `${opp.signals.join(', ')} - Price: $${opp.price.toFixed(8)}`
+                    );
+                });
+            } else {
+                document.getElementById('alertsCount').style.display = 'none';
+            }
+
+            scanBtn.textContent = '🔍 Start Scan';
+            scanBtn.disabled = false;
+            document.getElementById('scanStatus').textContent = '🔍 Scanner: Idle';
+        }
+
+        function toggleSound() {
+            SOUND_ENABLED = !SOUND_ENABLED;
+            const btn = document.getElementById('soundToggle');
+            btn.textContent = SOUND_ENABLED ? '🔊' : '🔇';
+            btn.classList.toggle('muted', !SOUND_ENABLED);
+        }
+
+        function viewChart(symbol) {
+            window.open(`https://dexscreener.com/solana/${TOKENS.find(t => t.symbol === symbol)?.address}`, '_blank');
+        }
+
+        // Auto-scan setup
+        function setupAutoScan() {
+            const interval = parseInt(document.getElementById('scanInterval').value);
+            
+            if (SCAN_INTERVAL) {
+                clearInterval(SCAN_INTERVAL);
+            }
+            
+            if (interval > 0) {
+                SCAN_INTERVAL = setInterval(startScan, interval * 1000);
+            }
+        }
+
+        document.getElementById('scanInterval').addEventListener('change', setupAutoScan);
+
+        // Initial scan
+        startScan();
+        setupAutoScan();
+    </script>
+</body>
+</html>

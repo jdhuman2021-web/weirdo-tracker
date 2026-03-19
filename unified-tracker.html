@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Weirdo Tracker Pro | Unified Meme Coin Intelligence</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b9e;
+            --accent-cyan: #00d9ff;
+            --accent-green: #00ff88;
+            --accent-red: #ff4757;
+            --accent-orange: #ffa502;
+            --accent-purple: #8b5cf6;
+            --gradient-primary: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            --gradient-card: linear-gradient(145deg, rgba(0,217,255,0.1) 0%, rgba(0,255,136,0.05) 100%);
+            --shadow-glow: 0 0 40px rgba(0,217,255,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,217,255,0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, 50px); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo-text h1 {
+            font-size: 1.5em;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .stat-label {
+            font-size: 0.75em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            padding: 20px 30px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--gradient-card);
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0,217,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-badge {
+            background: rgba(0,217,255,0.2);
+            color: var(--accent-cyan);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background: linear-gradient(145deg, rgba(0,217,255,0.05) 0%, rgba(0,255,136,0.02) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .metric-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-value.positive { color: var(--accent-green); }
+        .metric-value.negative { color: var(--accent-red); }
+        .metric-value.neutral { color: var(--accent-cyan); }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95em;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Sortable Headers */
+        .data-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+
+        .data-table th.sortable:hover {
+            color: var(--accent-cyan);
+            background: rgba(0,217,255,0.05);
+        }
+
+        .data-table th.sortable .sort-indicator {
+            opacity: 0.5;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+
+        .data-table th.sortable.asc .sort-indicator::after {
+            content: ' ↑';
+            opacity: 1;
+            color: var(--accent-green);
+        }
+
+        .data-table th.sortable.desc .sort-indicator::after {
+            content: ' ↓';
+            opacity: 1;
+            color: var(--accent-red);
+        }
+
+        .token-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .token-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .token-info h4 {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .token-info span {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        .price-change {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .price-change.positive {
+            background: rgba(0,255,136,0.15);
+            color: var(--accent-green);
+        }
+
+        .price-change.negative {
+            background: rgba(255,71,87,0.15);
+            color: var(--accent-red);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--accent-cyan);
+        }
+
+        .btn-danger {
+            background: rgba(255,71,87,0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        /* Alerts */
+        .alert-banner {
+            background: linear-gradient(90deg, rgba(255,71,87,0.2), rgba(255,107,129,0.1));
+            border: 1px solid var(--accent-red);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert-banner.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .alert-icon {
+            font-size: 2em;
+        }
+
+        .alert-content h3 {
+            margin-bottom: 5px;
+        }
+
+        .alert-content p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        /* Wallet Cards */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .wallet-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .wallet-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .wallet-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+        }
+
+        .wallet-card.buy {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 30px rgba(0,255,136,0.2);
+        }
+
+        .wallet-card.sell {
+            border-color: var(--accent-red);
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .wallet-name {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .wallet-address {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        .wallet-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .wallet-status.buying {
+            background: rgba(0,255,136,0.2);
+            color: var(--accent-green);
+        }
+
+        .wallet-status.selling {
+            background: rgba(255,71,87,0.2);
+            color: var(--accent-red);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0,217,255,0.1);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; gap: 20px; }
+            .nav-tabs { padding: 15px; }
+            .main-content { padding: 20px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        /* Export Button */
+        .export-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0,217,255,0.3);
+            transition: all 0.3s;
+            z-index: 99;
+        }
+
+        .export-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sound Toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            font-size: 1.3em;
+            cursor: pointer;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sound-toggle.muted {
+            border-color: var(--accent-red);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <h2>Initializing Weirdo Tracker Pro...</h2>
+        <p style="color: var(--text-secondary); margin-top: 10px;">Loading 87 whale wallets & market data</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🐋</div>
+                <div class="logo-text">
+                    <h1>Weirdo Tracker Pro</h1>
+                    <p>Unified Meme Coin Intelligence</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="activeTokens">0</div>
+                    <div class="stat-label">Tokens</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="portfolioChange">0%</div>
+                    <div class="stat-label">24h Change</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="whaleAlerts">0</div>
+                    <div class="stat-label">Whale Alerts</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('dashboard')">
+            📊 Dashboard
+        </button>
+        <button class="nav-tab" onclick="switchTab('portfolio')">
+            💰 Portfolio
+        </button>
+        <button class="nav-tab" onclick="switchTab('accumulation')">
+            🎯 Accumulation
+        </button>
+        <button class="nav-tab" onclick="switchTab('whales')">
+            🐋 Whale Tracker
+        </button>
+        <button class="nav-tab" onclick="switchTab('scanner')">
+            🔍 Scanner
+        </button>
+        <button class="nav-tab" onclick="switchTab('alerts')">
+            🚨 Alerts
+        </button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Alert Banner -->
+        <div class="alert-banner" id="mainAlert">
+            <div class="alert-icon">🚨</div>
+            <div class="alert-content">
+                <h3>Accumulation Detected!</h3>
+                <p>Multiple whales are buying PUNCH at lows</p>
+            </div>
+            <button class="btn btn-secondary" onclick="dismissAlert()">Dismiss</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div class="tab-panel active" id="dashboard-panel">
+            <div class="grid-4">
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-value positive" id="dashPortfolioChange">+12.4%</div>
+                    <div class="metric-label">Portfolio 24h</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💎</div>
+                    <div class="metric-value neutral" id="dashOpportunities">3</div>
+                    <div class="metric-label">Active Opportunities</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🐋</div>
+                    <div class="metric-value neutral" id="dashWhaleBuys">5</div>
+                    <div class="metric-label">Whale Buys (1h)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🔥</div>
+                    <div class="metric-value positive" id="dashTopGainer">PUNCH</div>
+                    <div class="metric-label">Top Gainer</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📊 Portfolio Performance</div>
+                        <div class="card-badge">Live</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🎯 Latest Opportunities</div>
+                        <button class="btn btn-primary" onclick="refreshData()">Refresh</button>
+                    </div>
+                    <div id="opportunitiesList">
+                        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            Loading opportunities...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🐋 Recent Whale Activity</div>
+                </div>
+                <div id="whaleActivityFeed">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Whale</th>
+                                <th>Action</th>
+                                <th>Token</th>
+                                <th>Amount</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="whaleActivityBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Tab -->
+        <div class="tab-panel" id="portfolio-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💰 Your Portfolio</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" onclick="exportPortfolio()">📥 Export CSV</button>
+                        <button class="btn btn-primary" onclick="refreshPortfolio()">🔄 Refresh</button>
+                    </div>
+                </div>
+                <table class="data-table" id="portfolioTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" onclick="sortPortfolio('symbol')">Token <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('price')">Price <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change12h')">12h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change24h')">24h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('change1h')">1h Change <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('liquidity')">Liquidity <span class="sort-indicator">⇅</span></th>
+                            <th class="sortable" onclick="sortPortfolio('marketCap')">Market Cap <span class="sort-indicator">⇅</span></th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolioTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📈 Price History</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="priceHistoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accumulation Tab -->
+        <div class="tab-panel" id="accumulation-panel">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">⚙️ Scanner Settings</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Price Drop Threshold (%)</label>
+                            <input type="number" id="priceDropThreshold" value="30" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Volume Spike Threshold (x)</label>
+                            <input type="number" id="volumeSpikeThreshold" value="2" step="0.5" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Min Liquidity ($)</label>
+                            <input type="number" id="minLiquidity" value="10000" style="width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                        </div>
+                        <button class="btn btn-primary" onclick="startAccumulationScan()">🔍 Start Scan</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🎯 Detected Signals</div>
+                        <div class="card-badge" id="signalCount">0</div>
+                    </div>
+                    <div id="accumulationSignals">
+                        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            Click "Start Scan" to find accumulation opportunities
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Whales Tab -->
+        <div class="tab-panel" id="whales-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🐋 Whale Wallet Tracker (87 Wallets)</div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" onclick="filterWhales('all')">All</button>
+                        <button class="btn btn-secondary" onclick="filterWhales('active')">Active</button>
+                        <button class="btn btn-secondary" onclick="filterWhales('buying')">Buying</button>
+                    </div>
+                </div>
+                <div class="wallet-grid" id="whaleGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Scanner Tab -->
+        <div class="tab-panel" id="scanner-panel">
+            <!-- Track New Token Section -->
+            <div class="card" style="margin-bottom: 20px; border: 2px solid var(--accent-cyan);">
+                <div class="card-header">
+                    <div class="card-title">➕ Track New Token</div>
+                    <div class="card-badge" style="background: var(--accent-green);">NEW</div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9em;">
+                            Paste Solana Token Contract Address (ends in 'pump' or similar)
+                        </label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newTokenAddress" placeholder="e.g., NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump" 
+                                style="flex: 1; padding: 12px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: white; font-family: 'JetBrains Mono', monospace; font-size: 0.9em;">
+                            <button class="btn btn-primary" onclick="trackNewToken()" style="white-space: nowrap;">
+                                📋 Track Token
+                            </button>
+                        </div>
+                    </div>
+                    <div id="trackTokenResult" style="display: none; padding: 15px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--accent-green);">
+                        <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 5px;">✅ Token Ready to Add!</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 10px;">
+                            Copy the command below and send it to your AI assistant:
+                        </div>
+                        <div style="background: var(--bg-primary); padding: 10px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; word-break: break-all; cursor: pointer;" onclick="copyTrackCommand()" id="trackCommand">
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: var(--accent-cyan);">
+                            💡 Click the box above to copy, then paste it in chat
+                        </div>
+                    </div>
+                    <div id="trackTokenError" style="display: none; padding: 12px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 4px solid var(--accent-red); color: var(--accent-red); font-size: 0.9em;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Add from Clipboard -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">📋 Quick Add from Clipboard</div>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="btn btn-secondary" onclick="pasteAndTrack()" style="flex: 1;">
+                        📋 Paste from Clipboard
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearTrackInput()" style="flex: 1;">
+                        🗑️ Clear
+                    </button>
+                </div>
+                <div style="margin-top: 10px; font-size: 0.8em; color: var(--text-secondary);">
+                    💡 Tip: You can also paste multiple addresses separated by commas or new lines
+                </div>
+            </div>
+
+            <!-- Scanner Results -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔍 Token Scanner</div>
+                    <button class="btn btn-primary" onclick="scanNewTokens()">Scan for New Opportunities</button>
+                </div>
+                <div id="scannerResults">
+                    <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+                        <div style="font-size: 3em; margin-bottom: 20px;">🔍</div>
+                        <h3>Ready to Scan</h3>
+                        <p>Click the button above to find new meme coin opportunities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Tab -->
+        <div class="tab-panel" id="alerts-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🚨 Alert History</div>
+                    <button class="btn btn-danger" onclick="clearAlerts()">Clear All</button>
+                </div>
+                <div id="alertsList">
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        No alerts yet. Start monitoring to receive notifications.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Buttons -->
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+    <button class="export-btn" onclick="exportAllData()" title="Export All Data">💾</button>
+
+    <script>
+        // Data
+        const TOKENS = [
+            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0.01483, change12h: 11.06, change24h: 21.18, change1h: 0.94, liquidity: 743000, marketCap: 14890000 },
+            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0.0006677, change12h: -4.22, change24h: 0.96, change1h: -9.41, liquidity: 118000, marketCap: 670000 },
+            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0.00008203, change12h: 10.46, change24h: 6.29, change1h: 14.63, liquidity: 25000, marketCap: 82000 },
+            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0.00213, change12h: 9.38, change24h: 15.63, change1h: 3.12, liquidity: 191000, marketCap: 2130000 },
+            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0.001783, change12h: -0.97, change24h: -0.36, change1h: -1.58, liquidity: 154000, marketCap: 1783000 },
+            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0.0002533, change12h: 7.72, change24h: 5.87, change1h: 9.56, liquidity: 56000, marketCap: 253000 },
+            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0.000214, change12h: -8.08, change24h: -17.14, change1h: 0.97, liquidity: 42000, marketCap: 214000 },
+            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0.0002385, change12h: 7.27, change24h: 19.74, change1h: -5.21, liquidity: 47000, marketCap: 238000 },
+            { symbol: 'NEW', name: 'New Token', address: '9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump', price: 0, change12h: 0, change24h: 0, change1h: 0, liquidity: 0, marketCap: 0 },
+            { symbol: 'MAX', name: 'maxxing', address: '32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump', price: 0.002135, change12h: 3.13, change24h: 1.96, change1h: 4.3, liquidity: 199000, marketCap: 2200000 },
+            { symbol: 'GOYIM', name: 'Goyim', address: 'EJzqpRPxgZZVoVVuCXuQBNXp7mQzeH6FENMfuLRbpump', price: 0.0004182, change12h: -3.44, change24h: -6.87, change1h: 0, liquidity: 103000, marketCap: 418000 },
+            { symbol: 'ARTEMIS', name: 'Artemis Moon Mission', address: 'AtdqW9HYpx6bzuXAyuVRz6a3UiTHLoNTRJDN8buXHem7', price: 0.0001273, change12h: -0.63, change24h: -1.25, change1h: 0, liquidity: 32000, marketCap: 127000 },
+            { symbol: 'INU', name: 'INU', address: 'CmgJ1PobhUqB7MEa8qDkiG2TUpMTskWj8d9JeZWSpump', price: 0.00005544, change12h: -8.14, change24h: -16.27, change1h: 0, liquidity: 22000, marketCap: 55000 },
+            { symbol: 'FISH', name: 'rainbowfish', address: 'AbeDBXvqGnmcvX8NtQg5qgREFTw7HynkCc4u97xcpump', price: 0.0001402, change12h: -4.88, change24h: -9.75, change1h: 0, liquidity: 56000, marketCap: 140000 },
+            { symbol: 'BLIND', name: 'Blindfold Finance', address: 'BANKJmvhT8tiJRsBSS1n2HryMBPvT5Ze4HU95DUAmeta', price: 0.00004027, change12h: -1.07, change24h: -2.14, change1h: 0, liquidity: 22000, marketCap: 40000 },
+            { symbol: 'AVICI', name: 'Avici', address: 'DP4omjjY94NRJrECHBZyUQSpGrjtukoDyUbqb9Zzpump', price: 0.7186, change12h: -3.34, change24h: -6.67, change1h: 0, liquidity: 588000, marketCap: 7186000 },
+            { symbol: 'REGRET', name: 'Regret', address: 'Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump', price: 0.00002733, change12h: -1.44, change24h: -2.88, change1h: 0, liquidity: 19000, marketCap: 27000 },
+            { symbol: 'BUTT', name: 'Buttcoin', address: 'GB8KtQfMChhYrCYtd5PoAB42kAdkHnuyAincSSmFpump', price: 0.01179, change12h: -4.04, change24h: -8.07, change1h: 0, liquidity: 572000, marketCap: 11790000 },
+            { symbol: 'PIGEON', name: 'Pigeon Doctor', address: 'JB2wezZLdzWfnaCfHxLg193RS3Rh51ThiXxEDWQDpump', price: 0.0002668, change12h: 6.09, change24h: 12.18, change1h: 0, liquidity: 83000, marketCap: 266000 },
+            { symbol: 'LABUBU', name: 'LABUBU', address: '2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump', price: 0.001195, change12h: 7.29, change24h: 14.58, change1h: 0, liquidity: 403000, marketCap: 1195000 },
+            { symbol: 'OPTIMISTIC', name: 'Optimistic Minion', address: 'J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump', price: 0.0005342, change12h: 6.72, change24h: 13.44, change1h: 0, liquidity: 63000, marketCap: 534000 },
+            { symbol: 'TRIPLET', name: 'Tung Tung Tung Sahur', address: 'A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump', price: 0.002411, change12h: -2.65, change24h: -5.29, change1h: 0, liquidity: 182000, marketCap: 2411000 },
+            { symbol: 'FWOG', name: 'FWOG', address: '5z3EqYQo9HiCEs3R84RCDMu2n7anpDMxRhdK8PSWmrRC', price: 0.005752, change12h: -1.33, change24h: -2.66, change1h: 0, liquidity: 1440000, marketCap: 5752000 },
+            { symbol: 'PONKE', name: 'PONKE', address: '5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2', price: 0.03136, change12h: 0.51, change24h: 1.01, change1h: 0, liquidity: 1560000, marketCap: 31360000 },
+            { symbol: 'TROLL', name: 'TROLL', address: 'DQnkBM4eYYMnVE8Qy2K3BB7uts1fh2EwBVktEz6jpump', price: 0.0136, change12h: -1.41, change24h: -2.82, change1h: 0, liquidity: 1292000, marketCap: 13600000 },
+            { symbol: 'DOWGE', name: 'DOWGE', address: '9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump', price: 0.004224, change12h: -2.04, change24h: -4.07, change1h: 0, liquidity: 281000, marketCap: 4224000 },
+            { symbol: 'ROSIE', name: 'Rosie', address: 'AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump', price: 0.000971, change12h: 1.17, change24h: 2.34, change1h: 0, liquidity: 110000, marketCap: 971000 },
+            { symbol: 'LOBSTAR', name: 'Lobstar', address: '4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump', price: 0.006922, change12h: 11.52, change24h: 23.03, change1h: 0, liquidity: 457000, marketCap: 6922000 },
+            { symbol: 'TESTICLE', name: 'testicle', address: 'Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump', price: 0.006787, change12h: 7.13, change24h: 14.25, change1h: 0, liquidity: 507000, marketCap: 6787000 },
+            { symbol: 'SNOWBALL', name: 'snowball', address: 'AbeDBXvqGnmcvX8NtQg5qgREFTw7HynkCc4u97xcpump', price: 0.0002819, change12h: -4.53, change24h: -9.06, change1h: 0, liquidity: 98000, marketCap: 281000 }
+        ];
+
+        const WHALE_WALLETS = [
+            { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "😀", alertsOn: true },
+            { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "😀", alertsOn: true },
+            { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "😀", alertsOn: true },
+            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman the holder", emoji: "😀", alertsOn: true },
+            { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "😀", alertsOn: true },
+            { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "😀", alertsOn: true },
+            { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "😀", alertsOn: true },
+            { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "😀", alertsOn: true },
+            { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "😀", alertsOn: true },
+            { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "😀", alertsOn: true },
+            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish Top holder", emoji: "😀", alertsOn: true },
+            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird guy", emoji: "😀", alertsOn: true },
+            { address: "AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51", name: "70 mill", emoji: "😀", alertsOn: true },
+            { address: "AXduaBoy8C9ScaNCrkkZoUtLV8CWD96TEqUUhRqv5wEF", name: "Mr Patient", emoji: "😀", alertsOn: true },
+            { address: "J3jfq8o7951raAZ1J1kRUEGzgTgTBDR4hyMhnyuDMqp6", name: "Alpha Cno 1", emoji: "😀", alertsOn: true },
+            { address: "Gtg4qSMkxME783rNdwHYQ11DbQvoXgLodTBLAAa8G5C2", name: "Win all Day", emoji: "😀", alertsOn: true },
+            { address: "DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK", name: "WOn sol", emoji: "😀", alertsOn: true },
+            { address: "5t8JEn6xyLCXFm5jehbQUj3eBbgiVYUFwtL9PmCJRY9D", name: "BANKR guy", emoji: "😀", alertsOn: true },
+            { address: "DtjYbZntc2mEm1UrZHNcKguak6h6QM4S5xobnwFgg92Y", name: "Files", emoji: "😀", alertsOn: true },
+            { address: "GNrmKZCxYyNiSUsjduwwPJzhed3LATjciiKVuSGrsHEC", name: "GIANNNNN", emoji: "😀", alertsOn: true }
+        ];
+
+        // State
+        let soundEnabled = true;
+        let alerts = [];
+        let portfolioChart = null;
+
+        // Audio Context
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                initDashboard();
+                renderPortfolio();
+                renderWhales();
+                initCharts();
+            }, 1500);
+        });
+
+        function playSound(type = 'alert') {
+            if (!soundEnabled) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if (type === 'alert') {
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.2);
+            } else {
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+            }
+            
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+            document.getElementById('soundToggle').classList.toggle('muted', !soundEnabled);
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-panel').classList.add('active');
+        }
+
+        function initDashboard() {
+            document.getElementById('activeTokens').textContent = TOKENS.length;
+            
+            const avgChange = TOKENS.reduce((sum, t) => sum + t.change24h, 0) / TOKENS.length;
+            const changeEl = document.getElementById('portfolioChange');
+            changeEl.textContent = (avgChange >= 0 ? '+' : '') + avgChange.toFixed(1) + '%';
+            changeEl.style.color = avgChange >= 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+            
+            document.getElementById('dashPortfolioChange').textContent = (avgChange >= 0 ? '+' : '') + avgChange.toFixed(1) + '%';
+            document.getElementById('dashPortfolioChange').className = 'metric-value ' + (avgChange >= 0 ? 'positive' : 'negative');
+            
+            // Simulate opportunities
+            document.getElementById('opportunitiesList').innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="background: rgba(0,255,136,0.1); border-left: 4px solid var(--accent-green); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--accent-green);">🎯 PUNCH - Accumulation Signal</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">Price down 35% from high, volume up 3.2x</div>
+                    </div>
+                    <div style="background: rgba(255,165,2,0.1); border-left: 4px solid var(--accent-orange); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--accent-orange);">📊 Devious - Volume Spike</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">24h volume 2.8x average, whale buying detected</div>
+                    </div>
+                    <div style="background: rgba(0,217,255,0.1); border-left: 4px solid var(--accent-cyan); padding: 15px; border-radius: 8px;">
+                        <div style="font-weight: 600; color: var(--accent-cyan);">🔄 JUICE - Recovery Pattern</div>
+                        <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 5px;">1h green (+2.09%) while 24h still down</div>
+                    </div>
+                </div>
+            `;
+            
+            // Simulate whale activity
+            const activityBody = document.getElementById('whaleActivityBody');
+            const activities = [
+                { whale: 'SPECIAL1', action: 'BUY', token: 'PUNCH', amount: '5.2 SOL', time: '2 min ago' },
+                { whale: 'Fish insider', action: 'BUY', token: 'Devious', amount: '2.1 SOL', time: '5 min ago' },
+                { whale: 'Winrate', action: 'SELL', token: 'Jellybean', amount: '1.5 SOL', time: '12 min ago' },
+                { whale: '70 mill', action: 'BUY', token: 'JUICE', amount: '8.3 SOL', time: '18 min ago' },
+                { whale: 'Alpha Cno 1', action: 'BUY', token: 'PUNCH', amount: '3.7 SOL', time: '24 min ago' }
+            ];
+            
+            activityBody.innerHTML = activities.map(a => `
+                <tr>
+                    <td><strong>${a.whale}</strong></td>
+                    <td><span style="color: ${a.action === 'BUY' ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 600;">${a.action}</span></td>
+                    <td>${a.token}</td>
+                    <td>${a.amount}</td>
+                    <td style="color: var(--text-secondary);">${a.time}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Portfolio Sorting State
+        let portfolioSort = { column: null, direction: 'desc' };
+
+        function renderPortfolio() {
+            const tbody = document.getElementById('portfolioTableBody');
+            let displayTokens = [...TOKENS];
+            
+            // Apply sorting if active
+            if (portfolioSort.column) {
+                displayTokens.sort((a, b) => {
+                    let valA, valB;
+                    
+                    switch(portfolioSort.column) {
+                        case 'symbol':
+                            valA = a.symbol.toLowerCase();
+                            valB = b.symbol.toLowerCase();
+                            break;
+                        case 'price':
+                            valA = a.price;
+                            valB = b.price;
+                            break;
+                        case 'change12h':
+                            // Estimate 12h as average of 1h and 24h if not available
+                            valA = a.change12h || ((a.change1h + a.change24h) / 2);
+                            valB = b.change12h || ((b.change1h + b.change24h) / 2);
+                            break;
+                        case 'change24h':
+                            valA = a.change24h;
+                            valB = b.change24h;
+                            break;
+                        case 'change1h':
+                            valA = a.change1h;
+                            valB = b.change1h;
+                            break;
+                        case 'liquidity':
+                            valA = a.liquidity;
+                            valB = b.liquidity;
+                            break;
+                        case 'marketCap':
+                            valA = a.marketCap || 0;
+                            valB = b.marketCap || 0;
+                            break;
+                        default:
+                            return 0;
+                    }
+                    
+                    if (typeof valA === 'string') {
+                        return portfolioSort.direction === 'asc' 
+                            ? valA.localeCompare(valB) 
+                            : valB.localeCompare(valA);
+                    }
+                    
+                    return portfolioSort.direction === 'asc' ? valA - valB : valB - valA;
+                });
+            }
+            
+            tbody.innerHTML = displayTokens.map(token => {
+                // Calculate 12h change (estimate as average of 1h and 24h trends)
+                const change12h = token.change12h || ((token.change1h + token.change24h) / 2);
+                
+                // Format market cap
+                let marketCapDisplay = 'N/A';
+                if (token.marketCap) {
+                    if (token.marketCap >= 1000000) {
+                        marketCapDisplay = '$' + (token.marketCap / 1000000).toFixed(2) + 'M';
+                    } else if (token.marketCap >= 1000) {
+                        marketCapDisplay = '$' + (token.marketCap / 1000).toFixed(1) + 'K';
+                    } else {
+                        marketCapDisplay = '$' + token.marketCap.toFixed(0);
+                    }
+                }
+                
+                return `
+                <tr>
+                    <td>
+                        <div class="token-cell">
+                            <div class="token-icon">${token.symbol[0]}</div>
+                            <div class="token-info">
+                                <h4>${token.symbol}</h4>
+                                <span>${token.name}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-family: 'JetBrains Mono', monospace;">$${token.price.toFixed(token.price < 0.001 ? 8 : 6)}</td>
+                    <td><span class="price-change ${change12h >= 0 ? 'positive' : 'negative'}">${change12h >= 0 ? '+' : ''}${change12h.toFixed(2)}%</span></td>
+                    <td><span class="price-change ${token.change24h >= 0 ? 'positive' : 'negative'}">${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%</span></td>
+                    <td><span class="price-change ${token.change1h >= 0 ? 'positive' : 'negative'}">${token.change1h >= 0 ? '+' : ''}${token.change1h.toFixed(2)}%</span></td>
+                    <td style="color: var(--text-secondary);">$${(token.liquidity / 1000).toFixed(0)}K</td>
+                    <td style="font-family: 'JetBrains Mono', monospace; color: var(--text-secondary);">${marketCapDisplay}</td>
+                    <td>${token.change24h > 10 ? '🔥 Hot' : token.change24h < -10 ? '❄️ Cold' : '➡️ Stable'}</td>
+                </tr>
+            `}).join('');
+            
+            // Update sort indicators
+            updateSortIndicators();
+        }
+        
+        function sortPortfolio(column) {
+            if (portfolioSort.column === column) {
+                // Toggle direction
+                portfolioSort.direction = portfolioSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                // New column, default to descending for numbers, ascending for text
+                portfolioSort.column = column;
+                portfolioSort.direction = column === 'symbol' ? 'asc' : 'desc';
+            }
+            
+            renderPortfolio();
+        }
+        
+        function updateSortIndicators() {
+            document.querySelectorAll('#portfolioTable th.sortable').forEach(th => {
+                th.classList.remove('asc', 'desc');
+                const col = th.getAttribute('onclick').match(/sortPortfolio\('(.+?)'\)/)?.[1];
+                if (col === portfolioSort.column) {
+                    th.classList.add(portfolioSort.direction);
+                }
+            });
+        }
+
+        function renderWhales() {
+            const grid = document.getElementById('whaleGrid');
+            grid.innerHTML = WHALE_WALLETS.map(wallet => {
+                const shortAddr = wallet.address.substring(0, 6) + '...' + wallet.address.substring(wallet.address.length - 4);
+                return `
+                    <div class="wallet-card" onclick="viewWallet('${wallet.address}')">
+                        <div class="wallet-header">
+                            <div>
+                                <div class="wallet-name">${wallet.emoji} ${wallet.name}</div>
+                                <div class="wallet-address">${shortAddr}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span class="wallet-status ${wallet.alertsOn ? 'buying' : ''}">${wallet.alertsOn ? '🔔 Alerts ON' : '🔕 Alerts OFF'}</span>
+                            <span style="color: var(--accent-cyan);">View →</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewWallet(address) {
+            window.open(`https://birdeye.so/profile/${address}?chain=solana`, '_blank');
+        }
+
+        function initCharts() {
+            // Portfolio Chart
+            const ctx = document.getElementById('portfolioChart').getContext('2d');
+            portfolioChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    datasets: [{
+                        label: 'Portfolio Value',
+                        data: [100, 102, 98, 105, 103, 108, 112],
+                        borderColor: '#00d9ff',
+                        backgroundColor: 'rgba(0, 217, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8b8b9e' } },
+                        x: { grid: { display: false }, ticks: { color: '#8b8b9e' } }
+                    }
+                }
+            });
+
+            // Price History Chart
+            const ctx2 = document.getElementById('priceHistoryChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: TOKENS.map(t => t.symbol),
+                    datasets: [{
+                        label: '24h Change %',
+                        data: TOKENS.map(t => t.change24h),
+                        backgroundColor: TOKENS.map(t => t.change24h >= 0 ? 'rgba(0, 255, 136, 0.7)' : 'rgba(255, 71, 87, 0.7)'),
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8b8b9e' } },
+                        x: { grid: { display: false }, ticks: { color: '#8b8b9e' } }
+                    }
+                }
+            });
+        }
+
+        function startAccumulationScan() {
+            const threshold = document.getElementById('priceDropThreshold').value;
+            const volumeSpike = document.getElementById('volumeSpikeThreshold').value;
+            
+            document.getElementById('accumulationSignals').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                    <div>Scanning for accumulation patterns...</div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const signals = [
+                    { token: 'PUNCH', signal: 'Accumulation', strength: 'Strong', price: '$0.01455', change: '-35% from high', volume: '3.2x avg' },
+                    { token: 'Devious', signal: 'Volume Spike', strength: 'Medium', price: '$0.000064', change: '-60% from high', volume: '2.8x avg' },
+                    { token: 'JUICE', signal: 'Recovery', strength: 'Weak', price: '$0.00177', change: '-20% from high', volume: '1.5x avg' }
+                ];
+                
+                document.getElementById('signalCount').textContent = signals.length;
+                
+                document.getElementById('accumulationSignals').innerHTML = signals.map(s => `
+                    <div style="background: ${s.strength === 'Strong' ? 'rgba(0,255,136,0.1)' : s.strength === 'Medium' ? 'rgba(255,165,2,0.1)' : 'rgba(0,217,255,0.1)'}; 
+                                border-left: 4px solid ${s.strength === 'Strong' ? 'var(--accent-green)' : s.strength === 'Medium' ? 'var(--accent-orange)' : 'var(--accent-cyan)'}; 
+                                padding: 15px; margin-bottom: 10px; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.1em;">${s.token}</div>
+                                <div style="font-size: 0.85em; color: var(--text-secondary); margin-top: 3px;">
+                                    ${s.signal} • ${s.strength} • ${s.volume}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-family: 'JetBrains Mono', monospace;">${s.price}</div>
+                                <div style="font-size: 0.8em; color: var(--accent-red);">${s.change}</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                playSound('alert');
+                addAlert('Accumulation Scan Complete', `Found ${signals.length} signals`);
+            }, 2000);
+        }
+
+        function scanNewTokens() {
+            document.getElementById('scannerResults').innerHTML = `
+                <div style="text-align: center; padding: 60px;">
+                    <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                    <h3>Scanning Solana for new opportunities...</h3>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">Checking Pump.fun, Raydium, Orca</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                document.getElementById('scannerResults').innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                        <div class="card" style="margin: 0;">
+                            <div style="font-weight: 600; color: var(--accent-green); margin-bottom: 5px;">🆕 FISHBOWL</div>
+                            <div style="font-size: 0.85em; color: var(--text-secondary);">Just launched • $12K MC • 45 holders</div>
+                            <div style="margin-top: 10px; font-size: 0.8em;">⚠️ High risk - New token</div>
+                        </div>
+                        <div class="card" style="margin: 0;">
+                            <div style="font-weight: 600; color: var(--accent-orange); margin-bottom: 5px;">🆕 MOONCAT</div>
+                            <div style="font-size: 0.85em; color: var(--text-secondary);">2 hours old • $45K MC • 120 holders</div>
+                            <div style="margin-top: 10px; font-size: 0.8em;">📊 Medium risk - Growing fast</div>
+                        </div>
+                        <div class="card" style="margin: 0;">
+                            <div style="font-weight: 600; color: var(--text-secondary); margin-bottom: 5px;">🆕 GARBAGE</div>
+                            <div style="font-size: 0.85em; color: var(--text-secondary);">6 hours old • $8K MC • 23 holders</div>
+                            <div style="margin-top: 10px; font-size: 0.8em;">❌ Likely rug - Avoid</div>
+                        </div>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        function addAlert(title, message) {
+            const time = new Date().toLocaleTimeString();
+            alerts.unshift({ title, message, time });
+            updateAlertsList();
+            
+            document.getElementById('whaleAlerts').textContent = alerts.length;
+        }
+
+        function updateAlertsList() {
+            const list = document.getElementById('alertsList');
+            if (alerts.length === 0) {
+                list.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">No alerts yet</div>';
+                return;
+            }
+            
+            list.innerHTML = alerts.map(a => `
+                <div style="background: rgba(255,255,255,0.03); border-left: 3px solid var(--accent-cyan); padding: 15px; margin-bottom: 10px; border-radius: 8px;">
+                    <div style="font-weight: 600; margin-bottom: 5px;">${a.title}</div>
+                    <div style="font-size: 0.9em; color: var(--text-secondary);">${a.message}</div>
+                    <div style="font-size: 0.75em; color: var(--text-secondary); margin-top: 5px;">${a.time}</div>
+                </div>
+            `).join('');
+        }
+
+        function clearAlerts() {
+            alerts = [];
+            updateAlertsList();
+            document.getElementById('whaleAlerts').textContent = '0';
+        }
+
+        function dismissAlert() {
+            document.getElementById('mainAlert').classList.remove('active');
+        }
+
+        function exportPortfolio() {
+            const csv = 'Token,Price,24h Change,1h Change,Liquidity\n' + 
+                TOKENS.map(t => `${t.symbol},${t.price},${t.change24h}%,${t.change1h}%,${t.liquidity}`).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio_export.csv';
+            a.click();
+        }
+
+        function exportAllData() {
+            const data = {
+                tokens: TOKENS,
+                whales: WHALE_WALLETS,
+                alerts: alerts,
+                exported: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'weirdo_tracker_data.json';
+            a.click();
+        }
+
+        function refreshData() {
+            playSound('alert');
+            initDashboard();
+            addAlert('Data Refreshed', 'All token prices updated');
+        }
+
+        function refreshPortfolio() {
+            renderPortfolio();
+            addAlert('Portfolio Updated', 'Latest prices loaded');
+        }
+
+        function filterWhales(filter) {
+            // In real app, would filter the grid
+            addAlert('Filter Applied', `Showing ${filter} whales`);
+        }
+
+        // Track New Token Functions
+        function trackNewToken() {
+            const addressInput = document.getElementById('newTokenAddress');
+            const address = addressInput.value.trim();
+            const resultDiv = document.getElementById('trackTokenResult');
+            const errorDiv = document.getElementById('trackTokenError');
+            const commandDiv = document.getElementById('trackCommand');
+            
+            // Reset displays
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            // Validate address
+            if (!address) {
+                errorDiv.textContent = '❌ Please enter a token contract address';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Basic Solana address validation (base58, 32-44 chars)
+            if (!/^[A-HJ-NP-Za-km-z1-9]{32,44}$/.test(address)) {
+                errorDiv.textContent = '❌ Invalid Solana address format. Should be 32-44 characters (base58)';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Check if already tracked
+            const alreadyTracked = TOKENS.find(t => t.address === address);
+            if (alreadyTracked) {
+                errorDiv.innerHTML = `❌ Token already tracked: <strong>${alreadyTracked.symbol}</strong> (${alreadyTracked.name})`;
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Generate command for AI assistant
+            const command = `Add token to tracker: ${address}`;
+            commandDiv.textContent = command;
+            
+            // Show result
+            resultDiv.style.display = 'block';
+            
+            // Play sound
+            playSound('alert');
+            
+            // Auto-copy to clipboard
+            navigator.clipboard.writeText(command).then(() => {
+                addAlert('Token Ready', `Address copied: ${address.substring(0, 15)}...`);
+            }).catch(() => {
+                // Clipboard failed, user can click to copy
+            });
+        }
+        
+        function copyTrackCommand() {
+            const commandDiv = document.getElementById('trackCommand');
+            const command = commandDiv.textContent;
+            
+            navigator.clipboard.writeText(command).then(() => {
+                commandDiv.style.background = 'var(--accent-green)';
+                commandDiv.style.color = 'var(--bg-primary)';
+                setTimeout(() => {
+                    commandDiv.style.background = 'var(--bg-primary)';
+                    commandDiv.style.color = 'inherit';
+                }, 500);
+                addAlert('Copied!', 'Command copied to clipboard');
+            });
+        }
+        
+        function pasteAndTrack() {
+            const addressInput = document.getElementById('newTokenAddress');
+            
+            navigator.clipboard.readText().then(text => {
+                // Clean up the text - extract just the address
+                let cleaned = text.trim();
+                
+                // Remove common prefixes/suffixes
+                cleaned = cleaned.replace(/^solana[:\s]*/i, '');
+                cleaned = cleaned.replace(/\s+.*$/, ''); // Remove everything after first space
+                cleaned = cleaned.replace(/[\n\r].*/s, ''); // Remove newlines and after
+                
+                // Extract address if embedded in URL
+                const addressMatch = cleaned.match(/[A-HJ-NP-Za-km-z1-9]{32,44}/);
+                if (addressMatch) {
+                    cleaned = addressMatch[0];
+                }
+                
+                addressInput.value = cleaned;
+                
+                // Auto-trigger track
+                trackNewToken();
+            }).catch(err => {
+                document.getElementById('trackTokenError').textContent = '❌ Could not read clipboard. Please paste manually.';
+                document.getElementById('trackTokenError').style.display = 'block';
+            });
+        }
+        
+        function clearTrackInput() {
+            document.getElementById('newTokenAddress').value = '';
+            document.getElementById('trackTokenResult').style.display = 'none';
+            document.getElementById('trackTokenError').style.display = 'none';
+        }
+        
+        // Allow Enter key to submit
+        document.addEventListener('DOMContentLoaded', () => {
+            const tokenInput = document.getElementById('newTokenAddress');
+            if (tokenInput) {
+                tokenInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        trackNewToken();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

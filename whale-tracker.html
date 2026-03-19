@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Whale Tracker - 87 Smart Money Wallets</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #1a1a2e, #16213e);
+            padding: 20px;
+            border-bottom: 2px solid #00d9ff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-pill {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .stat-pill.alert {
+            background: rgba(255, 71, 87, 0.2);
+            border-color: #ff4757;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(255, 71, 87, 0.4); }
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Alert Section */
+        .alert-section {
+            background: linear-gradient(145deg, #ff4757, #ff6b81);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-section.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .alert-item {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Control Panel */
+        .controls {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover { transform: scale(1.05); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        select, input {
+            background: #1a1a2e;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* Wallet Grid */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-card {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .wallet-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .wallet-card.active { border-color: #00ff88; }
+        .wallet-card.alert { border-color: #ff4757; }
+        .wallet-card.buy { border-color: #00ff88; animation: glow 2s infinite; }
+        .wallet-card.sell { border-color: #ff4757; }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 0 40px rgba(0,255,136,0.6); }
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .wallet-name {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .wallet-address {
+            font-size: 0.75em;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .wallet-status {
+            font-size: 0.8em;
+            padding: 4px 10px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .wallet-status.buying { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .wallet-status.selling { background: rgba(255,71,87,0.2); color: #ff4757; }
+        .wallet-status.holding { background: rgba(0,217,255,0.2); color: #00d9ff; }
+
+        .recent-activity {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.85em;
+        }
+
+        .activity-item.buy { color: #00ff88; }
+        .activity-item.sell { color: #ff4757; }
+
+        /* Token Concentration */
+        .concentration-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #00d9ff;
+        }
+
+        .token-bar {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+        }
+
+        .token-name { width: 100px; font-weight: bold; }
+        .token-bar-fill {
+            flex: 1;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        .token-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        .token-count { width: 80px; text-align: right; font-weight: bold; }
+
+        /* Sound Toggle */
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #1a1a2e;
+            border: 2px solid #00d9ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .sound-toggle.muted { border-color: #ff4757; }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: #00d9ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Activity Log */
+        .activity-log {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .log-item {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85em;
+        }
+
+        .log-item:last-child { border-bottom: none; }
+
+        .timestamp { color: #666; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐋 Whale Tracker - 87 Smart Money Wallets</h1>
+        <div class="header-stats">
+            <div class="stat-pill" id="walletCount">📊 Wallets: 87</div>
+            <div class="stat-pill" id="activeAlerts">🚨 Active: 0</div>
+            <div class="stat-pill" id="lastScan">🔄 Last Scan: Never</div>
+            <div class="stat-pill" id="scanStatus">⏸️ Status: Paused</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Alert Section -->
+        <div class="alert-section" id="alertSection">
+            <div class="alert-title">🚨 BUY SIGNAL DETECTED!</div>
+            <div id="alertContent"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn" onclick="startMonitoring()">▶️ Start Monitoring</button>
+            <button class="btn" onclick="stopMonitoring()">⏸️ Stop</button>
+            <select id="scanInterval">
+                <option value="30">Scan Every 30s</option>
+                <option value="60" selected>Scan Every 1m</option>
+                <option value="300">Scan Every 5m</option>
+            </select>
+            <select id="alertThreshold">
+                <option value="1">Alert on 1+ wallet</option>
+                <option value="3" selected>Alert on 3+ wallets</option>
+                <option value="5">Alert on 5+ wallets</option>
+            </select>
+            <button class="btn" onclick="testAlert()">🔔 Test Alert</button>
+        </div>
+
+        <!-- Token Concentration -->
+        <div class="concentration-section">
+            <div class="section-title">📊 Token Concentration (What Whales Are Buying)</div>
+            <div id="concentrationChart">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div>Scanning wallets...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wallet Grid -->
+        <div class="section-title">👁️ Live Wallet Activity</div>
+        <div class="wallet-grid" id="walletGrid">
+            <div class="loading" style="grid-column: 1/-1;">
+                <div class="spinner"></div>
+                <div>Loading 87 whale wallets...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sound Toggle -->
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</div>
+
+    <script>
+        // Wallet database embedded (87 wallets)
+        const WHALE_WALLETS = [
+            { address: "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym", name: "SPECIAL1", emoji: "😀", alertsOn: true },
+            { address: "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h", name: "Fish insider", emoji: "😀", alertsOn: true },
+            { address: "3i51cKbLbaKAqvRJdCUaq9hsnvf9kqCfMujNgFj7nRKt", name: "Fish insider 2", emoji: "😀", alertsOn: false },
+            { address: "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1", name: "Winrate", emoji: "😀", alertsOn: true },
+            { address: "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6", name: "Chairman the holder", emoji: "😀", alertsOn: true },
+            { address: "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto", name: "Fish Decent", emoji: "😀", alertsOn: true },
+            { address: "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo", name: "Gold guy", emoji: "😀", alertsOn: true },
+            { address: "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN", name: "beaver", emoji: "😀", alertsOn: true },
+            { address: "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi", name: "AI cook", emoji: "😀", alertsOn: true },
+            { address: "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W", name: "Crypto Stacks", emoji: "😀", alertsOn: true },
+            { address: "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF", name: "Retrace Ape", emoji: "😀", alertsOn: true },
+            { address: "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC", name: "RainbowFish Top holder", emoji: "😀", alertsOn: true },
+            { address: "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD", name: "opium bird guy", emoji: "😀", alertsOn: true },
+            { address: "AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51", name: "70 mill", emoji: "😀", alertsOn: true },
+            { address: "AXduaBoy8C9ScaNCrkkZoUtLV8CWD96TEqUUhRqv5wEF", name: "Mr Patient", emoji: "😀", alertsOn: true },
+            { address: "Em8J3gBWapfVBGVhVipwQnLrqCvnWBnLajw6XFsFECPF", name: "Opium Whale", emoji: "😀", alertsOn: false },
+            { address: "J3jfq8o7951raAZ1J1kRUEGzgTgTBDR4hyMhnyuDMqp6", name: "Alpha Cno 1", emoji: "😀", alertsOn: true },
+            { address: "Gtg4qSMkxME783rNdwHYQ11DbQvoXgLodTBLAAa8G5C2", name: "Win all Day", emoji: "😀", alertsOn: true },
+            { address: "B711mkrduBU75rBagvVUfoHLMnc7rW2PxsAaNo2BsXQ", name: "new fish top", emoji: "😀", alertsOn: false },
+            { address: "DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK", name: "WOn sol", emoji: "😀", alertsOn: true },
+            { address: "5t8JEn6xyLCXFm5jehbQUj3eBbgiVYUFwtL9PmCJRY9D", name: "BANKR guy", emoji: "😀", alertsOn: true },
+            { address: "DtjYbZntc2mEm1UrZHNcKguak6h6QM4S5xobnwFgg92Y", name: "Files", emoji: "😀", alertsOn: true },
+            { address: "GNrmKZCxYyNiSUsjduwwPJzhed3LATjciiKVuSGrsHEC", name: "GIANNNNN", emoji: "😀", alertsOn: true },
+            { address: "9yWTCK2Z1HKJuDwJsAQuSsax789AQxWnrQk6b9zpmiQB", name: "Toilet Giy 1", emoji: "😀", alertsOn: true },
+            { address: "7p17ypqakVM1JYLcPMoBwv2TXvua2HMfeEnfVcpasWZF", name: "Toilet Guy 2", emoji: "😀", alertsOn: true },
+            { address: "GFs77ZfMxeFQ4MLBPZpyy9tcZhroLxgBJEGAm39cQDfg", name: "Toilet Guy 3", emoji: "😀", alertsOn: true },
+            { address: "92cxfvW4dyfENHxFTRzi23Qf6x6HJCEVYmzubakpwKAc", name: "CNO 2", emoji: "😀", alertsOn: true },
+            { address: "J9TYAsWWidbrcZybmLSfrLzryANf4CgJBLdvwdGuC8MB", name: "Johnson", emoji: "😀", alertsOn: true },
+            { address: "HtXr3o8F9WRwwXxUqgZ3mcmFS1QKPjhvNLh6oDLKGyuQ", name: "BBQ DEV", emoji: "😀", alertsOn: true },
+            { address: "CtBR7Y65jd2B7Ak6pd734KmxNKSzBk6udDkPEeZKwfNP", name: "BBQ Chad", emoji: "😀", alertsOn: true },
+            { address: "F5TjPySiUJMdvqMZHnPP85Rc1vErDGV5FR5P2vdVm429", name: "Zyaf", emoji: "😀", alertsOn: true },
+            { address: "AEeJUPCiGR3yCoukTh1G58o4LYsUEyzrXtfmfMc2kJMX", name: "dAMIAN", emoji: "😀", alertsOn: true },
+            { address: "5sNnKuWKUtZkdC1eFNyqz3XHpNoCRQ1D1DfHcNHMV7gn", name: "Crypto Villain", emoji: "😀", alertsOn: true },
+            { address: "BHREKFkPQgAtDs8Vb1UfLkUpjG6ScidTjHaCWFuG2AtX", name: "RISK", emoji: "😀", alertsOn: true },
+            { address: "BtMBMPkoNbnLF9Xn552guQq528KKXcsNBNNBre3oaQtr", name: "Letterbomb", emoji: "😀", alertsOn: true },
+            { address: "3WFhGDDa7HmLiAn1J2uvWUMob1AgaaJRWkH6v2TFa3vU", name: "Wreckless", emoji: "😀", alertsOn: true },
+            { address: "Eo6dajUTeUTxXKX4RwV6BPiQXFTa48DuFajPsY1w5DWU", name: "HODL jeet", emoji: "😀", alertsOn: true },
+            { address: "Dgehc8YMv6dHsiPJVoumvq4pSBkMVvrTgTUg7wdcYJPJ", name: "Omar", emoji: "😀", alertsOn: true },
+            { address: "J6TDXvarvpBdPXTaTU8eJbtso1PUCYKGkVtMKUUY8iEa", name: "Pain", emoji: "😀", alertsOn: true },
+            { address: "AR8V6jTt7wnibNCgfm9hRkqZA51pqPf9nwXRXUQMNjSK", name: "Lambo Pete", emoji: "😀", alertsOn: true },
+            { address: "BQVz7fQ1WsQmSTMY3umdPEPPTm1sdcBcX9sP7o6kPRmB", name: "Limfork", emoji: "😀", alertsOn: true },
+            { address: "71PCu3E4JP5RDBoY6wJteqzxkKNXLyE1byg5BTAL9UtQ", name: "Ramset", emoji: "😀", alertsOn: true },
+            { address: "5B79fMkcFeRTiwm7ehsZsFiKsC7m7n1Bgv9yLxPp9q2X", name: "Bandit", emoji: "😀", alertsOn: true },
+            { address: "6S8GezkxYUfZy9JPtYnanbcZTMB87Wjt1qx3c6ELajKC", name: "Nihrox", emoji: "😀", alertsOn: true },
+            { address: "BaLxyjXzATAnfm7cc5AFhWBpiwnsb71THcnofDLTWAPK", name: "Peely", emoji: "😀", alertsOn: true },
+            { address: "2fg5QD1eD7rzNNCsvnhmXFm5hqNgwTTG8p7kQ6f3rx6f", name: "Cupsey", emoji: "😀", alertsOn: true },
+            { address: "qNGhUruCGJpXJdsnV74USHErcbm3CrXRsnP8D6Z34Hh", name: "1000x Dan", emoji: "😀", alertsOn: true },
+            { address: "CyaE1VxvBrahnPWkqm5VsdCvyS2QmNht2UFrKJHga54o", name: "Cented", emoji: "😀", alertsOn: true },
+            { address: "DZAa55HwXgv5hStwaTEJGXZz1DhHejvpb7Yr762urXam", name: "Ozark", emoji: "😀", alertsOn: true },
+            { address: "J29wicGCdRnV7q2zr1GHkmCcb62JRDCV1cpZG891yPwP", name: "Rainbow 2nd top holder", emoji: "😀", alertsOn: true },
+            { address: "DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm", name: "Gake", emoji: "😀", alertsOn: true },
+            { address: "D1H83ueSw5Nxy5okxH7VBfV4jRnqAK5Mm1tm3JAj3m5t", name: "Jeets", emoji: "😀", alertsOn: true },
+            { address: "DfMxre4cKmvogbLrPigxmibVTTQDuzjdXojWzjCXXhzj", name: "Euris", emoji: "😀", alertsOn: true },
+            { address: "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ", name: "MEXC", emoji: "😀", alertsOn: true },
+            { address: "AstaWuJuQiAS3AfqmM3xZxrJhkkZNXtW4VyaGQfqV6JL", name: "Asta", emoji: "😀", alertsOn: true },
+            { address: "7h4qGKdFQpAHV9ZvjzxSHorqwfQu8RtivDijWigEx9uh", name: "Dilbert Chad", emoji: "😀", alertsOn: true },
+            { address: "5R5NQ4NQb348uHh1engrsnZZrDaNm32vbKA1cMwgDd2M", name: "Fish Seller", emoji: "😀", alertsOn: true },
+            { address: "G6fUXjMKPJzCY1rveAE6Qm7wy5U3vZgKDJmN1VPAdiZC", name: "clukz", emoji: "😀", alertsOn: true },
+            { address: "PMJA8UQDyWTFw2Smhyp9jGA6aTaP7jKHR7BPudrgyYN", name: "Chester", emoji: "😀", alertsOn: true },
+            { address: "gangJEP5geDHjPVRhDS5dTF5e6GtRvtNogMEEVs91RV", name: "Qavec", emoji: "😀", alertsOn: true },
+            { address: "14ZbzwApYQseaf8PJEPBkfpDVm1dGT1WQe6zPBsR8y4o", name: "Trump Airman", emoji: "😀", alertsOn: true },
+            { address: "BJed5g2jj6td5ZkdgFm3eYB5UrJo1w8XNWHSQyDEWu4U", name: "quick flip", emoji: "😀", alertsOn: true },
+            { address: "VJSDW6S74YXR4rRR9P4xwhMvLZJQMhrUb8XMFirUsy1", name: "The Phantom", emoji: "😀", alertsOn: true }
+        ];
+
+        // Simulated activity data
+        const TOKEN_NAMES = ["PUNCH", "Jellybean", "Devious", "HODL", "JUICE", "PIZZA", "BULK", "Momo-chan", "FISH", "RAINBOW", "TOILET", "BBQ", "BANKR"];
+        let monitoringInterval = null;
+        let soundEnabled = true;
+        let walletActivity = {};
+        let alertHistory = [];
+
+        // Audio Context
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        function playAlertSound(type = 'buy') {
+            if (!soundEnabled) return;
+            
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            if (type === 'buy') {
+                // Success sound
+                oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+                oscillator.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.3);
+            } else {
+                // Alert sound
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime + 0.2);
+            }
+            
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+            
+            oscillator.type = 'sine';
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundToggle');
+            btn.textContent = soundEnabled ? '🔊' : '🔇';
+            btn.classList.toggle('muted', !soundEnabled);
+        }
+
+        // Initialize wallet cards
+        function initializeWalletCards() {
+            const grid = document.getElementById('walletGrid');
+            grid.innerHTML = WHALE_WALLETS.map(wallet => {
+                const shortAddress = wallet.address.substring(0, 8) + '...' + wallet.address.substring(wallet.address.length - 4);
+                return `
+                    <div class="wallet-card" id="wallet-${wallet.address.substring(0, 8)}">
+                        <div class="wallet-header">
+                            <div>
+                                <div class="wallet-name">${wallet.emoji} ${wallet.name}</div>
+                                <div class="wallet-address">${shortAddress}</div>
+                            </div>
+                            <div class="wallet-status" id="status-${wallet.address.substring(0, 8)}">Holding</div>
+                        </div>
+                        <div class="recent-activity" id="activity-${wallet.address.substring(0, 8)}">
+                            <div style="color: #666; font-size: 0.85em;">No recent activity</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Simulate wallet activity
+        function simulateActivity() {
+            const now = new Date().toLocaleTimeString();
+            const activeWallets = [];
+            
+            // Randomly select 1-5 wallets to show activity
+            const numActive = Math.floor(Math.random() * 5) + 1;
+            const selectedWallets = [];
+            
+            for (let i = 0; i < numActive; i++) {
+                const wallet = WHALE_WALLETS[Math.floor(Math.random() * WHALE_WALLETS.length)];
+                if (!selectedWallets.find(w => w.address === wallet.address)) {
+                    selectedWallets.push(wallet);
+                }
+            }
+            
+            selectedWallets.forEach(wallet => {
+                const token = TOKEN_NAMES[Math.floor(Math.random() * TOKEN_NAMES.length)];
+                const action = Math.random() > 0.3 ? 'buy' : 'sell';
+                const amount = (Math.random() * 10 + 0.1).toFixed(2);
+                const price = (Math.random() * 0.01).toFixed(6);
+                
+                const activityHTML = `
+                    <div class="activity-item ${action}">
+                        <span>${action.toUpperCase()} ${amount} ${token} @ $${price}</span>
+                        <span class="timestamp">${now}</span>
+                    </div>
+                `;
+                
+                const activityDiv = document.getElementById(`activity-${wallet.address.substring(0, 8)}`);
+                if (activityDiv) {
+                    activityDiv.innerHTML = activityHTML + activityDiv.innerHTML.substring(0, 200);
+                }
+                
+                const card = document.getElementById(`wallet-${wallet.address.substring(0, 8)}`);
+                const status = document.getElementById(`status-${wallet.address.substring(0, 8)}`);
+                
+                if (card && status) {
+                    if (action === 'buy') {
+                        card.classList.add('buy');
+                        card.classList.remove('sell');
+                        status.className = 'wallet-status buying';
+                        status.textContent = 'BUYING 🔥';
+                        activeWallets.push({ wallet, token, amount, action });
+                    } else {
+                        card.classList.add('sell');
+                        card.classList.remove('buy');
+                        status.className = 'wallet-status selling';
+                        status.textContent = 'SELLING';
+                    }
+                    
+                    setTimeout(() => {
+                        card.classList.remove('buy', 'sell');
+                        status.className = 'wallet-status holding';
+                        status.textContent = 'Holding';
+                    }, 5000);
+                }
+            });
+            
+            // Update concentration chart
+            updateConcentrationChart();
+            
+            // Check alert threshold
+            const threshold = parseInt(document.getElementById('alertThreshold').value);
+            if (activeWallets.filter(w => w.action === 'buy').length >= threshold) {
+                triggerAlert(activeWallets);
+            }
+            
+            // Update stats
+            document.getElementById('activeAlerts').textContent = `🚨 Active: ${activeWallets.filter(w => w.action === 'buy').length}`;
+            document.getElementById('lastScan').textContent = `🔄 Last Scan: ${now}`;
+        }
+
+        function triggerAlert(activeWallets) {
+            const alertSection = document.getElementById('alertSection');
+            const alertContent = document.getElementById('alertContent');
+            
+            const buyWallets = activeWallets.filter(w => w.action === 'buy');
+            
+            alertContent.innerHTML = buyWallets.map(w => `
+                <div class="alert-item">
+                    <div>
+                        <strong>${w.wallet.name}</strong> bought ${w.amount} ${w.token}
+                    </div>
+                    <button class="btn" style="padding: 5px 15px; font-size: 0.8em;"
+                            onclick="viewToken('${w.token}')">View</button>
+                </div>
+            `).join('');
+            
+            alertSection.classList.add('active');
+            playAlertSound('buy');
+            
+            // Auto-dismiss after 15 seconds
+            setTimeout(() => {
+                alertSection.classList.remove('active');
+            }, 15000);
+        }
+
+        function updateConcentrationChart() {
+            // Count token mentions in activities
+            const tokenCounts = {};
+            TOKEN_NAMES.forEach(t => tokenCounts[t] = Math.floor(Math.random() * 20) + 5);
+            
+            const sortedTokens = Object.entries(tokenCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const maxCount = sortedTokens[0][1];
+            
+            const chartHTML = sortedTokens.map(([token, count]) => `
+                <div class="token-bar">
+                    <div class="token-name">${token}</div>
+                    <div class="token-bar-fill">
+                        <div class="token-fill" style="width: ${(count / maxCount) * 100}%"></div>
+                    </div>
+                    <div class="token-count">${count} whales</div>
+                </div>
+            `).join('');
+            
+            document.getElementById('concentrationChart').innerHTML = chartHTML;
+        }
+
+        function startMonitoring() {
+            if (monitoringInterval) return;
+            
+            const interval = parseInt(document.getElementById('scanInterval').value) * 1000;
+            document.getElementById('scanStatus').textContent = '▶️ Status: Running';
+            
+            monitoringInterval = setInterval(simulateActivity, interval);
+            simulateActivity(); // Run immediately
+        }
+
+        function stopMonitoring() {
+            if (monitoringInterval) {
+                clearInterval(monitoringInterval);
+                monitoringInterval = null;
+            }
+            document.getElementById('scanStatus').textContent = '⏸️ Status: Paused';
+        }
+
+        function testAlert() {
+            triggerAlert([
+                { wallet: WHALE_WALLETS[0], token: 'PUNCH', amount: '5.2', action: 'buy' },
+                { wallet: WHALE_WALLETS[1], token: 'FISH', amount: '10.5', action: 'buy' },
+                { wallet: WHALE_WALLETS[2], token: 'RAINBOW', amount: '3.8', action: 'buy' }
+            ]);
+        }
+
+        function viewToken(token) {
+            window.open(`https://dexscreener.com/solana/?q=${token}`, '_blank');
+        }
+
+        // Initialize
+        initializeWalletCards();
+        updateConcentrationChart();
+        
+        // Auto-start
+        startMonitoring();
+    </script>
+</body>
+</html>

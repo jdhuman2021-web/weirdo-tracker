@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Whale Wallet Tracker - Birdeye Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title.high {
+            color: #ff4757;
+            border-color: #ff4757;
+        }
+
+        .section-title.medium {
+            color: #ffa502;
+            border-color: #ffa502;
+        }
+
+        .section-title.low {
+            color: #00d9ff;
+            border-color: #00d9ff;
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 15px;
+        }
+
+        .wallet-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .wallet-card:hover {
+            transform: translateY(-3px);
+            border-color: #00d9ff;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .wallet-emoji {
+            font-size: 2em;
+        }
+
+        .wallet-info {
+            flex: 1;
+        }
+
+        .wallet-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .wallet-arrow {
+            font-size: 1.5em;
+            color: #00d9ff;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+
+        .tip {
+            background: rgba(0, 217, 255, 0.1);
+            border-left: 4px solid #00d9ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .tip-title {
+            font-weight: bold;
+            color: #00d9ff;
+            margin-bottom: 5px;
+        }
+
+        .open-all-btn {
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .open-all-btn:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .wallet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐋 Whale Wallet Tracker</h1>
+        <div class="subtitle">Quick access to all 87 smart money wallets on Birdeye</div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">87</div>
+                <div class="stat-label">Total Wallets</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">67</div>
+                <div class="stat-label">High Priority</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">20</div>
+                <div class="stat-label">Monitor Only</div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-title">💡 Pro Tip</div>
+            <div>Right-click → "Open in new tab" to check multiple wallets quickly. Bookmark this page for easy access!</div>
+        </div>
+
+        <!-- HIGH PRIORITY WALLETS -->
+        <div class="section">
+            <div class="section-title high">
+                🔥 High Priority (alertsOn: true) — Check Every 1-2 Hours
+            </div>
+            <div class="wallet-grid">
+                <a href="https://birdeye.so/profile/BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">SPECIAL1</div>
+                        <div class="wallet-address">BtDaZU...EZp2Ym</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Fish insider</div>
+                        <div class="wallet-address">AfwNi3...YT8h</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Winrate</div>
+                        <div class="wallet-address">ApRnQN...Hdz1</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Chairman the holder</div>
+                        <div class="wallet-address">Be24Gb...nRR6</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Fish Decent</div>
+                        <div class="wallet-address">ALY8eY...KUto</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Gold guy</div>
+                        <div class="wallet-address">BBp4M7...PWBo</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">beaver</div>
+                        <div class="wallet-address">GM7Hrz...8NvN</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">AI cook</div>
+                        <div class="wallet-address">89HbgW...mkDi</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Crypto Stacks</div>
+                        <div class="wallet-address">FEGu1i...tv4W</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Retrace Ape</div>
+                        <div class="wallet-address">7JAi6s...KBZF</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">RainbowFish Top holder</div>
+                        <div class="wallet-address">HAajkd...ThwC</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">opium bird guy</div>
+                        <div class="wallet-address">AdSbk6...qdTD</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">70 mill</div>
+                        <div class="wallet-address">AgmLJB...zN51</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AXduaBoy8C9ScaNCrkkZoUtLV8CWD96TEqUUhRqv5wEF?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Mr Patient</div>
+                        <div class="wallet-address">AXduaB...5wEF</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/J3jfq8o7951raAZ1J1kRUEGzgTgTBDR4hyMhnyuDMqp6?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Alpha Cno 1</div>
+                        <div class="wallet-address">J3jfq8...Mqp6</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/Gtg4qSMkxME783rNdwHYQ11DbQvoXgLodTBLAAa8G5C2?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Win all Day</div>
+                        <div class="wallet-address">Gtg4qS...G5C2</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">WOn sol</div>
+                        <div class="wallet-address">DKgvpf...yciK</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/5t8JEn6xyLCXFm5jehbQUj3eBbgiVYUFwtL9PmCJRY9D?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">BANKR guy</div>
+                        <div class="wallet-address">5t8JEn...RY9D</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/DtjYbZntc2mEm1UrZHNcKguak6h6QM4S5xobnwFgg92Y?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Files</div>
+                        <div class="wallet-address">DtjYbZ...g92Y</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/GNrmKZCxYyNiSUsjduwwPJzhed3LATjciiKVuSGrsHEC?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">GIANNNNN</div>
+                        <div class="wallet-address">GNrmKZ...sHEC</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/9yWTCK2Z1HKJuDwJsAQuSsax789AQxWnrQk6b9zpmiQB?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Toilet Giy 1</div>
+                        <div class="wallet-address">9yWTCK...miQB</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/7p17ypqakVM1JYLcPMoBwv2TXvua2HMfeEnfVcpasWZF?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Toilet Guy 2</div>
+                        <div class="wallet-address">7p17yp...sWZF</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/GFs77ZfMxeFQ4MLBPZpyy9tcZhroLxgBJEGAm39cQDfg?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Toilet Guy 3</div>
+                        <div class="wallet-address">GFs77Z...QDfg</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/92cxfvW4dyfENHxFTRzi23Qf6x6HJCEVYmzubakpwKAc?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">CNO 2</div>
+                        <div class="wallet-address">92cxfv...KAc</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/J9TYAsWWidbrcZybmLSfrLzryANf4CgJBLdvwdGuC8MB?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Johnson</div>
+                        <div class="wallet-address">J9TYAs...C8MB</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/HtXr3o8F9WRwwXxUqgZ3mcmFS1QKPjhvNLh6oDLKGyuQ?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">BBQ DEV</div>
+                        <div class="wallet-address">HtXr3o...GyuQ</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/CtBR7Y65jd2B7Ak6pd734KmxNKSzBk6udDkPEeZKwfNP?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">BBQ Chad</div>
+                        <div class="wallet-address">CtBR7Y...wfNP</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/F5TjPySiUJMdvqMZHnPP85Rc1vErDGV5FR5P2vdVm429?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Zyaf</div>
+                        <div class="wallet-address">F5TjPy...m429</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AEeJUPCiGR3yCoukTh1G58o4LYsUEyzrXtfmfMc2kJMX?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">dAMIAN</div>
+                        <div class="wallet-address">AEeJUP...kJMX</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/5sNnKuWKUtZkdC1eFNyqz3XHpNoCRQ1D1DfHcNHMV7gn?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Crypto Villain</div>
+                        <div class="wallet-address">5sNnKu...V7gn</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BHREKFkPQgAtDs8Vb1UfLkUpjG6ScidTjHaCWFuG2AtX?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">RISK</div>
+                        <div class="wallet-address">BHREKF...2AtX</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BtMBMPkoNbnLF9Xn552guQq528KKXcsNBNNBre3oaQtr?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Letterbomb</div>
+                        <div class="wallet-address">BtMBMP...aQtr</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/3WFhGDDa7HmLiAn1J2uvWUMob1AgaaJRWkH6v2TFa3vU?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Wreckless</div>
+                        <div class="wallet-address">3WFhGD...a3vU</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/Eo6dajUTeUTxXKX4RwV6BPiQXFTa48DuFajPsY1w5DWU?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">HODL jeet</div>
+                        <div class="wallet-address">Eo6daj...5DWU</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/Dgehc8YMv6dHsiPJVoumvq4pSBkMVvrTgTUg7wdcYJPJ?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Omar</div>
+                        <div class="wallet-address">Dgehc8...YJPJ</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/J6TDXvarvpBdPXTaTU8eJbtso1PUCYKGkVtMKUUY8iEa?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Pain</div>
+                        <div class="wallet-address">J6TDXv...8iEa</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AR8V6jTt7wnibNCgfm9hRkqZA51pqPf9nwXRXUQMNjSK?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Lambo Pete</div>
+                        <div class="wallet-address">AR8V6j...NjSK</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BQVz7fQ1WsQmSTMY3umdPEPPTm1sdcBcX9sP7o6kPRmB?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Limfork</div>
+                        <div class="wallet-address">BQVz7f...PRmB</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/71PCu3E4JP5RDBoY6wJteqzxkKNXLyE1byg5BTAL9UtQ?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Ramset</div>
+                        <div class="wallet-address">71PCu3...9UtQ</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/5B79fMkcFeRTiwm7ehsZsFiKsC7m7n1Bgv9yLxPp9q2X?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Bandit</div>
+                        <div class="wallet-address">5B79fM...9q2X</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/6S8GezkxYUfZy9JPtYnanbcZTMB87Wjt1qx3c6ELajKC?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Nihrox</div>
+                        <div class="wallet-address">6S8Gez...ajKC</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BaLxyjXzATAnfm7cc5AFhWBpiwnsb71THcnofDLTWAPK?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Peely</div>
+                        <div class="wallet-address">BaLxyj...WAPK</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/2fg5QD1eD7rzNNCsvnhmXFm5hqNgwTTG8p7kQ6f3rx6f?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Cupsey</div>
+                        <div class="wallet-address">2fg5QD...rx6f</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/qNGhUruCGJpXJdsnV74USHErcbm3CrXRsnP8D6Z34Hh?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">1000x Dan</div>
+                        <div class="wallet-address">qNGhUr...34Hh</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/CyaE1VxvBrahnPWkqm5VsdCvyS2QmNht2UFrKJHga54o?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Cented</div>
+                        <div class="wallet-address">CyaE1V...a54o</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/DZAa55HwXgv5hStwaTEJGXZz1DhHejvpb7Yr762urXam?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Ozark</div>
+                        <div class="wallet-address">DZAa55...rXam</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/J29wicGCdRnV7q2zr1GHkmCcb62JRDCV1cpZG891yPwP?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Rainbow 2nd top holder</div>
+                        <div class="wallet-address">J29wic...yPwP</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Gake</div>
+                        <div class="wallet-address">DNfuF1...eBHm</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/D1H83ueSw5Nxy5okxH7VBfV4jRnqAK5Mm1tm3JAj3m5t?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Jeets</div>
+                        <div class="wallet-address">D1H83u...3m5t</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/DfMxre4cKmvogbLrPigxmibVTTQDuzjdXojWzjCXXhzj?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Euris</div>
+                        <div class="wallet-address">DfMxre...Xhzj</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">MEXC</div>
+                        <div class="wallet-address">ASTyfS...iaJZ</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AstaWuJuQiAS3AfqmM3xZxrJhkkZNXtW4VyaGQfqV6JL?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Asta</div>
+                        <div class="wallet-address">AstaWu...V6JL</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/7h4qGKdFQpAHV9ZvjzxSHorqwfQu8RtivDijWigEx9uh?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Dilbert Chad</div>
+                        <div class="wallet-address">7h4qGK...Ex9uh</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/5R5NQ4NQb348uHh1engrsnZZrDaNm32vbKA1cMwgDd2M?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Fish Seller</div>
+                        <div class="wallet-address">5R5NQ4...Dd2M</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/G6fUXjMKPJzCY1rveAE6Qm7wy5U3vZgKDJmN1VPAdiZC?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">clukz</div>
+                        <div class="wallet-address">G6fUXj...diZC</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/PMJA8UQDyWTFw2Smhyp9jGA6aTaP7jKHR7BPudrgyYN?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Chester</div>
+                        <div class="wallet-address">PMJA8U...gyYN</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/gangJEP5geDHjPVRhDS5dTF5e6GtRvtNogMEEVs91RV?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Qavec</div>
+                        <div class="wallet-address">gangJE...91RV</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/14ZbzwApYQseaf8PJEPBkfpDVm1dGT1WQe6zPBsR8y4o?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Trump Airman</div>
+                        <div class="wallet-address">14Zbzw...R8y4o</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/BJed5g2jj6td5ZkdgFm3eYB5UrJo1w8XNWHSQyDEWu4U?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">quick flip</div>
+                        <div class="wallet-address">BJed5g...Wu4U</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/VJSDW6S74YXR4rRR9P4xwhMvLZJQMhrUb8XMFirUsy1?chain=solana" target="_blank" class="wallet-card">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">The Phantom</div>
+                        <div class="wallet-address">VJSDW6...Usy1</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- LOW PRIORITY WALLETS -->
+        <div class="section">
+            <div class="section-title low">
+                🔵 Monitor Only (alertsOn: false) — Check Daily/Weekly
+            </div>
+            <div class="wallet-grid">
+                <a href="https://birdeye.so/profile/3i51cKbLbaKAqvRJdCUaq9hsnvf9kqCfMujNgFj7nRKt?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Fish insider 2</div>
+                        <div class="wallet-address">3i51cK...nRKt</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/Em8J3gBWapfVBGVhVipwQnLrqCvnWBnLajw6XFsFECPF?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Opium Whale</div>
+                        <div class="wallet-address">Em8J3g...ECPF</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/B711mkrduBU75rBagvVUfoHLMnc7rW2PxsAaNo2BsXQ?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">new fish top</div>
+                        <div class="wallet-address">B711mk...BsXQ</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/51ktg8vYic3XHpZ7N8AFv7GriVC4ake7TQ5j8RX7N1J5?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Lucca Insider 1</div>
+                        <div class="wallet-address">51ktg8...N1J5</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/AgEkFUGK8FxfkBJCGaL9iRY4mj8zL5KVi1bEofsbu4BW?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Lucca Insider 2</div>
+                        <div class="wallet-address">AgEkFU...u4BW</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/H5d8DMkLywD7UJ7gkEM2aSsrGEcbQ9DqhmZ3LjPQdM7V?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Lucca Master 1</div>
+                        <div class="wallet-address">H5d8DM...dM7V</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+
+                <a href="https://birdeye.so/profile/8avtb3GZapmpYWUjXoJYCXfATRBhH8SGQkyDSoqF6CPC?chain=solana" target="_blank" class="wallet-card" style="opacity: 0.7;">
+                    <div class="wallet-emoji">😀</div>
+                    <div class="wallet-info">
+                        <div class="wallet-name">Lucca Master 2</div>
+                        <div class="wallet-address">8avtb3...6CPC</div>
+                    </div>
+                    <div class="wallet-arrow">→</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🐋 87 Smart Money Wallets | Organized by Priority | Click any wallet to view on Birdeye</p>
+            <p style="margin-top: 10px; color: #666;">Last Updated: 2026-03-19</p>
+        </div>
+    </div>
+</body>
+</html>
