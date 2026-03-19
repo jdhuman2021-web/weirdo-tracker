@@ -107,18 +107,18 @@
     </div>
 
     <script>
-        // Token Data
+        // Token Data with addresses for DexScreener links
         const TOKENS = [
-            { symbol: 'PUNCH', name: 'パンチ', price: 0.01483, change24h: 21.18, liquidity: 743000, marketCap: 14890000, volumeSpike: 1.5, whaleBuys1h: 3 },
-            { symbol: 'Jellybean', name: 'Jellybean', price: 0.0006677, change24h: 0.96, liquidity: 118000, marketCap: 670000, volumeSpike: 0.8, whaleBuys1h: 0 },
-            { symbol: 'Devious', name: 'Devious MF', price: 0.00008203, change24h: 6.29, liquidity: 25000, marketCap: 82000, volumeSpike: 2.8, whaleBuys1h: 1 },
-            { symbol: 'HODL', name: 'HODL', price: 0.00213, change24h: 15.63, liquidity: 191000, marketCap: 2130000, volumeSpike: 1.2, whaleBuys1h: 2 },
-            { symbol: 'JUICE', name: 'JUICE', price: 0.001783, change24h: -0.36, liquidity: 154000, marketCap: 1783000, volumeSpike: 0.9, whaleBuys1h: 0 },
-            { symbol: 'PIZZA', name: 'Bitcoin Pizza', price: 0.0002533, change24h: 5.87, liquidity: 56000, marketCap: 253000, volumeSpike: 1.1, whaleBuys1h: 1 },
-            { symbol: 'BULK', name: 'bulk', price: 0.000214, change24h: -17.14, liquidity: 42000, marketCap: 214000, volumeSpike: 0.6, whaleBuys1h: 0 },
-            { symbol: 'Momo-chan', name: 'モモちゃん', price: 0.0002385, change24h: 19.74, liquidity: 47000, marketCap: 238000, volumeSpike: 1.8, whaleBuys1h: 2 },
-            { symbol: 'MAX', name: 'maxxing', price: 0.002135, change24h: 1.96, liquidity: 199000, marketCap: 2200000, volumeSpike: 1.0, whaleBuys1h: 1 },
-            { symbol: 'LOBSTAR', name: 'Lobstar', price: 0.006922, change24h: 23.03, liquidity: 457000, marketCap: 6922000, volumeSpike: 2.1, whaleBuys1h: 3 }
+            { symbol: 'PUNCH', name: 'パンチ', address: 'NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump', price: 0.01483, change24h: 21.18, liquidity: 743000, marketCap: 14890000, volumeSpike: 1.5, whaleBuys1h: 3 },
+            { symbol: 'Jellybean', name: 'Jellybean', address: '412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump', price: 0.0006677, change24h: 0.96, liquidity: 118000, marketCap: 670000, volumeSpike: 0.8, whaleBuys1h: 0 },
+            { symbol: 'Devious', name: 'Devious MF', address: 'CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump', price: 0.00008203, change24h: 6.29, liquidity: 25000, marketCap: 82000, volumeSpike: 2.8, whaleBuys1h: 1 },
+            { symbol: 'HODL', name: 'HODL', address: 'Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqE8x9pump', price: 0.00213, change24h: 15.63, liquidity: 191000, marketCap: 2130000, volumeSpike: 1.2, whaleBuys1h: 2 },
+            { symbol: 'JUICE', name: 'JUICE', address: '2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump', price: 0.001783, change24h: -0.36, liquidity: 154000, marketCap: 1783000, volumeSpike: 0.9, whaleBuys1h: 0 },
+            { symbol: 'PIZZA', name: 'Bitcoin Pizza', address: 'G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump', price: 0.0002533, change24h: 5.87, liquidity: 56000, marketCap: 253000, volumeSpike: 1.1, whaleBuys1h: 1 },
+            { symbol: 'BULK', name: 'bulk', address: 'F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump', price: 0.000214, change24h: -17.14, liquidity: 42000, marketCap: 214000, volumeSpike: 0.6, whaleBuys1h: 0 },
+            { symbol: 'Momo-chan', name: 'モモちゃん', address: '3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump', price: 0.0002385, change24h: 19.74, liquidity: 47000, marketCap: 238000, volumeSpike: 1.8, whaleBuys1h: 2 },
+            { symbol: 'MAX', name: 'maxxing', address: '32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump', price: 0.002135, change24h: 1.96, liquidity: 199000, marketCap: 2200000, volumeSpike: 1.0, whaleBuys1h: 1 },
+            { symbol: 'LOBSTAR', name: 'Lobstar', address: '4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump', price: 0.006922, change24h: 23.03, liquidity: 457000, marketCap: 6922000, volumeSpike: 2.1, whaleBuys1h: 3 }
         ];
 
         let currentSort = { column: null, direction: 'desc' };
@@ -247,8 +247,16 @@
             document.getElementById('portfolioBody').innerHTML = displayTokens.map(t => {
                 const status = getStatus(t);
                 return `
-                    <tr>
-                        <td><strong>${t.symbol}</strong><br><small style="color: #8b8b9e;">${t.name}</small></td>
+                    <tr style="cursor: pointer;" onclick="window.open('https://dexscreener.com/solana/${t.address}', '_blank')">
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #00d9ff, #00ff88); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">${t.symbol[0]}</div>
+                                <div>
+                                    <div style="font-weight: 600; color: #00d9ff; text-decoration: underline;">${t.symbol}</div>
+                                    <div style="color: #8b8b9e; font-size: 0.85em;">${t.name}</div>
+                                </div>
+                            </div>
+                        </td>
                         <td style="font-family: monospace;">$${t.price.toFixed(t.price < 0.001 ? 6 : 4)}</td>
                         <td class="${t.change24h >= 0 ? 'positive' : 'negative'}">${t.change24h >= 0 ? '+' : ''}${t.change24h.toFixed(2)}%</td>
                         <td>$${(t.liquidity / 1000).toFixed(0)}K</td>
