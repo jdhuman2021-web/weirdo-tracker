@@ -870,7 +870,7 @@
         
         function renderOpportunities() {
             const ops = currentData.opportunities || [];
-            const strongBuys = ops.filter(o => o.score >= 45); // Lowered to include Watch tier (40+)
+            const strongBuys = ops.filter(o => o.score >= 40); // Show Watch tier (40+)
             
             let html = '';
             
