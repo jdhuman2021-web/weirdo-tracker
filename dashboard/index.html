@@ -593,6 +593,7 @@
                     <div class="chart-title-info">
                         <h2 id="selectedName">Select a Token</h2>
                         <span id="selectedMeta">Click a token from the watchlist</span>
+                        <button class="copy-address-btn" id="copyAddressBtn" onclick="copyContractAddress()" style="display: none; margin-left: 10px; padding: 4px 10px; background: rgba(0,255,136,0.15); border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); font-size: 11px; cursor: pointer; font-family: monospace;">📋 Copy Address</button>
                     </div>
                 </div>
                 <div class="chart-price">
@@ -956,6 +957,15 @@
             document.getElementById('selectedMeta').textContent = `${selectedToken.name} • $${formatNumber(selectedToken.market_cap)} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
             document.getElementById('selectedPrice').textContent = '$' + formatNumber(selectedToken.market_cap);
             
+            // Show copy address button
+            const copyBtn = document.getElementById('copyAddressBtn');
+            if (selectedToken.address) {
+                copyBtn.style.display = 'inline-block';
+                copyBtn.dataset.address = selectedToken.address;
+            } else {
+                copyBtn.style.display = 'none';
+            }
+            
             const changeEl = document.getElementById('selectedChange');
             const change = selectedToken.price_change_24h;
             changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '% (24h)';
@@ -1061,6 +1071,31 @@
         function showError() {
             document.getElementById('tokenList').innerHTML = '<div class="error">⚠️ Data unavailable<br><small>Push to GitHub to activate</small></div>';
             document.getElementById('opportunitiesList').innerHTML = '<div class="error">Waiting for data...</div>';
+        }
+        
+        // Copy Contract Address
+        function copyContractAddress() {
+            const btn = document.getElementById('copyAddressBtn');
+            const address = btn.dataset.address;
+            
+            if (!address) return;
+            
+            navigator.clipboard.writeText(address).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = 'rgba(0,255,136,0.3)';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'rgba(0,255,136,0.15)';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                btn.textContent = '❌ Failed';
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Address';
+                }, 2000);
+            });
         }
         
         // Initialize
