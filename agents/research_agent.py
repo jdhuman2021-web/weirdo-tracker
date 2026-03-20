@@ -47,16 +47,24 @@ def fetch_token_data(token):
             age_delta = datetime.utcnow() - created_dt
             age_hours = int(age_delta.total_seconds() / 3600)
         
-        # Fetch holder count from Solscan (optional, best effort)
+        # Fetch holder count from Birdeye (free, no API key needed)
         holder_count = 0
         try:
-            solscan_url = f"https://api.solscan.io/token/holder?tokenAddress={token['address']}"
-            holder_resp = requests.get(solscan_url, timeout=5)
+            # Birdeye public API - no auth required
+            birdeye_url = f"https://public-api.birdeye.so/defi/token_holder?address={token['address']}"
+            holder_resp = requests.get(birdeye_url, timeout=5)
             if holder_resp.status_code == 200:
                 holder_data = holder_resp.json()
-                holder_count = holder_data.get('totalHolders', 0)
-        except:
-            holder_count = 0  # API may require auth
+                holder_count = holder_data.get('data', {}).get('totalHolders', 0)
+                print(f"👥 {holder_count} holders")
+        except Exception as e:
+            # Fallback: estimate from transaction count
+            txns_24h = pair.get('txns', {}).get('h24', {})
+            if txns_24h:
+                # Rough estimate: unique holders ≈ (buys + sells) / 3
+                estimated = (txns_24h.get('buys', 0) + txns_24h.get('sells', 0)) // 3
+                holder_count = max(estimated, 10)  # Minimum 10
+            print(f"👥 ~{holder_count} holders (estimated)")
         
         return {
             'symbol': token['symbol'],
