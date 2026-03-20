@@ -49,30 +49,31 @@ def calculate_score(token):
         risk_factors.append("Already pumped +50% - late entry risk")
     
     # ============================================
-    # 2. VOLUME/LIQUIDITY RATIO (30 points max)
+    # 2. VOLUME/LIQUIDITY RATIO (35 points max)
     # ============================================
-    # High volume vs liquidity = accumulation or distribution
+    # EXTREME VOLUME = BULLISH! Whale accumulation signal
     volume = token.get('volume_24h', 0)
     liquidity = token.get('liquidity_usd', 1)
     vol_ratio = volume / liquidity if liquidity > 0 else 0
     
-    # Sweet spot: 2-5x ratio (healthy interest, not manipulation)
-    if 2.0 <= vol_ratio <= 5.0:
-        score += 30  # Perfect: healthy volume
-        reasons.append(f"Volume {vol_ratio:.1f}x liquidity - healthy accumulation")
+    # EXTREME VOLUME IS GOOD - whales are accumulating!
+    if vol_ratio > 10:
+        score += 35  # Maximum! Extreme whale activity
+        reasons.append(f"Volume {vol_ratio:.1f}x - EXTREME whale accumulation!")
     elif vol_ratio > 5.0:
-        score += 25  # Very high: could be manipulation or viral
-        reasons.append(f"Volume {vol_ratio:.1f}x - viral or manipulation")
-        if vol_ratio > 10:
-            risk_factors.append("Extreme vol ratio - possible pump scheme")
+        score += 32  # Very high - strong interest
+        reasons.append(f"Volume {vol_ratio:.1f}x - viral momentum")
+    elif 2.0 <= vol_ratio <= 5.0:
+        score += 28  # Healthy accumulation
+        reasons.append(f"Volume {vol_ratio:.1f}x liquidity - healthy accumulation")
     elif vol_ratio > 1.5:
-        score += 18  # Good: above average
+        score += 20  # Good: above average
         reasons.append(f"Volume {vol_ratio:.1f}x - rising interest")
     elif vol_ratio > 1.0:
-        score += 10  # Moderate: slightly above average
+        score += 12  # Moderate: slightly above average
         reasons.append("Volume above liquidity - mild interest")
     else:
-        score -= 5  # Penalize: dead token
+        score -= 10  # Penalize: dead token
         risk_factors.append("Volume below liquidity - dead/abandoned")
     
     # ============================================
