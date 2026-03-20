@@ -62,7 +62,7 @@ jobs:
         python3 agents/whale_activity_agent.py || echo "Whale failed"
       continue-on-error: true
     
-    - name: Run Thinking
+    - name: Run Thinking (with whale data)
       id: thinking
       run: |
         echo "Running Thinking Agent..."
