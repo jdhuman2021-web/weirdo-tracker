@@ -821,11 +821,11 @@
         
         function renderOpportunities() {
             const ops = currentData.opportunities || [];
-            const strongBuys = ops.filter(o => o.score >= 70);
+            const strongBuys = ops.filter(o => o.score >= 60);
             
             let html = '';
             
-            strongBuys.slice(0, 8).forEach(token => {
+            strongBuys.slice(0, 10).forEach(token => {
                 html += `
                     <div class="opportunity-card" onclick="selectTokenBySymbol('${token.symbol}')">
                         <div class="opportunity-header">
