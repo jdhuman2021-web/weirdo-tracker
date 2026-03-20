@@ -2,7 +2,7 @@ name: Weirdo Tracker - Data Pipeline
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Every 15 minutes
+    - cron: '*/30 * * * *'  # Every 30 minutes (free tier friendly)
   workflow_dispatch:
     inputs:
       reason:
