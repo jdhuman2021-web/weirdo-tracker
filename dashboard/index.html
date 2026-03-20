@@ -752,7 +752,7 @@
                 return `
                     <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
                         <span class="ticker-symbol">${token.symbol}</span>
-                        <span class="ticker-price">$${formatPrice(token.price_usd)}</span>
+                        <span class="ticker-price">MC: $${formatNumber(token.market_cap)}</span>
                         <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
                     </div>
                 `;
@@ -762,7 +762,7 @@
                 return `
                     <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
                         <span class="ticker-symbol">${token.symbol}</span>
-                        <span class="ticker-price">$${formatPrice(token.price_usd)}</span>
+                        <span class="ticker-price">MC: $${formatNumber(token.market_cap)}</span>
                         <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
                     </div>
                 `;
@@ -859,7 +859,7 @@
                                 ${token.symbol}
                                 <span class="signal-dot ${signalClass}"></span>
                             </div>
-                            <div class="token-list-price">$${formatPrice(token.price_usd)}</div>
+                            <div class="token-list-price">MC: $${formatNumber(token.market_cap)}</div>
                         </div>
                         <div class="token-list-change ${changeClass}">${changeSign}${token.price_change_24h.toFixed(1)}%</div>
                     </div>
@@ -885,7 +885,7 @@
                         <div class="opportunity-reason">${token.reasons?.slice(0, 2).join(' • ') || 'Analyzing...'}</div>
                         <div class="opportunity-meta">
                             <span>${token.price_change_24h > 0 ? '+' : ''}${token.price_change_24h.toFixed(1)}% 24h</span>
-                            <span>Vol: $${formatNumber(token.volume_24h)}</span>
+                            <span>MC: $${formatNumber(token.market_cap)}</span>
                         </div>
                     </div>
                 `;
@@ -916,8 +916,8 @@
             document.getElementById('selectedIcon').textContent = selectedToken.symbol[0];
             document.getElementById('selectedIcon').style.background = getTokenGradient(selectedToken.symbol);
             document.getElementById('selectedName').textContent = `${selectedToken.symbol} / ${selectedToken.chain}`;
-            document.getElementById('selectedMeta').textContent = `${selectedToken.name} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
-            document.getElementById('selectedPrice').textContent = '$' + formatPrice(selectedToken.price_usd);
+            document.getElementById('selectedMeta').textContent = `${selectedToken.name} • MC: $${formatNumber(selectedToken.market_cap)} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
+            document.getElementById('selectedPrice').textContent = 'MC: $' + formatNumber(selectedToken.market_cap);
             
             const changeEl = document.getElementById('selectedChange');
             const change = selectedToken.price_change_24h;
