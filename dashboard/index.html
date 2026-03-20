@@ -605,9 +605,10 @@
             <div class="chart-container">
                 <div id="tradingview_chart" style="height: 550px; width: 100%; margin-bottom: 20px;"></div>
                 
-                <div class="chart-stats" style="margin-top: 0;">
+                <!-- Compact Single-Row Stats -->
+                <div class="chart-stats" style="margin-top: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;">
                     <div class="chart-stat">
-                        <div class="chart-stat-label">24h Volume</div>
+                        <div class="chart-stat-label">Volume</div>
                         <div class="chart-stat-value" id="statVolume">--</div>
                     </div>
                     <div class="chart-stat">
@@ -621,18 +622,6 @@
                     <div class="chart-stat">
                         <div class="chart-stat-label">Score</div>
                         <div class="chart-stat-value" id="statScore" style="color: var(--accent);">--</div>
-                    </div>
-                </div>
-                
-                <!-- Extended Stats Row -->
-                <div class="chart-stats" style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Holders</div>
-                        <div class="chart-stat-value" id="statHolders">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Holder Growth</div>
-                        <div class="chart-stat-value" id="statHolderGrowth">--</div>
                     </div>
                     <div class="chart-stat">
                         <div class="chart-stat-label">Age</div>
@@ -975,13 +964,6 @@
             document.getElementById('statLiquidity').textContent = '$' + formatNumber(selectedToken.liquidity_usd);
             document.getElementById('statMcap').textContent = '$' + formatNumber(selectedToken.market_cap);
             document.getElementById('statScore').textContent = selectedToken.score + '/100';
-            
-            // Extended stats
-            document.getElementById('statHolders').textContent = selectedToken.holder_count > 0 ? selectedToken.holder_count : '~' + ((selectedToken.txns?.h24?.buys || 0) + (selectedToken.txns?.h24?.sells || 0)) / 3;
-            const holderGrowth = selectedToken.holder_growth_24h || 0;
-            const holderGrowthEl = document.getElementById('statHolderGrowth');
-            holderGrowthEl.textContent = holderGrowth !== 0 ? '+' + holderGrowth.toFixed(1) + '%' : 'N/A';
-            holderGrowthEl.style.color = holderGrowth > 10 ? 'var(--accent)' : holderGrowth < -5 ? 'var(--danger)' : 'var(--text-secondary)';
             document.getElementById('statAge').textContent = selectedToken.age_hours ? `${selectedToken.age_hours}h` : 'N/A';
             const volRatio = selectedToken.volume_24h / (selectedToken.liquidity_usd || 1);
             document.getElementById('statVolRatio').textContent = volRatio.toFixed(1) + 'x';
