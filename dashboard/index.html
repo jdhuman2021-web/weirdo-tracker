@@ -186,6 +186,16 @@
             color: var(--accent);
         }
         
+        .sort-arrow {
+            font-size: 9px;
+            margin-left: 2px;
+            opacity: 0.7;
+        }
+        
+        .sort-btn.active .sort-arrow {
+            opacity: 1;
+        }
+        
         .token-list {
             overflow-y: auto;
             flex: 1;
@@ -561,12 +571,12 @@
                 <div>Watchlist</div>
                 <div class="sort-controls">
                     <button class="sort-btn active" onclick="sortTokens('default')">Default</button>
-                    <button class="sort-btn" onclick="sortTokens('alpha')">A-Z</button>
-                    <button class="sort-btn" onclick="sortTokens('score')">Score</button>
-                    <button class="sort-btn" onclick="sortTokens('change')">24h%</button>
-                    <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap</button>
-                    <button class="sort-btn" onclick="sortTokens('volume')">Volume</button>
-                    <button class="sort-btn" onclick="sortTokens('age')">Age</button>
+                    <button class="sort-btn" onclick="sortTokens('alpha')">A-Z <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('score')">Score <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('change')">24h% <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('volume')">Volume <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('age')">Age <span class="sort-arrow">↓</span></button>
                 </div>
             </div>
             <div class="token-list" id="tokenList">
@@ -717,9 +727,18 @@
         }
         
         let currentSort = 'default';
+        let sortDirection = {}; // Track direction per sort type
         
         function sortTokens(type) {
-            currentSort = type;
+            // Toggle direction if clicking same sort
+            if (currentSort === type) {
+                sortDirection[type] = !sortDirection[type];
+            } else {
+                currentSort = type;
+                if (sortDirection[type] === undefined) {
+                    sortDirection[type] = false; // Default ascending
+                }
+            }
             
             // Update button states
             document.querySelectorAll('.sort-btn').forEach(btn => {
@@ -729,27 +748,49 @@
                 }
             });
             
+            // Update arrow direction
+            updateSortArrows();
+            
             renderTokenList();
+        }
+        
+        function updateSortArrows() {
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                const arrow = btn.querySelector('.sort-arrow');
+                if (!arrow) return;
+                
+                const btnType = btn.textContent.toLowerCase().includes('alpha') ? 'alpha' :
+                               btn.textContent.toLowerCase().includes('score') ? 'score' :
+                               btn.textContent.toLowerCase().includes('24h') ? 'change' :
+                               btn.textContent.toLowerCase().includes('mkt') ? 'mcap' :
+                               btn.textContent.toLowerCase().includes('volume') ? 'volume' :
+                               btn.textContent.toLowerCase().includes('age') ? 'age' : 'default';
+                
+                if (arrow) {
+                    arrow.textContent = sortDirection[btnType] ? '↑' : '↓';
+                }
+            });
         }
         
         function getSortedTokens() {
             if (!currentData || !currentData.opportunities) return [];
             
             const ops = [...currentData.opportunities];
+            const dir = sortDirection[currentSort] ? -1 : 1; // false=asc, true=desc
             
             switch (currentSort) {
                 case 'score':
-                    return ops.sort((a, b) => b.score - a.score);
+                    return ops.sort((a, b) => (b.score - a.score) * dir);
                 case 'change':
-                    return ops.sort((a, b) => b.price_change_24h - a.price_change_24h);
+                    return ops.sort((a, b) => (b.price_change_24h - a.price_change_24h) * dir);
                 case 'mcap':
-                    return ops.sort((a, b) => b.market_cap - a.market_cap);
+                    return ops.sort((a, b) => (b.market_cap - a.market_cap) * dir);
                 case 'volume':
-                    return ops.sort((a, b) => b.volume_24h - a.volume_24h);
+                    return ops.sort((a, b) => (b.volume_24h - a.volume_24h) * dir);
                 case 'alpha':
-                    return ops.sort((a, b) => a.symbol.localeCompare(b.symbol));
+                    return ops.sort((a, b) => a.symbol.localeCompare(b.symbol) * dir);
                 case 'age':
-                    return ops.sort((a, b) => new Date(a.added_date) - new Date(b.added_date));
+                    return ops.sort((a, b) => (new Date(a.added_date) - new Date(b.added_date)) * dir);
                 default:
                     return ops;
             }
