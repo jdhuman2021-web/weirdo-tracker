@@ -1,6 +1,8 @@
+# Research agent.py
+
 """
-Research Agent v1.1 - Dynamic Token Support
-Reads token list from config/tokens.json
+Research Agent v1.2 - Real Token Age Support
+Fetches pairCreatedAt from DexScreener and calculates token age
 """
 
 import json
@@ -37,6 +39,14 @@ def fetch_token_data(token):
         # Get pair with highest liquidity
         pair = max(pairs, key=lambda x: x.get('liquidity', {}).get('usd', 0) or 0)
         
+        # Calculate token age from pairCreatedAt
+        pair_created_at = pair.get('pairCreatedAt', 0)
+        age_hours = 0
+        if pair_created_at > 0:
+            created_dt = datetime.fromtimestamp(pair_created_at / 1000)
+            age_delta = datetime.utcnow() - created_dt
+            age_hours = int(age_delta.total_seconds() / 3600)
+        
         return {
             'symbol': token['symbol'],
             'name': token['name'],
@@ -48,6 +58,9 @@ def fetch_token_data(token):
             'volume_24h': float(pair.get('volume', {}).get('h24', 0) or 0),
             'liquidity_usd': float(pair.get('liquidity', {}).get('usd', 0) or 0),
             'market_cap': float(pair.get('fdv', 0) or pair.get('marketCap', 0) or 0),
+            'pair_created_at': pair_created_at,
+            'age_hours': age_hours,
+            'age_days': round(age_hours / 24, 1),
             'timestamp': datetime.utcnow().isoformat(),
             'source': 'dexscreener',
             'added_date': token.get('added_date'),
@@ -59,7 +72,7 @@ def fetch_token_data(token):
 
 def main():
     """Main execution"""
-    print("🔍 Research Agent v1.1 - Dynamic Token Support")
+    print("🔍 Research Agent v1.2 - Real Token Age Support")
     print("=" * 50)
     
     # Load configuration
@@ -67,7 +80,7 @@ def main():
     tokens = config.get('tokens', [])
     
     if not tokens:
-        print("⚠️  No tokens configured. Add tokens to config/tokens.json")
+        print("⚠️ No tokens configured. Add tokens to config/tokens.json")
         return
     
     print(f"📋 Loaded {len(tokens)} tokens from config")
@@ -80,7 +93,7 @@ def main():
         data = fetch_token_data(token)
         if data:
             results.append(data)
-            print(f"✓ ${data['price_usd']:.6f}")
+            print(f"✓ ${data['price_usd']:.6f} (Age: {data['age_hours']}h)")
         else:
             print("✗ Failed")
         
@@ -95,7 +108,7 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'tokens_fetched': len(results),
             'total_configured': len(tokens),
-            'agent': 'research_v1.1'
+            'agent': 'research_v1.2'
         },
         'raw_data': results
     }
@@ -106,9 +119,9 @@ def main():
     print(f"\n💾 Saved {len(results)} tokens to data/latest.json")
     
     if results:
-        sorted_by_change = sorted(results, key=lambda x: x['price_change_24h'], reverse=True)
-        print(f"\n🔥 Top: {sorted_by_change[0]['symbol']} (+{sorted_by_change[0]['price_change_24h']:.2f}%)")
-        print(f"❄️ Bottom: {sorted_by_change[-1]['symbol']} ({sorted_by_change[-1]['price_change_24h']:.2f}%)")
+        sorted_by_age = sorted(results, key=lambda x: x['age_hours'])
+        print(f"\n👶 Freshest: {sorted_by_age[0]['symbol']} ({sorted_by_age[0]['age_hours']}h old)")
+        print(f"🧠 Oldest: {sorted_by_age[-1]['symbol']} ({sorted_by_age[-1]['age_hours']}h old)")
 
 if __name__ == "__main__":
     main()

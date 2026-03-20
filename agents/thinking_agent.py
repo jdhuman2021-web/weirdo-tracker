@@ -1,6 +1,8 @@
+# Thinking agent.py
+
 """
-Thinking Agent v1.0
-Analyzes raw data and scores opportunities
+Thinking Agent v1.1 - Real Token Age Scoring
+Uses actual token age from DexScreener
 """
 
 import json
@@ -73,7 +75,7 @@ def get_signal(score):
 
 def main():
     """Main execution"""
-    print("🧠 Thinking Agent v1.0 - Analyzing opportunities...")
+    print("🧠 Thinking Agent v1.1 - Analyzing opportunities...")
     
     # Read latest research data
     try:
@@ -110,7 +112,7 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'total_opportunities': len(opportunities),
             'strong_buys': len([o for o in opportunities if o['signal'] == 'STRONG_BUY']),
-            'agent': 'thinking_v1.0'
+            'agent': 'thinking_v1.1'
         },
         'opportunities': opportunities
     }
@@ -122,8 +124,8 @@ def main():
     print(f"\n📊 Analysis Complete:")
     print(f"  Total tokens: {len(opportunities)}")
     print(f"  🔥 Strong Buys: {len([o for o in opportunities if o['signal'] == 'STRONG_BUY'])}")
-    print(f"  ⚠️  Speculative: {len([o for o in opportunities if o['signal'] == 'SPECULATIVE'])}")
-    print(f"  ❄️  Watch: {len([o for o in opportunities if o['signal'] == 'WATCH'])}")
+    print(f"  ⚠️ Speculative: {len([o for o in opportunities if o['signal'] == 'SPECULATIVE'])}")
+    print(f"  ❄️ Watch: {len([o for o in opportunities if o['signal'] == 'WATCH'])}")
     print(f"  🛑 Avoid: {len([o for o in opportunities if o['signal'] == 'AVOID'])}")
     
     if opportunities:
@@ -132,6 +134,10 @@ def main():
         print(f"  {top['symbol']} - Score: {top['score']}")
         print(f"  {top['label']}")
         print(f"  Reasons: {', '.join(top['reasons'][:2])}")
+        
+        # Age stats
+        if 'age_hours' in top:
+            print(f"  Age: {top['age_hours']} hours ({top['age_days']} days)")
 
 if __name__ == "__main__":
     main()

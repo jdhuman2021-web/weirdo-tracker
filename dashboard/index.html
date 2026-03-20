@@ -787,7 +787,7 @@
                 case 'alpha':
                     return ops.sort((a, b) => a.symbol.localeCompare(b.symbol) * dir);
                 case 'age':
-                    return ops.sort((a, b) => (new Date(a.added_date) - new Date(b.added_date)) * dir);
+                    return ops.sort((a, b) => ((a.age_hours || 9999) - (b.age_hours || 9999)) * dir); // Youngest first
                 default:
                     return ops;
             }
