@@ -743,21 +743,24 @@
         
         function renderTicker() {
             const ops = currentData.opportunities || [];
-            const tickerHTML = ops.map(token => {
+            // Sort by 24h change (highest gainers first)
+            const sorted = [...ops].sort((a, b) => (b.price_change_24h || 0) - (a.price_change_24h || 0));
+            
+            const tickerHTML = sorted.map(token => {
                 const change = token.price_change_24h >= 0 ? 'up' : 'down';
                 const sign = token.price_change_24h >= 0 ? '+' : '';
                 return `
-                    <div class="ticker-item">
+                    <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
                         <span class="ticker-symbol">${token.symbol}</span>
                         <span class="ticker-price">$${formatPrice(token.price_usd)}</span>
                         <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
                     </div>
                 `;
-            }).join('') + ops.map(token => {
+            }).join('') + sorted.map(token => {
                 const change = token.price_change_24h >= 0 ? 'up' : 'down';
                 const sign = token.price_change_24h >= 0 ? '+' : '';
                 return `
-                    <div class="ticker-item">
+                    <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
                         <span class="ticker-symbol">${token.symbol}</span>
                         <span class="ticker-price">$${formatPrice(token.price_usd)}</span>
                         <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
