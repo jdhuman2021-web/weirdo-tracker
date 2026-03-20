@@ -645,6 +645,11 @@
                         <div id="reasonsList" style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;"></div>
                     </div>
                     
+                    <div class="analysis-whale" id="analysisWhale" style="display: none; margin-bottom: 15px; padding: 12px; background: rgba(0,255,136,0.1); border-left: 3px solid var(--accent); border-radius: 4px;">
+                        <div class="chart-stat-label" style="color: var(--accent); font-weight: 700; margin-bottom: 8px;">🐋 Whale Activity</div>
+                        <div id="whaleList" style="font-size: 13px; color: var(--text-primary); line-height: 1.8;"></div>
+                    </div>
+                    
                     <div class="analysis-risks" id="analysisRisks" style="display: none;">
                         <div class="chart-stat-label" style="color: var(--danger); font-weight: 700; margin-bottom: 8px;">⚠️ Risk Factors</div>
                         <div id="risksList" style="font-size: 13px; color: var(--danger); line-height: 1.8;"></div>
@@ -942,6 +947,21 @@
                 reasonsList.innerHTML = selectedToken.reasons.map(r => `<div>• ${r}</div>`).join('');
             } else {
                 reasonsList.innerHTML = '<div>Analyzing...</div>';
+            }
+            
+            // Whale Activity
+            const whaleSection = document.getElementById('analysisWhale');
+            const whaleList = document.getElementById('whaleList');
+            const whaleActivity = selectedToken.whale_activity || {};
+            
+            if (whaleActivity.active_whales && whaleActivity.active_whales.length > 0) {
+                whaleSection.style.display = 'block';
+                const whales = whaleActivity.active_whales.map(w => 
+                    `<div>• ${w.name || 'Unknown'} - ${w.buys} buy(s) in 24h</div>`
+                ).join('');
+                whaleList.innerHTML = whales;
+            } else {
+                whaleSection.style.display = 'none';
             }
             
             // Risks

@@ -183,6 +183,22 @@ def calculate_score(token):
         score += 3  # Healthy distribution
         reasons.append("Holder distribution healthy")
     
+    # ============================================
+    # 8. WHALE ACTIVITY BONUS (15 points max)
+    # ============================================
+    # Check if tracked whale wallets are accumulating
+    whale_activity = token.get('whale_activity', {})
+    if whale_activity:
+        active_whales = whale_activity.get('active_whales', [])
+        total_buys = whale_activity.get('total_buys', 0)
+        
+        if len(active_whales) > 0:
+            score += 15  # Max bonus for any whale activity
+            reasons.append(f"🐋 {len(active_whales)} tracked whales buying in 24h")
+        elif total_buys > 0:
+            score += 10  # Some activity
+            reasons.append(f"🐋 Whale accumulation detected ({total_buys} buys)")
+    
     # Final score capped at 100
     final_score = min(max(score, 0), 100)
     
@@ -203,7 +219,7 @@ def get_signal(score):
 
 def main():
     """Main execution"""
-    print("🧠 Thinking Agent v2.0 - Advanced Scoring")
+    print("🧠 Thinking Agent v2.1 - Advanced Scoring + Whale Intelligence")
     print("=" * 60)
     
     # Read latest research data
@@ -214,11 +230,24 @@ def main():
         print("❌ No research data found. Run Research Agent first.")
         return
     
+    # Load whale activity data
+    try:
+        with open('data/whale_activity.json', 'r') as f:
+            whale_data = json.load(f)
+        whale_activity = whale_data.get('whale_activity', {})
+        print("🐋 Loaded whale activity data")
+    except FileNotFoundError:
+        print("⚠️ No whale activity data (run Whale Activity Agent first)")
+        whale_activity = {}
+    
     tokens = research.get('raw_data', [])
     
     # Analyze each token
     opportunities = []
     for token in tokens:
+        # Attach whale activity data
+        token['whale_activity'] = whale_activity.get(token['symbol'], {})
+        
         score, reasons, risk_factors = calculate_score(token)
         signal, label = get_signal(score)
         
