@@ -850,7 +850,7 @@
         
         function renderOpportunities() {
             const ops = currentData.opportunities || [];
-            const strongBuys = ops.filter(o => o.score >= 60);
+            const strongBuys = ops.filter(o => o.score >= 55); // Lowered threshold for more opportunities
             
             let html = '';
             
