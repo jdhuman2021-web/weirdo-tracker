@@ -5,6 +5,7 @@ Checks thresholds and sends notifications
 
 import json
 import os
+import requests
 from datetime import datetime
 
 def check_alerts():
@@ -59,7 +60,7 @@ def check_alerts():
         print("\n✅ No alerts - all quiet")
 
 def send_telegram_alert(alerts):
-    """Send Telegram notification (placeholder)"""
+    """Send Telegram notification"""
     bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
     chat_id = os.getenv('TELEGRAM_CHAT_ID')
     
@@ -67,8 +68,28 @@ def send_telegram_alert(alerts):
         print("⚠️  Telegram credentials not configured")
         return
     
-    # Implementation would go here
-    print("📱 Would send Telegram alert")
+    messages = []
+    for alert in alerts:
+        if alert['type'] == 'STRONG_BUY':
+            messages.append(f"🔥 <b>STRONG BUY</b>\n{alert['message']}")
+        elif alert['type'] == 'PRICE_DROP':
+            messages.append(f"❄️ <b>Price Drop</b>\n{alert['message']}")
+    
+    text = "\n\n".join(messages)
+    
+    try:
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {
+            'chat_id': chat_id,
+            'text': f"🧠 <b>Weirdo Tracker Alert</b>\n\n{text}",
+            'parse_mode': 'HTML',
+            'disable_web_page_preview': True
+        }
+        response = requests.post(url, data=payload, timeout=10)
+        response.raise_for_status()
+        print("📱 Telegram alert sent!")
+    except Exception as e:
+        print(f"❌ Telegram error: {e}")
 
 if __name__ == "__main__":
     check_alerts()

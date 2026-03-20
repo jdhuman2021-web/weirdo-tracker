@@ -3,41 +3,128 @@ name: Weirdo Tracker - Data Pipeline
 on:
   schedule:
     - cron: '*/15 * * * *'  # Every 15 minutes
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Manual trigger reason'
+        required: false
+        default: 'Manual run'
+
+env:
+  PYTHON_VERSION: '3.11'
+  DATA_RETENTION_DAYS: 7
 
 jobs:
   collect-data:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/checkout@v4
       with:
-        python-version: '3.10'
-        
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Cache API responses
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/weirdo-tracker
+        key: ${{ runner.os }}-api-cache-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-api-cache-
+    
     - name: Install dependencies
       run: |
-        pip install requests
-        
+        pip install requests python-telegram-bot
+    
     - name: Run Research Agent
+      id: research
       run: |
+        echo "::group::Research Agent"
         python agents/research_agent.py
-        
-    - name: Run Thinking Agent  
+        echo "::endgroup::"
+      continue-on-error: false
+    
+    - name: Run Thinking Agent
+      id: thinking
       run: |
+        echo "::group::Thinking Agent"
         python agents/thinking_agent.py
-        
-    - name: Check for alerts
+        echo "::endgroup::"
+      continue-on-error: false
+    
+    - name: Run Alert Agent
+      id: alert
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
+        echo "::group::Alert Agent"
         python agents/alert_agent.py
-        
+        echo "::endgroup::"
+    
+    - name: Generate summary
+      id: summary
+      run: |
+        python -c "
+        import json
+        try:
+            with open('data/opportunities.json') as f:
+                data = json.load(f)
+            strong_buys = len([o for o in data['opportunities'] if o['signal'] == 'STRONG_BUY'])
+            total = len(data['opportunities'])
+            print(f'STRONG_BUYS={strong_buys}')
+            print(f'TOTAL={total}')
+        except:
+            print('STRONG_BUYS=0')
+            print('TOTAL=0')
+        " >> $GITHUB_OUTPUT
+    
     - name: Commit and push results
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        
+        # Stage all data files
         git add data/
-        git diff --staged --quiet || git commit -m "Auto-update: $(date -u +%Y-%m-%d_%H:%M:%S UTC)"
-        git push
+        git add config/  # In case tokens were updated
+        
+        # Check if there are changes
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🤖 Auto-update: $(date -u +'%Y-%m-%d %H:%M UTC')
+          
+Strong Buys: ${{ steps.summary.outputs.STRONG_BUYS }}/${{ steps.summary.outputs.TOTAL }}
+          
+[skip ci]"
+          git push
+        fi
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tracker-data-${{ github.run_number }}
+        path: |
+          data/opportunities.json
+          data/alerts.json
+          data/latest.json
+        retention-days: ${{ env.DATA_RETENTION_DAYS }}
+    
+    - name: Notify on failure
+      if: failure()
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        if [ ! -z "$TELEGRAM_BOT_TOKEN" ] && [ ! -z "$TELEGRAM_CHAT_ID" ]; then
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=⚠️ Weirdo Tracker failed at $(date -u +'%H:%M UTC')\n\nCheck: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        fi
