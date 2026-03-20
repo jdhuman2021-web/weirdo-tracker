@@ -1,8 +1,8 @@
 # Thinking agent.py
 
 """
-Thinking Agent v1.1 - Real Token Age Scoring
-Uses actual token age from DexScreener
+Thinking Agent v2.0 - Advanced Opportunity Scoring
+Focuses on whale accumulation signals and entry timing
 """
 
 import json
@@ -10,75 +10,185 @@ from datetime import datetime
 from pathlib import Path
 
 def calculate_score(token):
-    """Calculate opportunity score 0-100"""
+    """
+    Calculate opportunity score 0-100
+    
+    Scoring Philosophy:
+    - We want tokens where WHALES are accumulating at LOWS
+    - We want ORGANIC GROWTH (holders increasing)
+    - We want SAFE EXITS (healthy liquidity)
+    - We want EARLY ENTRY (fresh but not too fresh)
+    - We want MOMENTUM SHIFT (price stabilizing after drop)
+    """
     score = 0
     reasons = []
+    risk_factors = []
     
-    # Price drop from high (30 points max)
-    if token.get('price_change_24h', 0) < -30:
-        score += 30
-        reasons.append("Price down >30% - potential reversal")
-    elif token.get('price_change_24h', 0) < -20:
-        score += 20
-        reasons.append("Price down >20%")
-    elif token.get('price_change_24h', 0) < -10:
-        score += 10
-        reasons.append("Price down >10%")
+    # ============================================
+    # 1. PRICE POSITION (35 points max)
+    # ============================================
+    # We want to buy AFTER a drop, when price is stabilizing
+    price_24h = token.get('price_change_24h', 0)
+    price_1h = token.get('price_change_1h', 0)
     
-    # Volume spike (25 points max)
+    # Sweet spot: down 20-40% but stabilizing (1h better than 24h)
+    if price_24h < -30 and price_1h > -5:
+        score += 35  # Perfect: crashed but stabilizing
+        reasons.append("Price crashed -30%+ but stabilizing - whale accumulation zone")
+    elif price_24h < -25 and price_1h > 0:
+        score += 32  # Very good: down big, now green 1h
+        reasons.append("Price down -25%+ with 1h reversal")
+    elif price_24h < -20 and price_1h > -3:
+        score += 28  # Good: significant drop, stabilizing
+        reasons.append("Price down -20%+ entering accumulation zone")
+    elif price_24h < -15:
+        score += 20  # Moderate: decent drop
+        reasons.append("Price down -15% - potential entry")
+    elif price_24h > 50:
+        score -= 15  # Penalize: already pumped, missed boat
+        risk_factors.append("Already pumped +50% - late entry risk")
+    
+    # ============================================
+    # 2. VOLUME/LIQUIDITY RATIO (30 points max)
+    # ============================================
+    # High volume vs liquidity = accumulation or distribution
     volume = token.get('volume_24h', 0)
     liquidity = token.get('liquidity_usd', 1)
     vol_ratio = volume / liquidity if liquidity > 0 else 0
     
-    if vol_ratio > 3:
-        score += 25
-        reasons.append(f"Volume {vol_ratio:.1f}x liquidity - accumulation")
-    elif vol_ratio > 2:
-        score += 15
+    # Sweet spot: 2-5x ratio (healthy interest, not manipulation)
+    if 2.0 <= vol_ratio <= 5.0:
+        score += 30  # Perfect: healthy volume
+        reasons.append(f"Volume {vol_ratio:.1f}x liquidity - healthy accumulation")
+    elif vol_ratio > 5.0:
+        score += 25  # Very high: could be manipulation or viral
+        reasons.append(f"Volume {vol_ratio:.1f}x - viral or manipulation")
+        if vol_ratio > 10:
+            risk_factors.append("Extreme vol ratio - possible pump scheme")
+    elif vol_ratio > 1.5:
+        score += 18  # Good: above average
         reasons.append(f"Volume {vol_ratio:.1f}x - rising interest")
-    elif vol_ratio > 1:
-        score += 5
-        reasons.append("Volume above average")
+    elif vol_ratio > 1.0:
+        score += 10  # Moderate: slightly above average
+        reasons.append("Volume above liquidity - mild interest")
+    else:
+        score -= 5  # Penalize: dead token
+        risk_factors.append("Volume below liquidity - dead/abandoned")
     
-    # Holder growth (20 points max) - NEW
+    # ============================================
+    # 3. HOLDER DYNAMICS (25 points max)
+    # ============================================
+    # Growing holders = organic interest, not just whale manipulation
+    holder_count = token.get('holder_count', 0)
     holder_growth = token.get('holder_growth_24h', 0)
-    if holder_growth > 15:
-        score += 20
-        reasons.append(f"Holders +{holder_growth:.1f}% - viral growth")
-    elif holder_growth > 10:
-        score += 15
+    
+    # Absolute holder count matters
+    if holder_count > 500:
+        score += 8  # Strong community
+        reasons.append(f"{holder_count} holders - established base")
+    elif holder_count > 200:
+        score += 5  # Decent
+        reasons.append(f"{holder_count} holders - growing")
+    elif holder_count < 50:
+        score -= 5  # Too early
+        risk_factors.append(f"Only {holder_count} holders - very early")
+    
+    # Growth rate matters more
+    if holder_growth > 20:
+        score += 17  # Viral growth
+        reasons.append(f"Holders +{holder_growth:.1f}% - viral adoption")
+    elif holder_growth > 12:
+        score += 14  # Strong growth
         reasons.append(f"Holders +{holder_growth:.1f}% - strong interest")
     elif holder_growth > 5:
-        score += 8
-        reasons.append(f"Holders +{holder_growth:.1f}% - growing")
+        score += 8  # Moderate growth
+        reasons.append(f"Holders +{holder_growth:.1f}% - steady growth")
+    elif holder_growth < -5:
+        score -= 10  # Losing holders
+        risk_factors.append(f"Holders -{abs(holder_growth):.1f}% - abandonment")
     
-    # Liquidity health (15 points max)
+    # ============================================
+    # 4. LIQUIDITY SAFETY (15 points max)
+    # ============================================
+    # Can you exit? Don't get trapped
     if liquidity > 100000:
-        score += 15
+        score += 15  # Very safe
         reasons.append("High liquidity - easy exit")
     elif liquidity > 50000:
-        score += 10
-        reasons.append("Good liquidity")
+        score += 12  # Safe
+        reasons.append("Good liquidity - manageable exit")
     elif liquidity > 25000:
-        score += 5
-        reasons.append("Acceptable liquidity")
+        score += 8  # Acceptable
+        reasons.append("Acceptable liquidity - moderate slippage")
+    elif liquidity > 10000:
+        score += 4  # Risky
+        reasons.append("Low liquidity - high slippage risk")
+        risk_factors.append("Liquidity <10K - exit difficulty")
+    else:
+        score -= 10  # Very risky
+        risk_factors.append("Liquidity <5K - trapped capital risk")
     
-    # Market cap size (10 points max)
+    # ============================================
+    # 5. MARKET CAP OPPORTUNITY (10 points max)
+    # ============================================
+    # Micro-caps have most room to grow
     mcap = token.get('market_cap', 0)
-    if mcap < 1000000 and mcap > 0:
-        score += 10
-        reasons.append("Micro-cap - high growth potential")
-    elif mcap < 5000000:
-        score += 5
-        reasons.append("Small-cap - growth opportunity")
     
-    return min(score, 100), reasons
+    if 0 < mcap < 50000:
+        score += 10  # Perfect: micro-cap gem
+        reasons.append(f"${mcap:.0f} MC - micro-cap gem potential")
+    elif mcap < 200000:
+        score += 8  # Very good
+        reasons.append(f"${mcap:.0f} MC - small-cap opportunity")
+    elif mcap < 1000000:
+        score += 5  # Good
+        reasons.append(f"${mcap:.0f} MC - moderate growth room")
+    elif mcap > 10000000:
+        score -= 5  # Limited upside
+        risk_factors.append(f"${mcap:.0f} MC - limited 100x potential")
+    
+    # ============================================
+    # 6. AGE/TIMING (5 points bonus/penalty)
+    # ============================================
+    # Fresh but not too fresh
+    age_hours = token.get('age_hours', 0)
+    
+    if 6 <= age_hours <= 48:
+        score += 5  # Sweet spot: proven but still fresh
+        reasons.append(f"{age_hours}h old - proven but fresh")
+    elif age_hours < 6:
+        score -= 3  # Too fresh - risky
+        risk_factors.append(f"{age_hours}h old - very fresh, unproven")
+    elif age_hours > 168:  # 7 days
+        score -= 2  # Old - may have already pumped
+    
+    # ============================================
+    # 7. RISK ADJUSTMENTS
+    # ============================================
+    # Holder concentration risk
+    top_holder_pct = token.get('top_holder_pct', 0)
+    if top_holder_pct > 50:
+        score -= 20  # Dangerous
+        risk_factors.append(f"Top holder {top_holder_pct:.1f}% - rug risk")
+    elif top_holder_pct > 30:
+        score -= 10  # Concerning
+        risk_factors.append(f"Top holder {top_holder_pct:.1f}% - concentration risk")
+    elif top_holder_pct < 10:
+        score += 3  # Healthy distribution
+        reasons.append("Holder distribution healthy")
+    
+    # Final score capped at 100
+    final_score = min(max(score, 0), 100)
+    
+    return final_score, reasons, risk_factors
 
 def get_signal(score):
-    """Convert score to signal"""
-    if score >= 80:
+    """Convert score to signal with nuanced thresholds"""
+    if score >= 85:
         return "STRONG_BUY", "🔥 Strong Buy"
-    elif score >= 60:
+    elif score >= 70:
+        return "BUY", "💚 Buy"
+    elif score >= 55:
         return "SPECULATIVE", "⚠️ Speculative"
     elif score >= 40:
         return "WATCH", "❄️ Watch"
@@ -87,7 +197,8 @@ def get_signal(score):
 
 def main():
     """Main execution"""
-    print("🧠 Thinking Agent v1.1 - Analyzing opportunities...")
+    print("🧠 Thinking Agent v2.0 - Advanced Scoring")
+    print("=" * 60)
     
     # Read latest research data
     try:
@@ -102,7 +213,7 @@ def main():
     # Analyze each token
     opportunities = []
     for token in tokens:
-        score, reasons = calculate_score(token)
+        score, reasons, risk_factors = calculate_score(token)
         signal, label = get_signal(score)
         
         opp = {
@@ -111,6 +222,7 @@ def main():
             'signal': signal,
             'label': label,
             'reasons': reasons,
+            'risk_factors': risk_factors,
             'analyzed_at': datetime.utcnow().isoformat()
         }
         opportunities.append(opp)
@@ -124,7 +236,11 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'total_opportunities': len(opportunities),
             'strong_buys': len([o for o in opportunities if o['signal'] == 'STRONG_BUY']),
-            'agent': 'thinking_v1.1'
+            'buys': len([o for o in opportunities if o['signal'] == 'BUY']),
+            'speculative': len([o for o in opportunities if o['signal'] == 'SPECULATIVE']),
+            'watch': len([o for o in opportunities if o['signal'] == 'WATCH']),
+            'avoid': len([o for o in opportunities if o['signal'] == 'AVOID']),
+            'agent': 'thinking_v2.0'
         },
         'opportunities': opportunities
     }
@@ -136,20 +252,19 @@ def main():
     print(f"\n📊 Analysis Complete:")
     print(f"  Total tokens: {len(opportunities)}")
     print(f"  🔥 Strong Buys: {len([o for o in opportunities if o['signal'] == 'STRONG_BUY'])}")
+    print(f"  💚 Buys: {len([o for o in opportunities if o['signal'] == 'BUY'])}")
     print(f"  ⚠️ Speculative: {len([o for o in opportunities if o['signal'] == 'SPECULATIVE'])}")
     print(f"  ❄️ Watch: {len([o for o in opportunities if o['signal'] == 'WATCH'])}")
     print(f"  🛑 Avoid: {len([o for o in opportunities if o['signal'] == 'AVOID'])}")
     
     if opportunities:
-        print(f"\n🏆 Top Opportunity:")
-        top = opportunities[0]
-        print(f"  {top['symbol']} - Score: {top['score']}")
-        print(f"  {top['label']}")
-        print(f"  Reasons: {', '.join(top['reasons'][:2])}")
-        
-        # Age stats
-        if 'age_hours' in top:
-            print(f"  Age: {top['age_hours']} hours ({top['age_days']} days)")
+        print(f"\n🏆 Top 3 Opportunities:")
+        for i, opp in enumerate(opportunities[:3], 1):
+            print(f"\n  {i}. {opp['symbol']} - Score: {opp['score']}")
+            print(f"     Signal: {opp['label']}")
+            print(f"     Reasons: {', '.join(opp['reasons'][:2])}")
+            if opp.get('risk_factors'):
+                print(f"     Risks: {', '.join(opp['risk_factors'][:2])}")
 
 if __name__ == "__main__":
     main()
