@@ -31,26 +31,41 @@ def calculate_score(token):
     # ============================================
     # 1. PRICE POSITION (35 points max)
     # ============================================
-    # We want to buy AFTER a drop, when price is stabilizing
+    # IMPORTANT: We want controlled dips, NOT crashes
+    # -15% to -30% = buying opportunity (dip)
+    # -50% or worse = DANGER (rug pull or dead)
     price_24h = token.get('price_change_24h', 0)
     price_1h = token.get('price_change_1h', 0)
     
-    # Sweet spot: down 20-40% but stabilizing (1h better than 24h)
-    if price_24h < -30 and price_1h > -5:
-        score += 35  # Perfect: crashed but stabilizing
-        reasons.append("Price crashed -30%+ but stabilizing - whale accumulation zone")
-    elif price_24h < -25 and price_1h > 0:
-        score += 32  # Very good: down big, now green 1h
-        reasons.append("Price down -25%+ with 1h reversal")
-    elif price_24h < -20 and price_1h > -3:
-        score += 28  # Good: significant drop, stabilizing
-        reasons.append("Price down -20%+ entering accumulation zone")
+    # MASSIVE CRASH = AVOID (rug pull or dead)
+    if price_24h < -50:
+        score -= 20  # Heavy penalty for crashes over 50%
+        risk_factors.append(f"Crashed {abs(price_24h):.0f}% in 24h - likely rug pull or dead")
+    # Controlled dip with recovery = BUY
+    elif price_24h < -30 and price_1h > 0:
+        score += 25  # Good: significant dip, recovering
+        reasons.append("Price down -30%+ with 1h reversal - potential bounce")
+    elif price_24h < -25 and price_1h > -3:
+        score += 20  # Moderate dip, stabilizing
+        reasons.append("Price down -25%+ stabilizing - accumulation zone")
+    elif price_24h < -20 and price_1h > -5:
+        score += 18  # Small dip
+        reasons.append("Price down -20% entering dip zone")
     elif price_24h < -15:
-        score += 20  # Moderate: decent drop
-        reasons.append("Price down -15% - potential entry")
-    elif price_24h > 50:
-        score -= 15  # Penalize: already pumped, missed boat
-        risk_factors.append("Already pumped +50% - late entry risk")
+        score += 12  # Minor correction
+        reasons.append("Price down -15% - minor correction")
+    elif price_24h < -10:
+        score += 5  # Small dip
+        reasons.append("Price down -10% - small dip")
+    elif 0 <= price_24h <= 30:
+        score += 5  # Stable or slight pump
+        reasons.append("Price stable or trending up")
+    elif price_24h > 30 and price_24h <= 100:
+        score -= 5  # Already pumped
+        risk_factors.append(f"Already pumped +{price_24h:.0f}% - higher risk")
+    elif price_24h > 100:
+        score -= 15  # Extreme pump - late entry
+        risk_factors.append(f"Extreme pump +{price_24h:.0f}% - very late entry risk")
     
     # ============================================
     # 2. VOLUME/LIQUIDITY RATIO (35 points max)
