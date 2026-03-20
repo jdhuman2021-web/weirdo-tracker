@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weirdo Tracker - Option C: Trading Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'SF Mono', system-ui, monospace;
+            background: #050505;
+            color: #e8eaf0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Layout Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+        
+        /* Ticker */
+        .ticker {
+            display: flex;
+            gap: 24px;
+            overflow: hidden;
+            flex: 1;
+            margin: 0 40px;
+            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+        }
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .ticker-symbol { font-weight: 600; }
+        .ticker-price { color: #6b7280; }
+        .ticker-change { font-weight: 600; }
+        .ticker-change.up { color: #00ff88; }
+        .ticker-change.down { color: #ff4757; }
+        
+        /* Status */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .time {
+            font-size: 14px;
+            color: #e8eaf0;
+            font-weight: 600;
+        }
+        
+        /* Left Sidebar - Token List */
+        .sidebar-left {
+            background: #0a0a0a;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .token-list {
+            overflow-y: auto;
+            flex: 1;
+        }
+        .token-list-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.2s;
+        }
+        .token-list-item:hover { background: rgba(255,255,255,0.03); }
+        .token-list-item.active {
+            background: rgba(0,255,136,0.08);
+            border-left: 3px solid #00ff88;
+        }
+        .token-list-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .token-list-info { flex: 1; }
+        .token-list-symbol {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .signal-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .signal-hot { background: #00ff88; box-shadow: 0 0 8px #00ff88; }
+        .signal-warm { background: #ffa502; }
+        .signal-cold { background: #ff4757; }
+        .token-list-price {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        .token-list-change {
+            text-align: right;
+            font-size: 13px;
+        }
+        .token-list-change.up { color: #00ff88; }
+        .token-list-change.down { color: #ff4757; }
+        
+        /* Main Content - Chart Area */
+        .main {
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chart-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .chart-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chart-title-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .chart-title-info h2 {
+            font-size: 20px;
+            margin: 0 0 2px 0;
+        }
+        .chart-title-info span {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .chart-price {
+            text-align: right;
+        }
+        .chart-price-main {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+        .chart-price-change {
+            font-size: 14px;
+            color: #00ff88;
+        }
+        
+        .chart-container {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,255,136,0.05) 0%, transparent 100%);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+        .chart-placeholder-text {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        .chart-placeholder-note {
+            color: #4a5568;
+            font-size: 12px;
+        }
+        
+        /* Chart Stats */
+        .chart-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+        .chart-stat {
+            background: #0a0a0a;
+            padding: 16px;
+        }
+        .chart-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .chart-stat-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        /* Right Sidebar - Alerts & Details */
+        .sidebar-right {
+            background: #0a0a0a;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Opportunities Panel */
+        .opportunities-panel {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        .panel-title {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .opportunity-card {
+            background: rgba(0,255,136,0.05);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .opportunity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .opportunity-symbol {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .opportunity-score {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .opportunity-reason {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        /* Alert Feed */
+        .alert-feed {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 16px;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .alert-icon {
+            font-size: 14px;
+        }
+        .alert-content {
+            flex: 1;
+        }
+        .alert-text {
+            font-size: 12px;
+            color: #e8eaf0;
+        }
+        .alert-time {
+            font-size: 11px;
+            color: #4a5568;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🧠</div>
+                <div class="logo-text">WEIRDO TRACKER</div>
+            </div>
+            
+            <div class="ticker">
+                <div class="ticker-item">
+                    <span class="ticker-symbol">MOMO</span>
+                    <span class="ticker-price">$0.000238</span>
+                    <span class="ticker-change up">+86.06%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-symbol">PIZZA</span>
+                    <span class="ticker-price">$0.000260</span>
+                    <span class="ticker-change down">-23.16%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-symbol">JELLY</span>
+                    <span class="ticker-price">$0.000756</span>
+                    <span class="ticker-change up">+18.77%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-symbol">PUNCH</span>
+                    <span class="ticker-price">$0.01517</span>
+                    <span class="ticker-change up">+14.63%</span>
+                </div>
+            </div>
+            
+            <div class="status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>LIVE</span>
+                </div>
+                <div class="time">10:20:45 UTC</div>
+            </div>
+        </header>
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <div class="sidebar-header">Watchlist (5)</div>
+            <div class="token-list">
+                <div class="token-list-item active">
+                    <div class="token-list-icon" style="background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);">モ</div>
+                    <div class="token-list-info">
+                        <div class="token-list-symbol">
+                            MOMO-chan
+                            <span class="signal-dot signal-hot"></span>
+                        </div>
+                        <div class="token-list-price">$0.000238</div>
+                    </div>
+                    <div class="token-list-change up">+86%</div>
+                </div>
+                
+                <div class="token-list-item">
+                    <div class="token-list-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff6348 100%);">🍕</div>
+                    <div class="token-list-info">
+                        <div class="token-list-symbol">
+                            PIZZA
+                            <span class="signal-dot signal-hot"></span>
+                        </div>
+                        <div class="token-list-price">$0.000260</div>
+                    </div>
+                    <div class="token-list-change down">-23%</div>
+                </div>
+                
+                <div class="token-list-item">
+                    <div class="token-list-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff9f43 100%);">🍬</div>
+                    <div class="token-list-info">
+                        <div class="token-list-symbol">
+                            Jellybean
+                            <span class="signal-dot signal-warm"></span>
+                        </div>
+                        <div class="token-list-price">$0.000756</div>
+                    </div>
+                    <div class="token-list-change up">+18%</div>
+                </div>
+                
+                <div class="token-list-item">
+                    <div class="token-list-icon" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);">👊</div>
+                    <div class="token-list-info">
+                        <div class="token-list-symbol">
+                            PUNCH
+                            <span class="signal-dot" style="background: #74b9ff;"></span>
+                        </div>
+                        <div class="token-list-price">$0.01517</div>
+                    </div>
+                    <div class="token-list-change up">+14%</div>
+                </div>
+                
+                <div class="token-list-item">
+                    <div class="token-list-icon" style="background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);">😈</div>
+                    <div class="token-list-info">
+                        <div class="token-list-symbol">
+                            Devious
+                            <span class="signal-dot signal-cold"></span>
+                        </div>
+                        <div class="token-list-price">$0.000083</div>
+                    </div>
+                    <div class="token-list-change down">-5%</div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <div class="chart-title-icon">モ</div>
+                    <div class="chart-title-info">
+                        <h2>Momo-chan / SOL</h2>
+                        <span>モモちゃん • Added 3/19 • Signal: STRONG BUY</span>
+                    </div>
+                </div>
+                <div class="chart-price">
+                    <div class="chart-price-main">$0.000238</div>
+                    <div class="chart-price-change">+86.06% (24h)</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    <div class="chart-placeholder-text">📊 TradingView Chart Integration</div>
+                    <div class="chart-placeholder-note">Price history, volume, RSI, MACD indicators</div>
+                </div>
+            </div>
+            
+            <div class="chart-stats">
+                <div class="chart-stat">
+                    <div class="chart-stat-label">24h Volume</div>
+                    <div class="chart-stat-value">$89,234</div>
+                </div>
+                <div class="chart-stat">
+                    <div class="chart-stat-label">Liquidity</div>
+                    <div class="chart-stat-value">$45,000</div>
+                </div>
+                <div class="chart-stat">
+                    <div class="chart-stat-label">Market Cap</div>
+                    <div class="chart-stat-value">$238,000</div>
+                </div>
+                <div class="chart-stat">
+                    <div class="chart-stat-label">Opportunity Score</div>
+                    <div class="chart-stat-value" style="color: #00ff88;">85/100</div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <div class="opportunities-panel">
+                <div class="panel-title">🔥 Top Opportunities</div>
+                
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <span class="opportunity-symbol">Momo-chan</span>
+                        <span class="opportunity-score">85/100</span>
+                    </div>
+                    <div class="opportunity-reason">Price down >30% from high • Volume 2x liquidity</div>
+                </div>
+                
+                <div class="opportunity-card">
+                    <div class="opportunity-header">
+                        <span class="opportunity-symbol">PIZZA</span>
+                        <span class="opportunity-score">82/100</span>
+                    </div>
+                    <div class="opportunity-reason">Down -23% • Micro-cap potential • Reversal setup</div>
+                </div>
+                
+                <div class="panel-title" style="margin-top: 24px;">⚠️ Speculative</div>
+                
+                <div class="opportunity-card" style="border-color: rgba(255,165,2,0.2); background: rgba(255,165,2,0.05);">
+                    <div class="opportunity-header">
+                        <span class="opportunity-symbol">Jellybean</span>
+                        <span class="opportunity-score" style="background: rgba(255,165,2,0.2); color: #ffa502;">65/100</span>
+                    </div>
+                    <div class="opportunity-reason">Volume rising • Good liquidity position</div>
+                </div>
+            </div>
+            
+            <div class="alert-feed">
+                <div class="panel-title">Recent Alerts</div>
+                
+                <div class="alert-item">
+                    <span class="alert-icon">🔥</span>
+                    <div class="alert-content">
+                        <div class="alert-text">Momo-chan scored 85 - STRONG BUY</div>
+                        <div class="alert-time">2 min ago</div>
+                    </div>
+                </div>
+                
+                <div class="alert-item">
+                    <span class="alert-icon">⚠️</span>
+                    <div class="alert-content">
+                        <div class="alert-text">PIZZA dropped -23% in 24h</div>
+                        <div class="alert-time">15 min ago</div>
+                    </div>
+                </div>
+                
+                <div class="alert-item">
+                    <span class="alert-icon">📊</span>
+                    <div class="alert-content">
+                        <div class="alert-text">New data fetched for 5 tokens</div>
+                        <div class="alert-time">30 min ago</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

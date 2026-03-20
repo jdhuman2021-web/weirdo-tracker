@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weirdo Tracker - Option D: Minimal Clean</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0a0b0d;
+            color: #e8eaf0;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .logo-text h1 {
+            font-size: 18px;
+            color: #00ff88;
+            margin: 0;
+        }
+        .logo-text span {
+            font-size: 11px;
+            color: #6b7280;
+        }
+        
+        /* Status Pills */
+        .status-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .pill-hot {
+            background: rgba(0,255,136,0.15);
+            color: #00ff88;
+            border: 1px solid rgba(0,255,136,0.3);
+        }
+        .pill-warm {
+            background: rgba(255,165,2,0.15);
+            color: #ffa502;
+            border: 1px solid rgba(255,165,2,0.3);
+        }
+        .pill-cold {
+            background: rgba(255,71,87,0.15);
+            color: #ff4757;
+            border: 1px solid rgba(255,71,87,0.3);
+        }
+        
+        /* Auto-scrolling Alert */
+        .alert-ticker {
+            background: rgba(0,255,136,0.08);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow: hidden;
+        }
+        .alert-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .alert-scroll {
+            flex: 1;
+            overflow: hidden;
+        }
+        .alert-content {
+            display: flex;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .alert-item {
+            white-space: nowrap;
+            padding-right: 40px;
+            font-size: 14px;
+        }
+        .alert-highlight {
+            color: #00ff88;
+            font-weight: 600;
+        }
+        
+        /* Signal Cards - Large */
+        .signal-section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .signal-card {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,255,136,0.02) 100%);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .signal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88 0%, #00cc6a 100%);
+        }
+        
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .signal-badge {
+            background: #00ff88;
+            color: #0a0b0d;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .signal-score {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+        
+        .token-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .token-icon-large {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .token-info h2 {
+            font-size: 22px;
+            margin: 0 0 2px 0;
+        }
+        .token-info span {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .price-display {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .price-large {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'SF Mono', monospace;
+        }
+        .change-large {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .change-large.up {
+            background: rgba(0,255,136,0.15);
+            color: #00ff88;
+        }
+        .change-large.down {
+            background: rgba(255,71,87,0.15);
+            color: #ff4757;
+        }
+        
+        .reason-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #9ca3af;
+            margin-top: 12px;
+        }
+        
+        /* Secondary Cards - Horizontal Scroll */
+        .secondary-section {
+            margin-bottom: 20px;
+        }
+        .card-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        .card-scroll::-webkit-scrollbar { display: none; }
+        
+        .mini-card {
+            flex-shrink: 0;
+            width: 160px;
+            background: #14171d;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .mini-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .mini-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .mini-score {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .mini-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .mini-price {
+            font-family: monospace;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+        .mini-change {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .mini-change.up { color: #00ff88; }
+        .mini-change.down { color: #ff4757; }
+        
+        /* Bottom Actions */
+        .actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, #0a0b0d 20%);
+            padding: 20px 16px 24px;
+            display: flex;
+            gap: 12px;
+        }
+        .action-btn {
+            flex: 1;
+            background: #14171d;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e8eaf0;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .action-btn.primary {
+            background: #00ff88;
+            color: #0a0b0d;
+            border-color: #00ff88;
+        }
+        
+        /* Desktop */
+        @media (min-width: 768px) {
+            body {
+                max-width: 480px;
+                margin: 0 auto;
+                padding: 24px;
+            }
+            .actions {
+                position: static;
+                background: none;
+                padding: 0;
+                margin-top: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🧠</div>
+            <div class="logo-text">
+                <h1>Weirdo Tracker</h1>
+                <span>Option D: Minimal Clean</span>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 13px; color: #6b7280;">Updated</div>
+            <div style="font-size: 14px; font-weight: 600; color: #00ff88;">10:20 UTC</div>
+        </div>
+    </header>
+
+    <div class="status-bar">
+        <div class="pill pill-hot">
+            🔥 2 Strong Buy
+        </div>
+        <div class="pill pill-warm">
+            ⚠️ 1 Speculative
+        </div>
+        <div class="pill pill-cold">
+            ❄️ 2 Avoid
+        </div>
+    </div>
+
+    <div class="alert-ticker">
+        <span class="alert-icon">🔔</span>
+        <div class="alert-scroll">
+            <div class="alert-content">
+                <span class="alert-item"><span class="alert-highlight">Momo-chan</span> scored 85 — STRONG BUY signal</span>
+                <span class="alert-item"><span class="alert-highlight">PIZZA</span> dropped -23% in 24h — potential reversal</span>
+                <span class="alert-item"><span class="alert-highlight">Jellybean</span> volume up 2x — accumulation detected</span>
+                <span class="alert-item"><span class="alert-highlight">Momo-chan</span> scored 85 — STRONG BUY signal</span>
+                <span class="alert-item"><span class="alert-highlight">PIZZA</span> dropped -23% in 24h — potential reversal</span>
+                <span class="alert-item"><span class="alert-highlight">Jellybean</span> volume up 2x — accumulation detected</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="signal-section">
+        <div class="section-title">🔥 Top Signal</div>
+        
+        <div class="signal-card">
+            <div class="signal-header">
+                <span class="signal-badge">STRONG BUY</span>
+                <span class="signal-score">85</span>
+            </div>
+            
+            <div class="token-main">
+                <div class="token-icon-large" style="background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);">モ</div>
+                <div class="token-info">
+                    <h2>Momo-chan</h2>
+                    <span>モモちゃん • SOL</span>
+                </div>
+            </div>
+            
+            <div class="price-display">
+                <span class="price-large">$0.000238</span>
+                <span class="change-large up">+86.06%</span>
+            </div>
+            
+            <span class="reason-tag">🔥 Price down &gt;30% • 📊 Volume 2x • 🚀 Micro-cap</span>
+        </div>
+    </div>
+
+    <div class="secondary-section">
+        <div class="section-title">Other Opportunities</div>
+        <div class="card-scroll">
+            <div class="mini-card" style="border-color: rgba(0,255,136,0.3);">
+                <div class="mini-card-header">
+                    <div class="mini-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff6348 100%);">🍕</div>
+                    <span class="mini-score" style="color: #00ff88;">82</span>
+                </div>
+                <div class="mini-name">PIZZA</div>
+                <div class="mini-price">$0.000260</div>
+                <div class="mini-change down">-23.16%</div>
+            </div>
+            
+            <div class="mini-card">
+                <div class="mini-card-header">
+                    <div class="mini-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff9f43 100%);">🍬</div>
+                    <span class="mini-score" style="color: #ffa502;">65</span>
+                </div>
+                <div class="mini-name">Jellybean</div>
+                <div class="mini-price">$0.000756</div>
+                <div class="mini-change up">+18.77%</div>
+            </div>
+            
+            <div class="mini-card">
+                <div class="mini-card-header">
+                    <div class="mini-icon" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);">👊</div>
+                    <span class="mini-score" style="color: #74b9ff;">55</span>
+                </div>
+                <div class="mini-name">PUNCH</div>
+                <div class="mini-price">$0.01517</div>
+                <div class="mini-change up">+14.63%</div>
+            </div>
+            
+            <div class="mini-card">
+                <div class="mini-card-header">
+                    <div class="mini-icon" style="background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);">😈</div>
+                    <span class="mini-score" style="color: #ff4757;">25</span>
+                </div>
+                <div class="mini-name">Devious</div>
+                <div class="mini-price">$0.000083</div>
+                <div class="mini-change down">-5.22%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="action-btn">📊 View All</button>
+        <button class="action-btn primary">➕ Add Token</button>
+    </div>
+</body>
+</html>

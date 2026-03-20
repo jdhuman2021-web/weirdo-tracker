@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weirdo Tracker - Option B: Hybrid Table + Cards</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: #0a0b0d; 
+            color: #e8eaf0; 
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 { color: #00ff88; font-size: 24px; }
+        .subtitle { color: #6b7280; font-size: 14px; }
+        
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(90deg, rgba(0,255,136,0.15) 0%, rgba(0,255,136,0.05) 100%);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .alert-icon { font-size: 20px; }
+        .alert-count { font-weight: 700; color: #00ff88; }
+        
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #14171d;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stat-value { font-size: 24px; font-weight: 700; }
+        .stat-label { font-size: 11px; color: #6b7280; margin-top: 4px; }
+        
+        /* Sort Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .sort-label { color: #6b7280; font-size: 14px; }
+        .sort-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .sort-btn {
+            background: #1a1d24;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e8eaf0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .sort-btn.active {
+            background: #00ff88;
+            color: #0a0b0d;
+            border-color: #00ff88;
+        }
+        .sort-btn .arrow { margin-left: 4px; }
+        
+        /* Table */
+        .table-container {
+            background: #14171d;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 80px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 80px;
+            padding: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .table-row:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        .table-row.expanded {
+            background: rgba(0,255,136,0.05);
+        }
+        
+        /* Cell Content */
+        .token-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .token-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .token-info { display: flex; flex-direction: column; }
+        .token-symbol { font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .chain-badge {
+            background: rgba(0,255,136,0.1);
+            color: #00ff88;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+        .token-name { font-size: 12px; color: #6b7280; }
+        
+        .price-cell { font-family: monospace; }
+        .change-cell { font-family: monospace; font-weight: 600; }
+        .change-cell.up { color: #00ff88; }
+        .change-cell.down { color: #ff4757; }
+        
+        .score-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .score-hot { background: rgba(0,255,136,0.15); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+        .score-warm { background: rgba(255,165,2,0.15); color: #ffa502; border: 1px solid rgba(255,165,2,0.3); }
+        .score-cold { background: rgba(255,71,87,0.15); color: #ff4757; border: 1px solid rgba(255,71,87,0.3); }
+        .score-neutral { background: rgba(116,185,255,0.15); color: #74b9ff; border: 1px solid rgba(116,185,255,0.3); }
+        
+        /* Expanded Detail Card */
+        .detail-row {
+            background: #0f1114;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .detail-item {
+            background: #14171d;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .detail-label {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .detail-value {
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .reasons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .reason-tag {
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .action-btn {
+            background: #1a1d24;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e8eaf0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-btn:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .action-btn.primary {
+            background: #00ff88;
+            color: #0a0b0d;
+            border-color: #00ff88;
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .table-header, .table-row {
+                grid-template-columns: 2fr 1fr 1fr 80px;
+            }
+            .table-header > div:nth-child(4),
+            .table-row > div:nth-child(4) { display: none; }
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🧠 Weirdo Tracker</h1>
+            <div class="subtitle">Option B: Hybrid Table + Cards</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="color: #6b7280; font-size: 13px;">Last updated</div>
+            <div style="color: #00ff88; font-weight: 600;">10:20 UTC</div>
+        </div>
+    </div>
+
+    <div class="alert-banner">
+        <span class="alert-icon">🔥</span>
+        <span><span class="alert-count">2 STRONG BUY</span> signals detected • Momo-chan and PIZZA showing accumulation</span>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value" style="color: #e8eaf0;">5</div>
+            <div class="stat-label">Tracked</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: #00ff88;">2</div>
+            <div class="stat-label">Strong Buy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: #ffa502;">1</div>
+            <div class="stat-label">Speculative</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: #6b7280;">1</div>
+            <div class="stat-label">Watch</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="sort-label">Sort by:</div>
+        <div class="sort-buttons">
+            <button class="sort-btn active">Score <span class="arrow">▼</span></button>
+            <button class="sort-btn">24h Change</button>
+            <button class="sort-btn">Volume</button>
+            <button class="sort-btn">Price</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <div>Token</div>
+            <div>Price</div>
+            <div>24h Change</div>
+            <div>Volume</div>
+            <div>Liquidity</div>
+            <div>Score</div>
+        </div>
+
+        <!-- Row 1: Momo-chan (Expanded) -->
+        <div class="table-row expanded" onclick="toggleDetail(this)">
+            <div class="token-cell">
+                <div class="token-icon" style="background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);">モ</div>
+                <div class="token-info">
+                    <div class="token-symbol">Momo-chan <span class="chain-badge">SOL</span></div>
+                    <div class="token-name">モモちゃん</div>
+                </div>
+            </div>
+            <div class="price-cell">$0.000238</div>
+            <div class="change-cell up">+86.06%</div>
+            <div style="font-family: monospace; color: #6b7280;">$89K</div>
+            <div style="font-family: monospace; color: #6b7280;">$45K</div>
+            <div><span class="score-badge score-hot">85</span></div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <div class="detail-label">1h Change</div>
+                    <div class="detail-value" style="color: #ff4757;">-12.5%</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">7d Change</div>
+                    <div class="detail-value" style="color: #00ff88;">+245%</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Market Cap</div>
+                    <div class="detail-value">$238K</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Signal</div>
+                    <div class="detail-value" style="color: #00ff88;">🔥 STRONG BUY</div>
+                </div>
+            </div>
+            <div class="reasons">
+                <span class="reason-tag">🔥 Price down >30% from high</span>
+                <span class="reason-tag">📊 Volume 2x liquidity - accumulation</span>
+                <span class="reason-tag">🚀 Micro-cap gem potential</span>
+                <span class="reason-tag">💧 Adequate liquidity</span>
+            </div>
+            <div class="actions">
+                <a href="#" class="action-btn primary">📊 View on DexScreener</a>
+                <button class="action-btn">📋 Copy Address</button>
+                <button class="action-btn">🔔 Set Alert</button>
+            </div>
+        </div>
+
+        <!-- Row 2: PIZZA -->
+        <div class="table-row" onclick="toggleDetail(this)">
+            <div class="token-cell">
+                <div class="token-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff6348 100%);">🍕</div>
+                <div class="token-info">
+                    <div class="token-symbol">PIZZA <span class="chain-badge">SOL</span></div>
+                    <div class="token-name">Bitcoin Pizza</div>
+                </div>
+            </div>
+            <div class="price-cell">$0.000260</div>
+            <div class="change-cell down">-23.16%</div>
+            <div style="font-family: monospace; color: #6b7280;">$12K</div>
+            <div style="font-family: monospace; color: #6b7280;">$8.5K</div>
+            <div><span class="score-badge score-hot">82</span></div>
+        </div>
+
+        <!-- Row 3: Jellybean -->
+        <div class="table-row" onclick="toggleDetail(this)">
+            <div class="token-cell">
+                <div class="token-icon" style="background: linear-gradient(135deg, #ffa502 0%, #ff9f43 100%);">🍬</div>
+                <div class="token-info">
+                    <div class="token-symbol">Jellybean <span class="chain-badge">SOL</span></div>
+                    <div class="token-name">Jellybean</div>
+                </div>
+            </div>
+            <div class="price-cell">$0.000756</div>
+            <div class="change-cell up">+18.77%</div>
+            <div style="font-family: monospace; color: #6b7280;">$193K</div>
+            <div style="font-family: monospace; color: #6b7280;">$126K</div>
+            <div><span class="score-badge score-warm">65</span></div>
+        </div>
+
+        <!-- Row 4: PUNCH -->
+        <div class="table-row" onclick="toggleDetail(this)">
+            <div class="token-cell">
+                <div class="token-icon" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);">👊</div>
+                <div class="token-info">
+                    <div class="token-symbol">PUNCH <span class="chain-badge">SOL</span></div>
+                    <div class="token-name">パンチ</div>
+                </div>
+            </div>
+            <div class="price-cell">$0.01517</div>
+            <div class="change-cell up">+14.63%</div>
+            <div style="font-family: monospace; color: #6b7280;">$1.3M</div>
+            <div style="font-family: monospace; color: #6b7280;">$753K</div>
+            <div><span class="score-badge score-neutral">55</span></div>
+        </div>
+
+        <!-- Row 5: Devious -->
+        <div class="table-row" onclick="toggleDetail(this)">
+            <div class="token-cell">
+                <div class="token-icon" style="background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);">😈</div>
+                <div class="token-info">
+                    <div class="token-symbol">Devious <span class="chain-badge">SOL</span></div>
+                    <div class="token-name">Devious MF</div>
+                </div>
+            </div>
+            <div class="price-cell">$0.000083</div>
+            <div class="change-cell down">-5.22%</div>
+            <div style="font-family: monospace; color: #6b7280;">$85K</div>
+            <div style="font-family: monospace; color: #6b7280;">$25K</div>
+            <div><span class="score-badge score-cold">25</span></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetail(row) {
+            // Toggle expanded class
+            row.classList.toggle('expanded');
+            // In real version, would show/hide detail row
+        }
+    </script>
+</body>
+</html>
