@@ -561,10 +561,12 @@
                 <div>Watchlist</div>
                 <div class="sort-controls">
                     <button class="sort-btn active" onclick="sortTokens('default')">Default</button>
+                    <button class="sort-btn" onclick="sortTokens('alpha')">A-Z</button>
                     <button class="sort-btn" onclick="sortTokens('score')">Score</button>
                     <button class="sort-btn" onclick="sortTokens('change')">24h%</button>
                     <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap</button>
                     <button class="sort-btn" onclick="sortTokens('volume')">Volume</button>
+                    <button class="sort-btn" onclick="sortTokens('age')">Age</button>
                 </div>
             </div>
             <div class="token-list" id="tokenList">
@@ -744,6 +746,10 @@
                     return ops.sort((a, b) => b.market_cap - a.market_cap);
                 case 'volume':
                     return ops.sort((a, b) => b.volume_24h - a.volume_24h);
+                case 'alpha':
+                    return ops.sort((a, b) => a.symbol.localeCompare(b.symbol));
+                case 'age':
+                    return ops.sort((a, b) => new Date(a.added_date) - new Date(b.added_date));
                 default:
                     return ops;
             }
