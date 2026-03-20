@@ -55,6 +55,13 @@ jobs:
         python3 agents/alert_agent.py || echo "Alert failed"
       continue-on-error: true
     
+    - name: Run Trending
+      id: trending
+      run: |
+        echo "Running Trending Agent..."
+        python3 agents/trending_agent.py || echo "Trending failed"
+      continue-on-error: true
+    
     - name: Commit data
       run: |
         git config --local user.email "action@github.com"
