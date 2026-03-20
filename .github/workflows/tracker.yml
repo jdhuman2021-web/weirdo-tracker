@@ -42,14 +42,18 @@ jobs:
     - name: Install dependencies
       run: |
         pip install requests python-telegram-bot
-    
+        
+    - name: Create data directory
+      run: |
+        mkdir -p data
+        
     - name: Run Research Agent
       id: research
       run: |
         echo "::group::Research Agent"
-        python agents/research_agent.py
+        python agents/research_agent.py || echo "Research agent failed"
         echo "::endgroup::"
-      continue-on-error: false
+      continue-on-error: true
     
     - name: Run Thinking Agent
       id: thinking
