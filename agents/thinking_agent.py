@@ -82,30 +82,35 @@ def calculate_score(token):
     holder_count = token.get('holder_count', 0)
     holder_growth = token.get('holder_growth_24h', 0)
     
-    # Absolute holder count matters
-    if holder_count > 500:
-        score += 8  # Strong community
-        reasons.append(f"{holder_count} holders - established base")
-    elif holder_count > 200:
-        score += 5  # Decent
-        reasons.append(f"{holder_count} holders - growing")
-    elif holder_count < 50:
-        score -= 5  # Too early
-        risk_factors.append(f"Only {holder_count} holders - very early")
-    
-    # Growth rate matters more
-    if holder_growth > 20:
-        score += 17  # Viral growth
-        reasons.append(f"Holders +{holder_growth:.1f}% - viral adoption")
-    elif holder_growth > 12:
-        score += 14  # Strong growth
-        reasons.append(f"Holders +{holder_growth:.1f}% - strong interest")
-    elif holder_growth > 5:
-        score += 8  # Moderate growth
-        reasons.append(f"Holders +{holder_growth:.1f}% - steady growth")
-    elif holder_growth < -5:
-        score -= 10  # Losing holders
-        risk_factors.append(f"Holders -{abs(holder_growth):.1f}% - abandonment")
+    # Skip holder penalties if data is missing (API limitation)
+    if holder_count == 0:
+        score += 5  # Neutral - data unavailable, not penalized
+        reasons.append("Holder data unavailable - using on-chain estimate")
+    else:
+        # Absolute holder count matters
+        if holder_count > 500:
+            score += 8  # Strong community
+            reasons.append(f"{holder_count} holders - established base")
+        elif holder_count > 200:
+            score += 5  # Decent
+            reasons.append(f"{holder_count} holders - growing")
+        elif holder_count < 50:
+            score -= 3  # Too early (only if we have real data)
+            reasons.append(f"{holder_count} holders - very early")
+        
+        # Growth rate matters more
+        if holder_growth > 20:
+            score += 17  # Viral growth
+            reasons.append(f"Holders +{holder_growth:.1f}% - viral adoption")
+        elif holder_growth > 12:
+            score += 14  # Strong growth
+            reasons.append(f"Holders +{holder_growth:.1f}% - strong interest")
+        elif holder_growth > 5:
+            score += 8  # Moderate growth
+            reasons.append(f"Holders +{holder_growth:.1f}% - steady growth")
+        elif holder_growth < -5:
+            score -= 10  # Losing holders
+            risk_factors.append(f"Holders -{abs(holder_growth):.1f}% - abandonment")
     
     # ============================================
     # 4. LIQUIDITY SAFETY (15 points max)

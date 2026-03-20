@@ -871,7 +871,7 @@
         
         function renderOpportunities() {
             const ops = currentData.opportunities || [];
-            const strongBuys = ops.filter(o => o.score >= 55); // Lowered threshold for more opportunities
+            const strongBuys = ops.filter(o => o.score >= 45); // Lowered to include Watch tier (40+)
             
             let html = '';
             
