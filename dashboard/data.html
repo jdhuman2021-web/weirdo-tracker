@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Data | Weirdo Tracker</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #14171d;
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #e8eaf0;
+            --text-secondary: #6b7280;
+            --accent: #00ff88;
+            --accent-dim: rgba(0,255,136,0.1);
+            --warning: #ffa502;
+            --danger: #ff4757;
+            --info: #74b9ff;
+        }
+        
+        body {
+            font-family: 'SF Mono', system-ui, -apple-system, monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .header-title span {
+            color: var(--accent);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+        
+        .btn-primary {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        /* Filters */
+        .filters {
+            padding: 15px 20px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-input {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            width: 250px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .filter-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        
+        /* Table */
+        .table-container {
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .data-table th {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .data-table th:hover {
+            background: var(--accent-dim);
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .data-table tr:hover {
+            background: var(--accent-dim);
+        }
+        
+        .signal-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .signal-strong-buy { background: rgba(0,255,136,0.2); color: var(--accent); }
+        .signal-buy { background: rgba(0,255,136,0.15); color: #00cc6a; }
+        .signal-speculative { background: rgba(255,165,2,0.15); color: var(--warning); }
+        .signal-watch { background: rgba(116,185,255,0.15); color: var(--info); }
+        .signal-avoid { background: rgba(255,71,87,0.15); color: var(--danger); }
+        
+        .score-bar {
+            width: 100px;
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        
+        .score-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        
+        .address-cell {
+            font-family: 'SF Mono', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .address-cell:hover {
+            color: var(--accent);
+        }
+        
+        .change-up { color: var(--accent); }
+        .change-down { color: var(--danger); }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: var(--danger);
+        }
+        
+        .link {
+            color: var(--info);
+            text-decoration: none;
+        }
+        
+        .link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .table-container {
+                padding: 10px;
+            }
+            
+            .data-table {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-title">
+            <span>⚡</span> Live Data Set
+        </div>
+        <div class="header-actions">
+            <button class="btn" onclick="refreshData()">🔄 Refresh</button>
+            <button class="btn" onclick="exportCSV()">📥 CSV</button>
+            <button class="btn btn-primary" onclick="window.location.href='/'">🏠 Dashboard</button>
+        </div>
+    </header>
+    
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value" id="statTotal">-</div>
+            <div class="stat-label">Total Tokens</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statAvgScore">-</div>
+            <div class="stat-label">Avg Score</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statBuys">-</div>
+            <div class="stat-label">Buy Signals</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="statLastUpdate">-</div>
+            <div class="stat-label">Last Update</div>
+        </div>
+    </div>
+    
+    <!-- Filters -->
+    <div class="filters">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search symbol, name..." onkeyup="filterTable()">
+        
+        <select class="filter-select" id="signalFilter" onchange="filterTable()">
+            <option value="">All Signals</option>
+            <option value="STRONG_BUY">🔥 Strong Buy</option>
+            <option value="BUY">💚 Buy</option>
+            <option value="SPECULATIVE">⚠️ Speculative</option>
+            <option value="WATCH">❄️ Watch</option>
+            <option value="AVOID">🛑 Avoid</option>
+        </select>
+        
+        <select class="filter-select" id="scoreFilter" onchange="filterTable()">
+            <option value="">All Scores</option>
+            <option value="85+">85+ (Strong Buy)</option>
+            <option value="70+">70+ (Buy)</option>
+            <option value="55+">55+ (Speculative)</option>
+            <option value="40+">40+ (Watch)</option>
+            <option value="<40"><40 (Avoid)</option>
+        </select>
+    </div>
+    
+    <!-- Table -->
+    <div class="table-container">
+        <table class="data-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable('symbol')">Symbol ↕</th>
+                    <th onclick="sortTable('name')">Name ↕</th>
+                    <th onclick="sortTable('score')">Score ↕</th>
+                    <th onclick="sortTable('signal')">Signal ↕</th>
+                    <th onclick="sortTable('market_cap')">Market Cap ↕</th>
+                    <th onclick="sortTable('volume_24h')"> Volume 24h ↕</th>
+                    <th onclick="sortTable('price_change_24h')">24h Change ↕</th>
+                    <th onclick="sortTable('age_hours')">Age ↕</th>
+                    <th>Contract</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr>
+                    <td colspan="9" class="loading">Loading data...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        // Configuration
+        const DATA_URL = 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/opportunities.json';
+        
+        let allData = [];
+        let filteredData = [];
+        let sortCol = 'score';
+        let sortAsc = false;
+        
+        // Load Data
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                if (!response.ok) throw new Error('Data unavailable');
+                const data = await response.json();
+                allData = data.opportunities || [];
+                filteredData = [...allData];
+                updateStats();
+                renderTable();
+            } catch (e) {
+                console.error('Fetch error:', e);
+                document.getElementById('tableBody').innerHTML = 
+                    '<tr><td colspan="9" class="error">⚠️ Data unavailable<br><small>Check GitHub pipeline status</small></td></tr>';
+            }
+        }
+        
+        // Update Stats
+        function updateStats() {
+            document.getElementById('statTotal').textContent = allData.length;
+            
+            const avgScore = allData.reduce((sum, t) => sum + (t.score || 0), 0) / allData.length;
+            document.getElementById('statAvgScore').textContent = avgScore.toFixed(0);
+            
+            const buys = allData.filter(t => ['STRONG_BUY', 'BUY'].includes(t.signal)).length;
+            document.getElementById('statBuys').textContent = buys;
+            
+            if (allData.length > 0) {
+                const lastUpdate = new Date(allData[0].analyzed_at || Date.now());
+                document.getElementById('statLastUpdate').textContent = 
+                    lastUpdate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            }
+        }
+        
+        // Render Table
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="loading">No tokens match filters</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filteredData.map(token => {
+                const scoreColor = getScoreColor(token.score);
+                const changeClass = (token.price_change_24h || 0) >= 0 ? 'change-up' : 'change-down';
+                const changeSign = (token.price_change_24h || 0) >= 0 ? '+' : '';
+                
+                return `
+                    <tr>
+                        <td style="font-weight: 700;">${token.symbol}</td>
+                        <td>${token.name || '-'}</td>
+                        <td>
+                            <div class="score-bar">
+                                <div class="score-fill" style="width: ${token.score}%; background: ${scoreColor};"></div>
+                            </div>
+                            ${token.score}
+                        </td>
+                        <td><span class="signal-badge signal-${token.signal.toLowerCase()}">${token.label || token.signal}</span></td>
+                        <td>$${formatNumber(token.market_cap)}</td>
+                        <td>$${formatNumber(token.volume_24h)}</td>
+                        <td class="${changeClass}">${changeSign}${(token.price_change_24h || 0).toFixed(1)}%</td>
+                        <td>${token.age_hours ? token.age_hours + 'h' : 'N/A'}</td>
+                        <td class="address-cell" onclick="copyAddress('${token.address}')" title="${token.address}">
+                            ${token.address.slice(0, 8)}...${token.address.slice(-4)}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Filter Table
+        function filterTable() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const signalFilter = document.getElementById('signalFilter').value;
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            
+            filteredData = allData.filter(token => {
+                // Search filter
+                if (search && !token.symbol.toLowerCase().includes(search) && 
+                    !(token.name && token.name.toLowerCase().includes(search))) {
+                    return false;
+                }
+                
+                // Signal filter
+                if (signalFilter && token.signal !== signalFilter) {
+                    return false;
+                }
+                
+                // Score filter
+                if (scoreFilter) {
+                    const score = token.score || 0;
+                    if (scoreFilter === '85+' && score < 85) return false;
+                    if (scoreFilter === '70+' && score < 70) return false;
+                    if (scoreFilter === '55+' && score < 55) return false;
+                    if (scoreFilter === '40+' && score < 40) return false;
+                    if (scoreFilter === '<40' && score >= 40) return false;
+                }
+                
+                return true;
+            });
+            
+            renderTable();
+        }
+        
+        // Sort Table
+        function sortTable(col) {
+            if (sortCol === col) {
+                sortAsc = !sortAsc;
+            } else {
+                sortCol = col;
+                sortAsc = true;
+            }
+            
+            filteredData.sort((a, b) => {
+                let aVal = a[col] || 0;
+                let bVal = b[col] || 0;
+                
+                if (typeof aVal === 'string') {
+                    return sortAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                }
+                
+                return sortAsc ? aVal - bVal : bVal - aVal;
+            });
+            
+            renderTable();
+        }
+        
+        // Helpers
+        function getScoreColor(score) {
+            if (score >= 85) return '#00ff88';
+            if (score >= 70) return '#00cc6a';
+            if (score >= 55) return '#ffa502';
+            if (score >= 40) return '#74b9ff';
+            return '#ff4757';
+        }
+        
+        function formatNumber(num) {
+            if (!num) return '0';
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+            return num.toFixed(0);
+        }
+        
+        function copyAddress(address) {
+            navigator.clipboard.writeText(address).then(() => {
+                alert('✅ Contract address copied!');
+            });
+        }
+        
+        // Export CSV
+        function exportCSV() {
+            const headers = ['Symbol', 'Name', 'Score', 'Signal', 'Market Cap', 'Volume 24h', '24h Change', 'Age (h)', 'Address'];
+            const rows = filteredData.map(t => [
+                t.symbol,
+                t.name || '',
+                t.score || 0,
+                t.signal || '',
+                t.market_cap || 0,
+                t.volume_24h || 0,
+                (t.price_change_24h || 0).toFixed(2),
+                t.age_hours || 0,
+                t.address
+            ]);
+            
+            const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `weirdo-data-${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+        }
+        
+        // Refresh
+        function refreshData() {
+            loadData();
+        }
+        
+        // Auto-refresh every 5 minutes
+        setInterval(loadData, 300000);
+        
+        // Initial load
+        loadData();
+    </script>
+</body>
+</html>
