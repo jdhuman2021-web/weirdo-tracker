@@ -1,8 +1,8 @@
 # Research agent.py
 
 """
-Research Agent v1.2 - Real Token Age Support
-Fetches pairCreatedAt from DexScreener and calculates token age
+Research Agent v1.3 - SQLite Database Support
+Fetches pairCreatedAt from DexScreener, calculates token age, writes to DB
 """
 
 import json
@@ -10,6 +10,10 @@ import requests
 import time
 from datetime import datetime
 from pathlib import Path
+import sys
+
+# Add parent directory to path for db_queries import
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 def load_config():
     """Load token configuration from JSON file"""
@@ -17,7 +21,7 @@ def load_config():
         with open('config/tokens.json', 'r') as f:
             return json.load(f)
     except FileNotFoundError:
-        print("❌ config/tokens.json not found. Creating default...")
+        print("ERROR: config/tokens.json not found. Creating default...")
         Path('config').mkdir(exist_ok=True)
         default = {"tokens": [], "whales": []}
         with open('config/tokens.json', 'w') as f:
@@ -92,15 +96,24 @@ def fetch_token_data(token):
 
 def main():
     """Main execution"""
-    print("🔍 Research Agent v1.2 - Real Token Age Support")
+    print("Research Agent v1.3 - SQLite Database Support")
     print("=" * 50)
+    
+    # Import DB functions
+    try:
+        from database.db_queries import add_price_snapshot, get_all_tokens
+        db_available = True
+        print("Database module loaded OK")
+    except Exception as e:
+        print(f"Database module not available: {e}")
+        db_available = False
     
     # Load configuration
     config = load_config()
     tokens = config.get('tokens', [])
     
     if not tokens:
-        print("⚠️ No tokens configured. Add tokens to config/tokens.json")
+        print("WARN: No tokens configured. Add tokens to config/tokens.json")
         return
     
     # Deduplicate tokens by address (prevent duplicates from batch adds)
@@ -108,29 +121,50 @@ def main():
     unique_tokens = []
     for token in tokens:
         if token['address'] in seen_addresses:
-            print(f"⚠️ Skipping duplicate: {token['symbol']} ({token['address'][:8]}...)")
+            print(f"Skipping duplicate: {token['symbol']} ({token['address'][:8]}...)")
             continue
         seen_addresses.add(token['address'])
         unique_tokens.append(token)
     
-    print(f"📋 Loaded {len(tokens)} tokens from config ({len(unique_tokens)} unique)")
+    print(f"Loaded {len(tokens)} tokens from config ({len(unique_tokens)} unique)")
     print()
     
     # Fetch data for all tokens
     results = []
+    db_writes = 0
     for i, token in enumerate(unique_tokens, 1):
         print(f"[{i}/{len(unique_tokens)}] {token['symbol']}...", end=' ')
         data = fetch_token_data(token)
         if data:
             results.append(data)
-            print(f"✓ ${data['price_usd']:.6f} (Age: {data['age_hours']}h)")
+            print(f"OK ${data['price_usd']:.6f} (Age: {data['age_hours']}h)")
+            
+            # Write to database if available
+            if db_available:
+                try:
+                    add_price_snapshot(
+                        token_address=data['address'],
+                        price_usd=data['price_usd'],
+                        market_cap=data['market_cap'],
+                        volume_24h=data['volume_24h'],
+                        liquidity_usd=data['liquidity_usd'],
+                        price_change_1h=data['price_change_1h'],
+                        price_change_24h=data['price_change_24h'],
+                        holder_count=data.get('holder_count', 0),
+                        age_hours=data.get('age_hours', 0),
+                        score=0,  # Research agent doesn't score
+                        signal='UNKNOWN'
+                    )
+                    db_writes += 1
+                except Exception as e:
+                    print(f"  DB write failed: {e}")
         else:
-            print("✗ Failed")
+            print("FAILED")
         
         if i < len(unique_tokens):
             time.sleep(6)  # Rate limiting
     
-    # Save results
+    # Save results to JSON (for pipeline compatibility)
     Path('data').mkdir(exist_ok=True)
     
     output = {
@@ -138,7 +172,8 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'tokens_fetched': len(results),
             'total_configured': len(tokens),
-            'agent': 'research_v1.2'
+            'agent': 'research_v1.3',
+            'db_writes': db_writes
         },
         'raw_data': results
     }
@@ -146,18 +181,19 @@ def main():
     with open('data/latest.json', 'w') as f:
         json.dump(output, f, indent=2)
     
-    print(f"\n💾 Saved {len(results)} tokens to data/latest.json")
+    print(f"\nSaved {len(results)} tokens to data/latest.json")
+    print(f"Database writes: {db_writes}")
     
     if results:
         sorted_by_age = sorted(results, key=lambda x: x['age_hours'])
-        print(f"\n👶 Freshest: {sorted_by_age[0]['symbol']} ({sorted_by_age[0]['age_hours']}h old)")
-        print(f"🧠 Oldest: {sorted_by_age[-1]['symbol']} ({sorted_by_age[-1]['age_hours']}h old)")
+        print(f"\nFreshest: {sorted_by_age[0]['symbol']} ({sorted_by_age[0]['age_hours']}h old)")
+        print(f"Oldest: {sorted_by_age[-1]['symbol']} ({sorted_by_age[-1]['age_hours']}h old)")
         
         # Holder stats if available
         holders_data = [r for r in results if r.get('holder_count', 0) > 0]
         if holders_data:
             sorted_by_holders = sorted(holders_data, key=lambda x: x.get('holder_count', 0), reverse=True)
-            print(f"\n👥 Most Holders: {sorted_by_holders[0]['symbol']} ({sorted_by_holders[0]['holder_count']})")
+            print(f"\nMost Holders: {sorted_by_holders[0]['symbol']} ({sorted_by_holders[0]['holder_count']})")
 
 if __name__ == "__main__":
     main()

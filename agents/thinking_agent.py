@@ -1,13 +1,17 @@
 # Thinking agent.py
 
 """
-Thinking Agent v2.0 - Advanced Opportunity Scoring
-Focuses on whale accumulation signals and entry timing
+Thinking Agent v2.2 - Historical Data Scoring
+Uses SQLite price history for trend analysis + whale intelligence
 """
 
 import json
 from datetime import datetime
 from pathlib import Path
+import sys
+
+# Add parent directory to path for db_queries import
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 def calculate_score(token):
     """
@@ -199,6 +203,38 @@ def calculate_score(token):
             score += 10  # Some activity
             reasons.append(f"🐋 Whale accumulation detected ({total_buys} buys)")
     
+    # ============================================
+    # 9. HISTORICAL TREND BONUS (10 points max)
+    # ============================================
+    # Use SQLite history to detect trends
+    price_history = token.get('price_history', [])
+    if price_history and len(price_history) >= 3:
+        # Check if price is trending up from recent lows
+        recent_prices = [p.get('price_usd', 0) for p in price_history[:5]]
+        if len(recent_prices) >= 3:
+            avg_recent = sum(recent_prices[:3]) / 3
+            avg_older = sum(recent_prices[3:]) / len(recent_prices[3:]) if len(recent_prices) > 3 else avg_recent
+            
+            if avg_recent > avg_older * 1.1:
+                score += 10  # Uptrend from lows
+                reasons.append("📈 Price trending up from recent lows")
+            elif avg_recent < avg_older * 0.9:
+                score -= 5  # Downtrend
+                risk_factors.append("📉 Price trending down")
+    
+    # Final score capped at 100
+    final_score = min(max(score, 0), 100)
+    
+    return final_score, reasons, risk_factorsales = whale_activity.get('active_whales', [])
+        total_buys = whale_activity.get('total_buys', 0)
+        
+        if len(active_whales) > 0:
+            score += 15  # Max bonus for any whale activity
+            reasons.append(f"🐋 {len(active_whales)} tracked whales buying in 24h")
+        elif total_buys > 0:
+            score += 10  # Some activity
+            reasons.append(f"🐋 Whale accumulation detected ({total_buys} buys)")
+    
     # Final score capped at 100
     final_score = min(max(score, 0), 100)
     
@@ -219,15 +255,24 @@ def get_signal(score):
 
 def main():
     """Main execution"""
-    print("🧠 Thinking Agent v2.1 - Advanced Scoring + Whale Intelligence")
+    print("Thinking Agent v2.2 - Historical Data Scoring")
     print("=" * 60)
+    
+    # Import DB functions
+    try:
+        from database.db_queries import get_price_history
+        db_available = True
+        print("Database module loaded OK")
+    except Exception as e:
+        print(f"Database module not available: {e}")
+        db_available = False
     
     # Read latest research data
     try:
         with open('data/latest.json', 'r') as f:
             research = json.load(f)
     except FileNotFoundError:
-        print("❌ No research data found. Run Research Agent first.")
+        print("ERROR: No research data found. Run Research Agent first.")
         return
     
     # Load whale activity data
@@ -235,9 +280,9 @@ def main():
         with open('data/whale_activity.json', 'r') as f:
             whale_data = json.load(f)
         whale_activity = whale_data.get('whale_activity', {})
-        print("🐋 Loaded whale activity data")
+        print("Loaded whale activity data")
     except FileNotFoundError:
-        print("⚠️ No whale activity data (run Whale Activity Agent first)")
+        print("WARN: No whale activity data (run Whale Activity Agent first)")
         whale_activity = {}
     
     tokens = research.get('raw_data', [])
@@ -247,6 +292,16 @@ def main():
     for token in tokens:
         # Attach whale activity data
         token['whale_activity'] = whale_activity.get(token['symbol'], {})
+        
+        # Attach price history from DB if available
+        if db_available:
+            try:
+                history = get_price_history(token['address'], hours=24)
+                token['price_history'] = history
+                if history:
+                    print(f"  {token['symbol']}: {len(history)} snapshots in DB")
+            except Exception as e:
+                token['price_history'] = []
         
         score, reasons, risk_factors = calculate_score(token)
         signal, label = get_signal(score)
@@ -275,7 +330,8 @@ def main():
             'speculative': len([o for o in opportunities if o['signal'] == 'SPECULATIVE']),
             'watch': len([o for o in opportunities if o['signal'] == 'WATCH']),
             'avoid': len([o for o in opportunities if o['signal'] == 'AVOID']),
-            'agent': 'thinking_v2.0'
+            'agent': 'thinking_v2.2',
+            'db_history_used': db_available
         },
         'opportunities': opportunities
     }
@@ -284,13 +340,13 @@ def main():
         json.dump(output, f, indent=2)
     
     # Summary
-    print(f"\n📊 Analysis Complete:")
+    print(f"\nAnalysis Complete:")
     print(f"  Total tokens: {len(opportunities)}")
-    print(f"  🔥 Strong Buys: {len([o for o in opportunities if o['signal'] == 'STRONG_BUY'])}")
-    print(f"  💚 Buys: {len([o for o in opportunities if o['signal'] == 'BUY'])}")
-    print(f"  ⚠️ Speculative: {len([o for o in opportunities if o['signal'] == 'SPECULATIVE'])}")
-    print(f"  ❄️ Watch: {len([o for o in opportunities if o['signal'] == 'WATCH'])}")
-    print(f"  🛑 Avoid: {len([o for o in opportunities if o['signal'] == 'AVOID'])}")
+    print(f"  Strong Buys: {len([o for o in opportunities if o['signal'] == 'STRONG_BUY'])}")
+    print(f"  Buys: {len([o for o in opportunities if o['signal'] == 'BUY'])}")
+    print(f"  Speculative: {len([o for o in opportunities if o['signal'] == 'SPECULATIVE'])}")
+    print(f"  Watch: {len([o for o in opportunities if o['signal'] == 'WATCH'])}")
+    print(f"  Avoid: {len([o for o in opportunities if o['signal'] == 'AVOID'])}")
     
     if opportunities:
         print(f"\n🏆 Top 3 Opportunities:")
