@@ -47,6 +47,17 @@ def fetch_token_data(token):
             age_delta = datetime.utcnow() - created_dt
             age_hours = int(age_delta.total_seconds() / 3600)
         
+        # Fetch holder count from Solscan (optional, best effort)
+        holder_count = 0
+        try:
+            solscan_url = f"https://api.solscan.io/token/holder?tokenAddress={token['address']}"
+            holder_resp = requests.get(solscan_url, timeout=5)
+            if holder_resp.status_code == 200:
+                holder_data = holder_resp.json()
+                holder_count = holder_data.get('totalHolders', 0)
+        except:
+            holder_count = 0  # API may require auth
+        
         return {
             'symbol': token['symbol'],
             'name': token['name'],
@@ -58,6 +69,7 @@ def fetch_token_data(token):
             'volume_24h': float(pair.get('volume', {}).get('h24', 0) or 0),
             'liquidity_usd': float(pair.get('liquidity', {}).get('usd', 0) or 0),
             'market_cap': float(pair.get('fdv', 0) or pair.get('marketCap', 0) or 0),
+            'holder_count': holder_count,
             'pair_created_at': pair_created_at,
             'age_hours': age_hours,
             'age_days': round(age_hours / 24, 1),
@@ -122,6 +134,12 @@ def main():
         sorted_by_age = sorted(results, key=lambda x: x['age_hours'])
         print(f"\n👶 Freshest: {sorted_by_age[0]['symbol']} ({sorted_by_age[0]['age_hours']}h old)")
         print(f"🧠 Oldest: {sorted_by_age[-1]['symbol']} ({sorted_by_age[-1]['age_hours']}h old)")
+        
+        # Holder stats if available
+        holders_data = [r for r in results if r.get('holder_count', 0) > 0]
+        if holders_data:
+            sorted_by_holders = sorted(holders_data, key=lambda x: x.get('holder_count', 0), reverse=True)
+            print(f"\n👥 Most Holders: {sorted_by_holders[0]['symbol']} ({sorted_by_holders[0]['holder_count']})")
 
 if __name__ == "__main__":
     main()
