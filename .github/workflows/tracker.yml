@@ -35,7 +35,10 @@ jobs:
       id: research
       run: |
         echo "Running Research Agent..."
-        python3 agents/research_agent.py || echo "Research failed"
+        echo "Config tokens count: $(cat config/tokens.json | jq '.tokens | length')"
+        python3 agents/research_agent.py 2>&1 | tee research.log
+        echo "Research exit code: $?"
+        cat data/latest.json 2>/dev/null | jq '.metadata' || echo "No latest.json"
       continue-on-error: true
     
     - name: Run Whale Activity
@@ -66,6 +69,12 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        echo "Files in data/:"
+        ls -la data/
+        echo "Latest.json metadata:"
+        cat data/latest.json | jq '.metadata' 2>/dev/null || echo "No latest.json"
         git add data/ || true
-        git diff --staged --quiet || git commit -m "Auto-update data"
+        git status
+        git diff --staged --quiet || git commit -m "Auto-update data: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
         git push || true
+        echo "Push exit code: $?"
