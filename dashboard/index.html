@@ -643,7 +643,25 @@
                     </div>
                 </div>
                 
-                <!-- Risk Factors Section -->
+                <!-- Analysis Summary Section -->
+                <div class="analysis-section" id="analysisSection" style="margin-top: 20px; border-top: 2px solid var(--border); padding-top: 20px;">
+                    <div class="analysis-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div class="analysis-title" style="font-size: 14px; font-weight: 700; color: var(--text-primary);">🧠 AI Analysis Summary</div>
+                        <div class="analysis-signal" id="analysisSignal" style="padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 700;">--</div>
+                    </div>
+                    
+                    <div class="analysis-reasons" id="analysisReasons" style="margin-bottom: 15px;">
+                        <div class="chart-stat-label" style="color: var(--accent); font-weight: 700; margin-bottom: 8px;">✅ Why This Token</div>
+                        <div id="reasonsList" style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;"></div>
+                    </div>
+                    
+                    <div class="analysis-risks" id="analysisRisks" style="display: none;">
+                        <div class="chart-stat-label" style="color: var(--danger); font-weight: 700; margin-bottom: 8px;">⚠️ Risk Factors</div>
+                        <div id="risksList" style="font-size: 13px; color: var(--danger); line-height: 1.8;"></div>
+                    </div>
+                </div>
+                
+                <!-- Risk Factors Section (deprecated - keeping for backward compat) -->
                 <div class="risk-section" id="riskSection" style="margin-top: 15px; padding: 12px; background: rgba(255,71,87,0.1); border-left: 3px solid var(--danger); border-radius: 4px; display: none;">
                     <div class="chart-stat-label" style="color: var(--danger); font-weight: 700; margin-bottom: 8px;">⚠️ Risk Factors</div>
                     <div id="riskFactors" style="font-size: 12px; color: var(--danger); line-height: 1.6;"></div>
@@ -907,6 +925,46 @@
             document.getElementById('statLiquidity').textContent = '$' + formatNumber(selectedToken.liquidity_usd);
             document.getElementById('statMcap').textContent = '$' + formatNumber(selectedToken.market_cap);
             document.getElementById('statScore').textContent = selectedToken.score + '/100';
+            
+            // Extended stats
+            document.getElementById('statHolders').textContent = selectedToken.holder_count > 0 ? selectedToken.holder_count : '~' + ((selectedToken.txns?.h24?.buys || 0) + (selectedToken.txns?.h24?.sells || 0)) / 3;
+            const holderGrowth = selectedToken.holder_growth_24h || 0;
+            const holderGrowthEl = document.getElementById('statHolderGrowth');
+            holderGrowthEl.textContent = holderGrowth !== 0 ? '+' + holderGrowth.toFixed(1) + '%' : 'N/A';
+            holderGrowthEl.style.color = holderGrowth > 10 ? 'var(--accent)' : holderGrowth < -5 ? 'var(--danger)' : 'var(--text-secondary)';
+            document.getElementById('statAge').textContent = selectedToken.age_hours ? `${selectedToken.age_hours}h` : 'N/A';
+            const volRatio = selectedToken.volume_24h / (selectedToken.liquidity_usd || 1);
+            document.getElementById('statVolRatio').textContent = volRatio.toFixed(1) + 'x';
+            document.getElementById('statVolRatio').style.color = volRatio > 3 ? 'var(--accent)' : volRatio > 1 ? 'var(--text-secondary)' : 'var(--danger)';
+            
+            // Analysis Summary
+            const signalEl = document.getElementById('analysisSignal');
+            signalEl.textContent = selectedToken.label || selectedToken.signal;
+            signalEl.style.background = selectedToken.score >= 85 ? 'rgba(0,255,136,0.2)' : 
+                                        selectedToken.score >= 70 ? 'rgba(0,255,136,0.15)' : 
+                                        selectedToken.score >= 55 ? 'rgba(255,165,2,0.15)' : 
+                                        'rgba(255,71,87,0.15)';
+            signalEl.style.color = selectedToken.score >= 85 ? 'var(--accent)' : 
+                                   selectedToken.score >= 70 ? 'var(--accent)' : 
+                                   selectedToken.score >= 55 ? 'var(--warning)' : 'var(--danger)';
+            
+            // Reasons
+            const reasonsList = document.getElementById('reasonsList');
+            if (selectedToken.reasons && selectedToken.reasons.length > 0) {
+                reasonsList.innerHTML = selectedToken.reasons.map(r => `<div>• ${r}</div>`).join('');
+            } else {
+                reasonsList.innerHTML = '<div>Analyzing...</div>';
+            }
+            
+            // Risks
+            const risksSection = document.getElementById('analysisRisks');
+            const risksList = document.getElementById('risksList');
+            if (selectedToken.risk_factors && selectedToken.risk_factors.length > 0) {
+                risksSection.style.display = 'block';
+                risksList.innerHTML = selectedToken.risk_factors.map(r => `<div>• ${r}</div>`).join('');
+            } else {
+                risksSection.style.display = 'none';
+            }
             
             // Load TradingView chart
             loadTradingViewChart(selectedToken);
