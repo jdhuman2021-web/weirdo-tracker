@@ -423,34 +423,33 @@
         }
         
         .opportunity-card:hover {
-            border-color: rgba(0,255,136,0.4);
             transform: translateY(-1px);
         }
         
-        /* Opportunity Card Color Variants */
+        /* Opportunity Card Color Variants - Full Background */
         .opportunity-card.strong-buy {
-            background: rgba(0,255,136,0.15);
-            border-left: 4px solid var(--accent);
+            background: linear-gradient(135deg, rgba(0,255,136,0.15) 0%, rgba(0,255,136,0.05) 100%);
+            border: 2px solid var(--accent);
         }
         
         .opportunity-card.buy {
-            background: rgba(0,255,136,0.1);
-            border-left: 4px solid var(--warning);
+            background: linear-gradient(135deg, rgba(255,165,2,0.12) 0%, rgba(255,165,2,0.04) 100%);
+            border: 2px solid var(--warning);
         }
         
         .opportunity-card.speculative {
-            background: rgba(255,165,2,0.1);
-            border-left: 4px solid var(--info);
+            background: linear-gradient(135deg, rgba(116,185,255,0.1) 0%, rgba(116,185,255,0.03) 100%);
+            border: 2px solid var(--info);
         }
         
         .opportunity-card.watch {
-            background: rgba(116,185,255,0.08);
-            border-left: 4px solid var(--info);
+            background: linear-gradient(135deg, rgba(116,185,255,0.08) 0%, rgba(116,185,255,0.02) 100%);
+            border: 2px solid rgba(116,185,255,0.5);
         }
         
         .opportunity-card.avoid {
-            background: rgba(255,71,87,0.08);
-            border-left: 4px solid var(--danger);
+            background: linear-gradient(135deg, rgba(255,71,87,0.1) 0%, rgba(255,71,87,0.03) 100%);
+            border: 2px solid var(--danger);
         }
         
         .opportunity-header {
@@ -466,12 +465,35 @@
         }
         
         .opportunity-score {
-            background: rgba(0,255,136,0.2);
-            color: var(--accent);
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: 700;
+        }
+        
+        .opportunity-card.strong-buy .opportunity-score {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+        
+        .opportunity-card.buy .opportunity-score {
+            background: var(--warning);
+            color: var(--bg-primary);
+        }
+        
+        .opportunity-card.speculative .opportunity-score {
+            background: var(--info);
+            color: var(--bg-primary);
+        }
+        
+        .opportunity-card.watch .opportunity-score {
+            background: rgba(116,185,255,0.3);
+            color: var(--text-primary);
+        }
+        
+        .opportunity-card.avoid .opportunity-score {
+            background: var(--danger);
+            color: var(--bg-primary);
         }
         
         .opportunity-reason {
