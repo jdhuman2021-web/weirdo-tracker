@@ -38,7 +38,14 @@ jobs:
         python3 agents/research_agent.py || echo "Research failed"
       continue-on-error: true
     
-    - name: Run Thinking
+    - name: Run Whale Activity
+      id: whale
+      run: |
+        echo "Running Whale Activity Agent..."
+        python3 agents/whale_activity_agent.py || echo "Whale failed"
+      continue-on-error: true
+    
+    - name: Run Thinking (with whale data)
       id: thinking
       run: |
         echo "Running Thinking Agent..."
@@ -53,20 +60,6 @@ jobs:
       run: |
         echo "Running Alert Agent..."
         python3 agents/alert_agent.py || echo "Alert failed"
-      continue-on-error: true
-    
-    - name: Run Whale Activity
-      id: whale
-      run: |
-        echo "Running Whale Activity Agent..."
-        python3 agents/whale_activity_agent.py || echo "Whale failed"
-      continue-on-error: true
-    
-    - name: Run Thinking (with whale data)
-      id: thinking
-      run: |
-        echo "Running Thinking Agent..."
-        python3 agents/thinking_agent.py || echo "Thinking failed"
       continue-on-error: true
     
     - name: Commit data
