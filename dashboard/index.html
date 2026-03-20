@@ -427,6 +427,32 @@
             transform: translateY(-1px);
         }
         
+        /* Opportunity Card Color Variants */
+        .opportunity-card.strong-buy {
+            background: rgba(0,255,136,0.15);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .opportunity-card.buy {
+            background: rgba(0,255,136,0.1);
+            border-left: 4px solid var(--warning);
+        }
+        
+        .opportunity-card.speculative {
+            background: rgba(255,165,2,0.1);
+            border-left: 4px solid var(--info);
+        }
+        
+        .opportunity-card.watch {
+            background: rgba(116,185,255,0.08);
+            border-left: 4px solid var(--info);
+        }
+        
+        .opportunity-card.avoid {
+            background: rgba(255,71,87,0.08);
+            border-left: 4px solid var(--danger);
+        }
+        
         .opportunity-header {
             display: flex;
             justify-content: space-between;
@@ -864,8 +890,9 @@
             let html = '';
             
             strongBuys.slice(0, 10).forEach(token => {
+                const cardClass = getOpportunityCardClass(token.score);
                 html += `
-                    <div class="opportunity-card" onclick="selectTokenBySymbol('${token.symbol}')">
+                    <div class="opportunity-card ${cardClass}" onclick="selectTokenBySymbol('${token.symbol}')">
                         <div class="opportunity-header">
                             <span class="opportunity-symbol">${token.symbol}</span>
                             <span class="opportunity-score">${token.score}/100</span>
@@ -1013,6 +1040,14 @@
             if (score >= 50) return 'signal-warm';
             if (score >= 30) return 'signal-neutral';
             return 'signal-cold';
+        }
+        
+        function getOpportunityCardClass(score) {
+            if (score >= 85) return 'strong-buy';      // Green accent
+            if (score >= 70) return 'buy';            // Green warning
+            if (score >= 55) return 'speculative';    // Orange
+            if (score >= 40) return 'watch';          // Blue
+            return 'avoid';                           // Red
         }
         
         function getTokenGradient(symbol) {
