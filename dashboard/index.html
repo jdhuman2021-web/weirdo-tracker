@@ -157,6 +157,35 @@
             font-weight: 600;
         }
         
+        .sort-controls {
+            display: flex;
+            gap: 4px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .sort-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .sort-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+        
+        .sort-btn.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
         .token-list {
             overflow-y: auto;
             flex: 1;
@@ -528,7 +557,16 @@
         
         <!-- Left Sidebar - Token List -->
         <aside class="sidebar-left">
-            <div class="sidebar-header">Watchlist</div>
+            <div class="sidebar-header">
+                <div>Watchlist</div>
+                <div class="sort-controls">
+                    <button class="sort-btn active" onclick="sortTokens('default')">Default</button>
+                    <button class="sort-btn" onclick="sortTokens('score')">Score</button>
+                    <button class="sort-btn" onclick="sortTokens('change')">24h%</button>
+                    <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap</button>
+                    <button class="sort-btn" onclick="sortTokens('volume')">Volume</button>
+                </div>
+            </div>
             <div class="token-list" id="tokenList">
                 <div class="loading">Loading...</div>
             </div>
@@ -676,8 +714,43 @@
             document.getElementById('ticker').innerHTML = tickerHTML;
         }
         
+        let currentSort = 'default';
+        
+        function sortTokens(type) {
+            currentSort = type;
+            
+            // Update button states
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(type === 'default' ? 'default' : type)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderTokenList();
+        }
+        
+        function getSortedTokens() {
+            if (!currentData || !currentData.opportunities) return [];
+            
+            const ops = [...currentData.opportunities];
+            
+            switch (currentSort) {
+                case 'score':
+                    return ops.sort((a, b) => b.score - a.score);
+                case 'change':
+                    return ops.sort((a, b) => b.price_change_24h - a.price_change_24h);
+                case 'mcap':
+                    return ops.sort((a, b) => b.market_cap - a.market_cap);
+                case 'volume':
+                    return ops.sort((a, b) => b.volume_24h - a.volume_24h);
+                default:
+                    return ops;
+            }
+        }
+        
         function renderTokenList() {
-            const ops = currentData.opportunities || [];
+            const ops = getSortedTokens();
             const listHTML = ops.map(token => {
                 const signalClass = getSignalClass(token.score);
                 const changeClass = token.price_change_24h >= 0 ? 'up' : 'down';
