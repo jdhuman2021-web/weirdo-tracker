@@ -857,7 +857,15 @@
         function getSortedTokens() {
             if (!currentData || !currentData.opportunities) return [];
             
-            const ops = [...currentData.opportunities];
+            // Deduplicate by address (keep first occurrence)
+            const seen = new Set();
+            const unique = currentData.opportunities.filter(t => {
+                if (seen.has(t.address)) return false;
+                seen.add(t.address);
+                return true;
+            });
+            
+            const ops = [...unique];
             const dir = sortDirection[currentSort] ? -1 : 1; // false=asc, true=desc
             
             switch (currentSort) {
@@ -1028,8 +1036,9 @@
         }
         
         function loadTradingViewChart(token) {
-            // Use DexScreener iframe for Solana tokens
-            const dexUrl = `https://dexscreener.com/solana/${token.address}?embed=true&theme=dark&chart=1`;
+            // Use DexScreener pair URL - extract pair ID from address or use address as fallback
+            const pairId = token.pair_address || token.address;
+            const dexUrl = `https://dexscreener.com/solana/${pairId}?embed=true&theme=dark&chart=1`;
             
             document.getElementById('tradingview_chart').innerHTML = `
                 <iframe 

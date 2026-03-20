@@ -103,13 +103,23 @@ def main():
         print("⚠️ No tokens configured. Add tokens to config/tokens.json")
         return
     
-    print(f"📋 Loaded {len(tokens)} tokens from config")
+    # Deduplicate tokens by address (prevent duplicates from batch adds)
+    seen_addresses = set()
+    unique_tokens = []
+    for token in tokens:
+        if token['address'] in seen_addresses:
+            print(f"⚠️ Skipping duplicate: {token['symbol']} ({token['address'][:8]}...)")
+            continue
+        seen_addresses.add(token['address'])
+        unique_tokens.append(token)
+    
+    print(f"📋 Loaded {len(tokens)} tokens from config ({len(unique_tokens)} unique)")
     print()
     
     # Fetch data for all tokens
     results = []
-    for i, token in enumerate(tokens, 1):
-        print(f"[{i}/{len(tokens)}] {token['symbol']}...", end=' ')
+    for i, token in enumerate(unique_tokens, 1):
+        print(f"[{i}/{len(unique_tokens)}] {token['symbol']}...", end=' ')
         data = fetch_token_data(token)
         if data:
             results.append(data)
@@ -117,7 +127,7 @@ def main():
         else:
             print("✗ Failed")
         
-        if i < len(tokens):
+        if i < len(unique_tokens):
             time.sleep(6)  # Rate limiting
     
     # Save results
