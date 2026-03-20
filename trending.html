@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Discovery | Weirdo Tracker</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #14171d;
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #e8eaf0;
+            --text-secondary: #6b7280;
+            --accent: #00ff88;
+            --accent-dim: rgba(0,255,136,0.1);
+            --warning: #ffa502;
+            --danger: #ff4757;
+            --info: #74b9ff;
+        }
+        
+        body {
+            font-family: 'SF Mono', system-ui, -apple-system, monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 60px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent) 0%, #00cc6a 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .nav-link.active {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+        
+        /* Split Layout */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            height: calc(100vh - 60px);
+        }
+        
+        /* Left Panel - Token List */
+        .token-panel {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .panel-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .filter-btn.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .token-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        
+        .token-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .token-card:hover {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+        
+        .token-card.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+        
+        .token-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .token-symbol {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .trending-score {
+            background: rgba(255,165,2,0.2);
+            color: var(--warning);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .token-card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        
+        .stat-label { opacity: 0.7; }
+        .stat-value { font-weight: 600; color: var(--text-primary); }
+        
+        .change-up { color: var(--accent); }
+        .change-down { color: var(--danger); }
+        
+        .add-btn {
+            background: rgba(0,255,136,0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            width: 100%;
+        }
+        
+        .add-btn:hover {
+            background: var(--accent-dim);
+        }
+        
+        .add-btn.added {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+            cursor: default;
+        }
+        
+        /* Right Panel - Preview */
+        .preview-panel {
+            background: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .preview-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .preview-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .preview-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .preview-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .chart-container {
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        
+        .stat-box-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .stat-box-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .analysis-section {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .analysis-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .analysis-list {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🔥</div>
+            <div class="logo-text">WEIRDO TRACKER</div>
+        </div>
+        <nav class="nav-links">
+            <a href="dashboard.html" class="nav-link">📊 Tracker</a>
+            <a href="trending.html" class="nav-link active">🔥 Trending</a>
+        </nav>
+    </header>
+    
+    <div class="split-layout">
+        <!-- Left Panel - Token List -->
+        <aside class="token-panel">
+            <div class="panel-header">
+                <div class="panel-title">🔥 Trending Tokens</div>
+                <div class="filters">
+                    <button class="filter-btn active" onclick="filterTrending('all')">All</button>
+                    <button class="filter-btn" onclick="filterTrending('volume')">High Vol</button>
+                    <button class="filter-btn" onclick="filterTrending('mcap')">Micro Cap</button>
+                    <button class="filter-btn" onclick="filterTrending('age')">Fresh</button>
+                </div>
+            </div>
+            <div class="token-list" id="tokenList">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <span style="margin-left: 12px;">Loading trending...</span>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Right Panel - Preview -->
+        <main class="preview-panel">
+            <div class="preview-header">
+                <div class="preview-title" id="previewTitle">Select a Token</div>
+                <div class="preview-subtitle" id="previewSubtitle">Click a token from the list to preview</div>
+            </div>
+            <div class="preview-content" id="previewContent">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔍</div>
+                    <div>Select a token to preview details</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        // Configuration
+        const CONFIG = {
+            trendingUrl: 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/trending.json',
+            tokensUrl: 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/config/tokens.json',
+            refreshInterval: 300000, // 5 minutes
+        };
+        
+        let trendingData = null;
+        let tokensData = null;
+        let selectedToken = null;
+        let currentFilter = 'all';
+        
+        // Fetch Trending Data
+        async function fetchTrendingData() {
+            try {
+                const response = await fetch(CONFIG.trendingUrl + '?t=' + Date.now());
+                if (!response.ok) throw new Error('Trending unavailable');
+                const data = await response.json();
+                trendingData = data;
+                renderTokenList();
+            } catch (e) {
+                console.error('Trending fetch error:', e);
+                document.getElementById('tokenList').innerHTML = '<div class="loading">Trending unavailable</div>';
+            }
+        }
+        
+        // Fetch Tokens Config
+        async function fetchTokensData() {
+            try {
+                const response = await fetch(CONFIG.tokensUrl + '?t=' + Date.now());
+                if (!response.ok) throw new Error('Tokens config unavailable');
+                const data = await response.json();
+                tokensData = data;
+            } catch (e) {
+                console.error('Tokens fetch error:', e);
+                tokensData = { tokens: [] };
+            }
+        }
+        
+        // Render Token List
+        function renderTokenList() {
+            if (!trendingData || !trendingData.trending) return;
+            
+            const tokens = filterTokens(trendingData.trending);
+            
+            const html = tokens.map(token => {
+                const isActive = selectedToken && selectedToken.symbol === token.symbol ? 'active' : '';
+                const isAdded = tokensData?.tokens?.some(t => t.address === token.address) ? 'added' : '';
+                const addText = isAdded ? '✓ Added' : '+ Add to Watchlist';
+                
+                return `
+                    <div class="token-card ${isActive}" onclick="selectToken('${token.symbol}')">
+                        <div class="token-card-header">
+                            <span class="token-symbol">${token.symbol}</span>
+                            <span class="trending-score">🔥 ${token.trending_score}</span>
+                        </div>
+                        <div class="token-card-stats">
+                            <div>
+                                <span class="stat-label">Price: </span>
+                                <span class="stat-value">$${formatPrice(token.price_usd)}</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">24h: </span>
+                                <span class="stat-value ${token.price_change_24h >= 0 ? 'change-up' : 'change-down'}">${token.price_change_24h >= 0 ? '+' : ''}${token.price_change_24h.toFixed(1)}%</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">Volume: </span>
+                                <span class="stat-value">$${formatNumber(token.volume_24h)}</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">MC: </span>
+                                <span class="stat-value">$${formatNumber(token.market_cap)}</span>
+                            </div>
+                        </div>
+                        <button class="add-btn ${isAdded}" onclick="event.stopPropagation(); addToken('${token.symbol}', '${token.address}')">${addText}</button>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('tokenList').innerHTML = html;
+        }
+        
+        // Filter Tokens
+        function filterTokens(tokens) {
+            if (currentFilter === 'all') return tokens;
+            
+            return tokens.filter(token => {
+                switch (currentFilter) {
+                    case 'volume': return token.volume_24h > 200000;
+                    case 'mcap': return token.market_cap > 0 && token.market_cap < 100000;
+                    case 'age': return token.age_hours && token.age_hours < 168; // < 7 days
+                    default: return true;
+                }
+            });
+        }
+        
+        // Filter Handler
+        function filterTrending(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderTokenList();
+        }
+        
+        // Select Token
+        function selectToken(symbol) {
+            const token = trendingData.trending.find(t => t.symbol === symbol);
+            if (token) {
+                selectedToken = token;
+                renderTokenList();
+                renderPreview(token);
+            }
+        }
+        
+        // Render Preview
+        function renderPreview(token) {
+            document.getElementById('previewTitle').textContent = `${token.symbol} - ${token.name}`;
+            document.getElementById('previewSubtitle').textContent = `${token.chain} • $${formatNumber(token.market_cap)} • 🔥 ${token.trending_score}`;
+            
+            const html = `
+                <div class="chart-container">
+                    <iframe src="https://dexscreener.com/solana/${token.pair_url.split('/').pop()}" style="width: 100%; height: 500px; border: none; border-radius: 8px;"></iframe>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-label">Price</div>
+                        <div class="stat-box-value">$${formatPrice(token.price_usd)}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-label">24h Change</div>
+                        <div class="stat-box-value ${token.price_change_24h >= 0 ? 'change-up' : 'change-down'}">${token.price_change_24h >= 0 ? '+' : ''}${token.price_change_24h.toFixed(1)}%</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-label">Volume 24h</div>
+                        <div class="stat-box-value">$${formatNumber(token.volume_24h)}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-label">Liquidity</div>
+                        <div class="stat-box-value">$${formatNumber(token.liquidity_usd)}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-label">Market Cap</div>
+                        <div class="stat-box-value">$${formatNumber(token.market_cap)}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-label">Trending Score</div>
+                        <div class="stat-box-value" style="color: var(--warning);">🔥 ${token.trending_score}</div>
+                    </div>
+                </div>
+                
+                <div class="analysis-section">
+                    <div class="analysis-title">🎯 Why This Token is Trending</div>
+                    <div class="analysis-list">
+                        ${token.volume_24h > 500000 ? '<div>• Extreme volume - whale activity detected</div>' : ''}
+                        ${token.volume_24h > 200000 ? '<div>• High volume - strong trader interest</div>' : ''}
+                        ${Math.abs(token.price_change_24h) > 50 ? '<div>• Strong price momentum - viral move</div>' : ''}
+                        ${token.market_cap < 100000 ? '<div>• Micro-cap gem - high upside potential</div>' : ''}
+                        ${token.liquidity_usd > 50000 ? '<div>• Healthy liquidity - safe exit possible</div>' : ''}
+                    </div>
+                </div>
+                
+                <div class="analysis-section">
+                    <div class="analysis-title">📋 Contract Address</div>
+                    <div style="font-family: monospace; font-size: 11px; word-break: break-all; color: var(--text-secondary);">${token.address}</div>
+                    <button class="add-btn" onclick="navigator.clipboard.writeText('${token.address}'); showToast('✅ Address copied!')" style="margin-top: 8px;">📋 Copy Address</button>
+                </div>
+            `;
+            
+            document.getElementById('previewContent').innerHTML = html;
+        }
+        
+        // Add Token to Watchlist
+        async function addToken(symbol, address) {
+            // Check if already added
+            if (tokensData?.tokens?.some(t => t.address === address)) {
+                showToast('ℹ️ Already in watchlist');
+                return;
+            }
+            
+            // Get token details
+            const token = trendingData.trending.find(t => t.symbol === symbol);
+            if (!token) return;
+            
+            // Create new token entry
+            const newToken = {
+                symbol: token.symbol,
+                name: token.name,
+                address: token.address,
+                chain: 'SOL',
+                added_date: new Date().toISOString().split('T')[0],
+                notes: 'Added from trending discovery'
+            };
+            
+            // Add to tokens array
+            tokensData.tokens.unshift(newToken);
+            
+            // Save to file (in production, this would commit to GitHub)
+            try {
+                // For demo, just update local state
+                await fetchTokensData();
+                renderTokenList();
+                showToast(`✅ ${symbol} added to watchlist!`);
+                
+                // In production, this would:
+                // 1. POST to GitHub API to update config/tokens.json
+                // 2. Trigger webhook to refresh data
+                // 3. Show success toast
+            } catch (e) {
+                console.error('Add token error:', e);
+                showToast('❌ Failed to add token');
+            }
+        }
+        
+        // Show Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Format Helpers
+        function formatPrice(price) {
+            if (price < 0.0001) return price.toFixed(6);
+            if (price < 0.01) return price.toFixed(4);
+            return price.toFixed(2);
+        }
+        
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+            return num.toFixed(0);
+        }
+        
+        // Initialize
+        fetchTrendingData();
+        fetchTokensData();
+        setInterval(fetchTrendingData, CONFIG.refreshInterval);
+    </script>
+</body>
+</html>

@@ -138,8 +138,8 @@ def main():
         'metadata': {
             'timestamp': datetime.utcnow().isoformat(),
             'chain': 'solana',
-            'limit': 15,
-            'agent': 'trending_v1.0'
+            'limit': 20,
+            'agent': 'trending_v1.1'
         },
         'trending': trending
     }
@@ -148,6 +148,32 @@ def main():
         json.dump(output, f, indent=2)
     
     print(f"💾 Saved {len(trending)} trending tokens to data/trending.json")
+    
+    # Save to history (persist trending history)
+    history_file = Path('data/trending_history.json')
+    history = []
+    
+    if history_file.exists():
+        with open(history_file, 'r') as f:
+            history = json.load(f)
+    
+    # Add this run to history
+    history_entry = {
+        'timestamp': datetime.utcnow().isoformat(),
+        'count': len(trending),
+        'top_token': trending[0]['symbol'] if trending else None,
+        'tokens': trending
+    }
+    
+    history.append(history_entry)
+    
+    # Keep last 100 entries (about 2 days of history at 30-min intervals)
+    history = history[-100:]
+    
+    with open(history_file, 'w') as f:
+        json.dump(history, f, indent=2)
+    
+    print(f"📜 Saved trending history ({len(history)} entries)")
 
 if __name__ == "__main__":
     main()
