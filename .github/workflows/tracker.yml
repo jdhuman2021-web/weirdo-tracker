@@ -1,0 +1,43 @@
+name: Weirdo Tracker - Data Pipeline
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        pip install requests
+        
+    - name: Run Research Agent
+      run: |
+        python agents/research_agent.py
+        
+    - name: Run Thinking Agent  
+      run: |
+        python agents/thinking_agent.py
+        
+    - name: Check for alerts
+      run: |
+        python agents/alert_agent.py
+        
+    - name: Commit and push results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git diff --staged --quiet || git commit -m "Auto-update: $(date -u +%Y-%m-%d_%H:%M:%S UTC)"
+        git push

@@ -1,6 +1,21 @@
 # Weirdo Portfolio Tracker - Version History
 
-## Current Version: v1.0.0
+## Current Version: v1.1.0
+
+### v1.1.0 (2026-03-19)
+**Commit:** `784627b`
+
+#### Changes
+- **Dashboard Update:** Replaced Portfolio Performance chart with Top 5 Trending Tokens
+  - Shows top 5 tokens by 24h change
+  - Medal emojis for ranks (🥇🥈🥉)
+  - Displays 24h%, 12h%, 1h%, price, and market cap
+  - Color-coded gains/losses
+  - Clean card-based layout
+
+---
+
+## Previous Versions
 
 ### v1.0.0 (2026-03-19)
 **Commit:** `ead6a9a`
@@ -40,6 +55,7 @@ This project uses Git for version control.
 
 ### Key Commits
 ```
+784627b - v1.1.0: Replace portfolio chart with Top 5 Trending Tokens
 ead6a9a - v1.0.0: Initial tracker release with 29 tokens
 0db376a - Organize workspace
 88f1867 - Initial commit
@@ -70,13 +86,13 @@ git reset --hard HEAD~1
 
 ## Future Versions
 
-### Planned for v1.1.0
+### Planned for v1.2.0
 - [ ] Auto-refresh from DexScreener API
 - [ ] Price alerts via Telegram
 - [ ] Export to PDF report
 - [ ] Mobile-responsive improvements
 
-### Planned for v1.2.0
+### Planned for v1.3.0
 - [ ] Real-time WebSocket price updates
 - [ ] Portfolio profit/loss tracking
 - [ ] Historical price charts
@@ -84,4 +100,4 @@ git reset --hard HEAD~1
 
 ---
 
-Last Updated: 2026-03-19 22:41 UTC
+Last Updated: 2026-03-19 22:43 UTC
