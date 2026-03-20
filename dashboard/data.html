@@ -270,6 +270,7 @@
     <header class="header">
         <div class="header-title">
             <span>⚡</span> Live Data Set
+            <span id="syncStatus" style="font-size: 12px; color: var(--text-secondary); margin-left: 10px; font-weight: 400;">🔄 Syncing...</span>
         </div>
         <div class="header-actions">
             <button class="btn" onclick="refreshData()">🔄 Refresh</button>
@@ -346,28 +347,37 @@
     </div>
     
     <script>
-        // Configuration
+        // Configuration - SAME as dashboard
         const DATA_URL = 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/opportunities.json';
+        const CACHE_BUSTER = Date.now();
+        const FULL_URL = DATA_URL + '?t=' + CACHE_BUSTER;
         
         let allData = [];
         let filteredData = [];
         let sortCol = 'score';
         let sortAsc = false;
+        let lastSync = null;
         
         // Load Data
         async function loadData() {
+            const statusEl = document.getElementById('statLastUpdate');
+            statusEl.textContent = '🔄 Syncing...';
+            
             try {
-                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                const response = await fetch(FULL_URL);
                 if (!response.ok) throw new Error('Data unavailable');
                 const data = await response.json();
                 allData = data.opportunities || [];
                 filteredData = [...allData];
+                lastSync = new Date();
                 updateStats();
                 renderTable();
+                statusEl.textContent = lastSync.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
             } catch (e) {
                 console.error('Fetch error:', e);
                 document.getElementById('tableBody').innerHTML = 
                     '<tr><td colspan="9" class="error">⚠️ Data unavailable<br><small>Check GitHub pipeline status</small></td></tr>';
+                statusEl.textContent = '❌ Failed';
             }
         }
         
@@ -385,6 +395,13 @@
                 const lastUpdate = new Date(allData[0].analyzed_at || Date.now());
                 document.getElementById('statLastUpdate').textContent = 
                     lastUpdate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            }
+            
+            // Update sync status
+            if (lastSync) {
+                const syncEl = document.getElementById('syncStatus');
+                syncEl.textContent = `✅ Synced: ${lastSync.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
+                syncEl.style.color = 'var(--accent)';
             }
         }
         
