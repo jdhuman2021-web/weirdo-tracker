@@ -367,7 +367,9 @@
                 const response = await fetch(FULL_URL);
                 if (!response.ok) throw new Error('Data unavailable');
                 const data = await response.json();
-                allData = data.opportunities || [];
+                
+                // Filter out dead tokens
+                allData = (data.opportunities || []).filter(t => t.status !== 'dead');
                 filteredData = [...allData];
                 lastSync = new Date();
                 updateStats();

@@ -287,6 +287,9 @@ def main():
     
     tokens = research.get('raw_data', [])
     
+    # Filter out dead tokens
+    tokens = [t for t in tokens if t.get('status', 'active') != 'dead']
+    
     # Analyze each token
     opportunities = []
     for token in tokens:

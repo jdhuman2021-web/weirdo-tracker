@@ -18,13 +18,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 def load_config():
     """Load token configuration from JSON file"""
     try:
-        with open('config/tokens.json', 'r') as f:
+        with open('config/tokens.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
         print("ERROR: config/tokens.json not found. Creating default...")
         Path('config').mkdir(exist_ok=True)
         default = {"tokens": [], "whales": []}
-        with open('config/tokens.json', 'w') as f:
+        with open('config/tokens.json', 'w', encoding='utf-8') as f:
             json.dump(default, f, indent=2)
         return default
 
@@ -75,6 +75,7 @@ def fetch_token_data(token):
             'name': token['name'],
             'address': token['address'],
             'chain': token['chain'],
+            'status': token.get('status', 'active'),
             'price_usd': float(pair.get('priceUsd', 0)),
             'price_change_1h': float(pair.get('priceChange', {}).get('h1', 0) or 0),
             'price_change_24h': float(pair.get('priceChange', {}).get('h24', 0) or 0),
@@ -110,10 +111,17 @@ def main():
     
     # Load configuration
     config = load_config()
-    tokens = config.get('tokens', [])
+    all_tokens = config.get('tokens', [])
+    
+    # Filter out dead/inactive tokens
+    tokens = [t for t in all_tokens if t.get('status', 'active') != 'dead']
+    dead_count = len(all_tokens) - len(tokens)
+    
+    if dead_count > 0:
+        print(f"Skipped {dead_count} dead/inactive tokens")
     
     if not tokens:
-        print("WARN: No tokens configured. Add tokens to config/tokens.json")
+        print("WARN: No active tokens configured. Add tokens to config/tokens.json")
         return
     
     # Deduplicate tokens by address (prevent duplicates from batch adds)

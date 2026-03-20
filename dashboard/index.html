@@ -767,14 +767,18 @@
         function renderAll() {
             if (!currentData || !currentData.opportunities) return;
             
+            // Filter out dead/inactive tokens
+            const activeOpportunities = currentData.opportunities.filter(t => t.status !== 'dead');
+            currentData.activeOpportunities = activeOpportunities;
+            
             renderTicker();
             renderTokenList();
             renderOpportunities();
             
             if (selectedToken) {
                 updateSelectedView();
-            } else if (currentData.opportunities.length > 0) {
-                selectToken(currentData.opportunities[0]);
+            } else if (activeOpportunities.length > 0) {
+                selectToken(activeOpportunities[0]);
             }
         }
         
@@ -855,11 +859,11 @@
         }
         
         function getSortedTokens() {
-            if (!currentData || !currentData.opportunities) return [];
+            if (!currentData || !currentData.activeOpportunities) return [];
             
             // Deduplicate by address (keep first occurrence)
             const seen = new Set();
-            const unique = currentData.opportunities.filter(t => {
+            const unique = currentData.activeOpportunities.filter(t => {
                 if (seen.has(t.address)) return false;
                 seen.add(t.address);
                 return true;

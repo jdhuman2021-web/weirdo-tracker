@@ -24,7 +24,9 @@ from database.db_queries import (
     get_price_history,
     get_latest_prices,
     get_token_summary,
-    get_top_performers
+    get_top_performers,
+    add_token,
+    get_connection
 )
 
 def cmd_tokens():
@@ -68,6 +70,44 @@ def cmd_top(limit: int = 10):
     for i, t in enumerate(top, 1):
         print(f"  {i}. {t['symbol']:15} Avg Score: {t['avg_score']:.1f}  Max: {t['max_score']}")
 
+def cmd_set_status(symbol: str, status: str):
+    """Mark a token as dead or active"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Find token
+    cursor.execute("SELECT id, symbol, address, status FROM tokens WHERE symbol = ?", (symbol.upper(),))
+    token = cursor.fetchone()
+    
+    if not token:
+        print(f"Token '{symbol}' not found")
+        conn.close()
+        return
+    
+    # Update status
+    cursor.execute("UPDATE tokens SET status = ? WHERE id = ?", (status, token['id']))
+    conn.commit()
+    
+    print(f"✅ {token['symbol']} marked as '{status}'")
+    print(f"   Address: {token['address']}")
+    print(f"   Previous status: {token['status']}")
+    
+    conn.close()
+
+def cmd_list_dead():
+    """List all dead tokens"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT symbol, name, address, status FROM tokens WHERE status = 'dead'")
+    dead = cursor.fetchall()
+    
+    print(f"Dead Tokens ({len(dead)} total):")
+    print("-" * 80)
+    for t in dead:
+        print(f"  {t[0]:15} {t[1][:30]:30} {t[2][:8]}...")
+    
+    conn.close()
+
 def print_help():
     """Print usage help"""
     print("Database CLI Tool")
@@ -79,7 +119,14 @@ def print_help():
     print("  prices SYMBOL   - Get price history for token")
     print("  summary         - Show database summary")
     print("  top [N]         - Top N performers (default: 10)")
+    print("  dead            - List dead tokens")
+    print("  set-status SYMBOL STATUS  - Mark token dead/active")
     print("  help            - Show this help")
+    print()
+    print("Examples:")
+    print("  python db_cli.py set-status DRIVEI dead")
+    print("  python db_cli.py set-status POUCH active")
+    print("  python db_cli.py dead")
 
 def main():
     if len(sys.argv) < 2:
@@ -97,6 +144,10 @@ def main():
     elif cmd == 'top':
         limit = int(sys.argv[2]) if len(sys.argv) >= 3 else 10
         cmd_top(limit)
+    elif cmd == 'dead':
+        cmd_list_dead()
+    elif cmd == 'set-status' and len(sys.argv) >= 4:
+        cmd_set_status(sys.argv[2], sys.argv[3])
     elif cmd == 'help':
         print_help()
     else:
