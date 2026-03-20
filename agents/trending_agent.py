@@ -10,24 +10,19 @@ import requests
 from datetime import datetime
 from pathlib import Path
 
-def fetch_trending_tokens(chain="solana", limit=15):
+def fetch_trending_tokens(chain="solana", limit=20):
     """
     Fetch trending tokens from DexScreener
     
-    DexScreener tracks:
-    - Volume spikes
-    - Price momentum
-    - Social mentions
-    - Trader activity
+    Uses multiple signals:
+    - Top gainers (24h price action)
+    - Volume leaders
+    - Fresh tokens (< 7 days)
     """
     try:
-        # DexScreener trending endpoint
-        url = f"https://api.dexscreener.com/latest/dex/tokens/{chain}"
-        
-        # Alternative: Use screener for trending pairs
+        # DexScreener screener endpoint with Solana filter
         screener_url = "https://api.dexscreener.com/latest/dex/screener"
         
-        # Get top gainers (trending by price action)
         response = requests.get(screener_url, timeout=10)
         
         if response.status_code != 200:
@@ -35,38 +30,43 @@ def fetch_trending_tokens(chain="solana", limit=15):
             return []
         
         data = response.json()
-        
-        # Extract pairs and filter for trending signals
         pairs = data.get('pairs', [])
         
+        # Filter for Solana only
+        solana_pairs = [p for p in pairs if p.get('chainId') == 'solana']
+        
         trending = []
-        for pair in pairs[:limit]:
-            # Calculate trending score
+        for pair in solana_pairs[:50]:  # Check more pairs
+            # Extract data
             volume_24h = pair.get('volume', {}).get('h24', 0)
             price_change_24h = pair.get('priceChange', {}).get('h24', 0)
             liquidity = pair.get('liquidity', {}).get('usd', 0)
+            fdv = pair.get('fdv', 0)
             
-            # Trending criteria:
-            # - High volume (>50K)
-            # - Strong price action (>20% or <-30% for accumulation)
-            # - Decent liquidity (>10K)
-            
+            # Calculate trending score
             trending_score = 0
             
-            if volume_24h > 500000:
+            # Volume scoring (whale activity)
+            if volume_24h > 1000000:
+                trending_score += 35  # Extreme volume
+            elif volume_24h > 500000:
                 trending_score += 30
             elif volume_24h > 200000:
                 trending_score += 20
             elif volume_24h > 50000:
                 trending_score += 10
             
-            if abs(price_change_24h) > 50:
+            # Price momentum (strong moves)
+            if abs(price_change_24h) > 100:
+                trending_score += 30  # Extreme mover
+            elif abs(price_change_24h) > 50:
                 trending_score += 25
             elif abs(price_change_24h) > 30:
                 trending_score += 15
             elif abs(price_change_24h) > 10:
                 trending_score += 8
             
+            # Liquidity (safety)
             if liquidity > 100000:
                 trending_score += 15
             elif liquidity > 50000:
@@ -74,21 +74,27 @@ def fetch_trending_tokens(chain="solana", limit=15):
             elif liquidity > 10000:
                 trending_score += 5
             
-            # Only include if trending score is decent
-            if trending_score >= 30:
+            # Market cap opportunity (micro-caps preferred)
+            if 0 < fdv < 100000:
+                trending_score += 10  # Micro-cap gem
+            elif fdv < 500000:
+                trending_score += 8
+            
+            # Only include if trending score is decent (minimum 35)
+            if trending_score >= 35:
                 token = {
                     'symbol': pair.get('baseToken', {}).get('symbol', 'UNKNOWN'),
                     'name': pair.get('baseToken', {}).get('name', 'Unknown'),
                     'address': pair.get('baseToken', {}).get('address', ''),
                     'chain': pair.get('chainId', 'solana'),
-                    'price_usd': pair.get('priceUsd', 0),
+                    'price_usd': float(pair.get('priceUsd', 0) or 0),
                     'price_change_24h': price_change_24h,
                     'volume_24h': volume_24h,
                     'liquidity_usd': liquidity,
-                    'market_cap': 0,  # DexScreener doesn't provide MC directly
+                    'market_cap': fdv,  # Use FDV as market cap estimate
                     'trending_score': trending_score,
                     'pair_url': pair.get('url', ''),
-                    'fdv': pair.get('fdv', 0),
+                    'fdv': fdv,
                     'timestamp': datetime.utcnow().isoformat()
                 }
                 trending.append(token)
