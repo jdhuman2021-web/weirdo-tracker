@@ -45,6 +45,16 @@ jobs:
         python3 agents/thinking_agent.py || echo "Thinking failed"
       continue-on-error: true
     
+    - name: Run Alert Agent
+      id: alert
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        echo "Running Alert Agent..."
+        python3 agents/alert_agent.py || echo "Alert failed"
+      continue-on-error: true
+    
     - name: Commit data
       run: |
         git config --local user.email "action@github.com"

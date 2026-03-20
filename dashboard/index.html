@@ -577,6 +577,7 @@
                     <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap <span class="sort-arrow">↓</span></button>
                     <button class="sort-btn" onclick="sortTokens('volume')">Volume <span class="sort-arrow">↓</span></button>
                     <button class="sort-btn" onclick="sortTokens('age')">Age <span class="sort-arrow">↓</span></button>
+                    <button class="sort-btn" onclick="sortTokens('holders')">Holders <span class="sort-arrow">↓</span></button>
                 </div>
             </div>
             <div class="token-list" id="tokenList">
@@ -788,6 +789,8 @@
                     return ops.sort((a, b) => a.symbol.localeCompare(b.symbol) * dir);
                 case 'age':
                     return ops.sort((a, b) => ((a.age_hours || 9999) - (b.age_hours || 9999)) * dir); // Youngest first
+                case 'holders':
+                    return ops.sort((a, b) => ((a.holder_count || 0) - (b.holder_count || 0)) * dir); // Most holders first
                 default:
                     return ops;
             }

@@ -40,7 +40,19 @@ def calculate_score(token):
         score += 5
         reasons.append("Volume above average")
     
-    # Liquidity health (25 points max)
+    # Holder growth (20 points max) - NEW
+    holder_growth = token.get('holder_growth_24h', 0)
+    if holder_growth > 15:
+        score += 20
+        reasons.append(f"Holders +{holder_growth:.1f}% - viral growth")
+    elif holder_growth > 10:
+        score += 15
+        reasons.append(f"Holders +{holder_growth:.1f}% - strong interest")
+    elif holder_growth > 5:
+        score += 8
+        reasons.append(f"Holders +{holder_growth:.1f}% - growing")
+    
+    # Liquidity health (15 points max)
     if liquidity > 100000:
         score += 15
         reasons.append("High liquidity - easy exit")
@@ -51,13 +63,13 @@ def calculate_score(token):
         score += 5
         reasons.append("Acceptable liquidity")
     
-    # Market cap size (20 points max)
+    # Market cap size (10 points max)
     mcap = token.get('market_cap', 0)
     if mcap < 1000000 and mcap > 0:
-        score += 20
+        score += 10
         reasons.append("Micro-cap - high growth potential")
     elif mcap < 5000000:
-        score += 10
+        score += 5
         reasons.append("Small-cap - growth opportunity")
     
     return min(score, 100), reasons
