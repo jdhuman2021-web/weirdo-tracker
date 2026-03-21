@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-03-21T21:54:22.675572",
-  "total_alerts": 1,
+  "timestamp": "2026-03-21T22:59:27.823154",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "SHOENICE",
-      "vol_ratio": 3.31,
-      "score": 30
+      "symbol": "snowball",
+      "vol_ratio": 10.17,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIGEON",
+      "vol_ratio": 4.67,
+      "score": 47
     }
   ]
 }
