@@ -899,12 +899,13 @@
                 const changeClass = token.price_change_24h >= 0 ? 'up' : 'down';
                 const changeSign = token.price_change_24h >= 0 ? '+' : '';
                 const isActive = selectedToken && selectedToken.symbol === token.symbol ? 'active' : '';
+                const dexUrl = `https://dexscreener.com/solana/${token.address}`;
                 
                 return `
-                    <div class="token-list-item ${isActive}" onclick="selectTokenBySymbol('${token.symbol}')">
+                    <div class="token-list-item ${isActive}" onclick="selectTokenBySymbol('${token.symbol}')" style="cursor: pointer;">
                         <div class="token-list-info">
                             <div class="token-list-symbol">
-                                ${token.symbol}
+                                <a href="${dexUrl}" target="_blank" style="color: inherit; text-decoration: none;" onclick="event.stopPropagation();">${token.symbol}</a>
                                 <span class="signal-dot ${signalClass}"></span>
                             </div>
                             <div class="token-list-price">$${formatNumber(token.market_cap)}</div>
@@ -925,10 +926,11 @@
             
             strongBuys.slice(0, 10).forEach(token => {
                 const cardClass = getOpportunityCardClass(token.score);
+                const dexUrl = `https://dexscreener.com/solana/${token.address}`;
                 html += `
-                    <div class="opportunity-card ${cardClass}" onclick="selectTokenBySymbol('${token.symbol}')">
+                    <div class="opportunity-card ${cardClass}" onclick="selectTokenBySymbol('${token.symbol}')" style="cursor: pointer;">
                         <div class="opportunity-header">
-                            <span class="opportunity-symbol">${token.symbol}</span>
+                            <span class="opportunity-symbol"><a href="${dexUrl}" target="_blank" style="color: inherit; text-decoration: none;" onclick="event.stopPropagation();">${token.symbol}</a></span>
                             <span class="opportunity-score">${token.score}/100</span>
                         </div>
                         <div class="opportunity-reason">${token.reasons?.slice(0, 2).join(' • ') || 'Analyzing...'}</div>
@@ -964,8 +966,11 @@
             
             document.getElementById('selectedIcon').textContent = selectedToken.symbol[0];
             document.getElementById('selectedIcon').style.background = getTokenGradient(selectedToken.symbol);
-            document.getElementById('selectedName').textContent = `${selectedToken.symbol} / ${selectedToken.chain}`;
-            document.getElementById('selectedMeta').textContent = `${selectedToken.name} • $${formatNumber(selectedToken.market_cap)} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
+            
+            // Make token name a clickable link to DexScreener
+            const dexUrl = `https://dexscreener.com/solana/${selectedToken.address}`;
+            document.getElementById('selectedName').innerHTML = `<a href="${dexUrl}" target="_blank" style="color: var(--accent); text-decoration: none;">${selectedToken.symbol}</a> <span style="color: var(--text-secondary);">/ ${selectedToken.chain}</span>`;
+            document.getElementById('selectedMeta').innerHTML = `<a href="${dexUrl}" target="_blank" style="color: var(--text-secondary); text-decoration: none;">${selectedToken.name}</a> • $${formatNumber(selectedToken.market_cap)} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
             document.getElementById('selectedPrice').textContent = '$' + formatNumber(selectedToken.market_cap);
             
             // Show copy address button
