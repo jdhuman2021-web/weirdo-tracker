@@ -426,19 +426,6 @@
             gap: 16px;
         }
         
-        .chart-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-            background: var(--gradient-card);
-            border: 1px solid var(--border);
-        }
-        
         .chart-title {
             font-size: 24px;
             font-weight: 700;
@@ -486,7 +473,7 @@
         }
         
         .chart-container {
-            height: 500px;
+            height: 400px;
             background: var(--bg-primary);
         }
         
@@ -908,10 +895,9 @@
             <div class="chart-section">
                 <div class="chart-header">
                     <div class="chart-title-section">
-                        <div class="chart-icon" id="chartIcon">📊</div>
                         <div>
                             <div class="chart-title" id="chartTitle">Select a Token</div>
-                            <div class="chart-subtitle" id="chartSubtitle">Click a token from the watchlist</div>
+                            <div class="chart-subtitle" id="chartSubtitle">Click a token from the list</div>
                         </div>
                     </div>
                     <button class="copy-btn" id="copyBtn" onclick="copyAddress()" style="display: none;">
@@ -1074,7 +1060,6 @@
             renderTokenList();
         }
         
-        // Select Token
         function selectToken(token) {
             if (!token) return;
             selectedToken = token;
@@ -1084,7 +1069,6 @@
             document.getElementById('chartContainer').innerHTML = `<iframe src="${dexUrl}" loading="lazy"></iframe>`;
             
             // Update title
-            document.getElementById('chartIcon').textContent = token.symbol[0];
             document.getElementById('chartTitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.symbol}</a>`;
             document.getElementById('chartSubtitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.name || token.symbol}</a>`;
             
