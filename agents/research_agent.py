@@ -67,6 +67,59 @@ def fetch_token_data(token):
         except:
             pass
         
+        # Extract social links from DexScreener
+        socials = {
+            'twitter': None,
+            'telegram': None,
+            'website': None
+        }
+        
+        # Check pair info for socials
+        info = pair.get('info', {})
+        if info:
+            # Twitter/X
+            if info.get('socials'):
+                for social in info.get('socials', []):
+                    social_type = social.get('type', '').lower()
+                    social_url = social.get('url', '')
+                    if 'twitter' in social_type or 'x.com' in social_url:
+                        socials['twitter'] = social_url
+                    elif 'telegram' in social_type or 't.me' in social_url:
+                        socials['telegram'] = social_url
+            
+            # Website
+            if info.get('websites'):
+                for website in info.get('websites', []):
+                    socials['website'] = website.get('url')
+                    break
+        
+        # Also check base token info
+        base_token = pair.get('baseToken', {})
+        if base_token:
+            # Sometimes socials are in baseToken
+            if not socials['website'] and base_token.get('website'):
+                socials['website'] = base_token.get('website')
+        
+        # Fallback: check all pairs for socials
+        if not any(socials.values()):
+            for p in pairs:
+                p_info = p.get('info', {})
+                if p_info:
+                    if p_info.get('socials'):
+                        for social in p_info.get('socials', []):
+                            social_type = social.get('type', '').lower()
+                            social_url = social.get('url', '')
+                            if 'twitter' in social_type or 'x.com' in social_url:
+                                if not socials['twitter']:
+                                    socials['twitter'] = social_url
+                            elif 'telegram' in social_type or 't.me' in social_url:
+                                if not socials['telegram']:
+                                    socials['telegram'] = social_url
+                    if p_info.get('websites') and not socials['website']:
+                        for website in p_info.get('websites', []):
+                            socials['website'] = website.get('url')
+                            break
+        
         return {
             'symbol': token['symbol'],
             'name': token.get('name', token['symbol']),
@@ -80,6 +133,7 @@ def fetch_token_data(token):
             'liquidity_usd': float(pair.get('liquidity', {}).get('usd', 0) or 0),
             'market_cap': float(pair.get('fdv', 0) or pair.get('marketCap', 0) or 0),
             'holder_count': holder_count,
+            'socials': socials,
             'pair_created_at': pair_created,
             'age_hours': age_hours,
             'age_days': round(age_hours / 24, 1) if age_hours else 0,

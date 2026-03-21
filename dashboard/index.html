@@ -451,6 +451,9 @@
         .chart-title {
             font-size: 24px;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         .chart-title a {
@@ -460,6 +463,39 @@
         
         .chart-title a:hover {
             text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+            font-size: 14px;
+        }
+        
+        .social-link:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .social-link svg {
+            width: 16px;
+            height: 16px;
         }
         
         .chart-subtitle {
@@ -1093,8 +1129,9 @@
             const dexUrl = `https://dexscreener.com/solana/${token.address}?embed=true&theme=dark&chart=1`;
             document.getElementById('chartContainer').innerHTML = `<iframe src="${dexUrl}" loading="lazy"></iframe>`;
             
-            // Update title
-            document.getElementById('chartTitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.symbol}</a>`;
+            // Update title with social links
+            const socialLinks = getSocialLinksHTML(token);
+            document.getElementById('chartTitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.symbol}</a>${socialLinks}`;
             document.getElementById('chartSubtitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.name || token.symbol}</a>`;
             
             // Update stats
@@ -1169,6 +1206,38 @@
             if (score >= 70) return 'signal-warm';
             if (score >= 55) return 'signal-neutral';
             return 'signal-cold';
+        }
+        
+        // Get Social Links HTML
+        function getSocialLinksHTML(token) {
+            const socials = [];
+            
+            // Twitter/X
+            if (token.twitter || token.socials?.twitter) {
+                const twitterUrl = token.twitter || token.socials?.twitter;
+                socials.push(`<a href="${twitterUrl}" target="_blank" class="social-link" title="Twitter/X" onclick="event.stopPropagation();">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L5.49 21.75H2.18l7.258-8.287L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>`);
+            }
+            
+            // Telegram
+            if (token.telegram || token.socials?.telegram) {
+                const telegramUrl = token.telegram || token.socials?.telegram;
+                socials.push(`<a href="${telegramUrl}" target="_blank" class="social-link" title="Telegram" onclick="event.stopPropagation();">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                </a>`);
+            }
+            
+            // Website
+            if (token.website || token.socials?.website) {
+                const websiteUrl = token.website || token.socials?.website;
+                socials.push(`<a href="${websiteUrl}" target="_blank" class="social-link" title="Website" onclick="event.stopPropagation();">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </a>`);
+            }
+            
+            if (socials.length === 0) return '';
+            return `<div class="social-links">${socials.join('')}</div>`;
         }
         
         // Initialize
