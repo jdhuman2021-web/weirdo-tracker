@@ -14,7 +14,6 @@ env:
   SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   HELIUS_API_KEY: ${{ secrets.HELIUS_API_KEY }}
-  JUPITER_API_KEY: ${{ secrets.JUPITER_API_KEY }}
 
 jobs:
   collect-data:
@@ -78,20 +77,6 @@ jobs:
         if [ -f data/whale_activity.json ]; then
           echo "Whale activity summary:"
           jq '.metadata' data/whale_activity.json
-        fi
-        exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Jupiter Price Agent
-      id: jupiter
-      run: |
-        echo "=== Running Jupiter Price Agent v1.0 ==="
-        python3 agents/jupiter_agent.py 2>&1 | tee jupiter.log
-        exit_code=$?
-        echo "Jupiter agent exit code: $exit_code"
-        if [ -f data/jupiter_prices.json ]; then
-          echo "Jupiter prices:"
-          jq '{successful, failed, timestamp: .timestamp}' data/jupiter_prices.json
         fi
         exit $exit_code
       continue-on-error: true
@@ -165,7 +150,6 @@ jobs:
         echo "Research Agent: ${{ steps.research.outcome }}"
         echo "Helius Agent: ${{ steps.helius.outcome }}"
         echo "Whale Agent: ${{ steps.whale.outcome }}"
-        echo "Jupiter Agent: ${{ steps.jupiter.outcome }}"
         echo "Thinking Agent: ${{ steps.thinking.outcome }}"
         echo "Backtest Agent: ${{ steps.backtest.outcome }}"
         echo "Alert Agent: ${{ steps.alert.outcome }}"
@@ -174,12 +158,6 @@ jobs:
           echo ""
           echo "=== Tokens Fetched ==="
           jq '.metadata.tokens_fetched' data/latest.json
-        fi
-        
-        if [ -f data/helius_data.json ]; then
-          echo ""
-          echo "=== Helius Data ==="
-          jq '{tokens_processed, total_holders}' data/helius_data.json
         fi
         
         if [ -f data/opportunities.json ]; then
