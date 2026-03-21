@@ -196,6 +196,8 @@
             border-radius: var(--radius-md);
             overflow: hidden;
             transition: var(--transition-normal);
+            display: flex;
+            flex-direction: column;
         }
         
         .card:hover {
@@ -271,8 +273,8 @@
         }
         
         .card-content {
-            padding: 12px;
-            max-height: 400px;
+            padding: 8px 0 0 0;
+            flex: 1;
             overflow-y: auto;
         }
         
@@ -280,18 +282,25 @@
         .token-list {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 0;
         }
         
         .token-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
+            padding: 10px 16px 10px 13px;
+            border-radius: 0;
             cursor: pointer;
             transition: var(--transition-fast);
-            border: 1px solid transparent;
+            border: none;
+            border-left: 3px solid transparent;
+            background: transparent;
+            flex: 1;
+        }
+        
+        .token-item:last-child {
+            border-bottom-left-radius: var(--radius-md);
         }
         
         .token-item:hover {
@@ -865,7 +874,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <!-- Token List -->
-            <div class="card" style="flex: 1; overflow: hidden;">
+            <div class="card" style="max-height: 60vh;">
                 <div class="card-header">
                     <span class="card-title">🪱 Tokens</span>
                     <div class="card-actions">
@@ -882,7 +891,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-content" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                <div class="card-content">
                     <div class="token-list" id="tokenList">
                         <div class="loading"><div class="spinner"></div>Loading tokens...</div>
                     </div>
