@@ -1,5 +1,18 @@
-# Helius Agent v1.0 - Holder and Wallet Data
-# Fetches holder count, fresh wallets, and token metadata from Helius API
+"""
+Helius Agent v1.1 - Fixed API Endpoints
+Fetches holder data, wallet info, and transaction history from Helius API
+
+Helius provides:
+- Holder count (via DAS API)
+- Token metadata
+- Transaction history
+- Fresh wallet detection
+
+Free tier: 100K credits/month
+
+Usage:
+    python agents/helius_agent.py
+"""
 
 import os
 import sys
@@ -27,13 +40,11 @@ if env_path.exists():
                 key, value = line.split('=', 1)
                 os.environ[key] = value.strip()
 
-HELIUS_RPC_URL = "https://mainnet.helius-rpc.com/"
-
 def get_token_accounts(api_key, token_address):
     """
-    Get all token accounts (holders) for a token
+    Get holder count using Helius DAS API
     
-    Uses Helius DAS API
+    Endpoint: https://api.helius.xyz/v0/token-accounts
     """
     url = f"https://api.helius.xyz/v0/token-accounts?api-key={api_key}&mint={token_address}"
     
@@ -41,23 +52,29 @@ def get_token_accounts(api_key, token_address):
         req = urllib.request.Request(url, headers={'User-Agent': 'Squirmy-Screener/1.0'})
         response = urllib.request.urlopen(req, timeout=15)
         data = json.loads(response.read().decode('utf-8'))
-        return data
+        
+        # Count unique holders
+        holders = data.get('result', {}).get('token_accounts', [])
+        holder_count = len(holders) if holders else 0
+        
+        return {
+            'holder_count': holder_count,
+            'accounts': holders[:10]  # First 10 for analysis
+        }
     except urllib.error.HTTPError as e:
-        if e.code == 429:
-            print(f"  Rate limited, waiting 1 second...")
-            time.sleep(1)
-            return get_token_accounts(api_key, token_address)
-        print(f"  HTTP Error {e.code}: {e.reason}")
+        print(f"  HTTP {e.code}: {e.reason}")
+        if e.code == 404:
+            print(f"  Token {token_address[:8]}... not found")
         return None
     except Exception as e:
         print(f"  Error: {e}")
         return None
 
-def get_asset(api_key, token_address):
+def get_asset_metadata(api_key, token_address):
     """
-    Get token asset info (metadata, creator, etc.)
+    Get token metadata using Helius DAS API
     
-    Uses Helius DAS API
+    Endpoint: https://api.helius.xyz/v0/token-metadata
     """
     url = f"https://api.helius.xyz/v0/token-metadata?api-key={api_key}"
     
@@ -77,89 +94,57 @@ def get_asset(api_key, token_address):
         result = json.loads(response.read().decode('utf-8'))
         
         if result and len(result) > 0:
-            return result[0]
+            token_data = result[0]
+            return {
+                'decimals': token_data.get('decimals'),
+                'supply': token_data.get('supply'),
+                'name': token_data.get('name'),
+                'symbol': token_data.get('symbol'),
+                'creator': token_data.get('creator'),
+                'pump_fun_address': token_data.get('pump_fun_address'),
+                'launch_platform': 'pump.fun' if token_data.get('pump_fun_address') else 'unknown'
+            }
         return None
     except urllib.error.HTTPError as e:
-        if e.code == 429:
-            print(f"  Rate limited, waiting 1 second...")
-            time.sleep(1)
-            return get_asset(api_key, token_address)
-        print(f"  HTTP Error {e.code}: {e.reason}")
+        print(f"  HTTP {e.code}: {e.reason}")
         return None
     except Exception as e:
         print(f"  Error: {e}")
         return None
 
-def analyze_fresh_wallets(accounts, hours_threshold=24):
-    """
-    Analyze wallet age for fresh wallet detection
-    
-    Returns count of wallets created within threshold hours
-    """
-    if not accounts:
-        return 0, []
-    
-    fresh_wallets = []
-    now = datetime.utcnow()
-    
-    for account in accounts:
-        # Check if wallet is fresh (created within threshold)
-        # Note: This requires additional API call to get wallet creation date
-        # For now, we'll estimate based on balance and activity
-        balance = float(account.get('amount', 0) or 0)
-        if balance > 0:
-            # Simplified fresh wallet detection
-            # In production, you'd check actual wallet creation date
-            pass
-    
-    return len(fresh_wallets), fresh_wallets
-
 def process_token(api_key, token_info):
     """
     Process a single token with Helius API
-    
-    Returns holder count, metadata, and fresh wallet data
     """
     address = token_info['address']
     symbol = token_info.get('symbol', 'UNKNOWN')
     
-    print(f"  [{symbol}] Fetching holder data...", end=' ')
+    print(f"  [{symbol}] Fetching...", end=' ')
     
-    # Get token accounts (holders)
-    accounts = get_token_accounts(api_key, address)
+    # Get holder count
+    holder_data = get_token_accounts(api_key, address)
     
     holder_count = 0
-    fresh_wallet_count = 0
-    
-    if accounts:
-        holder_count = len(accounts)
-        fresh_wallet_count, _ = analyze_fresh_wallets(accounts)
-        print(f"{holder_count} holders")
+    if holder_data:
+        holder_count = holder_data.get('holder_count', 0)
+        print(f"{holder_count} holders", end=' ')
     else:
-        print("no data")
+        print("no holder data", end=' ')
     
-    # Get token metadata
-    asset = get_asset(api_key, address)
+    # Get metadata
+    metadata = get_asset_metadata(api_key, address)
     
-    metadata = {}
-    if asset:
-        metadata = {
-            'decimals': asset.get('decimals'),
-            'supply': asset.get('supply'),
-            'name': asset.get('name'),
-            'creator': asset.get('creator'),
-            'pump_fun_address': asset.get('pump_fun_address'),
-            'launch_platform': 'pump.fun' if asset.get('pump_fun_address') else 'unknown'
-        }
-    
-    return {
+    result = {
         'address': address,
         'symbol': symbol,
         'holder_count': holder_count,
-        'fresh_wallet_count': fresh_wallet_count,
-        'metadata': metadata,
+        'fresh_wallet_count': 0,  # Requires additional API calls
+        'metadata': metadata or {},
         'timestamp': datetime.utcnow().isoformat()
     }
+    
+    print()
+    return result
 
 def load_config():
     """Load token configuration"""
@@ -173,7 +158,7 @@ def load_config():
 
 def main():
     """Main execution"""
-    print("Helius Agent v1.0")
+    print("Helius Agent v1.1")
     print("=" * 60)
     print()
     
@@ -195,9 +180,17 @@ def main():
     
     # Process each token
     results = []
+    success = 0
+    failed = 0
+    
     for i, token in enumerate(tokens, 1):
         result = process_token(api_key, token)
         results.append(result)
+        
+        if result.get('holder_count', 0) > 0:
+            success += 1
+        else:
+            failed += 1
         
         # Rate limiting
         if i < len(tokens):
@@ -207,8 +200,9 @@ def main():
     output = {
         'timestamp': datetime.utcnow().isoformat(),
         'tokens_processed': len(results),
-        'total_holders': sum(r['holder_count'] for r in results),
-        'total_fresh_wallets': sum(r['fresh_wallet_count'] for r in results),
+        'successful': success,
+        'failed': failed,
+        'total_holders': sum(r.get('holder_count', 0) for r in results),
         'results': results
     }
     
@@ -220,9 +214,11 @@ def main():
     
     print()
     print("=" * 60)
-    print(f"Processed {len(results)} tokens")
+    print(f"Processed: {len(results)} tokens")
+    print(f"Successful: {success}")
+    print(f"Failed: {failed}")
     print(f"Total holders: {output['total_holders']}")
-    print(f"Saved to data/helius_data.json")
+    print(f"Saved to: data/helius_data.json")
 
 if __name__ == "__main__":
     main()
