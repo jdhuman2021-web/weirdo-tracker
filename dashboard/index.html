@@ -2,238 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Weirdo Tracker | Meme Coin Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         :root {
-            --bg-primary: #050505;
-            --bg-secondary: #0a0a0a;
-            --bg-tertiary: #14171d;
-            --border: rgba(255,255,255,0.08);
-            --text-primary: #e8eaf0;
-            --text-secondary: #6b7280;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #15151f;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(0,255,136,0.3);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-muted: #55556a;
             --accent: #00ff88;
-            --accent-dim: rgba(0,255,136,0.1);
-            --warning: #ffa502;
-            --danger: #ff4757;
-            --info: #74b9ff;
+            --accent-dim: rgba(0,255,136,0.08);
+            --accent-glow: rgba(0,255,136,0.15);
+            --warning: #ffb340;
+            --danger: #ff5566;
+            --info: #6690ff;
+            --success: #00dd77;
+            --gradient-card: linear-gradient(135deg, rgba(0,255,136,0.03) 0%, rgba(102,144,255,0.03) 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-glow: 0 0 20px rgba(0,255,136,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
+            --transition-slow: 0.4s ease;
         }
         
         body {
-            font-family: 'SF Mono', system-ui, -apple-system, monospace;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        /* Dashboard Grid */
-        .dashboard {
-            display: grid;
-            grid-template-columns: 280px 1fr 320px;
-            grid-template-rows: 60px 1fr;
-            height: 100vh;
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
         
         /* Header */
         .header {
-            grid-column: 1 / -1;
-            background: var(--bg-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
+            gap: 16px;
         }
         
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-shrink: 0;
         }
         
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--accent) 0%, #00cc6a 100%);
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
+            box-shadow: var(--shadow-glow);
         }
         
         .logo-text {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, var(--accent) 0%, #66ffaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
         }
         
-        /* Ticker */
-        .ticker {
+        .logo-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+        
+        .menu-toggle:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+        
+        /* Status */
+        .status-bar {
             display: flex;
-            gap: 32px;
-            overflow: hidden;
-            flex: 1;
-            margin: 0 40px;
-            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         
-        .ticker-item {
+        .status-item {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 13px;
-            white-space: nowrap;
-            animation: scroll 30s linear infinite;
-        }
-        
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        
-        .ticker-symbol { font-weight: 600; color: var(--text-primary); }
-        .ticker-price { color: var(--text-secondary); }
-        .ticker-change { font-weight: 600; }
-        .ticker-change.up { color: var(--accent); }
-        .ticker-change.down { color: var(--danger); }
-        
-        /* Status */
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
             color: var(--text-secondary);
         }
         
         .status-dot {
             width: 8px;
             height: 8px;
-            background: var(--accent);
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            background: var(--accent);
+            animation: pulse 2s ease-in-out infinite;
         }
         
         @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
-            50% { opacity: 0.5; box-shadow: 0 0 4px var(--accent); }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
         
-        .time {
-            font-size: 14px;
-            color: var(--text-primary);
+        .status-value {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            font-family: 'SF Mono', monospace;
+            color: var(--text-primary);
         }
         
-        /* Left Sidebar */
-        .sidebar-left {
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
+        /* Main Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+            padding: 24px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
             display: flex;
             flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 104px;
+            height: calc(100vh - 128px);
             overflow: hidden;
         }
         
-        .sidebar-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
-        
-        .sort-controls {
-            display: flex;
-            gap: 4px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .sort-btn {
-            background: rgba(255,255,255,0.05);
+        .card {
+            background: var(--bg-card);
             border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+        
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+        
+        .card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        
+        .card-title {
+            font-size: 12px;
+            font-weight: 600;
             color: var(--text-secondary);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .card-content {
+            padding: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        /* Token List */
+        .token-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .token-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
         }
         
-        .sort-btn:hover {
-            background: rgba(255,255,255,0.1);
-            color: var(--text-primary);
+        .token-item:hover {
+            background: var(--accent-dim);
+            border-color: var(--border);
         }
         
-        .sort-btn.active {
+        .token-item.active {
             background: var(--accent-dim);
             border-color: var(--accent);
-            color: var(--accent);
         }
         
-        .sort-arrow {
-            font-size: 9px;
-            margin-left: 2px;
-            opacity: 0.7;
-        }
-        
-        .sort-btn.active .sort-arrow {
-            opacity: 1;
-        }
-        
-        .token-list {
-            overflow-y: auto;
-            flex: 1;
-        }
-        
-        .token-list-item {
+        .token-info {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            transition: all 0.2s;
+            flex-direction: column;
+            gap: 2px;
         }
         
-        .token-list-item:hover { 
-            background: rgba(255,255,255,0.03); 
-        }
-        
-        .token-list-item.active {
-            background: var(--accent-dim);
-            border-left: 3px solid var(--accent);
-        }
-        
-        .token-list-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            flex-shrink: 0;
-        }
-        
-        .token-list-info { flex: 1; }
-        
-        .token-list-symbol {
+        .token-symbol {
             font-weight: 600;
             font-size: 14px;
             display: flex;
@@ -241,215 +254,273 @@
             gap: 8px;
         }
         
+        .token-symbol a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .token-symbol a:hover {
+            text-decoration: underline;
+        }
+        
         .signal-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
         
-        .signal-hot { 
-            background: var(--accent); 
-            box-shadow: 0 0 6px var(--accent); 
-        }
+        .signal-hot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
         .signal-warm { background: var(--warning); }
-        .signal-cold { background: var(--danger); }
         .signal-neutral { background: var(--info); }
+        .signal-cold { background: var(--danger); }
         
-        .token-list-price {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-family: 'SF Mono', monospace;
+        .token-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
         }
         
-        .token-list-change {
-            text-align: right;
+        .token-change {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            font-family: 'SF Mono', monospace;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
         }
         
-        .token-list-change.up { color: var(--accent); }
-        .token-list-change.down { color: var(--danger); }
+        .change-up {
+            background: rgba(0,255,136,0.1);
+            color: var(--accent);
+        }
+        
+        .change-down {
+            background: rgba(255,85,102,0.1);
+            color: var(--danger);
+        }
         
         /* Main Content */
-        .main {
-            background: var(--bg-secondary);
+        .main-content {
             display: flex;
             flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* Chart Section */
+        .chart-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             overflow: hidden;
         }
         
         .chart-header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px 24px;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
         }
         
-        .chart-title {
+        .chart-title-section {
             display: flex;
             align-items: center;
             gap: 16px;
         }
         
-        .chart-title-icon {
+        .chart-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--accent) 0%, #00cc6a 100%);
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-card);
+            border: 1px solid var(--border);
         }
         
-        .chart-title-info h2 {
-            font-size: 22px;
-            margin: 0 0 4px 0;
+        .chart-title {
+            font-size: 24px;
+            font-weight: 700;
         }
         
-        .chart-title-info span {
-            font-size: 12px;
+        .chart-title a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .chart-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .chart-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .chart-subtitle a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        .chart-subtitle a:hover {
             color: var(--text-secondary);
         }
         
-        .chart-price { text-align: right; }
-        
-        .chart-price-main {
-            font-size: 32px;
-            font-weight: 700;
+        .copy-btn {
+            padding: 6px 12px;
+            background: var(--accent-dim);
+            border: 1px solid var(--border);
+            border-radius: 6px;
             color: var(--accent);
-            font-family: 'SF Mono', monospace;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: var(--transition-fast);
         }
         
-        .chart-price-change {
-            font-size: 14px;
-            color: var(--accent);
-            font-weight: 600;
+        .copy-btn:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
         }
         
         .chart-container {
-            flex: 1;
-            padding: 20px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
+            height: 500px;
+            background: var(--bg-primary);
         }
         
-        .chart-placeholder {
-            flex: 1;
-            background: linear-gradient(180deg, var(--accent-dim) 0%, transparent 100%);
-            border: 1px solid rgba(0,255,136,0.2);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            min-height: 300px;
+        .chart-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
         
-        .chart-placeholder-text {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .chart-placeholder-note {
-            color: var(--text-secondary);
-            font-size: 12px;
-            opacity: 0.7;
-        }
-        
-        /* Chart Stats */
-        .chart-stats {
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            background: var(--border);
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
         }
         
-        .chart-stat {
-            background: var(--bg-secondary);
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
             padding: 16px;
+            text-align: center;
+            transition: var(--transition-fast);
         }
         
-        .chart-stat-label {
-            font-size: 10px;
+        .stat-card:hover {
+            background: var(--accent-dim);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        
+        /* Analysis Section */
+        .analysis-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        
+        .analysis-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+        }
+        
+        .analysis-card h3 {
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 6px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .chart-stat-value {
-            font-size: 16px;
-            font-weight: 600;
-            font-family: 'SF Mono', monospace;
+        .signal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
         
-        /* Right Sidebar */
-        .sidebar-right {
-            background: var(--bg-secondary);
-            border-left: 1px solid var(--border);
+        .signal-strong-buy { background: rgba(0,255,136,0.15); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+        .signal-buy { background: rgba(0,221,119,0.12); color: #00dd77; border: 1px solid rgba(0,221,119,0.25); }
+        .signal-speculative { background: rgba(255,179,64,0.12); color: var(--warning); border: 1px solid rgba(255,179,64,0.25); }
+        .signal-watch { background: rgba(102,144,255,0.12); color: var(--info); border: 1px solid rgba(102,144,255,0.25); }
+        .signal-avoid { background: rgba(255,85,102,0.12); color: var(--danger); border: 1px solid rgba(255,85,102,0.25); }
+        
+        .reason-list {
             display: flex;
             flex-direction: column;
+            gap: 8px;
+        }
+        
+        .reason-item {
+            font-size: 13px;
+            color: var(--text-secondary);
+            padding-left: 16px;
+            position: relative;
+        }
+        
+        .reason-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        /* Opportunities Panel */
+        .opportunities-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             overflow: hidden;
         }
         
-        .opportunities-panel {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-        }
-        
-        .panel-title {
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
         .opportunity-card {
-            background: var(--accent-dim);
-            border: 1px solid rgba(0,255,136,0.2);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 12px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
         }
         
         .opportunity-card:hover {
+            border-color: var(--border-hover);
             transform: translateY(-1px);
-        }
-        
-        /* Opportunity Card Color Variants - Full Background */
-        .opportunity-card.strong-buy {
-            background: linear-gradient(135deg, rgba(0,255,136,0.15) 0%, rgba(0,255,136,0.05) 100%);
-            border: 2px solid var(--accent);
-        }
-        
-        .opportunity-card.buy {
-            background: linear-gradient(135deg, rgba(255,165,2,0.12) 0%, rgba(255,165,2,0.04) 100%);
-            border: 2px solid var(--warning);
-        }
-        
-        .opportunity-card.speculative {
-            background: linear-gradient(135deg, rgba(116,185,255,0.1) 0%, rgba(116,185,255,0.03) 100%);
-            border: 2px solid var(--info);
-        }
-        
-        .opportunity-card.watch {
-            background: linear-gradient(135deg, rgba(116,185,255,0.08) 0%, rgba(116,185,255,0.02) 100%);
-            border: 2px solid rgba(116,185,255,0.5);
-        }
-        
-        .opportunity-card.avoid {
-            background: linear-gradient(135deg, rgba(255,71,87,0.1) 0%, rgba(255,71,87,0.03) 100%);
-            border: 2px solid var(--danger);
         }
         
         .opportunity-header {
@@ -464,92 +535,44 @@
             font-size: 15px;
         }
         
+        .opportunity-symbol a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .opportunity-symbol a:hover {
+            text-decoration: underline;
+        }
+        
         .opportunity-score {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
             font-weight: 700;
-        }
-        
-        .opportunity-card.strong-buy .opportunity-score {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-        
-        .opportunity-card.buy .opportunity-score {
-            background: var(--warning);
-            color: var(--bg-primary);
-        }
-        
-        .opportunity-card.speculative .opportunity-score {
-            background: var(--info);
-            color: var(--bg-primary);
-        }
-        
-        .opportunity-card.watch .opportunity-score {
-            background: rgba(116,185,255,0.3);
-            color: var(--text-primary);
-        }
-        
-        .opportunity-card.avoid .opportunity-score {
-            background: var(--danger);
-            color: var(--bg-primary);
+            padding: 4px 10px;
+            border-radius: 6px;
         }
         
         .opportunity-reason {
             font-size: 12px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            margin-bottom: 8px;
         }
         
         .opportunity-meta {
             display: flex;
             gap: 12px;
-            margin-top: 10px;
             font-size: 11px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
         }
         
-        /* Alert Feed */
-        .alert-feed {
-            border-top: 1px solid var(--border);
-            padding: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        
-        .alert-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-        
-        .alert-icon { font-size: 14px; }
-        
-        .alert-content { flex: 1; }
-        
-        .alert-text {
-            font-size: 12px;
-            color: var(--text-primary);
-            line-height: 1.4;
-        }
-        
-        .alert-time {
-            font-size: 10px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-        
-        /* Loading States */
+        /* Loading State */
         .loading {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            color: var(--text-secondary);
-            font-size: 14px;
+            padding: 40px;
+            color: var(--text-muted);
         }
         
         .spinner {
@@ -558,8 +581,8 @@
             border: 2px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
+            animation: spin 0.8s linear infinite;
+            margin-right: 12px;
         }
         
         @keyframes spin {
@@ -568,506 +591,391 @@
         
         /* Error State */
         .error {
-            padding: 20px;
+            padding: 40px;
             text-align: center;
             color: var(--danger);
         }
         
-        /* Responsive */
-        @media (max-width: 1200px) {
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
             .dashboard {
-                grid-template-columns: 240px 1fr 280px;
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            
+            .sidebar {
+                position: static;
+                height: auto;
+                order: 2;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .sidebar.collapsed .card-content {
+                display: none;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .status-bar {
+                display: none;
+            }
+            
+            .logo-sub {
+                display: none;
             }
         }
         
-        @media (max-width: 900px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
             }
-            .sidebar-left, .sidebar-right {
-                display: none;
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .analysis-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 16px;
+            }
+            
+            .chart-title {
+                font-size: 18px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                padding: 12px;
+            }
+            
+            .stat-card {
+                padding: 12px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <div class="logo-icon">🧠</div>
-                <div class="logo-text">WEIRDO TRACKER</div>
-            </div>
-            
-            <div class="ticker" id="ticker">
-                <div class="loading"><div class="spinner"></div>Loading market data...</div>
-            </div>
-            
-            <div class="status">
-                <div class="status-indicator">
-                    <div class="status-dot"></div>
-                    <span>LIVE</span>
-                </div>
-                <div class="time" id="clock">--:--:--</div>
-            </div>
-        </header>
+    <!-- Header -->
+    <header class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+        </button>
         
-        <!-- Left Sidebar - Token List -->
-        <aside class="sidebar-left">
-            <div class="sidebar-header">
-                <div>Watchlist</div>
-                <div class="sort-controls">
-                    <button class="sort-btn active" onclick="sortTokens('default')">Default</button>
-                    <button class="sort-btn" onclick="sortTokens('alpha')">A-Z <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('score')">Score <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('change')">24h% <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('mcap')">Mkt Cap <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('volume')">Volume <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('age')">Age <span class="sort-arrow">↓</span></button>
-                    <button class="sort-btn" onclick="sortTokens('holders')">Holders <span class="sort-arrow">↓</span></button>
+        <div class="logo">
+            <div class="logo-icon">🧠</div>
+            <div>
+                <div class="logo-text">WEIRDO TRACKER</div>
+                <div class="logo-sub">Meme Coin Intelligence</div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-dot"></div>
+                <span>LIVE</span>
+            </div>
+            <div class="status-item">
+                <span>Tokens:</span>
+                <span class="status-value" id="tokenCount">-</span>
+            </div>
+            <div class="status-item">
+                <span>Updated:</span>
+                <span class="status-value" id="lastUpdate">-</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Token List -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Watchlist</span>
+                    <span id="watchlistCount" style="color: var(--text-muted); font-size: 12px;">-</span>
+                </div>
+                <div class="card-content">
+                    <div class="token-list" id="tokenList">
+                        <div class="loading"><div class="spinner"></div>Loading tokens...</div>
+                    </div>
                 </div>
             </div>
-            <div class="token-list" id="tokenList">
-                <div class="loading">Loading...</div>
+            
+            <!-- Opportunities -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Opportunities</span>
+                    <span id="oppCount" style="color: var(--accent); font-size: 12px;">-</span>
+                </div>
+                <div class="card-content" id="opportunitiesList">
+                    <div class="loading"><div class="spinner"></div>Analyzing...</div>
+                </div>
             </div>
         </aside>
         
-        <!-- Main Content - Chart Area -->
-        <main class="main">
-            <div class="chart-header">
-                <div class="chart-title">
-                    <div class="chart-title-icon" id="selectedIcon">📊</div>
-                    <div class="chart-title-info">
-                        <h2 id="selectedName">Select a Token</h2>
-                        <span id="selectedMeta">Click a token from the watchlist</span>
-                        <button class="copy-address-btn" id="copyAddressBtn" onclick="copyContractAddress()" style="display: none; margin-left: 10px; padding: 4px 10px; background: rgba(0,255,136,0.15); border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); font-size: 11px; cursor: pointer; font-family: monospace;">📋 Copy Address</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chart Section -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <div class="chart-title-section">
+                        <div class="chart-icon" id="chartIcon">📊</div>
+                        <div>
+                            <div class="chart-title" id="chartTitle">Select a Token</div>
+                            <div class="chart-subtitle" id="chartSubtitle">Click a token from the watchlist</div>
+                        </div>
                     </div>
+                    <button class="copy-btn" id="copyBtn" onclick="copyAddress()" style="display: none;">
+                        📋 Copy Address
+                    </button>
                 </div>
-                <div class="chart-price">
-                    <div class="chart-price-main" id="selectedPrice">--</div>
-                    <div class="chart-price-change" id="selectedChange">--</div>
+                <div class="chart-container" id="chartContainer">
+                    <div class="loading"><div class="spinner"></div>Select a token to view chart</div>
+                </div>
+                <div class="stats-grid" id="statsGrid" style="display: none;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statVolume">-</div>
+                        <div class="stat-label">Volume 24h</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statLiquidity">-</div>
+                        <div class="stat-label">Liquidity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statMcap">-</div>
+                        <div class="stat-label">Market Cap</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statScore">-</div>
+                        <div class="stat-label">Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAge">-</div>
+                        <div class="stat-label">Age</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statVolRatio">-</div>
+                        <div class="stat-label">Vol/Liq</div>
+                    </div>
                 </div>
             </div>
             
-            <div class="chart-container">
-                <div id="tradingview_chart" style="height: 550px; width: 100%; margin-bottom: 20px;"></div>
-                
-                <!-- Compact Single-Row Stats -->
-                <div class="chart-stats" style="margin-top: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;">
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Volume</div>
-                        <div class="chart-stat-value" id="statVolume">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Liquidity</div>
-                        <div class="chart-stat-value" id="statLiquidity">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Market Cap</div>
-                        <div class="chart-stat-value" id="statMcap">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Score</div>
-                        <div class="chart-stat-value" id="statScore" style="color: var(--accent);">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Age</div>
-                        <div class="chart-stat-value" id="statAge">--</div>
-                    </div>
-                    <div class="chart-stat">
-                        <div class="chart-stat-label">Vol Ratio</div>
-                        <div class="chart-stat-value" id="statVolRatio">--</div>
+            <!-- Analysis Section -->
+            <div class="analysis-section">
+                <div class="analysis-card">
+                    <h3>📊 AI Analysis</h3>
+                    <div class="signal-badge signal-watch" id="signalBadge">ANALYZING...</div>
+                    <div class="reason-list" id="reasonsList">
+                        <div class="reason-item">Loading analysis...</div>
                     </div>
                 </div>
-                
-                <!-- Analysis Summary Section -->
-                <div class="analysis-section" id="analysisSection" style="margin-top: 20px; border-top: 2px solid var(--border); padding-top: 20px;">
-                    <div class="analysis-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <div class="analysis-title" style="font-size: 14px; font-weight: 700; color: var(--text-primary);">🧠 AI Analysis Summary</div>
-                        <div class="analysis-signal" id="analysisSignal" style="padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 700;">--</div>
-                    </div>
-                    
-                    <div class="analysis-reasons" id="analysisReasons" style="margin-bottom: 15px;">
-                        <div class="chart-stat-label" style="color: var(--accent); font-weight: 700; margin-bottom: 8px;">✅ Why This Token</div>
-                        <div id="reasonsList" style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;"></div>
-                    </div>
-                    
-                    <div class="analysis-whale" id="analysisWhale" style="display: none; margin-bottom: 15px; padding: 12px; background: rgba(0,255,136,0.1); border-left: 3px solid var(--accent); border-radius: 4px;">
-                        <div class="chart-stat-label" style="color: var(--accent); font-weight: 700; margin-bottom: 8px;">🐋 Whale Activity</div>
-                        <div id="whaleList" style="font-size: 13px; color: var(--text-primary); line-height: 1.8;"></div>
-                    </div>
-                    
-                    <div class="analysis-risks" id="analysisRisks" style="display: none;">
-                        <div class="chart-stat-label" style="color: var(--danger); font-weight: 700; margin-bottom: 8px;">⚠️ Risk Factors</div>
-                        <div id="risksList" style="font-size: 13px; color: var(--danger); line-height: 1.8;"></div>
+                <div class="analysis-card">
+                    <h3>⚠️ Risk Factors</h3>
+                    <div class="reason-list" id="risksList">
+                        <div class="reason-item">Analyzing risks...</div>
                     </div>
                 </div>
             </div>
         </main>
-        
-        <!-- Right Sidebar - Opportunities -->
-        <aside class="sidebar-right">
-            <div class="opportunities-panel">
-                <div class="panel-title">🔥 Top Opportunities</div>
-                <div id="opportunitiesList">
-                    <div class="loading">Analyzing...</div>
-                </div>
-            </div>
-            
-            <div class="alert-feed">
-                <div class="panel-title">Recent Alerts</div>
-                <div id="alertFeed">
-                    <div class="alert-item">
-                        <span class="alert-icon">ℹ️</span>
-                        <div class="alert-content">
-                            <div class="alert-text">Dashboard initialized. Waiting for data...</div>
-                            <div class="alert-time">Just now</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </aside>
     </div>
-
+    
     <script>
         // Configuration
-        const CONFIG = {
-            dataUrl: 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/opportunities.json',
-            refreshInterval: 300000, // 5 minutes
-        };
+        const DATA_URL = 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/opportunities.json';
         
         let currentData = null;
         let selectedToken = null;
+        let sidebarCollapsed = false;
         
-        // Clock
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').textContent = 
-                now.toLocaleTimeString('en-US', { hour12: false, timeZone: 'UTC' }) + ' UTC';
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-        
-        // Fetch Data
-        async function fetchData() {
+        // Load Data
+        async function loadData() {
             try {
-                const response = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
-                if (!response.ok) throw new Error('Data unavailable');
+                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                if (!response.ok) throw new Error('Failed to fetch');
                 const data = await response.json();
                 currentData = data;
-                renderAll();
+                
+                // Filter active tokens
+                const activeTokens = (data.opportunities || []).filter(t => t.status !== 'dead');
+                currentData.activeTokens = activeTokens;
+                
+                renderTokenList();
+                renderOpportunities();
+                updateStats();
+                
+                if (activeTokens.length > 0 && !selectedToken) {
+                    selectToken(activeTokens[0]);
+                }
             } catch (e) {
-                console.error('Fetch error:', e);
-                showError();
+                console.error('Load error:', e);
+                document.getElementById('tokenList').innerHTML = '<div class="error">Failed to load data</div>';
             }
         }
         
-        // Render Functions
-        function renderAll() {
-            if (!currentData || !currentData.opportunities) return;
-            
-            // Filter out dead/inactive tokens
-            const activeOpportunities = currentData.opportunities.filter(t => t.status !== 'dead');
-            currentData.activeOpportunities = activeOpportunities;
-            
-            renderTicker();
-            renderTokenList();
-            renderOpportunities();
-            
-            if (selectedToken) {
-                updateSelectedView();
-            } else if (activeOpportunities.length > 0) {
-                selectToken(activeOpportunities[0]);
-            }
-        }
-        
-        function renderTicker() {
-            const ops = currentData.opportunities || [];
-            // Sort by 24h change (highest gainers first)
-            const sorted = [...ops].sort((a, b) => (b.price_change_24h || 0) - (a.price_change_24h || 0));
-            
-            const tickerHTML = sorted.map(token => {
-                const change = token.price_change_24h >= 0 ? 'up' : 'down';
-                const sign = token.price_change_24h >= 0 ? '+' : '';
-                return `
-                    <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
-                        <span class="ticker-symbol">${token.symbol}</span>
-                        <span class="ticker-price">$${formatNumber(token.market_cap)}</span>
-                        <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
-                    </div>
-                `;
-            }).join('') + sorted.map(token => {
-                const change = token.price_change_24h >= 0 ? 'up' : 'down';
-                const sign = token.price_change_24h >= 0 ? '+' : '';
-                return `
-                    <div class="ticker-item" style="cursor: pointer;" onclick="selectTokenBySymbol('${token.symbol}')">
-                        <span class="ticker-symbol">${token.symbol}</span>
-                        <span class="ticker-price">$${formatNumber(token.market_cap)}</span>
-                        <span class="ticker-change ${change}">${sign}${token.price_change_24h.toFixed(2)}%</span>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('ticker').innerHTML = tickerHTML;
-        }
-        
-        let currentSort = 'default';
-        let sortDirection = {}; // Track direction per sort type
-        
-        function sortTokens(type) {
-            // Toggle direction if clicking same sort
-            if (currentSort === type) {
-                sortDirection[type] = !sortDirection[type];
-            } else {
-                currentSort = type;
-                if (sortDirection[type] === undefined) {
-                    sortDirection[type] = false; // Default ascending
-                }
-            }
-            
-            // Update button states
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(type === 'default' ? 'default' : type)) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Update arrow direction
-            updateSortArrows();
-            
-            renderTokenList();
-        }
-        
-        function updateSortArrows() {
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                const arrow = btn.querySelector('.sort-arrow');
-                if (!arrow) return;
-                
-                const btnType = btn.textContent.toLowerCase().includes('alpha') ? 'alpha' :
-                               btn.textContent.toLowerCase().includes('score') ? 'score' :
-                               btn.textContent.toLowerCase().includes('24h') ? 'change' :
-                               btn.textContent.toLowerCase().includes('mkt') ? 'mcap' :
-                               btn.textContent.toLowerCase().includes('volume') ? 'volume' :
-                               btn.textContent.toLowerCase().includes('age') ? 'age' : 'default';
-                
-                if (arrow) {
-                    arrow.textContent = sortDirection[btnType] ? '↑' : '↓';
-                }
-            });
-        }
-        
-        function getSortedTokens() {
-            if (!currentData || !currentData.activeOpportunities) return [];
-            
-            // Deduplicate by address (keep first occurrence)
-            const seen = new Set();
-            const unique = currentData.activeOpportunities.filter(t => {
-                if (seen.has(t.address)) return false;
-                seen.add(t.address);
-                return true;
-            });
-            
-            const ops = [...unique];
-            const dir = sortDirection[currentSort] ? -1 : 1; // false=asc, true=desc
-            
-            switch (currentSort) {
-                case 'score':
-                    return ops.sort((a, b) => (b.score - a.score) * dir);
-                case 'change':
-                    return ops.sort((a, b) => (b.price_change_24h - a.price_change_24h) * dir);
-                case 'mcap':
-                    return ops.sort((a, b) => (b.market_cap - a.market_cap) * dir);
-                case 'volume':
-                    return ops.sort((a, b) => (b.volume_24h - a.volume_24h) * dir);
-                case 'alpha':
-                    return ops.sort((a, b) => a.symbol.localeCompare(b.symbol) * dir);
-                case 'age':
-                    return ops.sort((a, b) => ((a.age_hours || 9999) - (b.age_hours || 9999)) * dir); // Youngest first
-                case 'holders':
-                    return ops.sort((a, b) => ((a.holder_count || 0) - (b.holder_count || 0)) * dir); // Most holders first
-                default:
-                    return ops;
-            }
-        }
-        
+        // Render Token List
         function renderTokenList() {
-            const ops = getSortedTokens();
-            const listHTML = ops.map(token => {
+            const tokens = currentData?.activeTokens || [];
+            const list = document.getElementById('tokenList');
+            
+            if (tokens.length === 0) {
+                list.innerHTML = '<div class="loading">No tokens found</div>';
+                return;
+            }
+            
+            // Sort by score
+            const sorted = [...tokens].sort((a, b) => (b.score || 0) - (a.score || 0));
+            
+            list.innerHTML = sorted.map(token => {
+                const changeClass = (token.price_change_24h || 0) >= 0 ? 'change-up' : 'change-down';
+                const changeSign = (token.price_change_24h || 0) >= 0 ? '+' : '';
                 const signalClass = getSignalClass(token.score);
-                const changeClass = token.price_change_24h >= 0 ? 'up' : 'down';
-                const changeSign = token.price_change_24h >= 0 ? '+' : '';
-                const isActive = selectedToken && selectedToken.symbol === token.symbol ? 'active' : '';
+                const isActive = selectedToken?.symbol === token.symbol ? 'active' : '';
                 const dexUrl = `https://dexscreener.com/solana/${token.address}`;
                 
                 return `
-                    <div class="token-list-item ${isActive}" onclick="selectTokenBySymbol('${token.symbol}')" style="cursor: pointer;">
-                        <div class="token-list-info">
-                            <div class="token-list-symbol">
-                                <a href="${dexUrl}" target="_blank" style="color: inherit; text-decoration: none;" onclick="event.stopPropagation();">${token.symbol}</a>
+                    <div class="token-item ${isActive}" onclick="selectToken(currentData.activeTokens.find(t => t.symbol === '${token.symbol}'))">
+                        <div class="token-info">
+                            <div class="token-symbol">
                                 <span class="signal-dot ${signalClass}"></span>
+                                <a href="${dexUrl}" target="_blank" onclick="event.stopPropagation();">${token.symbol}</a>
                             </div>
-                            <div class="token-list-price">$${formatNumber(token.market_cap)}</div>
+                            <div class="token-meta">$${formatNumber(token.market_cap)} • ${token.signal}</div>
                         </div>
-                        <div class="token-list-change ${changeClass}">${changeSign}${token.price_change_24h.toFixed(1)}%</div>
+                        <div class="token-change ${changeClass}">${changeSign}${(token.price_change_24h || 0).toFixed(1)}%</div>
                     </div>
                 `;
             }).join('');
             
-            document.getElementById('tokenList').innerHTML = listHTML;
+            document.getElementById('watchlistCount').textContent = tokens.length;
         }
         
+        // Render Opportunities
         function renderOpportunities() {
-            const ops = currentData.opportunities || [];
-            const strongBuys = ops.filter(o => o.score >= 40); // Show Watch tier (40+)
+            const tokens = currentData?.activeTokens || [];
+            const opportunities = tokens.filter(t => (t.score || 0) >= 40).slice(0, 8);
+            const list = document.getElementById('opportunitiesList');
             
-            let html = '';
+            if (opportunities.length === 0) {
+                list.innerHTML = '<div class="loading">No strong signals right now</div>';
+                return;
+            }
             
-            strongBuys.slice(0, 10).forEach(token => {
-                const cardClass = getOpportunityCardClass(token.score);
+            list.innerHTML = opportunities.map(token => {
+                const cardClass = getCardClass(token.score);
                 const dexUrl = `https://dexscreener.com/solana/${token.address}`;
-                html += `
-                    <div class="opportunity-card ${cardClass}" onclick="selectTokenBySymbol('${token.symbol}')" style="cursor: pointer;">
+                
+                return `
+                    <div class="opportunity-card" onclick="selectToken(currentData.activeTokens.find(t => t.symbol === '${token.symbol}'))">
                         <div class="opportunity-header">
-                            <span class="opportunity-symbol"><a href="${dexUrl}" target="_blank" style="color: inherit; text-decoration: none;" onclick="event.stopPropagation();">${token.symbol}</a></span>
+                            <span class="opportunity-symbol"><a href="${dexUrl}" target="_blank" onclick="event.stopPropagation();">${token.symbol}</a></span>
                             <span class="opportunity-score">${token.score}/100</span>
                         </div>
                         <div class="opportunity-reason">${token.reasons?.slice(0, 2).join(' • ') || 'Analyzing...'}</div>
                         <div class="opportunity-meta">
-                            <span>${token.price_change_24h > 0 ? '+' : ''}${token.price_change_24h.toFixed(1)}% 24h</span>
+                            <span>${token.price_change_24h > 0 ? '+' : ''}${(token.price_change_24h || 0).toFixed(1)}%</span>
                             <span>$${formatNumber(token.market_cap)}</span>
                         </div>
                     </div>
                 `;
-            });
+            }).join('');
             
-            if (html === '') {
-                html = '<div class="loading">No strong signals right now</div>';
-            }
-            
-            document.getElementById('opportunitiesList').innerHTML = html;
+            document.getElementById('oppCount').textContent = opportunities.length;
         }
         
-        // Token Selection
-        function selectTokenBySymbol(symbol) {
-            const token = currentData.opportunities.find(o => o.symbol === symbol);
-            if (token) selectToken(token);
-        }
-        
+        // Select Token
         function selectToken(token) {
+            if (!token) return;
             selectedToken = token;
-            updateSelectedView();
-            renderTokenList(); // Update active state
-        }
-        
-        function updateSelectedView() {
-            if (!selectedToken) return;
             
-            document.getElementById('selectedIcon').textContent = selectedToken.symbol[0];
-            document.getElementById('selectedIcon').style.background = getTokenGradient(selectedToken.symbol);
+            // Update chart
+            const dexUrl = `https://dexscreener.com/solana/${token.address}?embed=true&theme=dark&chart=1`;
+            document.getElementById('chartContainer').innerHTML = `<iframe src="${dexUrl}" loading="lazy"></iframe>`;
             
-            // Make token name a clickable link to DexScreener
-            const dexUrl = `https://dexscreener.com/solana/${selectedToken.address}`;
-            document.getElementById('selectedName').innerHTML = `<a href="${dexUrl}" target="_blank" style="color: var(--accent); text-decoration: none;">${selectedToken.symbol}</a> <span style="color: var(--text-secondary);">/ ${selectedToken.chain}</span>`;
-            document.getElementById('selectedMeta').innerHTML = `<a href="${dexUrl}" target="_blank" style="color: var(--text-secondary); text-decoration: none;">${selectedToken.name}</a> • $${formatNumber(selectedToken.market_cap)} • Score: ${selectedToken.score}/100 • ${selectedToken.signal}`;
-            document.getElementById('selectedPrice').textContent = '$' + formatNumber(selectedToken.market_cap);
+            // Update title
+            document.getElementById('chartIcon').textContent = token.symbol[0];
+            document.getElementById('chartTitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.symbol}</a>`;
+            document.getElementById('chartSubtitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.name || token.symbol}</a>`;
             
-            // Show copy address button
-            const copyBtn = document.getElementById('copyAddressBtn');
-            if (selectedToken.address) {
-                copyBtn.style.display = 'inline-block';
-                copyBtn.dataset.address = selectedToken.address;
-            } else {
-                copyBtn.style.display = 'none';
-            }
-            
-            const changeEl = document.getElementById('selectedChange');
-            const change = selectedToken.price_change_24h;
-            changeEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '% (24h)';
-            changeEl.style.color = change >= 0 ? 'var(--accent)' : 'var(--danger)';
-            
-            document.getElementById('statVolume').textContent = '$' + formatNumber(selectedToken.volume_24h);
-            document.getElementById('statLiquidity').textContent = '$' + formatNumber(selectedToken.liquidity_usd);
-            document.getElementById('statMcap').textContent = '$' + formatNumber(selectedToken.market_cap);
-            document.getElementById('statScore').textContent = selectedToken.score + '/100';
-            document.getElementById('statAge').textContent = selectedToken.age_hours ? `${selectedToken.age_hours}h` : 'N/A';
-            const volRatio = selectedToken.volume_24h / (selectedToken.liquidity_usd || 1);
+            // Update stats
+            document.getElementById('statsGrid').style.display = 'grid';
+            document.getElementById('statVolume').textContent = '$' + formatNumber(token.volume_24h);
+            document.getElementById('statLiquidity').textContent = '$' + formatNumber(token.liquidity_usd);
+            document.getElementById('statMcap').textContent = '$' + formatNumber(token.market_cap);
+            document.getElementById('statScore').textContent = token.score + '/100';
+            document.getElementById('statAge').textContent = token.age_hours ? token.age_hours + 'h' : 'N/A';
+            const volRatio = token.volume_24h / (token.liquidity_usd || 1);
             document.getElementById('statVolRatio').textContent = volRatio.toFixed(1) + 'x';
-            document.getElementById('statVolRatio').style.color = volRatio > 3 ? 'var(--accent)' : volRatio > 1 ? 'var(--text-secondary)' : 'var(--danger)';
             
-            // Analysis Summary
-            const signalEl = document.getElementById('analysisSignal');
-            signalEl.textContent = selectedToken.label || selectedToken.signal;
-            signalEl.style.background = selectedToken.score >= 85 ? 'rgba(0,255,136,0.2)' : 
-                                        selectedToken.score >= 70 ? 'rgba(0,255,136,0.15)' : 
-                                        selectedToken.score >= 55 ? 'rgba(255,165,2,0.15)' : 
-                                        'rgba(255,71,87,0.15)';
-            signalEl.style.color = selectedToken.score >= 85 ? 'var(--accent)' : 
-                                   selectedToken.score >= 70 ? 'var(--accent)' : 
-                                   selectedToken.score >= 55 ? 'var(--warning)' : 'var(--danger)';
+            // Copy button
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.style.display = 'block';
+            copyBtn.dataset.address = token.address;
             
-            // Reasons
-            const reasonsList = document.getElementById('reasonsList');
-            if (selectedToken.reasons && selectedToken.reasons.length > 0) {
-                reasonsList.innerHTML = selectedToken.reasons.map(r => `<div>• ${r}</div>`).join('');
-            } else {
-                reasonsList.innerHTML = '<div>Analyzing...</div>';
-            }
+            // Analysis
+            const signalBadge = document.getElementById('signalBadge');
+            signalBadge.className = 'signal-badge signal-' + token.signal.toLowerCase();
+            signalBadge.textContent = token.label || token.signal;
             
-            // Whale Activity
-            const whaleSection = document.getElementById('analysisWhale');
-            const whaleList = document.getElementById('whaleList');
-            const whaleActivity = selectedToken.whale_activity || {};
+            document.getElementById('reasonsList').innerHTML = (token.reasons || ['Analyzing...']).map(r => 
+                `<div class="reason-item">${r}</div>`
+            ).join('');
             
-            if (whaleActivity.active_whales && whaleActivity.active_whales.length > 0) {
-                whaleSection.style.display = 'block';
-                const whales = whaleActivity.active_whales.map(w => 
-                    `<div>• ${w.name || 'Unknown'} - ${w.buys} buy(s) in 24h</div>`
-                ).join('');
-                whaleList.innerHTML = whales;
-            } else {
-                whaleSection.style.display = 'none';
-            }
+            document.getElementById('risksList').innerHTML = (token.risk_factors || ['No major risks']).map(r => 
+                `<div class="reason-item">${r}</div>`
+            ).join('');
             
-            // Risks
-            const risksSection = document.getElementById('analysisRisks');
-            const risksList = document.getElementById('risksList');
-            if (selectedToken.risk_factors && selectedToken.risk_factors.length > 0) {
-                risksSection.style.display = 'block';
-                risksList.innerHTML = selectedToken.risk_factors.map(r => `<div>• ${r}</div>`).join('');
-            } else {
-                risksSection.style.display = 'none';
-            }
-            
-            // Load TradingView chart
-            loadTradingViewChart(selectedToken);
+            renderTokenList();
         }
         
-        function loadTradingViewChart(token) {
-            // Use DexScreener pair URL - extract pair ID from address or use address as fallback
-            const pairId = token.pair_address || token.address;
-            const dexUrl = `https://dexscreener.com/solana/${pairId}?embed=true&theme=dark&chart=1`;
+        // Copy Address
+        function copyAddress() {
+            const address = document.getElementById('copyBtn').dataset.address;
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = '📋 Copy Address', 2000);
+            });
+        }
+        
+        // Update Stats
+        function updateStats() {
+            const tokens = currentData?.activeTokens || [];
+            document.getElementById('tokenCount').textContent = tokens.length;
             
-            document.getElementById('tradingview_chart').innerHTML = `
-                <iframe 
-                    src="${dexUrl}" 
-                    frameborder="0" 
-                    style="width: 100%; height: 600px; border: 0;"
-                    allowtransparency="true"
-                    loading="lazy">
-                </iframe>
-            `;
+            if (tokens.length > 0 && tokens[0].analyzed_at) {
+                const date = new Date(tokens[0].analyzed_at);
+                document.getElementById('lastUpdate').textContent = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            }
+        }
+        
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebarCollapsed = !sidebarCollapsed;
+            sidebar.classList.toggle('collapsed', sidebarCollapsed);
         }
         
         // Helpers
-        function formatPrice(price) {
-            if (!price || price === 0) return '0';
-            if (price < 0.001) return price.toExponential(2);
-            if (price < 1) return price.toFixed(6);
-            return price.toFixed(4);
-        }
-        
         function formatNumber(num) {
             if (!num) return '0';
             if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -1076,64 +984,23 @@
         }
         
         function getSignalClass(score) {
-            if (score >= 70) return 'signal-hot';
-            if (score >= 50) return 'signal-warm';
-            if (score >= 30) return 'signal-neutral';
+            if (score >= 85) return 'signal-hot';
+            if (score >= 70) return 'signal-warm';
+            if (score >= 55) return 'signal-neutral';
             return 'signal-cold';
         }
         
-        function getOpportunityCardClass(score) {
-            if (score >= 85) return 'strong-buy';      // Green accent
-            if (score >= 70) return 'buy';            // Green warning
-            if (score >= 55) return 'speculative';    // Orange
-            if (score >= 40) return 'watch';          // Blue
-            return 'avoid';                           // Red
-        }
-        
-        function getTokenGradient(symbol) {
-            const gradients = {
-                'MOMO': 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
-                'PIZZA': 'linear-gradient(135deg, #ffa502 0%, #ff6348 100%)',
-                'JELLY': 'linear-gradient(135deg, #ffa502 0%, #ff9f43 100%)',
-                'PUNCH': 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
-                'DEVIOUS': 'linear-gradient(135deg, #ff4757 0%, #ff6b81 100%)'
-            };
-            return gradients[symbol] || 'linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)';
-        }
-        
-        function showError() {
-            document.getElementById('tokenList').innerHTML = '<div class="error">⚠️ Data unavailable<br><small>Push to GitHub to activate</small></div>';
-            document.getElementById('opportunitiesList').innerHTML = '<div class="error">Waiting for data...</div>';
-        }
-        
-        // Copy Contract Address
-        function copyContractAddress() {
-            const btn = document.getElementById('copyAddressBtn');
-            const address = btn.dataset.address;
-            
-            if (!address) return;
-            
-            navigator.clipboard.writeText(address).then(() => {
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = 'rgba(0,255,136,0.3)';
-                
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = 'rgba(0,255,136,0.15)';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-                btn.textContent = '❌ Failed';
-                setTimeout(() => {
-                    btn.textContent = '📋 Copy Address';
-                }, 2000);
-            });
+        function getCardClass(score) {
+            if (score >= 85) return 'opportunity-card';
+            if (score >= 70) return 'opportunity-card';
+            if (score >= 55) return 'opportunity-card';
+            if (score >= 40) return 'opportunity-card';
+            return 'opportunity-card';
         }
         
         // Initialize
-        fetchData();
-        setInterval(fetchData, CONFIG.refreshInterval);
+        loadData();
+        setInterval(loadData, 300000); // Refresh every 5 minutes
     </script>
 </body>
 </html>
