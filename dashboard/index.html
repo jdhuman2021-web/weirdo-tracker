@@ -572,18 +572,56 @@
         }
         
         .opportunity-card {
-            background: var(--gradient-card);
-            border-radius: var(--radius-sm);
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 16px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             cursor: pointer;
-            transition: var(--transition-fast);
-            border: 1px solid transparent;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--card-accent, var(--accent));
         }
         
         .opportunity-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-1px);
+            border-color: var(--card-accent, var(--accent));
+            transform: translateX(4px);
+        }
+        
+        /* Score-based card colors */
+        .opportunity-card.score-excellent {
+            --card-accent: #00ff88;
+            background: linear-gradient(135deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%);
+        }
+        
+        .opportunity-card.score-good {
+            --card-accent: #00dd77;
+            background: linear-gradient(135deg, rgba(0,221,119,0.06) 0%, rgba(0,221,119,0.01) 100%);
+        }
+        
+        .opportunity-card.score-speculative {
+            --card-accent: #ffb340;
+            background: linear-gradient(135deg, rgba(255,179,64,0.06) 0%, rgba(255,179,64,0.01) 100%);
+        }
+        
+        .opportunity-card.score-watch {
+            --card-accent: #6690ff;
+            background: linear-gradient(135deg, rgba(102,144,255,0.06) 0%, rgba(102,144,255,0.01) 100%);
+        }
+        
+        .opportunity-card.score-avoid {
+            --card-accent: #ff5566;
+            background: linear-gradient(135deg, rgba(255,85,102,0.06) 0%, rgba(255,85,102,0.01) 100%);
         }
         
         .opportunity-header {
@@ -613,7 +651,42 @@
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
         }
+        
+        /* Score badge colors */
+        .score-excellent .opportunity-score {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+        }
+        
+        .score-good .opportunity-score {
+            background: rgba(0,221,119,0.15);
+            color: #00dd77;
+        }
+        
+        .score-speculative .opportunity-score {
+            background: rgba(255,179,64,0.15);
+            color: #ffb340;
+        }
+        
+        .score-watch .opportunity-score {
+            background: rgba(102,144,255,0.15);
+            color: #6690ff;
+        }
+        
+        .score-avoid .opportunity-score {
+            background: rgba(255,85,102,0.15);
+            color: #ff5566;
+        }
+        
+        /* Symbol colors match card accent */
+        .score-excellent .opportunity-symbol a { color: #00ff88; }
+        .score-good .opportunity-symbol a { color: #00dd77; }
+        .score-speculative .opportunity-symbol a { color: #ffb340; }
+        .score-watch .opportunity-symbol a { color: #6690ff; }
+        .score-avoid .opportunity-symbol a { color: #ff5566; }
         
         .opportunity-reason {
             font-size: 12px;
@@ -1098,11 +1171,11 @@
         }
         
         function getCardClass(score) {
-            if (score >= 85) return 'opportunity-card';
-            if (score >= 70) return 'opportunity-card';
-            if (score >= 55) return 'opportunity-card';
-            if (score >= 40) return 'opportunity-card';
-            return 'opportunity-card';
+            if (score >= 85) return 'opportunity-card score-excellent';
+            if (score >= 70) return 'opportunity-card score-good';
+            if (score >= 55) return 'opportunity-card score-speculative';
+            if (score >= 40) return 'opportunity-card score-watch';
+            return 'opportunity-card score-avoid';
         }
         
         // Initialize
