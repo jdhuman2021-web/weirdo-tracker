@@ -260,6 +260,29 @@
             background: var(--accent-dim);
         }
         
+        /* Row colors by score */
+        .data-table tr.score-excellent td { background: linear-gradient(90deg, rgba(0,255,136,0.08) 0%, transparent 100%); }
+        .data-table tr.score-excellent:hover td { background: rgba(0,255,136,0.12); }
+        
+        .data-table tr.score-good td { background: linear-gradient(90deg, rgba(0,221,119,0.06) 0%, transparent 100%); }
+        .data-table tr.score-good:hover td { background: rgba(0,221,119,0.1); }
+        
+        .data-table tr.score-speculative td { background: linear-gradient(90deg, rgba(255,179,64,0.06) 0%, transparent 100%); }
+        .data-table tr.score-speculative:hover td { background: rgba(255,179,64,0.1); }
+        
+        .data-table tr.score-watch td { background: linear-gradient(90deg, rgba(102,144,255,0.06) 0%, transparent 100%); }
+        .data-table tr.score-watch:hover td { background: rgba(102,144,255,0.1); }
+        
+        .data-table tr.score-avoid td { background: linear-gradient(90deg, rgba(255,85,102,0.06) 0%, transparent 100%); }
+        .data-table tr.score-avoid:hover td { background: rgba(255,85,102,0.1); }
+        
+        /* Symbol colors by score */
+        .data-table tr.score-excellent .token-symbol a { color: #00ff88; }
+        .data-table tr.score-good .token-symbol a { color: #00dd77; }
+        .data-table tr.score-speculative .token-symbol a { color: #ffb340; }
+        .data-table tr.score-watch .token-symbol a { color: #6690ff; }
+        .data-table tr.score-avoid .token-symbol a { color: #ff5566; }
+        
         .token-cell {
             display: flex;
             flex-direction: column;
@@ -600,9 +623,10 @@
                 const changeClass = (token.price_change_24h || 0) >= 0 ? 'change-up' : 'change-down';
                 const changeSign = (token.price_change_24h || 0) >= 0 ? '+' : '';
                 const dexUrl = `https://dexscreener.com/solana/${token.address}`;
+                const rowClass = getRowScoreClass(token.score);
                 
                 return `
-                    <tr>
+                    <tr class="${rowClass}">
                         <td>
                             <div class="token-cell">
                                 <span class="token-symbol"><a href="${dexUrl}" target="_blank">${token.symbol}</a></span>
@@ -624,6 +648,14 @@
                     </tr>
                 `;
             }).join('');
+        }
+        
+        function getRowScoreClass(score) {
+            if (score >= 85) return 'score-excellent';
+            if (score >= 70) return 'score-good';
+            if (score >= 55) return 'score-speculative';
+            if (score >= 40) return 'score-watch';
+            return 'score-avoid';
         }
         
         function filterTable() {

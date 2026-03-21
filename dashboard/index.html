@@ -339,6 +339,38 @@
         .signal-neutral { background: var(--info); }
         .signal-cold { background: var(--danger); }
         
+        /* Watchlist item colors by score */
+        .token-item.score-excellent {
+            background: linear-gradient(135deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%);
+            border-left: 3px solid #00ff88;
+        }
+        
+        .token-item.score-good {
+            background: linear-gradient(135deg, rgba(0,221,119,0.06) 0%, rgba(0,221,119,0.01) 100%);
+            border-left: 3px solid #00dd77;
+        }
+        
+        .token-item.score-speculative {
+            background: linear-gradient(135deg, rgba(255,179,64,0.06) 0%, rgba(255,179,64,0.01) 100%);
+            border-left: 3px solid #ffb340;
+        }
+        
+        .token-item.score-watch {
+            background: linear-gradient(135deg, rgba(102,144,255,0.06) 0%, rgba(102,144,255,0.01) 100%);
+            border-left: 3px solid #6690ff;
+        }
+        
+        .token-item.score-avoid {
+            background: linear-gradient(135deg, rgba(255,85,102,0.06) 0%, rgba(255,85,102,0.01) 100%);
+            border-left: 3px solid #ff5566;
+        }
+        
+        .token-item.score-excellent .token-symbol a { color: #00ff88; }
+        .token-item.score-good .token-symbol a { color: #00dd77; }
+        .token-item.score-speculative .token-symbol a { color: #ffb340; }
+        .token-item.score-watch .token-symbol a { color: #6690ff; }
+        .token-item.score-avoid .token-symbol a { color: #ff5566; }
+        
         .token-meta {
             font-size: 11px;
             color: var(--text-muted);
@@ -1013,10 +1045,11 @@
                 const changeSign = (token.price_change_24h || 0) >= 0 ? '+' : '';
                 const signalClass = getSignalClass(token.score);
                 const isActive = selectedToken?.symbol === token.symbol ? 'active' : '';
+                const scoreClass = getTokenScoreClass(token.score);
                 const dexUrl = `https://dexscreener.com/solana/${token.address}`;
                 
                 return `
-                    <div class="token-item ${isActive}" onclick="selectToken(currentData.activeTokens.find(t => t.symbol === '${token.symbol}'))">
+                    <div class="token-item ${scoreClass} ${isActive}" onclick="selectToken(currentData.activeTokens.find(t => t.symbol === '${token.symbol}'))">
                         <div class="token-info">
                             <div class="token-symbol">
                                 <span class="signal-dot ${signalClass}"></span>
@@ -1028,6 +1061,15 @@
                     </div>
                 `;
             }).join('');
+        }
+        
+        // Get token score class for watchlist
+        function getTokenScoreClass(score) {
+            if (score >= 85) return 'score-excellent';
+            if (score >= 70) return 'score-good';
+            if (score >= 55) return 'score-speculative';
+            if (score >= 40) return 'score-watch';
+            return 'score-avoid';
         }
         
         // Sort Tokens
