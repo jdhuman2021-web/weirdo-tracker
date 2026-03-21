@@ -1,4 +1,4 @@
-# Thinking Agent v2.3 - Historical Data Scoring with Supabase
+# Thinking Agent v2.4 - Fixed Volume Scoring + Whale Priority
 # Uses Supabase price history for trend analysis + whale intelligence
 
 import json
@@ -21,6 +21,8 @@ def calculate_score(token, price_history=None, whale_data=None):
     - We want EARLY ENTRY (fresh but not too fresh)
     - We want MOMENTUM SHIFT (price stabilizing after drop)
     
+    FIXED: Volume ratio now considers whale activity BEFORE penalizing
+    
     Args:
         token: Token data dict
         price_history: List of historical price snapshots
@@ -29,6 +31,15 @@ def calculate_score(token, price_history=None, whale_data=None):
     score = 0
     reasons = []
     risk_factors = []
+    
+    # ============================================
+    # Pre-check: Whale activity (for volume scoring)
+    # ============================================
+    has_whale_activity = False
+    if whale_data:
+        vol_1h_ratio = whale_data.get('vol_1h_ratio', 0)
+        vol_5m_ratio = whale_data.get('vol_5m_ratio', 0)
+        has_whale_activity = whale_data.get('whale_activity_detected', False) or vol_1h_ratio > 1.5 or vol_5m_ratio > 2.0
     
     # ============================================
     # 1. PRICE POSITION (35 points max)
@@ -68,6 +79,7 @@ def calculate_score(token, price_history=None, whale_data=None):
     
     # ============================================
     # 2. VOLUME/LIQUIDITY RATIO (35 points max)
+    # FIXED: Check whale activity before penalizing low volume
     # ============================================
     volume = token.get('volume_24h', 0)
     liquidity = token.get('liquidity_usd', 1)
@@ -89,9 +101,29 @@ def calculate_score(token, price_history=None, whale_data=None):
     elif vol_ratio > 1.0:
         score += 12
         reasons.append("Volume above liquidity - mild interest")
+    elif vol_ratio > 0.5:
+        score += 5
+        reasons.append("Moderate trading activity")
+    elif has_whale_activity:
+        # Whale activity detected - don't penalize low volume!
+        # Whales are buying despite low overall volume
+        score += 10
+        reasons.append("🐋 Whale activity detected - smart money accumulating")
     else:
-        score -= 10
-        risk_factors.append("Volume below liquidity - dead/abandoned")
+        # No whale activity + low volume = check market cap
+        mcap = token.get('market_cap', 0)
+        if mcap > 1000000:
+            # Established token with $1M+ MC - stable, not dead
+            score -= 3
+            reasons.append("Lower volume - established token")
+        elif mcap > 100000:
+            # Mid-cap $100K-$1M - might be dormant
+            score -= 5
+            risk_factors.append("Low volume relative to liquidity")
+        else:
+            # Small MC + low volume = likely dead/abandoned
+            score -= 10
+            risk_factors.append("Volume below liquidity - dead/abandoned")
     
     # ============================================
     # 3. HOLDER DYNAMICS (25 points max)
@@ -183,15 +215,12 @@ def calculate_score(token, price_history=None, whale_data=None):
     # ============================================
     if price_history and len(price_history) >= 3:
         try:
-            # Get price trend from history
             prices = [p.get('price_usd', 0) for p in price_history if p.get('price_usd', 0) > 0]
             
             if len(prices) >= 3:
-                # Calculate trend
                 recent_avg = sum(prices[:3]) / len(prices[:3])
                 older_avg = sum(prices[3:min(6, len(prices))]) / len(prices[3:min(6, len(prices))]) if len(prices) > 3 else recent_avg
                 
-                # Price recovering from lows
                 if recent_avg > older_avg * 1.15:
                     score += 15
                     reasons.append("📈 Strong uptrend from historical lows")
@@ -205,7 +234,6 @@ def calculate_score(token, price_history=None, whale_data=None):
                     score -= 5
                     risk_factors.append("📉 Price declining from historical average")
                 
-                # Volatility check
                 if len(prices) >= 5:
                     avg_price = sum(prices) / len(prices)
                     variance = sum((p - avg_price) ** 2 for p in prices) / len(prices)
@@ -269,7 +297,7 @@ def get_signal(score):
 
 def main():
     """Main execution"""
-    print("Thinking Agent v2.3 - Supabase Historical Scoring")
+    print("Thinking Agent v2.4 - Fixed Volume Scoring + Whale Priority")
     print("=" * 60)
     
     # Import Supabase client
@@ -364,7 +392,7 @@ def main():
             'speculative': len([o for o in opportunities if o['signal'] == 'SPECULATIVE']),
             'watch': len([o for o in opportunities if o['signal'] == 'WATCH']),
             'avoid': len([o for o in opportunities if o['signal'] == 'AVOID']),
-            'agent': 'thinking_v2.3',
+            'agent': 'thinking_v2.4',
             'supabase_connected': supabase is not None
         },
         'opportunities': opportunities
@@ -397,9 +425,8 @@ def main():
     # Write scores to Supabase
     if supabase and supabase.is_connected():
         print("\nWriting scores to Supabase...")
-        for opp in opportunities[:10]:  # Top 10
+        for opp in opportunities[:10]:
             try:
-                # Update snapshot with score
                 supabase.client.table('price_snapshots').update({
                     'score': opp['score'],
                     'signal': opp['signal']
