@@ -14,11 +14,13 @@ env:
   SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   HELIUS_API_KEY: ${{ secrets.HELIUS_API_KEY }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
 jobs:
   collect-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     
     steps:
     - name: Checkout
@@ -36,91 +38,22 @@ jobs:
     - name: Create dirs
       run: mkdir -p data config
     
-    - name: Run Research Agent
-      id: research
+    - name: Run Consolidated Pipeline
+      id: pipeline
       run: |
-        echo "=== Running Research Agent v1.5 ==="
-        echo "Config tokens: $(jq '.tokens | length' config/tokens.json)"
-        python3 agents/research_agent.py 2>&1 | tee research.log
+        echo "=== Running Collect and Score v1.0 ==="
+        echo "Pipeline: Research → Helius → Whale → Thinking → Backtest → Alert"
+        python3 agents/collect_and_score.py 2>&1 | tee pipeline.log
         exit_code=$?
-        echo "Research exit code: $exit_code"
-        if [ -f data/latest.json ]; then
-          echo "Latest.json metadata:"
-          jq '.metadata' data/latest.json
-        else
-          echo "ERROR: No latest.json created"
-        fi
-        exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Helius Agent
-      id: helius
-      run: |
-        echo "=== Running Helius Agent v1.0 ==="
-        python3 agents/helius_agent.py 2>&1 | tee helius.log
-        exit_code=$?
-        echo "Helius agent exit code: $exit_code"
-        if [ -f data/helius_data.json ]; then
-          echo "Helius data:"
-          jq '{tokens_processed, total_holders}' data/helius_data.json
-        fi
-        exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Whale Tracking Agent
-      id: whale
-      run: |
-        echo "=== Running Whale Tracking Agent v1.0 ==="
-        python3 agents/whale_agent.py 2>&1 | tee whale.log
-        exit_code=$?
-        echo "Whale agent exit code: $exit_code"
-        if [ -f data/whale_activity.json ]; then
-          echo "Whale activity summary:"
-          jq '.metadata' data/whale_activity.json
-        fi
-        exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Thinking Agent
-      id: thinking
-      run: |
-        echo "=== Running Thinking Agent v2.4 ==="
-        python3 agents/thinking_agent.py 2>&1 | tee thinking.log
-        exit_code=$?
-        echo "Thinking agent exit code: $exit_code"
+        echo "Pipeline exit code: $exit_code"
+        
+        # Extract summary
         if [ -f data/opportunities.json ]; then
-          echo "Opportunities summary:"
-          jq '.metadata' data/opportunities.json
+          echo "=== Score Distribution ==="
+          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
         fi
+        
         exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Backtest Agent
-      id: backtest
-      run: |
-        echo "=== Running Backtest Agent v1.0 ==="
-        python3 agents/backtest_agent.py 2>&1 | tee backtest.log
-        exit_code=$?
-        echo "Backtest agent exit code: $exit_code"
-        if [ -f data/backtest_results.json ]; then
-          echo "Backtest results:"
-          jq '.' data/backtest_results.json
-        fi
-        exit $exit_code
-      continue-on-error: true
-    
-    - name: Run Alert Agent
-      id: alert
-      env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      run: |
-        echo "=== Running Alert Agent ==="
-        python3 agents/alert_agent.py 2>&1 | tee alert.log
-        exit_code=$?
-        echo "Alert agent exit code: $exit_code"
-        exit $exit_code
-      continue-on-error: true
     
     - name: Commit and Push Data
       run: |
@@ -147,12 +80,7 @@ jobs:
     - name: Pipeline Summary
       run: |
         echo "=== Pipeline Summary ==="
-        echo "Research Agent: ${{ steps.research.outcome }}"
-        echo "Helius Agent: ${{ steps.helius.outcome }}"
-        echo "Whale Agent: ${{ steps.whale.outcome }}"
-        echo "Thinking Agent: ${{ steps.thinking.outcome }}"
-        echo "Backtest Agent: ${{ steps.backtest.outcome }}"
-        echo "Alert Agent: ${{ steps.alert.outcome }}"
+        echo "Result: ${{ steps.pipeline.outcome }}"
         
         if [ -f data/latest.json ]; then
           echo ""
@@ -164,4 +92,10 @@ jobs:
           echo ""
           echo "=== Score Distribution ==="
           jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
+        fi
+        
+        if [ -f data/alerts.json ]; then
+          echo ""
+          echo "=== Alerts ==="
+          jq '{total: .total_alerts, sent: .alerts_sent}' data/alerts.json
         fi

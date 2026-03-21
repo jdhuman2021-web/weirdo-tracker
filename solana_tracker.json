@@ -403,7 +403,18 @@
       "narrative": "$83K MC, $23K liq, $165K vol, +1041% 24h",
       "status": "active",
       "initial_data": {},
-      "history": []
+      "history": [
+        {
+          "timestamp": "2026-03-21T10:28:00Z",
+          "price_usd": 0.00001169,
+          "market_cap": 11687,
+          "liquidity_usd": 8960,
+          "volume_24h": 526832,
+          "price_change_1h": -21.02,
+          "price_change_24h": -68.1,
+          "alert": "CRASH: -68.1% 24h threshold breach"
+        }
+      ]
     },
     {
       "address": "FfWDxxT4ntPxmL565wcv3MwnDnkMyWo5ybD71KLApump",
@@ -414,7 +425,18 @@
       "narrative": "$19.8K FDV, $5.7K liq, 307K vol, +23.7% 1h",
       "status": "active",
       "initial_data": {},
-      "history": []
+      "history": [
+        {
+          "timestamp": "2026-03-21T10:28:00Z",
+          "price_usd": 0.000002439,
+          "market_cap": 2440,
+          "liquidity_usd": 4024,
+          "volume_24h": 34351,
+          "price_change_1h": 0,
+          "price_change_24h": -79.55,
+          "alert": "CRASH: -79.55% 24h threshold breach"
+        }
+      ]
     },
     {
       "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
