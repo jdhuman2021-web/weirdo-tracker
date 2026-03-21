@@ -109,6 +109,53 @@ class CollectAndScore:
     # STEP 1: RESEARCH - Fetch token data from DexScreener
     # ============================================
     
+    def get_holder_count_rpc(self, mint_address: str) -> int:
+        """
+        Get holder count via Solana RPC getProgramAccounts
+        
+        Uses free QuickNode/Alchemy RPC if available, falls back to public endpoint.
+        NOTE: This may return 0 for pump.fun tokens or when rate-limited.
+        For production, use a dedicated RPC endpoint (QuickNode free tier recommended).
+        """
+        # Use dedicated RPC if available, otherwise public
+        SOLANA_RPC = os.environ.get('SOLANA_RPC_URL', 'https://api.mainnet-beta.solana.com')
+        TOKEN_PROGRAM = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'
+        TOKEN_2022_PROGRAM = 'TokenzQdBNb4qyF5XrzxWjb6hCjLPuFT5F1j7w7fNdPX'
+        
+        # Try both Token Program and Token-2022 (pump.fun tokens often use Token-2022)
+        for program_id in [TOKEN_PROGRAM, TOKEN_2022_PROGRAM]:
+            payload = {
+                'jsonrpc': '2.0',
+                'id': 1,
+                'method': 'getProgramAccounts',
+                'params': [
+                    program_id,
+                    {
+                        'encoding': 'base64',
+                        'dataSlice': {'offset': 0, 'length': 0},  # Count only, no data
+                        'filters': [
+                            {'dataSize': 165},  # Standard token account size
+                            {'memcmp': {'offset': 0, 'bytes': mint_address}}
+                        ]
+                    }
+                ]
+            }
+            
+            try:
+                r = requests.post(SOLANA_RPC, json=payload, timeout=30)
+                result = r.json()
+                
+                if 'result' in result:
+                    accounts = result['result']
+                    count = len(accounts) if accounts else 0
+                    if count > 0:
+                        return count
+            except Exception:
+                pass
+        
+        # If both fail, return 0 (will be stored as NULL in database)
+        return 0
+    
     def fetch_dexscreener(self, token):
         """Fetch token data from DexScreener"""
         try:
@@ -146,6 +193,18 @@ class CollectAndScore:
             if info and info.get('websites'):
                 socials['website'] = info['websites'][0].get('url')
             
+            # Get holder count - Step 1: Check DEXScreener field
+            holder_count = 0
+            
+            # Try DEXScreener holders field first (free, instant)
+            holders_field = data.get('holders') or pair.get('holders')
+            if holders_field is not None:
+                try:
+                    holder_count = int(holders_field)
+                except (ValueError, TypeError):
+                    pass
+            
+            # Return base data (holder count will be filled by RPC fallback if needed)
             return {
                 'symbol': token['symbol'],
                 'name': token.get('name', token['symbol']),
@@ -160,6 +219,8 @@ class CollectAndScore:
                 'volume_5m': float(pair.get('volume', {}).get('m5', 0) or 0),
                 'liquidity_usd': float(pair.get('liquidity', {}).get('usd', 0) or 0),
                 'market_cap': float(pair.get('fdv', 0) or pair.get('marketCap', 0) or 0),
+                'holder_count': holder_count,  # May be 0, filled by RPC fallback
+                'holders_source': 'dexscreener' if holder_count > 0 else None,
                 'socials': socials,
                 'pair_created_at': pair_created,
                 'age_hours': age_hours,
@@ -179,6 +240,7 @@ class CollectAndScore:
         
         success = 0
         failed = 0
+        need_holder_fallback = []  # Tokens needing RPC holder count
         
         for i, token in enumerate(self.tokens, 1):
             print(f"[{i}/{len(self.tokens)}] {token['symbol']}...", end=' ')
@@ -187,7 +249,13 @@ class CollectAndScore:
             if data:
                 self.token_data[token['address']] = data
                 success += 1
-                print(f"OK ${data['price_usd']:.6f}")
+                
+                # Check if we need RPC fallback for holder count
+                if data.get('holder_count', 0) == 0:
+                    need_holder_fallback.append((token['address'], token['symbol']))
+                    print(f"OK ${data['price_usd']:.6f} (no holders)")
+                else:
+                    print(f"OK ${data['price_usd']:.6f} ({data['holder_count']} holders)")
             else:
                 failed += 1
                 print("FAILED")
@@ -198,81 +266,45 @@ class CollectAndScore:
         
         self.stats['tokens_fetched'] = success
         print(f"\n✓ Fetched {success} tokens ({failed} failed)")
+        
+        # Step 1b: RPC fallback for holder counts
+        if need_holder_fallback:
+            print(f"\n📊 Fetching holder counts via RPC for {len(need_holder_fallback)} tokens...")
+            for address, symbol in need_holder_fallback:
+                holder_count = self.get_holder_count_rpc(address)
+                if address in self.token_data:
+                    self.token_data[address]['holder_count'] = holder_count
+                    self.token_data[address]['holders_source'] = 'rpc'
+                    print(f"  {symbol}: {holder_count} holders")
+                time.sleep(0.5)  # Rate limiting for RPC
+        
         return success > 0
     
     # ============================================
-    # STEP 2: HELIUS - Fetch holder data
+    # STEP 2: HOLDERS - Already fetched in Research step
     # ============================================
     
-    def fetch_holders(self, address, symbol):
-        """Fetch holder count from Helius"""
-        api_key = os.environ.get('HELIUS_API_KEY')
-        if not api_key:
-            return None
-        
-        try:
-            # Use Helius DAS API - search assets by owner
-            # For now, use token metadata to get basic info
-            url = f"https://api.helius.xyz/v0/token-metadata?api-key={api_key}"
-            payload = {"mintAccounts": [address], "includeOffChain": False}
-            
-            response = requests.post(url, json=payload, timeout=15)
-            
-            if response.status_code != 200:
-                return None
-            
-            data = response.json()
-            if not data or len(data) == 0:
-                return None
-            
-            token_info = data[0]
-            
-            # Try to get holder count from metadata or use RPC
-            # For now, return basic metadata without holder count
-            # Holder count requires Premium API or different endpoint
-            
-            return {
-                'holder_count': 0,  # Would require Premium API
-                'metadata': token_info
-            }
-        except Exception as e:
-            return None
-    
-    def run_helius(self):
-        """Step 2: Fetch holder data from Helius"""
+    def run_holders(self):
+        """Step 2: Holder counts (already fetched via DEXScreener + RPC fallback)"""
         print("\n" + "="*60)
-        print("STEP 2: HELIUS - Fetching holder data")
+        print("STEP 2: HOLDERS - Using DEXScreener + RPC data")
         print("="*60)
         
-        api_key = os.environ.get('HELIUS_API_KEY')
-        if not api_key:
-            print("⚠ HELIUS_API_KEY not found, skipping")
-            return True
+        # Holder counts were already fetched in step 1
+        # Count how many have holder data
+        with_holders = sum(1 for d in self.token_data.values() if d.get('holder_count', 0) > 0)
+        total_holders = sum(d.get('holder_count', 0) for d in self.token_data.values())
         
-        success = 0
-        total_holders = 0
+        # Copy holder data to holder_data dict for scoring
+        for address, data in self.token_data.items():
+            self.holder_data[address] = {
+                'holder_count': data.get('holder_count', 0),
+                'source': data.get('holders_source', 'unknown')
+            }
         
-        for i, (address, data) in enumerate(self.token_data.items(), 1):
-            symbol = data.get('symbol', 'UNKNOWN')
-            print(f"[{i}/{len(self.token_data)}] {symbol}...", end=' ')
-            
-            holder_info = self.fetch_holders(address, symbol)
-            if holder_info:
-                self.holder_data[address] = holder_info
-                data['holder_count'] = holder_info.get('holder_count', 0)
-                success += 1
-                total_holders += holder_info.get('holder_count', 0)
-                print(f"{holder_info.get('holder_count', 0)} holders")
-            else:
-                data['holder_count'] = 0
-                print("no data")
-            
-            # Rate limiting
-            if i < len(self.token_data):
-                time.sleep(0.5)
-        
-        self.stats['holders_fetched'] = success
-        print(f"\n✓ Fetched holders for {success} tokens (total: {total_holders})")
+        self.stats['holders_fetched'] = with_holders
+        print(f"✓ {with_holders}/{len(self.token_data)} tokens have holder data")
+        print(f"  Total holders: {total_holders:,}")
         return True
     
     # ============================================
@@ -791,7 +823,7 @@ class CollectAndScore:
             print("ERROR: Research step failed")
             return False
         
-        self.run_helius()
+        self.run_holders()
         self.run_whale()
         self.run_thinking()
         self.run_backtest()
