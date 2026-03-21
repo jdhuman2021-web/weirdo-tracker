@@ -2,52 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Live Data | Weirdo Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         :root {
-            --bg-primary: #050505;
-            --bg-secondary: #0a0a0a;
-            --bg-tertiary: #14171d;
-            --border: rgba(255,255,255,0.08);
-            --text-primary: #e8eaf0;
-            --text-secondary: #6b7280;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a24;
+            --bg-card: #15151f;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(0,255,136,0.3);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8888a0;
+            --text-muted: #55556a;
             --accent: #00ff88;
-            --accent-dim: rgba(0,255,136,0.1);
-            --warning: #ffa502;
-            --danger: #ff4757;
-            --info: #74b9ff;
+            --accent-dim: rgba(0,255,136,0.08);
+            --accent-glow: rgba(0,255,136,0.15);
+            --warning: #ffb340;
+            --danger: #ff5566;
+            --info: #6690ff;
+            --success: #00dd77;
+            --gradient-card: linear-gradient(135deg, rgba(0,255,136,0.03) 0%, rgba(102,144,255,0.03) 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-glow: 0 0 20px rgba(0,255,136,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
         }
         
         body {
-            font-family: 'SF Mono', system-ui, -apple-system, monospace;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
         }
         
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        
         /* Header */
         .header {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 100;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
         }
         
         .header-title {
-            font-size: 18px;
-            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
-        .header-title span {
-            color: var(--accent);
+        .header-title h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent) 0%, #66ffaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-badge {
+            font-size: 11px;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            border: 1px solid var(--border);
         }
         
         .header-actions {
@@ -59,11 +100,16 @@
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 13px;
-            transition: all 0.2s;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
         
         .btn:hover {
@@ -73,6 +119,12 @@
         
         .btn-primary {
             background: var(--accent-dim);
+            border-color: rgba(0,255,136,0.3);
+            color: var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-glow);
             border-color: var(--accent);
         }
         
@@ -80,35 +132,46 @@
         .stats-bar {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
-            padding: 15px 20px;
+            padding: 20px 24px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
         }
         
         .stat-item {
             text-align: center;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+        
+        .stat-item:hover {
+            background: var(--accent-dim);
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
+            margin-bottom: 4px;
         }
         
         .stat-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         /* Filters */
         .filters {
-            padding: 15px 20px;
+            padding: 16px 24px;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
             align-items: center;
         }
@@ -117,29 +180,46 @@
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
             width: 250px;
+            transition: var(--transition-fast);
         }
         
         .search-input:focus {
             outline: none;
             border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-muted);
         }
         
         .filter-select {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
             font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .filter-select:hover {
+            border-color: var(--accent);
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent);
         }
         
         /* Table */
         .table-container {
-            padding: 20px;
+            padding: 24px;
             overflow-x: auto;
         }
         
@@ -151,116 +231,225 @@
         
         .data-table th {
             background: var(--bg-tertiary);
-            padding: 12px;
+            padding: 14px 16px;
             text-align: left;
             font-weight: 600;
-            border-bottom: 2px solid var(--border);
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
             cursor: pointer;
-            user-select: none;
+            transition: var(--transition-fast);
+            white-space: nowrap;
         }
         
         .data-table th:hover {
             background: var(--accent-dim);
+            color: var(--accent);
         }
         
         .data-table td {
-            padding: 12px;
+            padding: 14px 16px;
             border-bottom: 1px solid var(--border);
+            transition: var(--transition-fast);
         }
         
-        .data-table tr:hover {
+        .data-table tr:hover td {
             background: var(--accent-dim);
         }
         
+        .token-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .token-symbol {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .token-symbol a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .token-symbol a:hover {
+            text-decoration: underline;
+        }
+        
+        .token-name {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        
         .signal-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .signal-strong-buy { background: rgba(0,255,136,0.2); color: var(--accent); }
-        .signal-buy { background: rgba(0,255,136,0.15); color: #00cc6a; }
-        .signal-speculative { background: rgba(255,165,2,0.15); color: var(--warning); }
-        .signal-watch { background: rgba(116,185,255,0.15); color: var(--info); }
-        .signal-avoid { background: rgba(255,71,87,0.15); color: var(--danger); }
+        .signal-strong-buy { background: rgba(0,255,136,0.15); color: var(--accent); }
+        .signal-buy { background: rgba(0,221,119,0.12); color: #00dd77; }
+        .signal-speculative { background: rgba(255,179,64,0.12); color: var(--warning); }
+        .signal-watch { background: rgba(102,144,255,0.12); color: var(--info); }
+        .signal-avoid { background: rgba(255,85,102,0.12); color: var(--danger); }
+        
+        .score-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         
         .score-bar {
-            width: 100px;
-            height: 6px;
+            width: 60px;
+            height: 4px;
             background: var(--bg-tertiary);
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
         }
         
         .score-fill {
             height: 100%;
-            border-radius: 3px;
+            border-radius: 2px;
+            transition: width var(--transition-normal);
         }
         
+        .score-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            min-width: 30px;
+        }
+        
+        .change-up { color: var(--accent); }
+        .change-down { color: var(--danger); }
+        
         .address-cell {
-            font-family: 'SF Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             cursor: pointer;
+            transition: var(--transition-fast);
         }
         
         .address-cell:hover {
             color: var(--accent);
         }
         
-        .change-up { color: var(--accent); }
-        .change-down { color: var(--danger); }
-        
+        /* Loading & Error */
         .loading {
+            padding: 60px;
             text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
         
         .error {
+            padding: 60px;
             text-align: center;
-            padding: 40px;
             color: var(--danger);
         }
         
-        .link {
-            color: var(--info);
-            text-decoration: none;
-        }
-        
-        .link:hover {
-            text-decoration: underline;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
             .header {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
+                padding: 12px 16px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .search-input {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 16px;
+            }
+            
+            .stat-item {
+                padding: 12px;
+            }
+            
+            .stat-value {
+                font-size: 22px;
+            }
+            
+            .filters {
+                padding: 12px 16px;
+            }
+            
+            .table-container {
+                padding: 16px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
             
             .filters {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
             }
             
             .search-input {
                 width: 100%;
             }
             
-            .table-container {
-                padding: 10px;
+            .filter-select {
+                width: 100%;
             }
             
             .data-table {
                 font-size: 12px;
+            }
+            
+            .data-table th, .data-table td {
+                padding: 10px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-title h1 {
+                font-size: 16px;
+            }
+            
+            .header-badge {
+                display: none;
+            }
+            
+            .btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+            
+            .stats-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .data-table th:nth-child(5),
+            .data-table td:nth-child(5),
+            .data-table th:nth-child(8),
+            .data-table td:nth-child(8) {
+                display: none;
             }
         }
     </style>
@@ -269,13 +458,13 @@
     <!-- Header -->
     <header class="header">
         <div class="header-title">
-            <span>⚡</span> Live Data Set
-            <span id="syncStatus" style="font-size: 12px; color: var(--text-secondary); margin-left: 10px; font-weight: 400;">🔄 Syncing...</span>
+            <h1>⚡ Live Data</h1>
+            <span class="header-badge" id="syncStatus">🔄 Loading...</span>
         </div>
         <div class="header-actions">
             <button class="btn" onclick="refreshData()">🔄 Refresh</button>
-            <button class="btn" onclick="exportCSV()">📥 CSV</button>
-            <button class="btn btn-primary" onclick="window.location.href='/'">🏠 Dashboard</button>
+            <button class="btn" onclick="exportCSV()">📥 Export</button>
+            <a href="/" class="btn btn-primary">🏠 Dashboard</a>
         </div>
     </header>
     
@@ -301,7 +490,7 @@
     
     <!-- Filters -->
     <div class="filters">
-        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search symbol, name..." onkeyup="filterTable()">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search symbol or name..." onkeyup="filterTable()">
         
         <select class="filter-select" id="signalFilter" onchange="filterTable()">
             <option value="">All Signals</option>
@@ -318,7 +507,7 @@
             <option value="70+">70+ (Buy)</option>
             <option value="55+">55+ (Speculative)</option>
             <option value="40+">40+ (Watch)</option>
-            <option value="<40"><40 (Avoid)</option>
+            <option value="<40">&lt;40 (Avoid)</option>
         </select>
     </div>
     
@@ -327,12 +516,11 @@
         <table class="data-table" id="dataTable">
             <thead>
                 <tr>
-                    <th onclick="sortTable('symbol')">Symbol ↕</th>
-                    <th onclick="sortTable('name')">Name ↕</th>
+                    <th onclick="sortTable('symbol')">Token ↕</th>
                     <th onclick="sortTable('score')">Score ↕</th>
                     <th onclick="sortTable('signal')">Signal ↕</th>
                     <th onclick="sortTable('market_cap')">Market Cap ↕</th>
-                    <th onclick="sortTable('volume_24h')"> Volume 24h ↕</th>
+                    <th onclick="sortTable('volume_24h')">Volume 24h ↕</th>
                     <th onclick="sortTable('price_change_24h')">24h Change ↕</th>
                     <th onclick="sortTable('age_hours')">Age ↕</th>
                     <th>Contract</th>
@@ -340,14 +528,13 @@
             </thead>
             <tbody id="tableBody">
                 <tr>
-                    <td colspan="9" class="loading">Loading data...</td>
+                    <td colspan="8" class="loading">Loading data...</td>
                 </tr>
             </tbody>
         </table>
     </div>
     
     <script>
-        // Configuration - SAME as dashboard
         const DATA_URL = 'https://raw.githubusercontent.com/jdhuman2021-web/weirdo-tracker/main/data/opportunities.json';
         const CACHE_BUSTER = Date.now();
         const FULL_URL = DATA_URL + '?t=' + CACHE_BUSTER;
@@ -358,9 +545,8 @@
         let sortAsc = false;
         let lastSync = null;
         
-        // Load Data
         async function loadData() {
-            const statusEl = document.getElementById('statLastUpdate');
+            const statusEl = document.getElementById('syncStatus');
             statusEl.textContent = '🔄 Syncing...';
             
             try {
@@ -372,18 +558,19 @@
                 allData = (data.opportunities || []).filter(t => t.status !== 'dead');
                 filteredData = [...allData];
                 lastSync = new Date();
+                
                 updateStats();
                 renderTable();
-                statusEl.textContent = lastSync.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                statusEl.textContent = '✓ ' + lastSync.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                statusEl.style.color = 'var(--accent)';
             } catch (e) {
                 console.error('Fetch error:', e);
-                document.getElementById('tableBody').innerHTML = 
-                    '<tr><td colspan="9" class="error">⚠️ Data unavailable<br><small>Check GitHub pipeline status</small></td></tr>';
-                statusEl.textContent = '❌ Failed';
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="8" class="error">⚠️ Failed to load data<br><small>Check pipeline status</small></td></tr>';
+                statusEl.textContent = '✗ Failed';
+                statusEl.style.color = 'var(--danger)';
             }
         }
         
-        // Update Stats
         function updateStats() {
             document.getElementById('statTotal').textContent = allData.length;
             
@@ -393,26 +580,17 @@
             const buys = allData.filter(t => ['STRONG_BUY', 'BUY'].includes(t.signal)).length;
             document.getElementById('statBuys').textContent = buys;
             
-            if (allData.length > 0) {
-                const lastUpdate = new Date(allData[0].analyzed_at || Date.now());
-                document.getElementById('statLastUpdate').textContent = 
-                    lastUpdate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-            }
-            
-            // Update sync status
-            if (lastSync) {
-                const syncEl = document.getElementById('syncStatus');
-                syncEl.textContent = `✅ Synced: ${lastSync.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
-                syncEl.style.color = 'var(--accent)';
+            if (allData.length > 0 && allData[0].analyzed_at) {
+                const date = new Date(allData[0].analyzed_at);
+                document.getElementById('statLastUpdate').textContent = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
             }
         }
         
-        // Render Table
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             
             if (filteredData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" class="loading">No tokens match filters</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="loading">No tokens match filters</td></tr>';
                 return;
             }
             
@@ -424,46 +602,41 @@
                 
                 return `
                     <tr>
-                        <td style="font-weight: 700;"><a href="${dexUrl}" target="_blank" style="color: var(--accent); text-decoration: none;">${token.symbol}</a></td>
-                        <td><a href="${dexUrl}" target="_blank" style="color: var(--text-secondary); text-decoration: none;">${token.name || '-'}</a></td>
                         <td>
-                            <div class="score-bar">
-                                <div class="score-fill" style="width: ${token.score}%; background: ${scoreColor};"></div>
+                            <div class="token-cell">
+                                <span class="token-symbol"><a href="${dexUrl}" target="_blank">${token.symbol}</a></span>
+                                <span class="token-name">${token.name || '-'}</span>
                             </div>
-                            ${token.score}
                         </td>
-                        <td><span class="signal-badge signal-${token.signal.toLowerCase()}">${token.label || token.signal}</span></td>
+                        <td>
+                            <div class="score-cell">
+                                <div class="score-bar"><div class="score-fill" style="width: ${token.score}%; background: ${scoreColor};"></div></div>
+                                <span class="score-value">${token.score}</span>
+                            </div>
+                        </td>
+                        <td><span class="signal-badge signal-${token.signal.toLowerCase().replace('_', '-')}">${token.label || token.signal}</span></td>
                         <td>$${formatNumber(token.market_cap)}</td>
                         <td>$${formatNumber(token.volume_24h)}</td>
                         <td class="${changeClass}">${changeSign}${(token.price_change_24h || 0).toFixed(1)}%</td>
                         <td>${token.age_hours ? token.age_hours + 'h' : 'N/A'}</td>
-                        <td class="address-cell" onclick="copyAddress('${token.address}')" title="${token.address}">
-                            ${token.address.slice(0, 8)}...${token.address.slice(-4)}
-                        </td>
+                        <td class="address-cell" onclick="copyAddress('${token.address}')" title="${token.address}">${token.address.slice(0, 8)}...${token.address.slice(-4)}</td>
                     </tr>
                 `;
             }).join('');
         }
         
-        // Filter Table
         function filterTable() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const signalFilter = document.getElementById('signalFilter').value;
             const scoreFilter = document.getElementById('scoreFilter').value;
             
             filteredData = allData.filter(token => {
-                // Search filter
-                if (search && !token.symbol.toLowerCase().includes(search) && 
-                    !(token.name && token.name.toLowerCase().includes(search))) {
+                if (search && !token.symbol.toLowerCase().includes(search) && !(token.name && token.name.toLowerCase().includes(search))) {
                     return false;
                 }
-                
-                // Signal filter
                 if (signalFilter && token.signal !== signalFilter) {
                     return false;
                 }
-                
-                // Score filter
                 if (scoreFilter) {
                     const score = token.score || 0;
                     if (scoreFilter === '85+' && score < 85) return false;
@@ -472,14 +645,12 @@
                     if (scoreFilter === '40+' && score < 40) return false;
                     if (scoreFilter === '<40' && score >= 40) return false;
                 }
-                
                 return true;
             });
             
             renderTable();
         }
         
-        // Sort Table
         function sortTable(col) {
             if (sortCol === col) {
                 sortAsc = !sortAsc;
@@ -502,19 +673,18 @@
             renderTable();
         }
         
-        // Helpers
         function getScoreColor(score) {
             if (score >= 85) return '#00ff88';
-            if (score >= 70) return '#00cc6a';
-            if (score >= 55) return '#ffa502';
-            if (score >= 40) return '#74b9ff';
-            return '#ff4757';
+            if (score >= 70) return '#00dd77';
+            if (score >= 55) return '#ffb340';
+            if (score >= 40) return '#6690ff';
+            return '#ff5566';
         }
         
         function formatNumber(num) {
             if (!num) return '0';
             if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num.toFixed(0);
         }
         
@@ -524,7 +694,6 @@
             });
         }
         
-        // Export CSV
         function exportCSV() {
             const headers = ['Symbol', 'Name', 'Score', 'Signal', 'Market Cap', 'Volume 24h', '24h Change', 'Age (h)', 'Address'];
             const rows = filteredData.map(t => [
@@ -548,7 +717,6 @@
             a.click();
         }
         
-        // Refresh
         function refreshData() {
             loadData();
         }
