@@ -1,5 +1,9 @@
-# Research Agent v1.5 - Supabase Cloud Database
-# Fetches token data from DexScreener and writes to Supabase
+# Research Agent v1.4 - Supabase Cloud Database Support
+# Run this script to set up the Supabase-integrated research agent
+
+"""
+This file contains the complete research_agent.py with Supabase integration
+"""
 
 import json
 import requests
@@ -34,18 +38,20 @@ def load_config():
         return default
 
 def fetch_token_data(token):
-    """Fetch data for single token from DexScreener"""
+    """Fetch token data from DexScreener"""
+    address = token['address']
+    url = f"https://api.dexscreener.com/latest/dex/tokens/{address}"
+    
     try:
-        url = f"https://api.dexscreener.com/latest/dex/tokens/{token['address']}"
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=30)
         response.raise_for_status()
         data = response.json()
         
-        pairs = data.get('pairs', [])
-        if not pairs:
+        if not data.get('pairs') or len(data['pairs']) == 0:
             return None
         
-        # Get pair with highest liquidity
+        # Get best pair (highest liquidity)
+        pairs = data['pairs']
         pair = max(pairs, key=lambda x: float(x.get('liquidity', {}).get('usd', 0) or 0))
         
         # Calculate age
@@ -59,7 +65,7 @@ def fetch_token_data(token):
         # Get holder count from Birdeye (optional)
         holder_count = 0
         try:
-            birdeye_url = f"https://public-api.birdeye.so/defi/token_overview?address={token['address']}"
+            birdeye_url = f"https://public-api.birdeye.so/defi/token_overview?address={address}"
             birdeye_response = requests.get(birdeye_url, timeout=10)
             if birdeye_response.status_code == 200:
                 birdeye_data = birdeye_response.json()
@@ -69,7 +75,7 @@ def fetch_token_data(token):
         
         return {
             'symbol': token['symbol'],
-            'name': token.get('name', token['symbol']),
+            'name': token['name'],
             'address': token['address'],
             'chain': token.get('chain', 'SOL'),
             'status': token.get('status', 'active'),
@@ -84,15 +90,17 @@ def fetch_token_data(token):
             'age_hours': age_hours,
             'age_days': round(age_hours / 24, 1) if age_hours else 0,
             'timestamp': datetime.utcnow().isoformat(),
-            'source': 'dexscreener'
+            'source': 'dexscreener',
+            'added_date': token.get('added_date'),
+            'notes': token.get('notes', '')
         }
     except Exception as e:
-        print(f"  ERROR fetching {token['symbol']}: {e}")
+        print(f"Error fetching {token['symbol']}: {e}")
         return None
 
 def main():
     """Main execution"""
-    print("Research Agent v1.5 - Supabase Cloud Database")
+    print("Research Agent v1.4 - Supabase Cloud Database Support")
     print("=" * 50)
     
     # Initialize Supabase client
@@ -119,7 +127,7 @@ def main():
         print(f"Skipped {dead_count} dead/inactive tokens")
     
     if not tokens:
-        print("WARN: No active tokens configured")
+        print("WARN: No active tokens configured. Add tokens to config/tokens.json")
         return
     
     # Deduplicate
@@ -155,7 +163,7 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'tokens_fetched': len(results),
             'total_configured': len(tokens),
-            'agent': 'research_v1.5'
+            'agent': 'research_v1.4'
         },
         'raw_data': results
     }
@@ -193,7 +201,7 @@ def main():
                     price_change_24h=token.get('price_change_24h', 0),
                     holder_count=token.get('holder_count', 0),
                     age_hours=token.get('age_hours', 0),
-                    score=0,  # Scored by thinking agent
+                    score=0,
                     signal='UNKNOWN'
                 )
                 db_writes += 1
@@ -203,15 +211,12 @@ def main():
         print(f"✓ Wrote {db_writes} snapshots to Supabase")
         
         # Log pipeline run
-        try:
-            supabase.log_pipeline_run(
-                tokens_fetched=len(results),
-                opportunities_found=0,
-                alerts_sent=0,
-                status='success'
-            )
-        except:
-            pass
+        supabase.log_pipeline_run(
+            tokens_fetched=len(results),
+            opportunities_found=0,
+            alerts_sent=0,
+            status='success'
+        )
     
     if results:
         sorted_by_age = sorted(results, key=lambda x: x['age_hours'])

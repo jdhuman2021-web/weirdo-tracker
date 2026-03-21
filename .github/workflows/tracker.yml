@@ -10,6 +10,8 @@ permissions:
 
 env:
   PYTHON_VERSION: '3.11'
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
 jobs:
   collect-data:
@@ -26,7 +28,8 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Install deps
-      run: pip install requests
+      run: |
+        pip install requests supabase
     
     - name: Create dirs
       run: mkdir -p data config
