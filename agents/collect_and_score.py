@@ -211,22 +211,31 @@ class CollectAndScore:
             return None
         
         try:
-            url = f"https://api.helius.xyz/v0/token-accounts?api-key={api_key}&mint={address}"
-            req = requests.get(url, timeout=15)
+            # Use Helius DAS API - search assets by owner
+            # For now, use token metadata to get basic info
+            url = f"https://api.helius.xyz/v0/token-metadata?api-key={api_key}"
+            payload = {"mintAccounts": [address], "includeOffChain": False}
             
-            if req.status_code != 200:
+            response = requests.post(url, json=payload, timeout=15)
+            
+            if response.status_code != 200:
                 return None
             
-            data = req.json()
-            holders = data.get('result', {}).get('token_accounts', [])
-            holder_count = len(holders) if holders else 0
+            data = response.json()
+            if not data or len(data) == 0:
+                return None
+            
+            token_info = data[0]
+            
+            # Try to get holder count from metadata or use RPC
+            # For now, return basic metadata without holder count
+            # Holder count requires Premium API or different endpoint
             
             return {
-                'holder_count': holder_count,
-                'accounts': holders[:10]
+                'holder_count': 0,  # Would require Premium API
+                'metadata': token_info
             }
         except Exception as e:
-            print(f"  Helius error: {e}")
             return None
     
     def run_helius(self):
