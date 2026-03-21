@@ -1240,9 +1240,81 @@
             return `<div class="social-links">${socials.join('')}</div>`;
         }
         
-        // Initialize
+        // ============================================
+        // REAL-TIME PRICE UPDATES (Every 30 seconds)
+        // ============================================
+        
+        let priceUpdateInterval;
+        let lastPriceUpdate = 0;
+        
+        async function fetchRealTimePrices() {
+            if (!currentData || !currentData.opportunities) return;
+            
+            const tokens = currentData.opportunities;
+            if (tokens.length === 0) return;
+            
+            const addresses = tokens.slice(0, 30).map(t => t.address);
+            
+            try {
+                const url = `https://api.dexscreener.com/latest/dex/tokens/${addresses.join(',')}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.pairs && data.pairs.length > 0) {
+                    let updated = 0;
+                    tokens.forEach(token => {
+                        const pair = data.pairs.find(p => 
+                            p.baseToken?.address?.toLowerCase() === token.address?.toLowerCase()
+                        );
+                        
+                        if (pair) {
+                            token.price_usd = parseFloat(pair.priceUsd || 0);
+                            token.price_change_1h = parseFloat(pair.priceChange?.h1 || 0);
+                            token.price_change_24h = parseFloat(pair.priceChange?.h24 || 0);
+                            token.volume_24h = parseFloat(pair.volume?.h24 || 0);
+                            token.liquidity_usd = parseFloat(pair.liquidity?.usd || 0);
+                            token.market_cap = parseFloat(pair.fdv || 0);
+                            updated++;
+                        }
+                    });
+                    
+                    if (updated > 0) {
+                        renderTokenList();
+                        updateStats();
+                        
+                        if (currentToken) {
+                            const price = currentToken.price_usd;
+                            const change = currentToken.price_change_24h;
+                            const changeStr = change >= 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
+                            const changeColor = change >= 0 ? '#00ff88' : '#ff5566';
+                            
+                            const chartTitle = document.getElementById('chartTitle');
+                            if (chartTitle) {
+                                chartTitle.innerHTML = `<a href="https://dexscreener.com/solana/${currentToken.address}" target="_blank">${currentToken.symbol}</a>${getSocialLinksHTML(currentToken)}<span style="font-size: 14px; color: ${changeColor}; margin-left: 8px;">${changeStr}</span><span style="font-size: 12px; color: #666; margin-left: 8px;">$${price.toFixed(8)}</span>`;
+                            }
+                        }
+                        
+                        lastPriceUpdate = Date.now();
+                    }
+                }
+            } catch (error) {
+                console.error('Real-time price error:', error);
+            }
+        }
+        
+        function startRealTimeUpdates() {
+            console.log('Starting real-time price updates (30-second interval)...');
+            fetchRealTimePrices();
+            priceUpdateInterval = setInterval(fetchRealTimePrices, 30000);
+        }
+        
+        // ============================================
+        // INITIALIZE
+        // ============================================
+        
         loadData();
-        setInterval(loadData, 300000); // Refresh every 5 minutes
+        startRealTimeUpdates();
+        setInterval(loadData, 300000);
     </script>
 </body>
 </html>
