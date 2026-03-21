@@ -69,13 +69,27 @@ jobs:
     - name: Run Thinking Agent
       id: thinking
       run: |
-        echo "=== Running Thinking Agent v2.3 ==="
+        echo "=== Running Thinking Agent v2.4 ==="
         python3 agents/thinking_agent.py 2>&1 | tee thinking.log
         exit_code=$?
         echo "Thinking agent exit code: $exit_code"
         if [ -f data/opportunities.json ]; then
           echo "Opportunities summary:"
           jq '.metadata' data/opportunities.json
+        fi
+        exit $exit_code
+      continue-on-error: true
+    
+    - name: Run Backtest Agent
+      id: backtest
+      run: |
+        echo "=== Running Backtest Agent v1.0 ==="
+        python3 agents/backtest_agent.py 2>&1 | tee backtest.log
+        exit_code=$?
+        echo "Backtest agent exit code: $exit_code"
+        if [ -f data/backtest_results.json ]; then
+          echo "Backtest results:"
+          jq '.' data/backtest_results.json
         fi
         exit $exit_code
       continue-on-error: true
@@ -121,6 +135,7 @@ jobs:
         echo "Research Agent: ${{ steps.research.outcome }}"
         echo "Whale Agent: ${{ steps.whale.outcome }}"
         echo "Thinking Agent: ${{ steps.thinking.outcome }}"
+        echo "Backtest Agent: ${{ steps.backtest.outcome }}"
         echo "Alert Agent: ${{ steps.alert.outcome }}"
         
         if [ -f data/latest.json ]; then
@@ -133,4 +148,10 @@ jobs:
           echo ""
           echo "=== Score Distribution ==="
           jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
+        fi
+        
+        if [ -f data/backtest_results.json ]; then
+          echo ""
+          echo "=== Backtest Status ==="
+          jq '{snapshot_count, has_24h_data, has_7d_data}' data/backtest_results.json
         fi
