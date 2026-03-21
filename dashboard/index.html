@@ -218,6 +218,57 @@
             text-transform: uppercase;
         }
         
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sort-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .sort-select:hover {
+            border-color: var(--accent);
+        }
+        
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .sort-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .sort-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .sort-btn.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
         .card-content {
             padding: 12px;
             max-height: 400px;
@@ -724,7 +775,19 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title">Watchlist</span>
-                    <span id="watchlistCount" style="color: var(--text-muted); font-size: 12px;">-</span>
+                    <div class="card-actions">
+                        <select class="sort-select" id="sortSelect" onchange="sortTokens()">
+                            <option value="score">Score</option>
+                            <option value="symbol">Name</option>
+                            <option value="market_cap">MCap</option>
+                            <option value="volume_24h">Volume</option>
+                            <option value="price_change_24h">24h %</option>
+                            <option value="age_hours">Age</option>
+                        </select>
+                        <button class="sort-btn" id="sortDir" onclick="toggleSortDir()" title="Toggle sort direction">
+                            <span id="sortIcon">↓</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-content">
                     <div class="token-list" id="tokenList">
@@ -818,6 +881,8 @@
         let currentData = null;
         let selectedToken = null;
         let sidebarCollapsed = false;
+        let sortColumn = 'score';
+        let sortAscending = false; // false = descending (high to low)
         
         // Load Data
         async function loadData() {
@@ -854,8 +919,21 @@
                 return;
             }
             
-            // Sort by score
-            const sorted = [...tokens].sort((a, b) => (b.score || 0) - (a.score || 0));
+            // Sort based on current sort settings
+            const sorted = [...tokens].sort((a, b) => {
+                let aVal = a[sortColumn] || 0;
+                let bVal = b[sortColumn] || 0;
+                
+                // Handle string sorting for symbol
+                if (sortColumn === 'symbol') {
+                    aVal = (a.symbol || '').toLowerCase();
+                    bVal = (b.symbol || '').toLowerCase();
+                    return sortAscending ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                }
+                
+                // Numeric sorting
+                return sortAscending ? aVal - bVal : bVal - aVal;
+            });
             
             list.innerHTML = sorted.map(token => {
                 const changeClass = (token.price_change_24h || 0) >= 0 ? 'change-up' : 'change-down';
@@ -878,7 +956,24 @@
                 `;
             }).join('');
             
-            document.getElementById('watchlistCount').textContent = tokens.length;
+            // Update count
+            document.getElementById('watchlistCount').textContent = tokens.length + ' tokens';
+        }
+        
+        // Sort Tokens
+        function sortTokens() {
+            sortColumn = document.getElementById('sortSelect').value;
+            renderTokenList();
+        }
+        
+        // Toggle Sort Direction
+        function toggleSortDir() {
+            sortAscending = !sortAscending;
+            const btn = document.getElementById('sortDir');
+            const icon = document.getElementById('sortIcon');
+            icon.textContent = sortAscending ? '↑' : '↓';
+            btn.classList.toggle('active', sortAscending);
+            renderTokenList();
         }
         
         // Render Opportunities
