@@ -1,54 +1,91 @@
 {
   "metadata": {
-    "timestamp": "2026-03-21T09:58:38.682822",
+    "timestamp": "2026-03-21T11:02:50.839548",
     "total_opportunities": 36,
     "strong_buys": 0,
-    "buys": 1,
+    "buys": 2,
     "speculative": 4,
-    "watch": 6,
-    "avoid": 25,
+    "watch": 3,
+    "avoid": 27,
     "agent": "thinking_v2.3",
     "supabase_connected": true
   },
   "opportunities": [
     {
-      "symbol": "Devious",
-      "name": "Devious MF",
-      "address": "CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump",
+      "symbol": "Fro",
+      "name": "Afroman",
+      "address": "8oQEW25mcVzeWvcjkGup9ob3KafVMNdzAi8XXmmWpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 6.247e-05,
-      "price_change_1h": 2.87,
-      "price_change_24h": -30.46,
-      "volume_24h": 84898.34,
-      "liquidity_usd": 21766.03,
-      "market_cap": 62470.0,
+      "price_usd": 0.0001818,
+      "price_change_1h": -7.28,
+      "price_change_24h": -18.43,
+      "volume_24h": 188815.29,
+      "liquidity_usd": 36379.94,
+      "market_cap": 181866.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/deviousmfsol?s=21",
+        "twitter": "https://x.com/ogafroman",
         "telegram": null,
-        "website": null
+        "website": "https://www.ogafroman.com"
       },
-      "pair_created_at": 1773702306000,
-      "age_hours": 106,
-      "age_days": 4.4,
-      "timestamp": "2026-03-21T09:52:55.692722",
+      "pair_created_at": 1773817005000,
+      "age_hours": 76,
+      "age_days": 3.2,
+      "timestamp": "2026-03-21T11:00:29.712845",
       "source": "dexscreener",
-      "score": 70,
+      "score": 75,
       "signal": "BUY",
       "label": "\ud83d\udc9a Buy",
       "reasons": [
-        "Price down -30%+ with 1h reversal - potential bounce",
-        "Volume 3.9x liquidity - healthy accumulation",
+        "Price down -15% - minor correction",
+        "Volume 5.2x - viral momentum",
         "Holder data unavailable - using on-chain estimate",
-        "Low liquidity - high slippage risk",
-        "$62470 MC - small-cap opportunity"
+        "Acceptable liquidity - moderate slippage",
+        "$181866 MC - small-cap opportunity",
+        "\ud83d\udc0b Recent whale activity 4.7x"
       ],
-      "risk_factors": [
-        "Liquidity <10K - exit difficulty"
-      ],
+      "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:32.523984"
+      "analyzed_at": "2026-03-21T11:02:50.651568"
+    },
+    {
+      "symbol": "Rosie",
+      "name": "Rosie",
+      "address": "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.0008581,
+      "price_change_1h": 7.12,
+      "price_change_24h": 11.62,
+      "volume_24h": 359986.32,
+      "liquidity_usd": 104989.6,
+      "market_cap": 858043.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/i/communities/2032561757802344845",
+        "telegram": null,
+        "website": "https://rosie-dog.vercel.app/"
+      },
+      "pair_created_at": 1773494598000,
+      "age_hours": 165,
+      "age_days": 6.9,
+      "timestamp": "2026-03-21T10:59:39.484630",
+      "source": "dexscreener",
+      "score": 73,
+      "signal": "BUY",
+      "label": "\ud83d\udc9a Buy",
+      "reasons": [
+        "Price stable or trending up",
+        "Volume 3.4x liquidity - healthy accumulation",
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit",
+        "$858043 MC - moderate growth room",
+        "\ud83d\udc0b Whale accumulation detected 2.1x"
+      ],
+      "risk_factors": [],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:49.118116"
     },
     {
       "symbol": "balanced",
@@ -56,12 +93,12 @@
       "address": "25phdMqSQ11NuyVEwBJzJv1SeodGNfyZCu4ABNhdbonk",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 4.527e-05,
-      "price_change_1h": -16.24,
-      "price_change_24h": 24.26,
-      "volume_24h": 1734213.8,
-      "liquidity_usd": 34224.04,
-      "market_cap": 45275.0,
+      "price_usd": 4.339e-05,
+      "price_change_1h": -5.47,
+      "price_change_24h": 19.09,
+      "volume_24h": 1738018.42,
+      "liquidity_usd": 33729.41,
+      "market_cap": 43391.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/bonkfun/status/2035068314075234375",
@@ -69,100 +106,24 @@
         "website": null
       },
       "pair_created_at": 1774034130000,
-      "age_hours": 14,
+      "age_hours": 15,
       "age_days": 0.6,
-      "timestamp": "2026-03-21T09:56:22.979435",
+      "timestamp": "2026-03-21T11:00:35.943033",
       "source": "dexscreener",
       "score": 68,
       "signal": "SPECULATIVE",
       "label": "\u26a0\ufe0f Speculative",
       "reasons": [
         "Price stable or trending up",
-        "Volume 50.7x - EXTREME whale accumulation!",
+        "Volume 51.5x - EXTREME whale accumulation!",
         "Holder data unavailable - using on-chain estimate",
         "Acceptable liquidity - moderate slippage",
-        "$45275 MC - micro-cap gem potential",
-        "14h old - proven but fresh"
+        "$43391 MC - micro-cap gem potential",
+        "15h old - proven but fresh"
       ],
       "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:38.682796"
-    },
-    {
-      "symbol": "SHOENICE",
-      "name": "shoenice22",
-      "address": "HqMPmr1Mn5R8AsGwiM5foBjfKHCvJeCm9sbMTJXLpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 6.636e-06,
-      "price_change_1h": 3.82,
-      "price_change_24h": -40.94,
-      "volume_24h": 15917.19,
-      "liquidity_usd": 6566.59,
-      "market_cap": 6636.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/i/communities/2034776422959722772",
-        "telegram": null,
-        "website": "https://www.youtube.com/@shoenice22videos"
-      },
-      "pair_created_at": 1773968547000,
-      "age_hours": 32,
-      "age_days": 1.3,
-      "timestamp": "2026-03-21T09:53:58.683847",
-      "source": "dexscreener",
-      "score": 63,
-      "signal": "SPECULATIVE",
-      "label": "\u26a0\ufe0f Speculative",
-      "reasons": [
-        "Price down -30%+ with 1h reversal - potential bounce",
-        "Volume 2.4x liquidity - healthy accumulation",
-        "Holder data unavailable - using on-chain estimate",
-        "$6636 MC - micro-cap gem potential",
-        "32h old - proven but fresh"
-      ],
-      "risk_factors": [
-        "Liquidity <5K - trapped capital risk"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.383543"
-    },
-    {
-      "symbol": "CHIBI",
-      "name": "Chibification",
-      "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.002466,
-      "price_change_1h": 6.96,
-      "price_change_24h": -12.29,
-      "volume_24h": 953636.06,
-      "liquidity_usd": 158869.5,
-      "market_cap": 2466801.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/i/communities/2034569256617038277",
-        "telegram": null,
-        "website": "https://grok.com/imagine?template=b7fd1acb-dc83-4a5f-8e63-54362187374e"
-      },
-      "pair_created_at": 1773931152000,
-      "age_hours": 43,
-      "age_days": 1.8,
-      "timestamp": "2026-03-21T09:56:10.528250",
-      "source": "dexscreener",
-      "score": 62,
-      "signal": "SPECULATIVE",
-      "label": "\u26a0\ufe0f Speculative",
-      "reasons": [
-        "Price down -10% - small dip",
-        "Volume 6.0x - viral momentum",
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "43h old - proven but fresh"
-      ],
-      "risk_factors": [],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:38.310070"
+      "analyzed_at": "2026-03-21T11:02:50.839520"
     },
     {
       "symbol": "Jellybean",
@@ -170,12 +131,12 @@
       "address": "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0006119,
-      "price_change_1h": 1.51,
-      "price_change_24h": -18.99,
-      "volume_24h": 174962.77,
-      "liquidity_usd": 114532.33,
-      "market_cap": 609428.0,
+      "price_usd": 0.000622,
+      "price_change_1h": -0.03,
+      "price_change_24h": -22.09,
+      "volume_24h": 176875.37,
+      "liquidity_usd": 115282.64,
+      "market_cap": 619521.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/jellybeanonsol?s=21",
@@ -183,23 +144,98 @@
         "website": "https://thejellybean.fun"
       },
       "pair_created_at": 1770832014000,
-      "age_hours": 904,
+      "age_hours": 905,
       "age_days": 37.7,
-      "timestamp": "2026-03-21T09:52:49.419325",
+      "timestamp": "2026-03-21T10:57:02.563653",
       "source": "dexscreener",
-      "score": 55,
+      "score": 61,
       "signal": "SPECULATIVE",
       "label": "\u26a0\ufe0f Speculative",
       "reasons": [
-        "Price down -15% - minor correction",
+        "Price down -20% entering dip zone",
         "Volume 1.5x - rising interest",
         "Holder data unavailable - using on-chain estimate",
         "High liquidity - easy exit",
-        "$609428 MC - moderate growth room"
+        "$619521 MC - moderate growth room"
       ],
       "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:32.340561"
+      "analyzed_at": "2026-03-21T11:02:43.998753"
+    },
+    {
+      "symbol": "CHIBI",
+      "name": "Chibification",
+      "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.003091,
+      "price_change_1h": 26.36,
+      "price_change_24h": -10.42,
+      "volume_24h": 4236860.23,
+      "liquidity_usd": 174522.02,
+      "market_cap": 3091380.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/i/communities/2034569256617038277",
+        "telegram": null,
+        "website": "https://grok.com/imagine?template=b7fd1acb-dc83-4a5f-8e63-54362187374e"
+      },
+      "pair_created_at": 1773913358000,
+      "age_hours": 49,
+      "age_days": 2.0,
+      "timestamp": "2026-03-21T11:00:23.369930",
+      "source": "dexscreener",
+      "score": 60,
+      "signal": "SPECULATIVE",
+      "label": "\u26a0\ufe0f Speculative",
+      "reasons": [
+        "Price down -10% - small dip",
+        "Volume 24.3x - EXTREME whale accumulation!",
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:50.463188"
+    },
+    {
+      "symbol": "SHOENICE",
+      "name": "shoenice22",
+      "address": "HqMPmr1Mn5R8AsGwiM5foBjfKHCvJeCm9sbMTJXLpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 6.586e-06,
+      "price_change_1h": -0.76,
+      "price_change_24h": -29.58,
+      "volume_24h": 14247.34,
+      "liquidity_usd": 6537.49,
+      "market_cap": 6586.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/i/communities/2034776422959722772",
+        "telegram": null,
+        "website": "https://www.youtube.com/@shoenice22videos"
+      },
+      "pair_created_at": 1773968547000,
+      "age_hours": 33,
+      "age_days": 1.4,
+      "timestamp": "2026-03-21T10:58:11.689882",
+      "source": "dexscreener",
+      "score": 58,
+      "signal": "SPECULATIVE",
+      "label": "\u26a0\ufe0f Speculative",
+      "reasons": [
+        "Price down -25%+ stabilizing - accumulation zone",
+        "Volume 2.2x liquidity - healthy accumulation",
+        "Holder data unavailable - using on-chain estimate",
+        "$6586 MC - micro-cap gem potential",
+        "33h old - proven but fresh"
+      ],
+      "risk_factors": [
+        "Liquidity <5K - trapped capital risk"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:46.402703"
     },
     {
       "symbol": "Momo-chan",
@@ -207,12 +243,12 @@
       "address": "3zomtMhRRsBpLZeJLS86fgueXE7xAhoN8dnymNh8pump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.000372,
-      "price_change_1h": -0.07,
-      "price_change_24h": -7.05,
-      "volume_24h": 308467.89,
-      "liquidity_usd": 60843.86,
-      "market_cap": 371912.0,
+      "price_usd": 0.0003477,
+      "price_change_1h": -5.16,
+      "price_change_24h": -4.92,
+      "volume_24h": 296862.72,
+      "liquidity_usd": 58727.82,
+      "market_cap": 347619.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/i/communities/2033773408174150024",
@@ -220,9 +256,9 @@
         "website": "https://momochanonsol.com/"
       },
       "pair_created_at": 1773667317000,
-      "age_hours": 116,
-      "age_days": 4.8,
-      "timestamp": "2026-03-21T09:53:27.225047",
+      "age_hours": 117,
+      "age_days": 4.9,
+      "timestamp": "2026-03-21T10:57:40.257295",
       "source": "dexscreener",
       "score": 54,
       "signal": "WATCH",
@@ -231,84 +267,50 @@
         "Volume 5.1x - viral momentum",
         "Holder data unavailable - using on-chain estimate",
         "Good liquidity - manageable exit",
-        "$371912 MC - moderate growth room"
+        "$347619 MC - moderate growth room"
       ],
       "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:33.451954"
+      "analyzed_at": "2026-03-21T11:02:45.439212"
     },
     {
-      "symbol": "Fro",
-      "name": "Afroman",
-      "address": "8oQEW25mcVzeWvcjkGup9ob3KafVMNdzAi8XXmmWpump",
+      "symbol": "Devious",
+      "name": "Devious MF",
+      "address": "CeoReCwAmt8iqjQoKQGEMqKERDWGxxDUED9zVYg3pump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0001958,
-      "price_change_1h": 41.73,
-      "price_change_24h": 5.31,
-      "volume_24h": 186894.07,
-      "liquidity_usd": 37792.99,
-      "market_cap": 195805.0,
+      "price_usd": 6.328e-05,
+      "price_change_1h": 1.72,
+      "price_change_24h": -14.82,
+      "volume_24h": 84127.25,
+      "liquidity_usd": 21867.16,
+      "market_cap": 63287.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/ogafroman",
+        "twitter": "https://x.com/deviousmfsol?s=21",
         "telegram": null,
-        "website": "https://www.ogafroman.com"
+        "website": null
       },
-      "pair_created_at": 1773817005000,
-      "age_hours": 74,
-      "age_days": 3.1,
-      "timestamp": "2026-03-21T09:56:16.779610",
+      "pair_created_at": 1773702306000,
+      "age_hours": 107,
+      "age_days": 4.5,
+      "timestamp": "2026-03-21T10:57:08.764425",
       "source": "dexscreener",
-      "score": 54,
+      "score": 50,
       "signal": "WATCH",
       "label": "\u2744\ufe0f Watch",
       "reasons": [
-        "Price stable or trending up",
-        "Volume 4.9x liquidity - healthy accumulation",
+        "Price down -10% - small dip",
+        "Volume 3.8x liquidity - healthy accumulation",
         "Holder data unavailable - using on-chain estimate",
-        "Acceptable liquidity - moderate slippage",
-        "$195805 MC - small-cap opportunity"
+        "Low liquidity - high slippage risk",
+        "$63287 MC - small-cap opportunity"
       ],
-      "risk_factors": [],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:38.493637"
-    },
-    {
-      "symbol": "Rosie",
-      "name": "Rosie",
-      "address": "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.000818,
-      "price_change_1h": -7.86,
-      "price_change_24h": -3.24,
-      "volume_24h": 342593.28,
-      "liquidity_usd": 102670.05,
-      "market_cap": 818018.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/i/communities/2032561757802344845",
-        "telegram": null,
-        "website": "https://rosie-dog.vercel.app/"
-      },
-      "pair_created_at": 1773494598000,
-      "age_hours": 164,
-      "age_days": 6.8,
-      "timestamp": "2026-03-21T09:55:26.613570",
-      "source": "dexscreener",
-      "score": 53,
-      "signal": "WATCH",
-      "label": "\u2744\ufe0f Watch",
-      "reasons": [
-        "Volume 3.3x liquidity - healthy accumulation",
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "$818018 MC - moderate growth room"
+      "risk_factors": [
+        "Liquidity <10K - exit difficulty"
       ],
-      "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.999562"
+      "analyzed_at": "2026-03-21T11:02:44.209711"
     },
     {
       "symbol": "Optimistic",
@@ -316,12 +318,12 @@
       "address": "2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0009081,
-      "price_change_1h": 27.68,
-      "price_change_24h": 115.0,
-      "volume_24h": 1793046.73,
-      "liquidity_usd": 90740.44,
-      "market_cap": 908095.0,
+      "price_usd": 0.0008537,
+      "price_change_1h": -7.02,
+      "price_change_24h": 139.0,
+      "volume_24h": 1812124.46,
+      "liquidity_usd": 87979.96,
+      "market_cap": 853749.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/i/communities/2034488672767086881",
@@ -329,25 +331,24 @@
         "website": null
       },
       "pair_created_at": 1773896929000,
-      "age_hours": 52,
+      "age_hours": 53,
       "age_days": 2.2,
-      "timestamp": "2026-03-21T09:54:55.335071",
+      "timestamp": "2026-03-21T10:59:08.291343",
       "source": "dexscreener",
-      "score": 52,
+      "score": 42,
       "signal": "WATCH",
       "label": "\u2744\ufe0f Watch",
       "reasons": [
-        "Volume 19.8x - EXTREME whale accumulation!",
+        "Volume 20.6x - EXTREME whale accumulation!",
         "Holder data unavailable - using on-chain estimate",
         "Good liquidity - manageable exit",
-        "$908095 MC - moderate growth room",
-        "\ud83d\udc0b Recent whale activity 3.3x"
+        "$853749 MC - moderate growth room"
       ],
       "risk_factors": [
-        "Extreme pump +115% - very late entry risk"
+        "Extreme pump +139% - very late entry risk"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.078342"
+      "analyzed_at": "2026-03-21T11:02:48.126115"
     },
     {
       "symbol": "TripleT",
@@ -355,12 +356,12 @@
       "address": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.002096,
-      "price_change_1h": 0.1,
-      "price_change_24h": -16.62,
-      "volume_24h": 273068.13,
-      "liquidity_usd": 171545.13,
-      "market_cap": 2096587.0,
+      "price_usd": 0.002175,
+      "price_change_1h": 3.93,
+      "price_change_24h": -9.32,
+      "volume_24h": 268694.1,
+      "liquidity_usd": 174365.72,
+      "market_cap": 2174919.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/TripleTsol",
@@ -368,201 +369,11 @@
         "website": "https://triplet.site/"
       },
       "pair_created_at": 1771922626000,
-      "age_hours": 601,
-      "age_days": 25.0,
-      "timestamp": "2026-03-21T09:55:01.554257",
+      "age_hours": 602,
+      "age_days": 25.1,
+      "timestamp": "2026-03-21T10:59:14.515823",
       "source": "dexscreener",
-      "score": 50,
-      "signal": "WATCH",
-      "label": "\u2744\ufe0f Watch",
-      "reasons": [
-        "Price down -15% - minor correction",
-        "Volume 1.6x - rising interest",
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit"
-      ],
-      "risk_factors": [],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.260747"
-    },
-    {
-      "symbol": "Buttcoin",
-      "name": "Buttcoin",
-      "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.01383,
-      "price_change_1h": 1.84,
-      "price_change_24h": 5.79,
-      "volume_24h": 630522.76,
-      "liquidity_usd": 626093.44,
-      "market_cap": 13834086.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/buttcoin",
-        "telegram": null,
-        "website": "https://www.buttcoinfoundation.org/"
-      },
-      "pair_created_at": 1767965767000,
-      "age_hours": 1700,
-      "age_days": 70.8,
-      "timestamp": "2026-03-21T09:54:42.817835",
-      "source": "dexscreener",
-      "score": 45,
-      "signal": "WATCH",
-      "label": "\u2744\ufe0f Watch",
-      "reasons": [
-        "Price stable or trending up",
-        "Volume above liquidity - mild interest",
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "\ud83d\udc0b Active whale buying NOW 5.2x"
-      ],
-      "risk_factors": [
-        "$13834086 MC - limited 100x potential"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:35.711903"
-    },
-    {
-      "symbol": "FOID",
-      "name": "The Foid",
-      "address": "AC3ydFNcS7hitJF3ApnndhLajrqXg4S37jSSUnqgpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 1.484e-05,
-      "price_change_1h": 46.12,
-      "price_change_24h": -59.5,
-      "volume_24h": 524354.77,
-      "liquidity_usd": 10117.1,
-      "market_cap": 14839.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/i/communities/2034984417077121054",
-        "telegram": null,
-        "website": null
-      },
-      "pair_created_at": 1774024459000,
-      "age_hours": 17,
-      "age_days": 0.7,
-      "timestamp": "2026-03-21T09:55:45.436684",
-      "source": "dexscreener",
-      "score": 39,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Volume 51.8x - EXTREME whale accumulation!",
-        "Holder data unavailable - using on-chain estimate",
-        "Low liquidity - high slippage risk",
-        "$14839 MC - micro-cap gem potential",
-        "17h old - proven but fresh"
-      ],
-      "risk_factors": [
-        "Crashed 60% in 24h - likely rug pull or dead",
-        "Liquidity <10K - exit difficulty"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:37.577139"
-    },
-    {
-      "symbol": "Lobstar",
-      "name": "Lobstar",
-      "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.006789,
-      "price_change_1h": -3.84,
-      "price_change_24h": 7.2,
-      "volume_24h": 674846.35,
-      "liquidity_usd": 459059.86,
-      "market_cap": 6789123.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/i/communities/2024708338324299795",
-        "telegram": null,
-        "website": null
-      },
-      "pair_created_at": 1771561393000,
-      "age_hours": 701,
-      "age_days": 29.2,
-      "timestamp": "2026-03-21T09:55:32.866311",
-      "source": "dexscreener",
-      "score": 35,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Price stable or trending up",
-        "Volume above liquidity - mild interest",
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit"
-      ],
-      "risk_factors": [],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:37.186078"
-    },
-    {
-      "symbol": "KILROY",
-      "name": "Kilroy was here",
-      "address": "CFYhdWXsYfS7swnJgHRwb5toTHMEQD7Ljd5gGwKLpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.000367,
-      "price_change_1h": 8.46,
-      "price_change_24h": 11.7,
-      "volume_24h": 10525.48,
-      "liquidity_usd": 64986.85,
-      "market_cap": 364465.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/KilRoy_OnSolana",
-        "telegram": null,
-        "website": "https://kilroywashere.xyz/"
-      },
-      "pair_created_at": 1762886243000,
-      "age_hours": 3111,
-      "age_days": 129.6,
-      "timestamp": "2026-03-21T09:55:58.079530",
-      "source": "dexscreener",
-      "score": 35,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Price stable or trending up",
-        "Holder data unavailable - using on-chain estimate",
-        "Good liquidity - manageable exit",
-        "$364465 MC - moderate growth room",
-        "\ud83d\udc0b EXTREME whale volume 4.6x"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:37.945452"
-    },
-    {
-      "symbol": "PUNCH",
-      "name": "\u30d1\u30f3\u30c1",
-      "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.01466,
-      "price_change_1h": -3.98,
-      "price_change_24h": -2.48,
-      "volume_24h": 1148163.5,
-      "liquidity_usd": 747569.88,
-      "market_cap": 14657998.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/punch_ganbare?s=21&t=ruzx1xkKsZ3vDPRkeDVwPg",
-        "telegram": null,
-        "website": "https://punchonsolana.fun/"
-      },
-      "pair_created_at": 1770282065000,
-      "age_hours": 1056,
-      "age_days": 44.0,
-      "timestamp": "2026-03-21T09:52:43.220265",
-      "source": "dexscreener",
-      "score": 33,
+      "score": 38,
       "signal": "AVOID",
       "label": "\ud83d\uded1 Avoid",
       "reasons": [
@@ -570,50 +381,45 @@
         "Holder data unavailable - using on-chain estimate",
         "High liquidity - easy exit"
       ],
-      "risk_factors": [
-        "$14657998 MC - limited 100x potential"
-      ],
+      "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:32.156803"
+      "analyzed_at": "2026-03-21T11:02:48.323187"
     },
     {
-      "symbol": "NOTHING",
-      "name": "You'll own nothing & be happy",
-      "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
+      "symbol": "Lobstar",
+      "name": "Lobstar",
+      "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0008978,
-      "price_change_1h": 9.19,
-      "price_change_24h": 0.39,
-      "volume_24h": 59962.04,
-      "liquidity_usd": 147515.08,
-      "market_cap": 897751.0,
+      "price_usd": 0.006797,
+      "price_change_1h": 2.07,
+      "price_change_24h": 3.91,
+      "volume_24h": 667151.98,
+      "liquidity_usd": 458372.94,
+      "market_cap": 6796931.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/youllownnothing",
-        "telegram": "https://t.me/nothingmemechannel",
-        "website": "https://www.ownnothing.xyz/"
+        "twitter": "https://x.com/i/communities/2024708338324299795",
+        "telegram": null,
+        "website": null
       },
-      "pair_created_at": 1762893903000,
-      "age_hours": 3109,
-      "age_days": 129.5,
-      "timestamp": "2026-03-21T09:53:46.047799",
+      "pair_created_at": 1771561393000,
+      "age_hours": 702,
+      "age_days": 29.2,
+      "timestamp": "2026-03-21T10:59:45.717030",
       "source": "dexscreener",
-      "score": 33,
+      "score": 35,
       "signal": "AVOID",
       "label": "\ud83d\uded1 Avoid",
       "reasons": [
         "Price stable or trending up",
+        "Volume above liquidity - mild interest",
         "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "$897751 MC - moderate growth room",
-        "\ud83d\udc0b Whale accumulation detected 2.0x"
+        "High liquidity - easy exit"
       ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
+      "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.015394"
+      "analyzed_at": "2026-03-21T11:02:49.317417"
     },
     {
       "symbol": "testicle",
@@ -621,12 +427,12 @@
       "address": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.007814,
-      "price_change_1h": 1.75,
-      "price_change_24h": -0.58,
-      "volume_24h": 589673.69,
-      "liquidity_usd": 550328.86,
-      "market_cap": 7813803.0,
+      "price_usd": 0.007692,
+      "price_change_1h": -1.49,
+      "price_change_24h": -3.65,
+      "volume_24h": 580103.47,
+      "liquidity_usd": 545068.67,
+      "market_cap": 7692182.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/testicletoken",
@@ -634,9 +440,9 @@
         "website": "https://www.testicle.site/#about"
       },
       "pair_created_at": 1766317978000,
-      "age_hours": 2158,
-      "age_days": 89.9,
-      "timestamp": "2026-03-21T09:53:39.763480",
+      "age_hours": 2159,
+      "age_days": 90.0,
+      "timestamp": "2026-03-21T10:57:52.739059",
       "source": "dexscreener",
       "score": 30,
       "signal": "AVOID",
@@ -648,195 +454,45 @@
       ],
       "risk_factors": [],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:33.820424"
+      "analyzed_at": "2026-03-21T11:02:45.824244"
     },
     {
-      "symbol": "GOYIM",
-      "name": "Goyim",
-      "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
+      "symbol": "Buttcoin",
+      "name": "Buttcoin",
+      "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0005954,
-      "price_change_1h": -0.73,
-      "price_change_24h": -6.78,
-      "volume_24h": 119488.25,
-      "liquidity_usd": 124003.01,
-      "market_cap": 595455.0,
+      "price_usd": 0.01407,
+      "price_change_1h": -0.1,
+      "price_change_24h": 7.64,
+      "volume_24h": 633256.6,
+      "liquidity_usd": 630183.62,
+      "market_cap": 14074956.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/goyimcoinsol",
+        "twitter": "https://x.com/buttcoin",
         "telegram": null,
-        "website": "https://goyim.network/"
+        "website": "https://www.buttcoinfoundation.org/"
       },
-      "pair_created_at": 1769958443000,
-      "age_hours": 1146,
-      "age_days": 47.8,
-      "timestamp": "2026-03-21T09:56:04.281538",
+      "pair_created_at": 1767965767000,
+      "age_hours": 1701,
+      "age_days": 70.9,
+      "timestamp": "2026-03-21T10:58:55.818186",
       "source": "dexscreener",
-      "score": 28,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "$595455 MC - moderate growth room",
-        "\ud83d\udc0b Active whale buying NOW 5.2x"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:38.128925"
-    },
-    {
-      "symbol": "JUICE",
-      "name": "JUICE",
-      "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.001757,
-      "price_change_1h": 0.42,
-      "price_change_24h": -5.08,
-      "volume_24h": 13756.35,
-      "liquidity_usd": 154087.3,
-      "market_cap": 1684278.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/JuiceLaunch",
-        "telegram": null,
-        "website": "https://www.juiceeverything.com/"
-      },
-      "pair_created_at": 1766441506000,
-      "age_hours": 2123,
-      "age_days": 88.5,
-      "timestamp": "2026-03-21T09:53:08.213920",
-      "source": "dexscreener",
-      "score": 23,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "\ud83d\udc0b Whale accumulation detected 2.8x"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:32.890327"
-    },
-    {
-      "symbol": "MAX",
-      "name": "maxxing",
-      "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.002137,
-      "price_change_1h": 1.76,
-      "price_change_24h": -6.62,
-      "volume_24h": 141207.23,
-      "liquidity_usd": 200950.09,
-      "market_cap": 2136461.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/_maxxing",
-        "telegram": "https://t.me/ContentMaxxingCTO",
-        "website": "https://www.solmaxxing.xyz"
-      },
-      "pair_created_at": 1764628666000,
-      "age_hours": 2627,
-      "age_days": 109.5,
-      "timestamp": "2026-03-21T09:53:33.512216",
-      "source": "dexscreener",
-      "score": 23,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "\ud83d\udc0b Active whale buying NOW 8.1x"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:33.635819"
-    },
-    {
-      "symbol": "FWOG",
-      "name": "FWOG",
-      "address": "A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.005759,
-      "price_change_1h": -0.19,
-      "price_change_24h": -0.39,
-      "volume_24h": 57190.49,
-      "liquidity_usd": 1451378.55,
-      "market_cap": 5618871.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/itsafwog",
-        "telegram": "https://t.me/justfwogs",
-        "website": "https://itsafwog.com/"
-      },
-      "pair_created_at": 1722303257000,
-      "age_hours": 14384,
-      "age_days": 599.3,
-      "timestamp": "2026-03-21T09:55:07.753479",
-      "source": "dexscreener",
-      "score": 23,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "\ud83d\udc0b Whale accumulation detected 2.9x"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.448212"
-    },
-    {
-      "symbol": "TROLL",
-      "name": "TROLL",
-      "address": "5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 0.01345,
-      "price_change_1h": 2.83,
-      "price_change_24h": 0.54,
-      "volume_24h": 142583.47,
-      "liquidity_usd": 1294207.62,
-      "market_cap": 13438015.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://x.com/troll_",
-        "telegram": "https://t.me/trollsolog",
-        "website": "https://trololol.io"
-      },
-      "pair_created_at": 1745173826000,
-      "age_hours": 8031,
-      "age_days": 334.6,
-      "timestamp": "2026-03-21T09:55:13.988631",
-      "source": "dexscreener",
-      "score": 23,
+      "score": 30,
       "signal": "AVOID",
       "label": "\ud83d\uded1 Avoid",
       "reasons": [
         "Price stable or trending up",
+        "Volume above liquidity - mild interest",
         "Holder data unavailable - using on-chain estimate",
-        "High liquidity - easy exit",
-        "\ud83d\udc0b Whale accumulation detected 2.0x"
+        "High liquidity - easy exit"
       ],
       "risk_factors": [
-        "Volume below liquidity - dead/abandoned",
-        "$13438015 MC - limited 100x potential"
+        "$14074956 MC - limited 100x potential"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.631770"
+      "analyzed_at": "2026-03-21T11:02:47.749361"
     },
     {
       "symbol": "HODL",
@@ -844,12 +500,12 @@
       "address": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.002342,
-      "price_change_1h": -1.37,
-      "price_change_24h": -17.01,
-      "volume_24h": 151721.92,
-      "liquidity_usd": 196901.7,
-      "market_cap": 2342837.0,
+      "price_usd": 0.002325,
+      "price_change_1h": 0.44,
+      "price_change_24h": -20.68,
+      "volume_24h": 148485.31,
+      "liquidity_usd": 195748.59,
+      "market_cap": 2325129.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/hodl2013",
@@ -857,15 +513,15 @@
         "website": "https://hodl2013.com"
       },
       "pair_created_at": 1770925712000,
-      "age_hours": 878,
+      "age_hours": 879,
       "age_days": 36.6,
-      "timestamp": "2026-03-21T09:53:01.945231",
+      "timestamp": "2026-03-21T10:57:15.016306",
       "source": "dexscreener",
-      "score": 20,
+      "score": 26,
       "signal": "AVOID",
       "label": "\ud83d\uded1 Avoid",
       "reasons": [
-        "Price down -15% - minor correction",
+        "Price down -20% entering dip zone",
         "Holder data unavailable - using on-chain estimate",
         "High liquidity - easy exit"
       ],
@@ -873,7 +529,121 @@
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:32.706691"
+      "analyzed_at": "2026-03-21T11:02:44.441765"
+    },
+    {
+      "symbol": "PUNCH",
+      "name": "\u30d1\u30f3\u30c1",
+      "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.01437,
+      "price_change_1h": -2.67,
+      "price_change_24h": -6.03,
+      "volume_24h": 1103178.72,
+      "liquidity_usd": 738969.46,
+      "market_cap": 14372925.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/punch_ganbare?s=21&t=ruzx1xkKsZ3vDPRkeDVwPg",
+        "telegram": null,
+        "website": "https://punchonsolana.fun/"
+      },
+      "pair_created_at": 1770282065000,
+      "age_hours": 1057,
+      "age_days": 44.0,
+      "timestamp": "2026-03-21T10:56:56.352325",
+      "source": "dexscreener",
+      "score": 25,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Volume above liquidity - mild interest",
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [
+        "$14372925 MC - limited 100x potential"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:43.772760"
+    },
+    {
+      "symbol": "FOID",
+      "name": "The Foid",
+      "address": "AC3ydFNcS7hitJF3ApnndhLajrqXg4S37jSSUnqgpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 1.373e-05,
+      "price_change_1h": -8.43,
+      "price_change_24h": -62.52,
+      "volume_24h": 528791.56,
+      "liquidity_usd": 9710.65,
+      "market_cap": 13731.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/i/communities/2034984417077121054",
+        "telegram": null,
+        "website": null
+      },
+      "pair_created_at": 1774024459000,
+      "age_hours": 18,
+      "age_days": 0.8,
+      "timestamp": "2026-03-21T10:59:58.268402",
+      "source": "dexscreener",
+      "score": 25,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Volume 54.5x - EXTREME whale accumulation!",
+        "Holder data unavailable - using on-chain estimate",
+        "$13731 MC - micro-cap gem potential",
+        "18h old - proven but fresh"
+      ],
+      "risk_factors": [
+        "Crashed 63% in 24h - likely rug pull or dead",
+        "Liquidity <5K - trapped capital risk"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:49.698026"
+    },
+    {
+      "symbol": "GOYIM",
+      "name": "Goyim",
+      "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.0005945,
+      "price_change_1h": -1.22,
+      "price_change_24h": -6.6,
+      "volume_24h": 118461.62,
+      "liquidity_usd": 123655.46,
+      "market_cap": 594490.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/goyimcoinsol",
+        "telegram": null,
+        "website": "https://goyim.network/"
+      },
+      "pair_created_at": 1769958443000,
+      "age_hours": 1147,
+      "age_days": 47.8,
+      "timestamp": "2026-03-21T11:00:17.172461",
+      "source": "dexscreener",
+      "score": 23,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit",
+        "$594490 MC - moderate growth room",
+        "\ud83d\udc0b Recent whale activity 4.7x"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:50.269412"
     },
     {
       "symbol": "snowball",
@@ -881,12 +651,12 @@
       "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.000341,
-      "price_change_1h": 1.92,
-      "price_change_24h": 7.19,
-      "volume_24h": 24221.6,
-      "liquidity_usd": 109048.37,
-      "market_cap": 325872.0,
+      "price_usd": 0.000335,
+      "price_change_1h": -1.75,
+      "price_change_24h": 4.69,
+      "volume_24h": 22037.22,
+      "liquidity_usd": 107838.78,
+      "market_cap": 320164.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/i/communities/2001678386968564186",
@@ -894,9 +664,9 @@
         "website": "https://sb.fun"
       },
       "pair_created_at": 1766080714000,
-      "age_hours": 2223,
-      "age_days": 92.6,
-      "timestamp": "2026-03-21T09:55:39.098575",
+      "age_hours": 2225,
+      "age_days": 92.7,
+      "timestamp": "2026-03-21T10:59:52.018603",
       "source": "dexscreener",
       "score": 18,
       "signal": "AVOID",
@@ -905,13 +675,13 @@
         "Price stable or trending up",
         "Holder data unavailable - using on-chain estimate",
         "High liquidity - easy exit",
-        "$325872 MC - moderate growth room"
+        "$320164 MC - moderate growth room"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:37.388799"
+      "analyzed_at": "2026-03-21T11:02:49.507377"
     },
     {
       "symbol": "PIGEON",
@@ -919,12 +689,12 @@
       "address": "GB8KtQfMChhYrCYtd5PoAB42kAdkHnuyAincSSmFpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0002296,
-      "price_change_1h": -0.93,
-      "price_change_24h": -11.73,
-      "volume_24h": 31372.34,
-      "liquidity_usd": 77668.42,
-      "market_cap": 229604.0,
+      "price_usd": 0.0002368,
+      "price_change_1h": 3.14,
+      "price_change_24h": -10.12,
+      "volume_24h": 30976.29,
+      "liquidity_usd": 78756.79,
+      "market_cap": 236820.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/pigeon_doc?s=21",
@@ -932,9 +702,9 @@
         "website": "https://pigeondoctor.xyz/"
       },
       "pair_created_at": 1769382289000,
-      "age_hours": 1306,
-      "age_days": 54.4,
-      "timestamp": "2026-03-21T09:54:49.146372",
+      "age_hours": 1307,
+      "age_days": 54.5,
+      "timestamp": "2026-03-21T10:59:02.073764",
       "source": "dexscreener",
       "score": 15,
       "signal": "AVOID",
@@ -943,13 +713,51 @@
         "Price down -10% - small dip",
         "Holder data unavailable - using on-chain estimate",
         "Good liquidity - manageable exit",
-        "$229604 MC - moderate growth room"
+        "$236820 MC - moderate growth room"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:35.894442"
+      "analyzed_at": "2026-03-21T11:02:47.936619"
+    },
+    {
+      "symbol": "KILROY",
+      "name": "Kilroy was here",
+      "address": "CFYhdWXsYfS7swnJgHRwb5toTHMEQD7Ljd5gGwKLpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.0003689,
+      "price_change_1h": 0.51,
+      "price_change_24h": 12.2,
+      "volume_24h": 10727.11,
+      "liquidity_usd": 65033.33,
+      "market_cap": 366305.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/KilRoy_OnSolana",
+        "telegram": null,
+        "website": "https://kilroywashere.xyz/"
+      },
+      "pair_created_at": 1762886243000,
+      "age_hours": 3112,
+      "age_days": 129.7,
+      "timestamp": "2026-03-21T11:00:10.886792",
+      "source": "dexscreener",
+      "score": 15,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Price stable or trending up",
+        "Holder data unavailable - using on-chain estimate",
+        "Good liquidity - manageable exit",
+        "$366305 MC - moderate growth room"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:50.079068"
     },
     {
       "symbol": "PIZZA",
@@ -957,12 +765,12 @@
       "address": "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.000165,
-      "price_change_1h": -0.92,
-      "price_change_24h": -14.57,
-      "volume_24h": 23922.91,
-      "liquidity_usd": 45658.35,
-      "market_cap": 165085.0,
+      "price_usd": 0.00017,
+      "price_change_1h": 3.02,
+      "price_change_24h": -12.08,
+      "volume_24h": 23081.83,
+      "liquidity_usd": 46245.26,
+      "market_cap": 170064.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/i/communities/2028693567879729365",
@@ -970,9 +778,9 @@
         "website": "https://btcpizza2010.com"
       },
       "pair_created_at": 1772520410000,
-      "age_hours": 435,
-      "age_days": 18.1,
-      "timestamp": "2026-03-21T09:53:14.486447",
+      "age_hours": 436,
+      "age_days": 18.2,
+      "timestamp": "2026-03-21T10:57:27.598093",
       "source": "dexscreener",
       "score": 14,
       "signal": "AVOID",
@@ -981,74 +789,36 @@
         "Price down -10% - small dip",
         "Holder data unavailable - using on-chain estimate",
         "Acceptable liquidity - moderate slippage",
-        "$165085 MC - small-cap opportunity"
+        "$170064 MC - small-cap opportunity"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:33.077985"
+      "analyzed_at": "2026-03-21T11:02:45.020520"
     },
     {
-      "symbol": "BULK",
-      "name": "bulk",
-      "address": "F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump",
+      "symbol": "NOTHING",
+      "name": "You'll own nothing & be happy",
+      "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0001991,
-      "price_change_1h": -0.43,
-      "price_change_24h": 4.36,
-      "volume_24h": 8335.25,
-      "liquidity_usd": 40965.43,
-      "market_cap": 199052.0,
+      "price_usd": 0.0008785,
+      "price_change_1h": -1.74,
+      "price_change_24h": -5.47,
+      "volume_24h": 59539.75,
+      "liquidity_usd": 145676.17,
+      "market_cap": 878507.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/bulkedsol",
-        "telegram": "https://t.me/BulkedSol",
-        "website": "https://www.bulked.lol/"
+        "twitter": "https://x.com/youllownnothing",
+        "telegram": "https://t.me/nothingmemechannel",
+        "website": "https://www.ownnothing.xyz/"
       },
-      "pair_created_at": 1764636340000,
-      "age_hours": 2625,
-      "age_days": 109.4,
-      "timestamp": "2026-03-21T09:53:20.846234",
-      "source": "dexscreener",
-      "score": 14,
-      "signal": "AVOID",
-      "label": "\ud83d\uded1 Avoid",
-      "reasons": [
-        "Price stable or trending up",
-        "Holder data unavailable - using on-chain estimate",
-        "Acceptable liquidity - moderate slippage",
-        "$199052 MC - small-cap opportunity"
-      ],
-      "risk_factors": [
-        "Volume below liquidity - dead/abandoned"
-      ],
-      "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:33.262099"
-    },
-    {
-      "symbol": "UWU",
-      "name": "Unicorn",
-      "address": "UwU8RVXB69Y6Dcju6cN2Qef6fykkq6UUNpB15rZku6Z",
-      "chain": "SOL",
-      "status": "active",
-      "price_usd": 6.052e-05,
-      "price_change_1h": 0.0,
-      "price_change_24h": -0.07,
-      "volume_24h": 2584.83,
-      "liquidity_usd": 374298.77,
-      "market_cap": 913841.0,
-      "holder_count": 0,
-      "socials": {
-        "twitter": "https://twitter.com/unicornandmemes",
-        "telegram": "https://t.me/TheUnicornStandard",
-        "website": "https://unicorn.meme/"
-      },
-      "pair_created_at": 1723245917000,
-      "age_hours": 14122,
-      "age_days": 588.4,
-      "timestamp": "2026-03-21T09:53:52.404062",
+      "pair_created_at": 1762893903000,
+      "age_hours": 3110,
+      "age_days": 129.6,
+      "timestamp": "2026-03-21T10:57:59.063600",
       "source": "dexscreener",
       "score": 13,
       "signal": "AVOID",
@@ -1056,13 +826,87 @@
       "reasons": [
         "Holder data unavailable - using on-chain estimate",
         "High liquidity - easy exit",
-        "$913841 MC - moderate growth room"
+        "$878507 MC - moderate growth room"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.201381"
+      "analyzed_at": "2026-03-21T11:02:46.015637"
+    },
+    {
+      "symbol": "UWU",
+      "name": "Unicorn",
+      "address": "UwU8RVXB69Y6Dcju6cN2Qef6fykkq6UUNpB15rZku6Z",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 6.053e-05,
+      "price_change_1h": -0.1,
+      "price_change_24h": -0.06,
+      "volume_24h": 2589.54,
+      "liquidity_usd": 374349.75,
+      "market_cap": 913989.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://twitter.com/unicornandmemes",
+        "telegram": "https://t.me/TheUnicornStandard",
+        "website": "https://unicorn.meme/"
+      },
+      "pair_created_at": 1723245917000,
+      "age_hours": 14123,
+      "age_days": 588.5,
+      "timestamp": "2026-03-21T10:58:05.373834",
+      "source": "dexscreener",
+      "score": 13,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit",
+        "$913989 MC - moderate growth room"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:46.211341"
+    },
+    {
+      "symbol": "AVICI",
+      "name": "Avici",
+      "address": "BANKJmvhT8tiJRsBSS1n2HryMBPvT5Ze4HU95DUAmeta",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.7429,
+      "price_change_1h": -0.33,
+      "price_change_24h": 0.57,
+      "volume_24h": 17897.45,
+      "liquidity_usd": 603535.93,
+      "market_cap": 9583593.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/AviciMoney",
+        "telegram": "https://t.me/Aviciclub",
+        "website": "https://avici.money/"
+      },
+      "pair_created_at": 1760806818000,
+      "age_hours": 3689,
+      "age_days": 153.7,
+      "timestamp": "2026-03-21T10:58:43.237163",
+      "source": "dexscreener",
+      "score": 13,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Price stable or trending up",
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:47.363585"
     },
     {
       "symbol": "BQC",
@@ -1072,8 +916,8 @@
       "status": "active",
       "price_usd": 2.161e-05,
       "price_change_1h": 0.0,
-      "price_change_24h": 15.6,
-      "volume_24h": 512.67,
+      "price_change_24h": 7.33,
+      "volume_24h": 507.78,
       "liquidity_usd": 13864.07,
       "market_cap": 21196.0,
       "holder_count": 0,
@@ -1083,9 +927,9 @@
         "website": "https://bbqco.in/"
       },
       "pair_created_at": 1770479363000,
-      "age_hours": 1002,
+      "age_hours": 1003,
       "age_days": 41.8,
-      "timestamp": "2026-03-21T09:54:05.000334",
+      "timestamp": "2026-03-21T10:58:17.980967",
       "source": "dexscreener",
       "score": 12,
       "signal": "AVOID",
@@ -1101,7 +945,7 @@
         "Liquidity <10K - exit difficulty"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.567565"
+      "analyzed_at": "2026-03-21T11:02:46.592962"
     },
     {
       "symbol": "Regret",
@@ -1111,8 +955,8 @@
       "status": "active",
       "price_usd": 3.012e-05,
       "price_change_1h": 0.0,
-      "price_change_24h": 11.56,
-      "volume_24h": 517.08,
+      "price_change_24h": 9.47,
+      "volume_24h": 516.89,
       "liquidity_usd": 19748.24,
       "market_cap": 30100.0,
       "holder_count": 0,
@@ -1122,9 +966,9 @@
         "website": "https://regretonsolana.my.canva.site/"
       },
       "pair_created_at": 1757480424000,
-      "age_hours": 4612,
+      "age_hours": 4613,
       "age_days": 192.2,
-      "timestamp": "2026-03-21T09:54:36.576473",
+      "timestamp": "2026-03-21T10:58:49.572392",
       "source": "dexscreener",
       "score": 12,
       "signal": "AVOID",
@@ -1140,7 +984,45 @@
         "Liquidity <10K - exit difficulty"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:35.522027"
+      "analyzed_at": "2026-03-21T11:02:47.557350"
+    },
+    {
+      "symbol": "BULK",
+      "name": "bulk",
+      "address": "F4TJfiMVi7zFGRJj4FVC1Zuj7fdCo6skKa4SnAU4pump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.0002016,
+      "price_change_1h": 1.3,
+      "price_change_24h": 4.81,
+      "volume_24h": 8312.03,
+      "liquidity_usd": 41211.45,
+      "market_cap": 201636.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/bulkedsol",
+        "telegram": "https://t.me/BulkedSol",
+        "website": "https://www.bulked.lol/"
+      },
+      "pair_created_at": 1764636340000,
+      "age_hours": 2626,
+      "age_days": 109.4,
+      "timestamp": "2026-03-21T10:57:33.934923",
+      "source": "dexscreener",
+      "score": 11,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Price stable or trending up",
+        "Holder data unavailable - using on-chain estimate",
+        "Acceptable liquidity - moderate slippage",
+        "$201636 MC - moderate growth room"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:45.240903"
     },
     {
       "symbol": "INU",
@@ -1148,12 +1030,12 @@
       "address": "AtdqW9HYpx6bzuXAyuVRz6a3UiTHLoNTRJDN8buXHem7",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 5.234e-05,
-      "price_change_1h": -1.91,
-      "price_change_24h": 3.88,
-      "volume_24h": 5817.64,
-      "liquidity_usd": 21684.77,
-      "market_cap": 51790.0,
+      "price_usd": 5.175e-05,
+      "price_change_1h": -1.13,
+      "price_change_24h": 0.97,
+      "volume_24h": 5881.26,
+      "liquidity_usd": 21559.71,
+      "market_cap": 51206.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/_inucoin",
@@ -1161,9 +1043,9 @@
         "website": "https://inucoin.fun/"
       },
       "pair_created_at": 1769532989000,
-      "age_hours": 1264,
-      "age_days": 52.7,
-      "timestamp": "2026-03-21T09:54:17.631757",
+      "age_hours": 1266,
+      "age_days": 52.8,
+      "timestamp": "2026-03-21T10:58:30.584251",
       "source": "dexscreener",
       "score": 10,
       "signal": "AVOID",
@@ -1172,14 +1054,14 @@
         "Price stable or trending up",
         "Holder data unavailable - using on-chain estimate",
         "Low liquidity - high slippage risk",
-        "$51790 MC - small-cap opportunity"
+        "$51206 MC - small-cap opportunity"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned",
         "Liquidity <10K - exit difficulty"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.953526"
+      "analyzed_at": "2026-03-21T11:02:46.972665"
     },
     {
       "symbol": "Artemis II",
@@ -1187,12 +1069,12 @@
       "address": "EJzqpRPxgZZVoVVuCXuQBNXp7mQzeH6FENMfuLRbpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.0001243,
-      "price_change_1h": 0.0,
-      "price_change_24h": -5.39,
-      "volume_24h": 5696.14,
-      "liquidity_usd": 31754.13,
-      "market_cap": 124214.0,
+      "price_usd": 0.0001257,
+      "price_change_1h": 1.17,
+      "price_change_24h": -6.06,
+      "volume_24h": 5295.1,
+      "liquidity_usd": 31965.2,
+      "market_cap": 125666.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/i/communities/2015419302506094832",
@@ -1200,9 +1082,9 @@
         "website": "https://www.artemis2coin.fun/"
       },
       "pair_created_at": 1769348704000,
-      "age_hours": 1316,
-      "age_days": 54.8,
-      "timestamp": "2026-03-21T09:54:11.308431",
+      "age_hours": 1317,
+      "age_days": 54.9,
+      "timestamp": "2026-03-21T10:58:24.296209",
       "source": "dexscreener",
       "score": 9,
       "signal": "AVOID",
@@ -1210,36 +1092,36 @@
       "reasons": [
         "Holder data unavailable - using on-chain estimate",
         "Acceptable liquidity - moderate slippage",
-        "$124214 MC - small-cap opportunity"
+        "$125666 MC - small-cap opportunity"
       ],
       "risk_factors": [
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:34.767474"
+      "analyzed_at": "2026-03-21T11:02:46.780854"
     },
     {
-      "symbol": "AVICI",
-      "name": "Avici",
-      "address": "BANKJmvhT8tiJRsBSS1n2HryMBPvT5Ze4HU95DUAmeta",
+      "symbol": "JUICE",
+      "name": "JUICE",
+      "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.7454,
-      "price_change_1h": 0.0,
-      "price_change_24h": -0.06,
-      "volume_24h": 19183.31,
-      "liquidity_usd": 605066.61,
-      "market_cap": 9615567.0,
+      "price_usd": 0.001731,
+      "price_change_1h": -1.38,
+      "price_change_24h": -6.94,
+      "volume_24h": 14307.77,
+      "liquidity_usd": 152674.08,
+      "market_cap": 1659185.0,
       "holder_count": 0,
       "socials": {
-        "twitter": "https://x.com/AviciMoney",
-        "telegram": "https://t.me/Aviciclub",
-        "website": "https://avici.money/"
+        "twitter": "https://x.com/JuiceLaunch",
+        "telegram": null,
+        "website": "https://www.juiceeverything.com/"
       },
-      "pair_created_at": 1760806818000,
-      "age_hours": 3688,
-      "age_days": 153.7,
-      "timestamp": "2026-03-21T09:54:30.264678",
+      "pair_created_at": 1766441506000,
+      "age_hours": 2124,
+      "age_days": 88.5,
+      "timestamp": "2026-03-21T10:57:21.290860",
       "source": "dexscreener",
       "score": 8,
       "signal": "AVOID",
@@ -1252,7 +1134,117 @@
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:35.338786"
+      "analyzed_at": "2026-03-21T11:02:44.679344"
+    },
+    {
+      "symbol": "MAX",
+      "name": "maxxing",
+      "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.002052,
+      "price_change_1h": -0.84,
+      "price_change_24h": -8.29,
+      "volume_24h": 143542.46,
+      "liquidity_usd": 196582.02,
+      "market_cap": 2052078.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/_maxxing",
+        "telegram": "https://t.me/ContentMaxxingCTO",
+        "website": "https://www.solmaxxing.xyz"
+      },
+      "pair_created_at": 1764628666000,
+      "age_hours": 2628,
+      "age_days": 109.5,
+      "timestamp": "2026-03-21T10:57:46.499930",
+      "source": "dexscreener",
+      "score": 8,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:45.628433"
+    },
+    {
+      "symbol": "FWOG",
+      "name": "FWOG",
+      "address": "A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.005662,
+      "price_change_1h": -1.39,
+      "price_change_24h": -1.88,
+      "volume_24h": 59122.36,
+      "liquidity_usd": 1435831.21,
+      "market_cap": 5524121.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/itsafwog",
+        "telegram": "https://t.me/justfwogs",
+        "website": "https://itsafwog.com/"
+      },
+      "pair_created_at": 1722303257000,
+      "age_hours": 14385,
+      "age_days": 599.4,
+      "timestamp": "2026-03-21T10:59:20.746010",
+      "source": "dexscreener",
+      "score": 8,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:48.511138"
+    },
+    {
+      "symbol": "TROLL",
+      "name": "TROLL",
+      "address": "5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2",
+      "chain": "SOL",
+      "status": "active",
+      "price_usd": 0.01336,
+      "price_change_1h": 0.04,
+      "price_change_24h": 0.04,
+      "volume_24h": 132685.37,
+      "liquidity_usd": 1287116.73,
+      "market_cap": 13350221.0,
+      "holder_count": 0,
+      "socials": {
+        "twitter": "https://x.com/troll_",
+        "telegram": "https://t.me/trollsolog",
+        "website": "https://trololol.io"
+      },
+      "pair_created_at": 1745173826000,
+      "age_hours": 8032,
+      "age_days": 334.7,
+      "timestamp": "2026-03-21T10:59:26.943126",
+      "source": "dexscreener",
+      "score": 8,
+      "signal": "AVOID",
+      "label": "\ud83d\uded1 Avoid",
+      "reasons": [
+        "Price stable or trending up",
+        "Holder data unavailable - using on-chain estimate",
+        "High liquidity - easy exit"
+      ],
+      "risk_factors": [
+        "Volume below liquidity - dead/abandoned",
+        "$13350221 MC - limited 100x potential"
+      ],
+      "historical_snapshots": 0,
+      "analyzed_at": "2026-03-21T11:02:48.725197"
     },
     {
       "symbol": "DJI6930",
@@ -1260,12 +1252,12 @@
       "address": "DQnkBM4eYYMnVE8Qy2K3BB7uts1fh2EwBVktEz6jpump",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.004236,
-      "price_change_1h": 0.15,
-      "price_change_24h": -3.6,
-      "volume_24h": 13727.06,
-      "liquidity_usd": 283173.95,
-      "market_cap": 4236703.0,
+      "price_usd": 0.004305,
+      "price_change_1h": 0.65,
+      "price_change_24h": -2.62,
+      "volume_24h": 15202.63,
+      "liquidity_usd": 285021.51,
+      "market_cap": 4304942.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/dji6930",
@@ -1273,9 +1265,9 @@
         "website": "https://dji6930.com"
       },
       "pair_created_at": 1749219412000,
-      "age_hours": 6907,
+      "age_hours": 6908,
       "age_days": 287.8,
-      "timestamp": "2026-03-21T09:55:20.292821",
+      "timestamp": "2026-03-21T10:59:33.219358",
       "source": "dexscreener",
       "score": 8,
       "signal": "AVOID",
@@ -1288,7 +1280,7 @@
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:36.815226"
+      "analyzed_at": "2026-03-21T11:02:48.919709"
     },
     {
       "symbol": "VIBECOIN",
@@ -1296,12 +1288,12 @@
       "address": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
       "chain": "SOL",
       "status": "active",
-      "price_usd": 0.002416,
-      "price_change_1h": 0.61,
-      "price_change_24h": -7.38,
-      "volume_24h": 19468.65,
-      "liquidity_usd": 127606.5,
-      "market_cap": 2415387.0,
+      "price_usd": 0.002435,
+      "price_change_1h": 0.78,
+      "price_change_24h": -7.98,
+      "volume_24h": 19349.37,
+      "liquidity_usd": 127983.86,
+      "market_cap": 2434285.0,
       "holder_count": 0,
       "socials": {
         "twitter": "https://x.com/vibecoinonanon?s=21",
@@ -1309,9 +1301,9 @@
         "website": "https://anoncoin.it/vibecoin"
       },
       "pair_created_at": 1755441758000,
-      "age_hours": 5179,
+      "age_hours": 5180,
       "age_days": 215.8,
-      "timestamp": "2026-03-21T09:55:51.746757",
+      "timestamp": "2026-03-21T11:00:04.570839",
       "source": "dexscreener",
       "score": 8,
       "signal": "AVOID",
@@ -1324,7 +1316,7 @@
         "Volume below liquidity - dead/abandoned"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:37.761478"
+      "analyzed_at": "2026-03-21T11:02:49.885389"
     },
     {
       "symbol": "BLIND",
@@ -1334,8 +1326,8 @@
       "status": "active",
       "price_usd": 3.964e-05,
       "price_change_1h": 0.0,
-      "price_change_24h": -2.0,
-      "volume_24h": 354.32,
+      "price_change_24h": -2.05,
+      "volume_24h": 350.62,
       "liquidity_usd": 21838.44,
       "market_cap": 39606.0,
       "holder_count": 0,
@@ -1345,9 +1337,9 @@
         "website": "https://www.blindfoldfinance.com/"
       },
       "pair_created_at": 1766775652000,
-      "age_hours": 2030,
+      "age_hours": 2031,
       "age_days": 84.6,
-      "timestamp": "2026-03-21T09:54:23.933267",
+      "timestamp": "2026-03-21T10:58:36.886903",
       "source": "dexscreener",
       "score": 7,
       "signal": "AVOID",
@@ -1362,7 +1354,7 @@
         "Liquidity <10K - exit difficulty"
       ],
       "historical_snapshots": 0,
-      "analyzed_at": "2026-03-21T09:58:35.154152"
+      "analyzed_at": "2026-03-21T11:02:47.170623"
     }
   ]
 }
