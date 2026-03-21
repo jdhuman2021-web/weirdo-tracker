@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Weirdo Tracker | Meme Coin Intelligence</title>
+    <title>Squirmy Screener | Meme Coin Intelligence</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230a0a0f' stroke='%2300ff88' stroke-width='4'/><text x='50' y='65' font-size='50' text-anchor='middle'>🪱</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -103,6 +104,17 @@
             color: var(--text-muted);
             letter-spacing: 1px;
             text-transform: uppercase;
+        }
+        
+        .logo-icon {
+            font-size: 24px;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
         }
         
         /* Mobile Menu Toggle */
@@ -681,9 +693,9 @@
         </button>
         
         <div class="logo">
-            <div class="logo-icon">🧠</div>
+            <div class="logo-icon">🪱</div>
             <div>
-                <div class="logo-text">WEIRDO TRACKER</div>
+                <div class="logo-text">SQUIRMY SCREENER</div>
                 <div class="logo-sub">Meme Coin Intelligence</div>
             </div>
         </div>
