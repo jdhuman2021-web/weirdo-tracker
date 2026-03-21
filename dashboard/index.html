@@ -877,9 +877,9 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <!-- Token List -->
-            <div class="card">
+            <div class="card" style="flex: 1; overflow: hidden;">
                 <div class="card-header">
-                    <span class="card-title">Watchlist</span>
+                    <span class="card-title">🪱 Tokens</span>
                     <div class="card-actions">
                         <select class="sort-select" id="sortSelect" onchange="sortTokens()">
                             <option value="score">Score</option>
@@ -894,21 +894,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-content">
+                <div class="card-content" style="max-height: calc(100vh - 200px); overflow-y: auto;">
                     <div class="token-list" id="tokenList">
                         <div class="loading"><div class="spinner"></div>Loading tokens...</div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Opportunities -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Opportunities</span>
-                    <span id="oppCount" style="color: var(--accent); font-size: 12px;">-</span>
-                </div>
-                <div class="card-content" id="opportunitiesList">
-                    <div class="loading"><div class="spinner"></div>Analyzing...</div>
                 </div>
             </div>
         </aside>
@@ -1002,7 +991,6 @@
                 currentData.activeTokens = activeTokens;
                 
                 renderTokenList();
-                renderOpportunities();
                 updateStats();
                 
                 if (activeTokens.length > 0 && !selectedToken) {
@@ -1084,39 +1072,6 @@
             icon.textContent = sortAscending ? '↑' : '↓';
             btn.classList.toggle('active', sortAscending);
             renderTokenList();
-        }
-        
-        // Render Opportunities
-        function renderOpportunities() {
-            const tokens = currentData?.activeTokens || [];
-            const opportunities = tokens.filter(t => (t.score || 0) >= 40).slice(0, 8);
-            const list = document.getElementById('opportunitiesList');
-            
-            if (opportunities.length === 0) {
-                list.innerHTML = '<div class="loading">No strong signals right now</div>';
-                return;
-            }
-            
-            list.innerHTML = opportunities.map(token => {
-                const cardClass = getCardClass(token.score);
-                const dexUrl = `https://dexscreener.com/solana/${token.address}`;
-                
-                return `
-                    <div class="${cardClass}" onclick="selectToken(currentData.activeTokens.find(t => t.symbol === '${token.symbol}'))">
-                        <div class="opportunity-header">
-                            <span class="opportunity-symbol"><a href="${dexUrl}" target="_blank" onclick="event.stopPropagation();">${token.symbol}</a></span>
-                            <span class="opportunity-score">${token.score}/100</span>
-                        </div>
-                        <div class="opportunity-reason">${token.reasons?.slice(0, 2).join(' • ') || 'Analyzing...'}</div>
-                        <div class="opportunity-meta">
-                            <span>${token.price_change_24h > 0 ? '+' : ''}${(token.price_change_24h || 0).toFixed(1)}%</span>
-                            <span>$${formatNumber(token.market_cap)}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('oppCount').textContent = opportunities.length;
         }
         
         // Select Token
@@ -1205,14 +1160,6 @@
             if (score >= 70) return 'signal-warm';
             if (score >= 55) return 'signal-neutral';
             return 'signal-cold';
-        }
-        
-        function getCardClass(score) {
-            if (score >= 85) return 'opportunity-card score-excellent';
-            if (score >= 70) return 'opportunity-card score-good';
-            if (score >= 55) return 'opportunity-card score-speculative';
-            if (score >= 40) return 'opportunity-card score-watch';
-            return 'opportunity-card score-avoid';
         }
         
         // Initialize
