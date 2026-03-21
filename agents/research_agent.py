@@ -12,13 +12,13 @@ import sys
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Import Supabase client
+# Import Supabase client (optional)
 try:
     from database.supabase_client import get_client
     SUPABASE_AVAILABLE = True
 except ImportError:
     SUPABASE_AVAILABLE = False
-    print("WARNING: Supabase client not available, using JSON only")
+    print("Note: Supabase not available, using JSON only")
 
 def load_config():
     """Load token configuration from JSON file"""
@@ -26,7 +26,7 @@ def load_config():
         with open('config/tokens.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        print("ERROR: config/tokens.json not found. Creating default...")
+        print("ERROR: config/tokens.json not found")
         Path('config').mkdir(exist_ok=True)
         default = {"tokens": [], "whales": []}
         with open('config/tokens.json', 'w', encoding='utf-8') as f:
@@ -100,12 +100,12 @@ def main():
     if SUPABASE_AVAILABLE:
         try:
             supabase = get_client()
-            if supabase.is_connected():
-                print("✓ Supabase connected")
+            if supabase and supabase.is_connected():
+                print("Connected to Supabase")
             else:
-                print("✗ Supabase not connected (check credentials)")
+                print("Supabase not connected (check credentials)")
         except Exception as e:
-            print(f"✗ Supabase init error: {e}")
+            print(f"Supabase init error: {e}")
     
     # Load configuration
     config = load_config()
@@ -119,7 +119,7 @@ def main():
         print(f"Skipped {dead_count} dead/inactive tokens")
     
     if not tokens:
-        print("WARN: No active tokens configured")
+        print("No active tokens configured")
         return
     
     # Deduplicate
@@ -155,7 +155,8 @@ def main():
             'timestamp': datetime.utcnow().isoformat(),
             'tokens_fetched': len(results),
             'total_configured': len(tokens),
-            'agent': 'research_v1.5'
+            'agent': 'research_v1.5',
+            'supabase': SUPABASE_AVAILABLE and supabase is not None
         },
         'raw_data': results
     }
@@ -163,7 +164,7 @@ def main():
     with open('data/latest.json', 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2)
     
-    print(f"\n✓ Saved {len(results)} tokens to data/latest.json")
+    print(f"\nSaved {len(results)} tokens to data/latest.json")
     
     # Write to Supabase
     if supabase and supabase.is_connected():
@@ -200,7 +201,7 @@ def main():
             except Exception as e:
                 print(f"  Error writing {token['symbol']}: {e}")
         
-        print(f"✓ Wrote {db_writes} snapshots to Supabase")
+        print(f"Wrote {db_writes} snapshots to Supabase")
         
         # Log pipeline run
         try:
