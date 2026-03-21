@@ -334,6 +334,55 @@ class SupabaseClient:
             return []
 
 
+    # ============================================
+    # ASYNC METHODS FOR WEBSOCKET AGENT
+    # ============================================
+    
+    async def insert_snapshot_async(self, token_address: str, price_usd: float, 
+                                     market_cap: float, volume_24h: float, 
+                                     liquidity_usd: float, price_change_1h: float,
+                                     price_change_24h: float, holder_count: int,
+                                     source: str = 'gmgn_websocket') -> Optional[str]:
+        """Async insert snapshot for WebSocket agent"""
+        return self.insert_snapshot(
+            token_address=token_address,
+            price_usd=price_usd,
+            market_cap=market_cap,
+            volume_24h=volume_24h,
+            liquidity_usd=liquidity_usd,
+            price_change_1h=price_change_1h,
+            price_change_24h=price_change_24h,
+            holder_count=holder_count,
+            age_hours=0,  # Will be calculated
+            score=0,  # Will be calculated by thinking agent
+            signal='PENDING'
+        )
+    
+    async def upsert_token_async(self, symbol: str, name: str, address: str,
+                                  chain: str = 'SOL', source: str = 'gmgn_discovery') -> Optional[str]:
+        """Async upsert token for WebSocket agent"""
+        return self.upsert_token(
+            symbol=symbol,
+            name=name,
+            address=address,
+            chain=chain,
+            source=source,
+            status='active'
+        )
+    
+    async def insert_whale_activity_async(self, token_address: str, whale_address: str,
+                                           action: str, amount_usd: float,
+                                           source: str = 'gmgn_websocket') -> Optional[str]:
+        """Async insert whale activity for WebSocket agent"""
+        return self.insert_whale_activity(
+            token_address=token_address,
+            whale_address=whale_address,
+            whale_name='Unknown',
+            action=action,
+            amount_usd=amount_usd
+        )
+
+
 # Singleton instance
 _client = None
 
