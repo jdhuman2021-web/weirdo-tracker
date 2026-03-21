@@ -80,6 +80,20 @@ jobs:
         exit $exit_code
       continue-on-error: true
     
+    - name: Run Jupiter Price Agent
+      id: jupiter
+      run: |
+        echo "=== Running Jupiter Price Agent v1.0 ==="
+        python3 agents/jupiter_agent.py 2>&1 | tee jupiter.log
+        exit_code=$?
+        echo "Jupiter agent exit code: $exit_code"
+        if [ -f data/jupiter_prices.json ]; then
+          echo "Jupiter prices:"
+          jq '{successful, failed, timestamp: .timestamp}' data/jupiter_prices.json
+        fi
+        exit $exit_code
+      continue-on-error: true
+    
     - name: Run Backtest Agent
       id: backtest
       run: |
