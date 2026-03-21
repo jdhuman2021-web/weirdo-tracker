@@ -237,10 +237,13 @@ def calculate_score(token):
                 score -= 5  # Downtrend
                 risk_factors.append("📉 Price trending down")
     
-    # Final score capped at 100
-    final_score = min(max(score, 0), 100)
-    
-    return final_score, reasons, risk_factorsales = whale_activity.get('active_whales', [])
+    # ============================================
+    # 8. WHALE ACTIVITY BONUS (15 points max)
+    # ============================================
+    # Check if tracked whale wallets are accumulating
+    whale_activity = token.get('whale_activity', {})
+    if whale_activity:
+        active_whales = whale_activity.get('active_whales', [])
         total_buys = whale_activity.get('total_buys', 0)
         
         if len(active_whales) > 0:
@@ -249,6 +252,25 @@ def calculate_score(token):
         elif total_buys > 0:
             score += 10  # Some activity
             reasons.append(f"🐋 Whale accumulation detected ({total_buys} buys)")
+    
+    # ============================================
+    # 9. HISTORICAL TREND BONUS (10 points max)
+    # ============================================
+    # Use SQLite history to detect trends
+    price_history = token.get('price_history', [])
+    if price_history and len(price_history) >= 3:
+        # Check if price is trending up from recent lows
+        recent_prices = [p.get('price_usd', 0) for p in price_history[:5]]
+        if len(recent_prices) >= 3:
+            avg_recent = sum(recent_prices[:3]) / 3
+            avg_older = sum(recent_prices[3:]) / len(recent_prices[3:]) if len(recent_prices) > 3 else avg_recent
+            
+            if avg_recent > avg_older * 1.1:
+                score += 10  # Uptrend from lows
+                reasons.append("📈 Price trending up from recent lows")
+            elif avg_recent < avg_older * 0.9:
+                score -= 5  # Downtrend
+                risk_factors.append("📉 Price trending down")
     
     # Final score capped at 100
     final_score = min(max(score, 0), 100)
