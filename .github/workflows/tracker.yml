@@ -1,4 +1,4 @@
-name: Weirdo Tracker Data Pipeline
+name: Squirmy Screener Data Pipeline
 
 on:
   schedule:
@@ -11,12 +11,13 @@ permissions:
 env:
   PYTHON_VERSION: '3.11'
   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
 jobs:
   collect-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     
     steps:
     - name: Checkout
@@ -34,28 +35,49 @@ jobs:
     - name: Create dirs
       run: mkdir -p data config
     
-    - name: Run Research
+    - name: Run Research Agent
       id: research
       run: |
-        echo "Running Research Agent..."
-        echo "Config tokens count: $(cat config/tokens.json | jq '.tokens | length')"
+        echo "=== Running Research Agent v1.5 ==="
+        echo "Config tokens: $(jq '.tokens | length' config/tokens.json)"
         python3 agents/research_agent.py 2>&1 | tee research.log
-        echo "Research exit code: $?"
-        cat data/latest.json 2>/dev/null | jq '.metadata' || echo "No latest.json"
+        exit_code=$?
+        echo "Research exit code: $exit_code"
+        if [ -f data/latest.json ]; then
+          echo "Latest.json metadata:"
+          jq '.metadata' data/latest.json
+        else
+          echo "ERROR: No latest.json created"
+        fi
+        exit $exit_code
       continue-on-error: true
     
-    - name: Run Whale Activity
+    - name: Run Whale Tracking Agent
       id: whale
       run: |
-        echo "Running Whale Activity Agent..."
-        python3 agents/whale_activity_agent.py || echo "Whale failed"
+        echo "=== Running Whale Tracking Agent v1.0 ==="
+        python3 agents/whale_agent.py 2>&1 | tee whale.log
+        exit_code=$?
+        echo "Whale agent exit code: $exit_code"
+        if [ -f data/whale_activity.json ]; then
+          echo "Whale activity summary:"
+          jq '.metadata' data/whale_activity.json
+        fi
+        exit $exit_code
       continue-on-error: true
     
-    - name: Run Thinking (with whale data)
+    - name: Run Thinking Agent
       id: thinking
       run: |
-        echo "Running Thinking Agent..."
-        python3 agents/thinking_agent.py || echo "Thinking failed"
+        echo "=== Running Thinking Agent v2.3 ==="
+        python3 agents/thinking_agent.py 2>&1 | tee thinking.log
+        exit_code=$?
+        echo "Thinking agent exit code: $exit_code"
+        if [ -f data/opportunities.json ]; then
+          echo "Opportunities summary:"
+          jq '.metadata' data/opportunities.json
+        fi
+        exit $exit_code
       continue-on-error: true
     
     - name: Run Alert Agent
@@ -64,20 +86,51 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        echo "Running Alert Agent..."
-        python3 agents/alert_agent.py || echo "Alert failed"
+        echo "=== Running Alert Agent ==="
+        python3 agents/alert_agent.py 2>&1 | tee alert.log
+        exit_code=$?
+        echo "Alert agent exit code: $exit_code"
+        exit $exit_code
       continue-on-error: true
     
-    - name: Commit data
+    - name: Commit and Push Data
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        echo "Files in data/:"
-        ls -la data/
-        echo "Latest.json metadata:"
-        cat data/latest.json | jq '.metadata' 2>/dev/null || echo "No latest.json"
-        git add data/ || true
+        
+        echo "=== Data Files ==="
+        ls -la data/ 2>/dev/null || echo "No data directory"
+        
+        echo "=== Committing Changes ==="
+        git add data/ 2>/dev/null || true
+        git add config/ 2>/dev/null || true
+        
         git status
-        git diff --staged --quiet || git commit -m "Auto-update data: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-        git push || true
-        echo "Push exit code: $?"
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          git commit -m "Auto-update data: $timestamp"
+          git push || echo "Push failed (may be up to date)"
+        fi
+    
+    - name: Pipeline Summary
+      run: |
+        echo "=== Pipeline Summary ==="
+        echo "Research Agent: ${{ steps.research.outcome }}"
+        echo "Whale Agent: ${{ steps.whale.outcome }}"
+        echo "Thinking Agent: ${{ steps.thinking.outcome }}"
+        echo "Alert Agent: ${{ steps.alert.outcome }}"
+        
+        if [ -f data/latest.json ]; then
+          echo ""
+          echo "=== Tokens Fetched ==="
+          jq '.metadata.tokens_fetched' data/latest.json
+        fi
+        
+        if [ -f data/opportunities.json ]; then
+          echo ""
+          echo "=== Score Distribution ==="
+          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
+        fi
