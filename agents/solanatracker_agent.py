@@ -131,7 +131,7 @@ def main():
         
         # Rate limiting - be gentle with free tier
         if i < len(tokens):
-            time.sleep(0.5)
+            time.sleep(2)  # Increased from 0.5 to 2 seconds
     
     # Save results
     output = {
