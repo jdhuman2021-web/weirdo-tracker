@@ -961,6 +961,9 @@
                             <div class="chart-subtitle" id="chartSubtitle">Click a token from the list</div>
                         </div>
                     </div>
+                    <button class="copy-btn" id="dexBtn" style="display: none;">
+                        📈 DexScreener
+                    </button>
                     <button class="copy-btn" id="copyBtn" onclick="copyAddress()" style="display: none;">
                         📋 Copy Address
                     </button>
@@ -1128,10 +1131,17 @@
             const dexUrl = `https://dexscreener.com/solana/${token.address}?embed=true&theme=dark&chart=1`;
             document.getElementById('chartContainer').innerHTML = `<iframe src="${dexUrl}" loading="lazy"></iframe>`;
             
-            // Update title with social links
+            // Update title with social links (no DexScreener link in title)
             const socialLinks = getSocialLinksHTML(token);
-            document.getElementById('chartTitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.symbol}</a>${socialLinks}`;
-            document.getElementById('chartSubtitle').innerHTML = `<a href="https://dexscreener.com/solana/${token.address}" target="_blank">${token.name || token.symbol}</a>`;
+            document.getElementById('chartTitle').innerHTML = `${token.symbol}${socialLinks}`;
+            document.getElementById('chartSubtitle').textContent = token.name || token.symbol;
+            
+            // Add DexScreener link button
+            const dexBtn = document.getElementById('dexBtn');
+            if (dexBtn) {
+                dexBtn.style.display = 'block';
+                dexBtn.onclick = () => window.open(`https://dexscreener.com/solana/${token.address}`, '_blank');
+            }
             
             // Update stats
             document.getElementById('statsGrid').style.display = 'grid';
