@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-03-22T07:51:19.797825",
-  "total_alerts": 0,
+  "timestamp": "2026-03-22T09:08:24.415825",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Regret",
+      "vol_ratio": 3.14,
+      "score": 45
+    },
+    {
+      "type": "WHALE",
+      "symbol": "DJI6930",
+      "vol_ratio": 6.29,
+      "score": 35
+    }
+  ]
 }
