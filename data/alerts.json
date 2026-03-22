@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-03-22T11:06:05.834782",
-  "total_alerts": 1,
+  "timestamp": "2026-03-22T11:59:51.845145",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "JUICE",
-      "vol_ratio": 4.93,
+      "vol_ratio": 5.14,
       "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 4.59,
+      "score": 37
     }
   ]
 }
