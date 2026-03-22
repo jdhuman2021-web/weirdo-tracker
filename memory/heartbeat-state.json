@@ -1,6 +1,6 @@
 {
   "lastChecks": {
-    "portfolio": "2026-03-21T15:44:00Z"
+    "portfolio": "2026-03-21T23:06:00Z"
   },
   "alerts": [
     {
@@ -26,29 +26,36 @@
       "token": "Momo-chan",
       "change_24h": -51.76,
       "change_6h": -48.9,
-      "message": "Momo-chan crashed -51.76% in 24h, -48.9% in 6h (threshold breach - RECOVERING)"
+      "message": "Momo-chan crashed -51.76% in 24h, -48.9% in 6h (threshold breach - RECOVERED)"
+    },
+    {
+      "timestamp": "2026-03-21T17:06:00Z",
+      "type": "price_drop",
+      "severity": "critical",
+      "token": "FOID",
+      "change_24h": -91.74,
+      "change_6h": -54.62,
+      "message": "FOID accelerating crash -91.74% in 24h, -54.62% in 6h (CRITICAL)"
+    },
+    {
+      "timestamp": "2026-03-21T18:36:00Z",
+      "type": "price_drop",
+      "severity": "critical",
+      "token": "FOID",
+      "change_24h": -92.42,
+      "change_6h": -48.94,
+      "message": "FOID catastrophic crash -92.42% in 24h, -48.94% in 6h (CRITICAL)"
     }
   ],
-  "updates": {
-    "Momo-chan": {
-      "status": "recovering",
-      "change_24h": -39.55,
-      "change_6h": -43.62,
-      "change_1h": 8.58,
-      "note": "Bounced back +8.58% in 1h, now below threshold"
-    },
-    "FOID": {
-      "status": "crashed",
-      "change_24h": -80.72,
-      "change_6h": -52.88,
-      "change_1h": -15.13,
-      "note": "Continued bleeding, now -80.72%"
-    },
-    "DRIVE": {
-      "status": "dead",
-      "change_24h": -81.18,
-      "change_6h": -2.97,
-      "note": "Slight recovery from -90% to -81%"
+  "day_summary": {
+    "date": "2026-03-21",
+    "total_checks": 25,
+    "threshold_breaches": 5,
+    "tokens_breached": ["FOID", "DRIVE", "Momo-chan"],
+    "final_status": {
+      "FOID": -7.33,
+      "DRIVE": -13.52,
+      "Momo-chan": -44.36
     }
   }
 }
