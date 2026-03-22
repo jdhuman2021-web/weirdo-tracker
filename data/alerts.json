@@ -1,19 +1,17 @@
 {
-  "timestamp": "2026-03-22T11:59:51.845145",
-  "total_alerts": 2,
+  "timestamp": "2026-03-22T13:59:49.232830",
+  "total_alerts": 1,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 5.14,
-      "score": 50
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 4.59,
-      "score": 37
+      "type": "STRONG_BUY",
+      "symbol": "NOTHING2",
+      "score": 85,
+      "price": 0.0009264,
+      "reasons": [
+        "Price dip with reversal - bounce potential",
+        "Volume 13.9x - EXTREME!"
+      ]
     }
   ]
 }
