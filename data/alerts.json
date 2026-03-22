@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-03-22T21:57:30.500766",
-  "total_alerts": 1,
+  "timestamp": "2026-03-22T23:01:47.693630",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "snowball",
-      "vol_ratio": 3.51,
-      "score": 47
+      "symbol": "Optimistic",
+      "vol_ratio": 4.69,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 4.14,
+      "score": 35
     }
   ]
 }
