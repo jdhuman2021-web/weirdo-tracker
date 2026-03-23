@@ -49,6 +49,15 @@ jobs:
         exit $exit_code
       continue-on-error: true
     
+    - name: Merge SolanaTracker Data
+      id: merge
+      run: |
+        echo "=== Merging SolanaTracker Data ==="
+        python3 agents/merge_solanatracker.py 2>&1 | tee merge.log
+        exit_code=$?
+        echo "Merge exit code: $exit_code"
+      continue-on-error: true
+    
     - name: Run Consolidated Pipeline
       id: pipeline
       run: |
