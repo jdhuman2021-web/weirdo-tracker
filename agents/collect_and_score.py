@@ -213,8 +213,10 @@ class CollectAndScore:
                 'status': token.get('status', 'active'),
                 'price_usd': float(pair.get('priceUsd', 0) or 0),
                 'price_change_1h': float(pair.get('priceChange', {}).get('h1', 0) or 0),
+                'price_change_6h': float(pair.get('priceChange', {}).get('h6', 0) or 0),
                 'price_change_24h': float(pair.get('priceChange', {}).get('h24', 0) or 0),
                 'volume_24h': float(pair.get('volume', {}).get('h24', 0) or 0),
+                'volume_6h': float(pair.get('volume', {}).get('h6', 0) or 0),
                 'volume_1h': float(pair.get('volume', {}).get('h1', 0) or 0),
                 'volume_5m': float(pair.get('volume', {}).get('m5', 0) or 0),
                 'liquidity_usd': float(pair.get('liquidity', {}).get('usd', 0) or 0),
@@ -445,7 +447,9 @@ class CollectAndScore:
         # Extract values
         price_24h = data.get('price_change_24h', 0)
         price_1h = data.get('price_change_1h', 0)
+        price_6h = data.get('price_change_6h', 0)
         volume = data.get('volume_24h', 0)
+        volume_6h = data.get('volume_6h', volume / 4)  # Estimate if not available
         liquidity = data.get('liquidity_usd', 1)
         mcap = data.get('market_cap', 0)
         holder_count = data.get('holder_count', 0)
@@ -519,6 +523,17 @@ class CollectAndScore:
         if vol_ratio > 5 and price_24h < -20:
             sub_scores['vol_score'] = min(sub_scores['vol_score'], 10)
             risk_factors.append(f"Volume {vol_ratio:.1f}x but down {price_24h:.0f}% - possible dump")
+        
+        # VOLUME ACCELERATION: For aged tokens starting to move
+        # 6h volume > 40% of 24h in 25% of time = accelerating
+        if volume > 0 and volume_6h > 0:
+            vol_6h_ratio = volume_6h / volume if volume > 0 else 0
+            if vol_6h_ratio > 0.4 and age_days >= 30:
+                sub_scores['vol_score'] += 5
+                reasons.append(f"Momentum building: 6h trending (+{price_6h:.0f}%)")
+            elif vol_6h_ratio > 0.35 and age_days >= 30 and price_24h > 10:
+                sub_scores['vol_score'] += 3
+                reasons.append(f"Aged gem waking up: +{price_24h:.0f}% 24h")
         
         # 3. LIQUIDITY (15 points max)
         if liquidity > 100000:
