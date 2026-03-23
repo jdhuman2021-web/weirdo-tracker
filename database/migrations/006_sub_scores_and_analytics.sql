@@ -85,18 +85,18 @@ WHERE sh.price_at_score > 0;
 
 CREATE OR REPLACE VIEW watchlist_health_score AS
 SELECT
-    DATE_TRUNC('hour', scored_at) AS hour,
-    COUNT(*) FILTER (WHERE recommendation IN ('STRONG_BUY','BUY')) AS bullish_count,
-    COUNT(*) FILTER (WHERE recommendation = 'SPECULATIVE') AS speculative_count,
-    COUNT(*) FILTER (WHERE recommendation IN ('WATCH','AVOID')) AS bearish_count,
+    DATE_TRUNC('hour', calculated_at) AS hour,
+    COUNT(*) FILTER (WHERE signal IN ('STRONG_BUY','BUY')) AS bullish_count,
+    COUNT(*) FILTER (WHERE signal = 'SPECULATIVE') AS speculative_count,
+    COUNT(*) FILTER (WHERE signal IN ('WATCH','AVOID')) AS bearish_count,
     COUNT(*) AS total_tokens,
     ROUND(
-        100.0 * COUNT(*) FILTER (WHERE recommendation IN ('STRONG_BUY','BUY','SPECULATIVE'))
+        100.0 * COUNT(*) FILTER (WHERE signal IN ('STRONG_BUY','BUY','SPECULATIVE'))
         / COUNT(*), 1
     ) AS health_score
 FROM score_history
-WHERE scored_at >= NOW() - INTERVAL '7 days'
-GROUP BY DATE_TRUNC('hour', scored_at)
+WHERE calculated_at >= NOW() - INTERVAL '7 days'
+GROUP BY DATE_TRUNC('hour', calculated_at)
 ORDER BY hour DESC;
 
 -- ============================================
