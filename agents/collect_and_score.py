@@ -959,7 +959,95 @@ class CollectAndScore:
         except:
             pass
         
+        # NEW: Save opportunity snapshot for trend analysis
+        try:
+            self.save_opportunity_snapshot()
+        except Exception as e:
+            print(f"Warning: Could not save opportunity snapshot: {e}")
+        
         return True
+    
+    def save_opportunity_snapshot(self):
+        """Save complete opportunity snapshot for trend analysis"""
+        if not self.supabase or not self.supabase.is_connected():
+            return
+        
+        # Calculate metrics
+        total = len(self.opportunities)
+        if total == 0:
+            return
+        
+        scores = [o.get('score', 0) for o in self.opportunities]
+        avg_score = sum(scores) / len(scores)
+        median_score = sorted(scores)[len(scores) // 2]
+        
+        signal_counts = {
+            'STRONG_BUY': 0,
+            'BUY': 0,
+            'SPECULATIVE': 0,
+            'WATCH': 0,
+            'AVOID': 0
+        }
+        for opp in self.opportunities:
+            signal = opp.get('signal', 'UNKNOWN')
+            if signal in signal_counts:
+                signal_counts[signal] += 1
+        
+        health_score = round(
+            (signal_counts['STRONG_BUY'] + signal_counts['BUY'] + signal_counts['SPECULATIVE']) 
+            / total * 100, 2
+        )
+        
+        bullish_ratio = round(
+            signal_counts['STRONG_BUY'] + signal_counts['BUY'] / 
+            max(1, signal_counts['STRONG_BUY'] + signal_counts['BUY'] + signal_counts['AVOID']),
+            2
+        )
+        
+        total_volume = sum(o.get('volume_24h', 0) for o in self.opportunities)
+        volume_spikes = sum(1 for o in self.opportunities if o.get('vol_acceleration', 0) > 5)
+        
+        # Top 5 opportunities
+        top_5 = [
+            {
+                'symbol': o.get('symbol'),
+                'score': o.get('score'),
+                'signal': o.get('signal'),
+                'price_usd': o.get('price_usd'),
+                'vol_acceleration': o.get('vol_acceleration')
+            }
+            for o in sorted(self.opportunities, key=lambda x: x.get('score', 0), reverse=True)[:5]
+        ]
+        
+        # Determine market regime
+        if health_score >= 60:
+            regime = 'risk_on'
+        elif health_score <= 30:
+            regime = 'risk_off'
+        elif signal_counts['AVOID'] > signal_counts['BUY']:
+            regime = 'volatile'
+        else:
+            regime = 'neutral'
+        
+        self.supabase.insert_opportunity_snapshot(
+            total_tokens=total,
+            tokens_scored=total,
+            avg_score=avg_score,
+            median_score=median_score,
+            strong_buy_count=signal_counts['STRONG_BUY'],
+            buy_count=signal_counts['BUY'],
+            speculative_count=signal_counts['SPECULATIVE'],
+            watch_count=signal_counts['WATCH'],
+            avoid_count=signal_counts['AVOID'],
+            health_score=health_score,
+            bullish_ratio=bullish_ratio,
+            total_volume_24h=total_volume,
+            volume_spike_count=volume_spikes,
+            top_5_opportunities=top_5,
+            market_regime=regime
+        )
+        
+        print(f"✓ Saved opportunity snapshot: {health_score}% health, {regime} regime")
     
     # ============================================
     # MAIN - Run entire pipeline
