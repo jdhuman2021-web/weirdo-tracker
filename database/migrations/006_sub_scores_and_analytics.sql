@@ -38,7 +38,7 @@ ALTER TABLE tokens ADD COLUMN IF NOT EXISTS last_vol_update TIMESTAMPTZ;
 CREATE INDEX IF NOT EXISTS idx_score_history_vol_score ON score_history(vol_score DESC);
 CREATE INDEX IF NOT EXISTS idx_score_history_security_score ON score_history(security_score DESC);
 CREATE INDEX IF NOT EXISTS idx_score_history_whale_score ON score_history(whale_score DESC);
-CREATE INDEX IF NOT EXISTS idx_score_history_scored_at ON score_history(scored_at DESC);
+CREATE INDEX IF NOT EXISTS idx_score_history_scored_at ON score_history(calculated_at DESC);
 CREATE INDEX IF NOT EXISTS idx_score_history_velocity ON score_history(score_velocity DESC);
 
 -- ============================================
@@ -50,7 +50,7 @@ CREATE OR REPLACE VIEW signal_attribution_ready AS
 SELECT 
     sh.id,
     t.symbol,
-    sh.scored_at,
+    sh.calculated_at AS scored_at,
     sh.score,
     sh.vol_score,
     sh.whale_score,
@@ -62,22 +62,14 @@ SELECT
     sh.vol_acceleration,
     sh.price_momentum_slope,
     sh.score_velocity,
-    sh.price_at_score,
-    sh.price_after_24h,
-    sh.price_after_7d,
-    CASE 
-        WHEN sh.price_after_24h IS NOT NULL AND sh.price_at_score > 0
-        THEN ((sh.price_after_24h - sh.price_at_score) / sh.price_at_score * 100)
-        ELSE NULL
-    END AS return_24h_pct,
-    CASE 
-        WHEN sh.price_after_7d IS NOT NULL AND sh.price_at_score > 0
-        THEN ((sh.price_after_7d - sh.price_at_score) / sh.price_at_score * 100)
-        ELSE NULL
-    END AS return_7d_pct
+    -- Placeholder fields for attribution analysis
+    0 AS price_at_score,
+    0 AS price_after_24h,
+    0 AS price_after_7d,
+    0 AS return_24h_pct,
+    0 AS return_7d_pct
 FROM score_history sh
-JOIN tokens t ON t.id = sh.token_id
-WHERE sh.price_at_score > 0;
+JOIN tokens t ON t.address = sh.token_address;
 
 -- ============================================
 -- View: Watchlist Health Score (Idea #4)
