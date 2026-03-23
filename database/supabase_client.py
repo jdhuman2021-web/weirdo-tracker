@@ -114,7 +114,10 @@ class SupabaseClient:
                         volume_24h: float, liquidity_usd: float,
                         price_change_1h: float, price_change_24h: float,
                         holder_count: int, age_hours: int, score: int, 
-                        signal: str) -> Optional[str]:
+                        signal: str,
+                        vol_score: int = 0, whale_score: int = 0, 
+                        security_score: int = 0, holder_score: int = 0,
+                        momentum_score: int = 0, social_score: int = 0) -> Optional[str]:
         """Insert a price snapshot"""
         if not self.is_connected():
             return None
@@ -131,7 +134,14 @@ class SupabaseClient:
                 'holder_count': holder_count,
                 'age_hours': age_hours,
                 'score': score,
-                'signal': signal
+                'signal': signal,
+                # NEW: Sub-scores for attribution analysis
+                'vol_score': vol_score,
+                'whale_score': whale_score,
+                'security_score': security_score,
+                'holder_score': holder_score,
+                'momentum_score': momentum_score,
+                'social_score': social_score
             }).execute()
             
             return result.data[0]['id'] if result.data else None

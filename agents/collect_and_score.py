@@ -361,8 +361,23 @@ class CollectAndScore:
     # ============================================
     
     def calculate_score(self, data, whale_info):
-        """Calculate opportunity score 0-100"""
-        score = 0
+        """
+        Calculate opportunity score 0-100 with sub-scores for attribution analysis
+        
+        Returns:
+            total_score: 0-100
+            sub_scores: dict of individual component scores
+            reasons: list of why
+            risk_factors: list of risks
+        """
+        sub_scores = {
+            'price_score': 0,
+            'vol_score': 0,
+            'liquidity_score': 0,
+            'mcap_score': 0,
+            'age_score': 0,
+            'whale_score': 0
+        }
         reasons = []
         risk_factors = []
         
@@ -383,87 +398,90 @@ class CollectAndScore:
         
         # 1. PRICE POSITION (35 points max)
         if price_24h < -50:
-            score -= 20
+            sub_scores['price_score'] = -20
             risk_factors.append(f"Crashed {abs(price_24h):.0f}% in 24h")
         elif price_24h < -30 and price_1h > 0:
-            score += 25
+            sub_scores['price_score'] = 25
             reasons.append("Price dip with reversal - bounce potential")
         elif price_24h < -20 and price_1h > -5:
-            score += 18
+            sub_scores['price_score'] = 18
             reasons.append("Price in dip zone")
         elif 0 <= price_24h <= 30:
-            score += 5
+            sub_scores['price_score'] = 5
             reasons.append("Price stable")
         elif price_24h > 100:
-            score -= 15
+            sub_scores['price_score'] = -15
             risk_factors.append(f"Extreme pump +{price_24h:.0f}%")
         
         # 2. VOLUME RATIO (35 points max)
         if vol_ratio > 10:
-            score += 35
+            sub_scores['vol_score'] = 35
             reasons.append(f"Volume {vol_ratio:.1f}x - EXTREME!")
         elif vol_ratio > 5:
-            score += 28
+            sub_scores['vol_score'] = 28
             reasons.append(f"Volume {vol_ratio:.1f}x - viral")
         elif vol_ratio > 2:
-            score += 20
+            sub_scores['vol_score'] = 20
             reasons.append(f"Volume {vol_ratio:.1f}x - healthy")
         elif has_whale:
-            score += 15
+            sub_scores['vol_score'] = 15
             reasons.append("Whale activity detected")
         elif vol_ratio < 0.5 and mcap < 100000:
-            score -= 10
+            sub_scores['vol_score'] = -10
             risk_factors.append("Low volume - potentially dead")
         
         # 3. LIQUIDITY (15 points max)
         if liquidity > 100000:
-            score += 15
+            sub_scores['liquidity_score'] = 15
             reasons.append("High liquidity")
         elif liquidity > 50000:
-            score += 12
+            sub_scores['liquidity_score'] = 12
             reasons.append("Good liquidity")
         elif liquidity > 25000:
-            score += 8
+            sub_scores['liquidity_score'] = 8
         elif liquidity < 10000:
-            score -= 5
+            sub_scores['liquidity_score'] = -5
             risk_factors.append("Low liquidity")
         
         # 4. MARKET CAP (10 points max)
         if 0 < mcap < 50000:
-            score += 10
+            sub_scores['mcap_score'] = 10
             reasons.append("Micro-cap gem potential")
         elif mcap < 200000:
-            score += 8
+            sub_scores['mcap_score'] = 8
         elif mcap > 10000000:
-            score -= 5
+            sub_scores['mcap_score'] = -5
         
         # 5. AGE TIMING (5 points)
         if 6 <= age_hours <= 48:
-            score += 5
+            sub_scores['age_score'] = 5
             reasons.append("Fresh but proven")
         elif age_hours < 6:
-            score -= 3
+            sub_scores['age_score'] = -3
             risk_factors.append("Very fresh")
         
         # 6. WHALE BONUS (20 points max)
         if has_whale:
             if vol_1h_ratio > 3:
-                score += 20
+                sub_scores['whale_score'] = 20
                 reasons.append(f"Whale volume {vol_1h_ratio:.1f}x")
             elif vol_1h_ratio > 2:
-                score += 15
+                sub_scores['whale_score'] = 15
                 reasons.append(f"Whale accumulation {vol_1h_ratio:.1f}x")
             else:
-                score += 5
+                sub_scores['whale_score'] = 5
                 reasons.append("Whale activity")
             
             # Whale selling check
             if vol_1h_ratio > 2 and price_1h < -10:
-                score -= 15
+                sub_scores['whale_score'] -= 15
                 risk_factors.append(f"Whale selling detected")
         
-        # Cap score
-        return max(0, min(100, score)), reasons, risk_factors
+        # Calculate total
+        total_score = sum(sub_scores.values())
+        total_score = max(0, min(100, total_score))
+        
+        return total_score, sub_scores, reasons, risk_factors
     
     def get_signal(self, score):
         """Convert score to signal"""
@@ -479,16 +497,16 @@ class CollectAndScore:
             return "AVOID", "🛑 Avoid"
     
     def run_thinking(self):
-        """Step 4: Calculate scores for all tokens"""
+        """Step 4: Calculate scores for all tokens with sub-scores"""
         print("\n" + "="*60)
-        print("STEP 4: THINKING - Calculating scores")
+        print("STEP 4: THINKING - Calculating scores with sub-scores")
         print("="*60)
         
         for i, (address, data) in enumerate(self.token_data.items(), 1):
             symbol = data.get('symbol', 'UNKNOWN')
             whale_info = self.whale_data.get(address, {})
             
-            score, reasons, risks = self.calculate_score(data, whale_info)
+            score, sub_scores, reasons, risks = self.calculate_score(data, whale_info)
             signal, label = self.get_signal(score)
             
             opp = {
@@ -497,16 +515,23 @@ class CollectAndScore:
                 'signal': signal,
                 'label': label,
                 'reasons': reasons,
-                'risk_factors': risks
+                'risk_factors': risks,
+                # NEW: Sub-scores for attribution analysis
+                'vol_score': sub_scores.get('vol_score', 0),
+                'whale_score': sub_scores.get('whale_score', 0),
+                'liquidity_score': sub_scores.get('liquidity_score', 0),
+                'mcap_score': sub_scores.get('mcap_score', 0),
+                'age_score': sub_scores.get('age_score', 0),
+                'price_score': sub_scores.get('price_score', 0)
             }
             self.opportunities.append(opp)
             
-            print(f"[{i}/{len(self.token_data)}] {symbol}: {score} → {signal}")
+            print(f"[{i}/{len(self.token_data)}] {symbol}: {score} → {signal} (sub-scores: vol={sub_scores.get('vol_score',0)}, whale={sub_scores.get('whale_score',0)})")
         
         # Sort by score
         self.opportunities.sort(key=lambda x: x['score'], reverse=True)
         
-        print(f"\n✓ Scored {len(self.opportunities)} tokens")
+        print(f"\n✓ Scored {len(self.opportunities)} tokens with sub-scores")
         return True
     
     # ============================================
@@ -849,7 +874,14 @@ class CollectAndScore:
                     holder_count=opp.get('holder_count', 0),
                     age_hours=opp.get('age_hours', 0),
                     score=opp.get('score', 0),
-                    signal=opp.get('signal', 'UNKNOWN')
+                    signal=opp.get('signal', 'UNKNOWN'),
+                    # NEW: Sub-scores
+                    vol_score=opp.get('vol_score', 0),
+                    whale_score=opp.get('whale_score', 0),
+                    security_score=opp.get('security_score', 0),
+                    holder_score=opp.get('holder_score', 0),
+                    momentum_score=opp.get('momentum_score', 0),
+                    social_score=opp.get('social_score', 0)
                 )
                 
                 db_writes += 1

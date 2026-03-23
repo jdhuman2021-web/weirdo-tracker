@@ -58,7 +58,14 @@ def save_snapshot(opportunities):
             "price_change_24h": opp.get("price_change_24h"),
             "price_change_1h": opp.get("price_change_1h"),
             "reasons": opp.get("reasons", []),
-            "risk_factors": opp.get("risk_factors", [])
+            "risk_factors": opp.get("risk_factors", []),
+            # NEW: SolanaTracker data
+            "security_score": opp.get("security_score"),
+            "holder_count": opp.get("holder_count"),
+            "lp_burn": opp.get("lp_burn"),
+            "buy_sell_ratio": opp.get("buy_sell_ratio"),
+            "age_days": opp.get("age_days"),
+            "socials": opp.get("socials", {})
         })
     
     history["snapshots"].append(snapshot)
