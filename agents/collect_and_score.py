@@ -471,6 +471,11 @@ class CollectAndScore:
             sub_scores['price_score'] = -15
             risk_factors.append(f"Extreme pump +{price_24h:.0f}%")
         
+        # Additional crash check: thin liquidity + crash = danger
+        if price_24h < -25 and liquidity < 15000:
+            sub_scores['price_score'] = max(sub_scores['price_score'], -15)
+            risk_factors.append(f"Thin liquidity (${liquidity:,.0f}) + crash = high risk")
+        
         # 2. VOLUME RATIO (35 points max)
         if vol_ratio > 10:
             sub_scores['vol_score'] = 35
@@ -487,6 +492,11 @@ class CollectAndScore:
         elif vol_ratio < 0.5 and mcap < 100000:
             sub_scores['vol_score'] = -10
             risk_factors.append("Low volume - potentially dead")
+        
+        # DUMP DETECTION: High volume but price crashing = potential pump and dump
+        if vol_ratio > 5 and price_24h < -20:
+            sub_scores['vol_score'] = min(sub_scores['vol_score'], 10)
+            risk_factors.append(f"Volume {vol_ratio:.1f}x but down {price_24h:.0f}% - possible dump")
         
         # 3. LIQUIDITY (15 points max)
         if liquidity > 100000:
