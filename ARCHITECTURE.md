@@ -1,63 +1,64 @@
-# Squirmy Screener - Architecture Document
+# Squirmy Screener - Architecture v2.0
 
-*Generated: 2026-03-21*
+*Last Updated: 2026-03-23*
+
+## Overview
+
+Squirmy Screener is a meme coin intelligence platform that combines multiple data sources to identify trading opportunities on Solana. This document describes the current architecture including the new SolanaTracker integration.
 
 ---
 
-## System Overview
-
-Squirmy Screener is a meme coin intelligence dashboard for tracking Solana tokens. It combines multiple data sources, AI scoring, and real-time updates to identify trading opportunities.
+## System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           DATA COLLECTION LAYER                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
-│  │ DexScreener  │  │   Helius     │  │   Jupiter    │  │   Supabase   │    │
-│  │   (Prices)   │  │  (Holders)  │  │  (Real-time) │  │  (History)   │    │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘    │
-└─────────┼──────────────────┼──────────────────┼──────────────────┼───────────┘
-          │                  │                  │                  │
-          ▼                  ▼                  ▼                  ▼
+│                           DATA SOURCES                                       │
+├──────────────┬──────────────┬──────────────┬──────────────┬──────────────┤
+│ DexScreener  │ SolanaTracker│   Helius     │   Supabase   │   GitHub     │
+│   (Prices)   │  (Security)  │  (Metadata)  │  (History)   │   (Config)   │
+└──────┬───────┴──────┬───────┴──────┬───────┴──────┬───────┴──────┬───────┘
+       │              │              │              │              │
+       └──────────────┴──────────────┴──────────────┴──────────────┘
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           AGENT PROCESSING LAYER                            │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
-│  │   Research   │──│   Helius     │──│    Whale     │──│   Jupiter    │    │
-│  │   Agent      │  │   Agent      │  │   Agent      │  │   Agent      │    │
-│  │   (v1.5)     │  │   (v1.0)     │  │   (v1.0)     │  │   (v1.0)     │    │
-│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘    │
-│         │                  │                  │                  │            │
-│         ▼                  ▼                  ▼                  ▼            │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                      │
-│  │   Thinking   │──│   Backtest   │──│    Alert     │                      │
-│  │   Agent      │  │   Agent      │  │   Agent      │                      │
-│  │   (v2.4)     │  │   (v1.0)     │  │   (v1.0)     │                      │
-│  └──────────────┘  └──────────────┘  └──────────────┘                      │
+│                      COLLECT & SCORE PIPELINE v1.0                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │   Research   │──│   Holders    │──│    Whale     │──│   Thinking   │   │
+│  │   (v1.5)     │  │   (v2.0)     │  │   (v1.0)     │  │   (v2.5)     │   │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────┬───────┘   │
+│         │                                                      │            │
+│         │              ┌───────────────────────────────────────┘            │
+│         │              │                                                    │
+│         │              ▼                                                    │
+│         │       ┌──────────────┐                                            │
+│         │       │   MERGE      │                                            │
+│         │       │ SolanaTracker│                                            │
+│         │       │   Data       │                                            │
+│         │       └──────┬───────┘                                            │
+│         │              │                                                    │
+│         └──────────────┼────────────────────────────────────────────────────┘
+│                        │
+│                        ▼
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│  │   Backtest   │──│    Alert     │──│    Save      │
+│  │   (v1.0)     │  │   (v1.0)     │  │   (v1.0)     │
+│  └──────────────┘  └──────────────┘  └──────────────┘
 └─────────────────────────────────────────────────────────────────────────────┘
-          │                  │                  │
-          ▼                  ▼                  ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           STORAGE LAYER                                     │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                          Supabase PostgreSQL                          │  │
-│  │  Tables: tokens, price_snapshots, whale_activity, alerts,            │  │
-│  │          pipeline_runs, score_history                                │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                          GitHub Repository                           │  │
-│  │  Files: config/tokens.json, data/*.json (opportunities, latest)     │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
+│                         STORAGE & OUTPUT                                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │opportunities.│  │   latest.    │  │   Supabase   │  │   Telegram   │  │
+│  │    json      │  │    json      │  │     DB       │  │   Alerts     │  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────┘
-          │
-          ▼
+                              │
+                              ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           PRESENTATION LAYER                                │
-│  ┌──────────────────────────────────────────────────────────────────────┐  │
-│  │                    Dashboard (index.html)                              │  │
-│  │  • Static hosting on Surge.sh                                         │  │
-│  │  • Real-time price polling (DexScreener, 30s)                         │  │
-│  │  • Full data refresh (GitHub Raw, 5min)                               │  │
-│  │  • Supabase Realtime (instant score updates)                          │  │
-│  └──────────────────────────────────────────────────────────────────────┘  │
+│                         DASHBOARD                                          │
+│                    https://squirmyscreener.surge.sh                         │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -65,7 +66,7 @@ Squirmy Screener is a meme coin intelligence dashboard for tracking Solana token
 
 ## Data Sources
 
-### 1. DexScreener API (Primary Price Data)
+### 1. DexScreener API (Primary)
 
 | Attribute | Value |
 |-----------|-------|
@@ -74,29 +75,28 @@ Squirmy Screener is a meme coin intelligence dashboard for tracking Solana token
 | **Cost** | Free |
 | **Data** | Price USD, 24h change, volume, liquidity, market cap, social links |
 | **Latency** | Real-time (~30 seconds) |
-| **Usage** | Batch up to 30 addresses per request |
+| **Update Frequency** | Every 30 minutes (pipeline) + Real-time polling (dashboard) |
 
-### 2. Helius API (Solana Blockchain Data)
-
-| Attribute | Value |
-|-----------|-------|
-| **Endpoint** | `https://mainnet.helius-rpc.com/` |
-| **Rate Limit** | 100,000 credits/month (free tier) |
-| **Cost** | Free |
-| **Data** | Holder count, fresh wallets, transaction history, token metadata, creator address |
-| **Latency** | ~30 minutes (pipeline) |
-| **Usage** | ~111 credits/day for 37 tokens |
-
-### 3. Jupiter API (Real-time Prices)
+### 2. SolanaTracker API (Security & Analytics)
 
 | Attribute | Value |
 |-----------|-------|
-| **Endpoint** | `https://quote-api.jup.ag/v6/quote` |
-| **Rate Limit** | ~10 requests/second |
+| **Endpoint** | `https://data.solanatracker.io/tokens/{address}` |
+| **Rate Limit** | 1000 credits/month (free tier) |
+| **Cost** | Free (1000 credits/month) |
+| **Data** | Security metrics, holder counts, transaction analysis, social links |
+| **Latency** | ~2 seconds per token |
+| **Update Strategy** | Optimized (see below) |
+
+### 3. Helius API (Metadata)
+
+| Attribute | Value |
+|-----------|-------|
+| **Endpoint** | `https://api.helius.xyz/v0/token-metadata` |
+| **Rate Limit** | 100K credits/month |
 | **Cost** | Free |
-| **Data** | Real-time USD price, 24h change, block height |
-| **Latency** | Real-time |
-| **Usage** | Batch up to 50 tokens per request |
+| **Data** | Token metadata, creation info |
+| **Status** | Backup source |
 
 ### 4. Supabase (Historical Data)
 
@@ -104,108 +104,145 @@ Squirmy Screener is a meme coin intelligence dashboard for tracking Solana token
 |-----------|-------|
 | **Type** | PostgreSQL Database |
 | **Free Tier** | 500MB storage, 2GB bandwidth/month |
-| **Data** | Historical prices, scores, whale activity, alerts |
+| **Data** | Historical prices, scores, alerts, pipeline runs |
 | **Features** | REST API, Realtime subscriptions |
 
 ---
 
-## Agents (Pipeline Order)
+## Optimized SolanaTracker Strategy
 
-### Pipeline Flow
+### Credit Usage Optimization
+
+| Data Type | Collection Strategy | Credits/Month |
+|-----------|---------------------|---------------|
+| **Static Data** (LP burn, socials, security) | Fetch once, cache forever | ~26 (one-time) |
+| **Dynamic Data** (holders, transactions) | Refresh every 2 days | ~104 (26 tokens × 4 refreshes) |
+| **Total** | | **~130 credits/month** |
+| **Budget** | 1000 credits/month | |
+| **Savings** | | **87% reduction** |
+
+### Static Data (Cache Forever)
+
+```python
+# Fetched once per token, never changes
+{
+    "security_score": 95,        # Calculated from LP burn + authorities
+    "lp_burn": 99,               # LP tokens burned (immutable)
+    "freeze_authority": null,    # Can freeze wallets?
+    "mint_authority": null,      # Can mint more tokens?
+    "twitter": "url",            # Social links
+    "telegram": "url",
+    "website": "url",
+    "creation_time": 1770281242, # Token birth timestamp
+    "deployer": "address"        # Creator wallet
+}
+```
+
+### Dynamic Data (Refresh Every 2 Days)
+
+```python
+# Updated regularly to track changes
+{
+    "holders": 26772,              # Number of token holders
+    "token_supply": 999849956,     # Total token supply
+    "buys": 397323,                # Buy transactions
+    "sells": 363002,               # Sell transactions
+    "total_txns": 760325,          # Total transactions
+    "volume_24h": 1529319,         # 24h volume in USD
+    "buy_sell_ratio": 1.09         # Buys/sells ratio
+}
+```
+
+### Caching Mechanism
 
 ```
-Research → Helius → Whale → Jupiter → Thinking → Backtest → Alert → Commit
-```
-
-| Agent | Version | Input | Output | Purpose |
-|-------|---------|-------|--------|---------|
-| **Research Agent** | v1.5 | `config/tokens.json` | `data/latest.json` | Fetch token data from DexScreener |
-| **Helius Agent** | v1.0 | `data/latest.json` | `data/helius_data.json` | Get holder counts, fresh wallets |
-| **Whale Agent** | v1.0 | `data/latest.json` | `data/whale_activity.json` | Detect volume spikes, whale movements |
-| **Jupiter Agent** | v1.0 | `config/tokens.json` | `data/jupiter_prices.json` | Get real-time Solana prices |
-| **Thinking Agent** | v2.4 | All data | `data/opportunities.json` | AI scoring, BUY/SELL signals |
-| **Backtest Agent** | v1.0 | `data/opportunities.json` | `data/backtest_results.json` | Track scoring accuracy |
-| **Alert Agent** | v1.0 | `data/opportunities.json` | Telegram notification | Send alerts for high scores |
-
----
-
-## Database Schema (Supabase)
-
-### Tables
-
-```sql
--- Tokens (37 tracked)
-tokens (
-  id UUID PRIMARY KEY,
-  address TEXT UNIQUE,
-  symbol TEXT,
-  name TEXT,
-  chain TEXT,
-  status TEXT,  -- 'active', 'dead', 'removed'
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-)
-
--- Price Snapshots (every 30 min)
-price_snapshots (
-  id UUID PRIMARY KEY,
-  token_id UUID REFERENCES tokens,
-  price_usd DECIMAL,
-  price_change_1h DECIMAL,
-  price_change_24h DECIMAL,
-  volume_24h DECIMAL,
-  liquidity_usd DECIMAL,
-  market_cap DECIMAL,
-  timestamp TIMESTAMP
-)
-
--- Whale Activity
-whale_activity (
-  id UUID PRIMARY KEY,
-  token_id UUID REFERENCES tokens,
-  volume_spike_percent DECIMAL,
-  detected_at TIMESTAMP,
-  details JSONB
-)
-
--- Alerts
-alerts (
-  id UUID PRIMARY KEY,
-  token_id UUID REFERENCES tokens,
-  alert_type TEXT,
-  message TEXT,
-  sent_at TIMESTAMP,
-  status TEXT
-)
-
--- Pipeline Runs
-pipeline_runs (
-  id UUID PRIMARY KEY,
-  run_at TIMESTAMP,
-  status TEXT,
-  duration_seconds INTEGER,
-  tokens_processed INTEGER,
-  errors JSONB
-)
-
--- Score History (for backtesting)
-score_history (
-  id UUID PRIMARY KEY,
-  token_id UUID REFERENCES tokens,
-  score INTEGER,
-  recommendation TEXT,
-  price_at_score DECIMAL,
-  price_after_24h DECIMAL,
-  price_after_7d DECIMAL,
-  scored_at TIMESTAMP
-)
+Token Cache (solanatracker_cache.json)
+├── Token Address (key)
+│   ├── Static Data (fetched once)
+│   ├── Dynamic Data (updated every 2 days)
+│   └── Timestamps (for cache validation)
 ```
 
 ---
 
-## Scoring Algorithm (Thinking Agent v2.4)
+## Pipeline Flow
 
-### Score Components
+### Step 1: Research (DexScreener)
+
+```python
+# Fetch all tokens from DexScreener
+# Returns: price, volume, liquidity, market cap, social links
+# Time: ~4-5 minutes (26 tokens × 6s delay)
+```
+
+### Step 2: Holders (DexScreener + Fallback)
+
+```python
+# Try DEXScreener holders field first
+# Fallback to SolanaTracker data (cached)
+# Time: ~1 minute
+```
+
+### Step 3: Whale Detection
+
+```python
+# Calculate volume spikes
+# Detect unusual trading patterns
+# Time: ~30 seconds
+```
+
+### Step 4: Thinking (Scoring)
+
+```python
+# Calculate opportunity scores
+# Consider price, volume, liquidity, age
+# Time: ~1 minute
+```
+
+### Step 5: Merge SolanaTracker Data
+
+```python
+# Load cached SolanaTracker data
+# Merge into opportunities:
+#   - Security score
+#   - Holder counts
+#   - Buy/sell ratio
+#   - Token age
+#   - Social links
+# Time: ~10 seconds
+```
+
+### Step 6: Backtest
+
+```python
+# Save snapshot for accuracy tracking
+# Compare predictions vs outcomes
+# Time: ~30 seconds
+```
+
+### Step 7: Alert
+
+```python
+# Check for high scores
+# Send Telegram notifications
+# Time: ~10 seconds
+```
+
+### Step 8: Save & Commit
+
+```python
+# Write opportunities.json (with merged data)
+# Write latest.json
+# Write Supabase
+# Git commit & push
+# Time: ~1 minute
+```
+
+---
+
+## Scoring Algorithm v2.5
+
+### Base Components (from DexScreener)
 
 | Factor | Weight | Max Points |
 |--------|--------|------------|
@@ -213,124 +250,90 @@ score_history (
 | Volume 24h | 10% | 10 |
 | Liquidity | 10% | 10 |
 | Market Cap | 10% | 10 |
-| Holder Count | 10% | 10 |
-| Fresh Wallets | 10% | 10 |
+| Age Timing | 5% | 5 |
 | Whale Activity | 15% | 15 |
-| Social Metrics | 5% | 5 |
-| Historical Performance | 10% | 10 |
-| Risk Factors | -20% | -20 (penalty) |
+| **Total Base** | **65%** | **65** |
 
-### Score Thresholds
+### SolanaTracker Enhancements (NEW)
 
-| Score | Recommendation |
-|-------|----------------|
-| 85+ | STRONG_BUY |
-| 70-84 | BUY |
-| 55-69 | SPECULATIVE |
-| 40-54 | WATCH |
-| <40 | AVOID |
+| Factor | Weight | Max Points | Source |
+|--------|--------|------------|--------|
+| Security Score | 15% | 15 | LP burn + authorities |
+| Holder Growth | 10% | 10 | SolanaTracker holders |
+| Buy/Sell Pressure | 10% | 10 | Transaction ratio |
+| **Total Enhanced** | **35%** | **35** |
 
-### Penalties Applied
+### Security Scoring
 
-| Condition | Penalty |
-|-----------|---------|
-| Price crashed >50% (24h) | -20 points |
-| Liquidity < $10K | -10 points |
-| No social links | -5 points |
-| Holder count < 100 | -5 points |
+```python
+# LP Burn (40 points max)
+100% burned:  40 points
+95-99%:       35 points
+90-94%:       30 points
+80-89%:       20 points
+50-79%:       10 points
+<50%:          0 points
 
----
+# Freeze Authority (30 points)
+None:          30 points
+Present:        0 points
 
-## Dashboard (index.html)
+# Mint Authority (30 points)
+None:          30 points
+Present:        0 points
 
-### Hosting
-
-| Attribute | Value |
-|-----------|-------|
-| **Platform** | Surge.sh |
-| **URL** | https://squirmyscreener.surge.sh |
-| **Cost** | Free (Student tier) |
-| **Deployment** | `surge dashboard/ squirmyscreener.surge.sh` |
-
-### Features
-
-- **Real-time price polling**: DexScreener API every 30 seconds
-- **Full data refresh**: GitHub Raw CDN every 5 minutes
-- **Responsive design**: Mobile-friendly
-- **Dark theme**: #0a0a0f background, #00ff88 accent
-- **Score visualization**: Color-coded recommendations
-
-### Data Flow
-
-```
-Browser → DexScreener API (30s) → Update prices
-Browser → GitHub Raw (5min) → Update scores
-Browser → Supabase Realtime → Instant score updates
+# Total: 100 points max
 ```
 
 ---
 
-## GitHub Actions Workflow
+## Data Flow
 
-### Schedule
-
-```yaml
-on:
-  schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
-  workflow_dispatch:  # Manual trigger
 ```
-
-### Environment Variables (Secrets)
-
-| Secret | Used By |
-|--------|---------|
-| `HELIUS_API_KEY` | Helius Agent |
-| `JUPITER_API_KEY` | Jupiter Agent |
-| `SUPABASE_URL` | All agents |
-| `SUPABASE_SERVICE_KEY` | All agents (write) |
-| `TELEGRAM_BOT_TOKEN` | Alert Agent |
-| `TELEGRAM_CHAT_ID` | Alert Agent |
-
-### Pipeline Steps
-
-```yaml
-jobs:
-  collect-data:
-    steps:
-      - Checkout
-      - Setup Python 3.11
-      - Install deps (requests, supabase)
-      - Run Research Agent
-      - Run Helius Agent
-      - Run Whale Agent
-      - Run Jupiter Agent
-      - Run Thinking Agent
-      - Run Backtest Agent
-      - Run Alert Agent
-      - Commit and Push Data
-      - Pipeline Summary
+┌─────────────────┐
+│  GitHub Actions │  (Every 30 minutes)
+│   Scheduler     │
+└────────┬────────┘
+         │
+         ▼
+┌────────────────────────────────────────────────────────┐
+│ 1. SolanaTracker Agent v2.0                            │
+│    ├─ Check cache for each token                       │
+│    ├─ New tokens: Fetch static + dynamic data           │
+│    ├─ Existing: Refresh dynamic data (every 2 days)   │
+│    └─ Save to solanatracker_cache.json                │
+└────────┬───────────────────────────────────────────────┘
+         │
+         ▼
+┌────────────────────────────────────────────────────────┐
+│ 2. Collect & Score Pipeline                          │
+│    ├─ Research: DexScreener prices (5 min)            │
+│    ├─ Holders: Cached SolanaTracker data              │
+│    ├─ Whale: Volume spike detection                   │
+│    ├─ Thinking: Calculate scores                      │
+│    ├─ MERGE: Add SolanaTracker security/holders      │
+│    ├─ Backtest: Save snapshot                       │
+│    ├─ Alert: Telegram notifications                  │
+│    └─ Save: opportunities.json (with merged data)    │
+└────────┬───────────────────────────────────────────────┘
+         │
+         ▼
+┌────────────────────────────────────────────────────────┐
+│ 3. Git Commit & Push                                   │
+│    ├─ opportunities.json → GitHub                       │
+│    ├─ latest.json → GitHub                            │
+│    └─ Trigger: Surge.sh redeploy                      │
+└────────┬───────────────────────────────────────────────┘
+         │
+         ▼
+┌────────────────────────────────────────────────────────┐
+│ 4. Dashboard Updates                                   │
+│    ├─ GitHub Raw CDN (5 min cache)                    │
+│    ├─ Dashboard loads opportunities.json              │
+│    ├─ Shows Security Score, Holders, Buy/Sell        │
+│    └─ Real-time price polling (DexScreener)          │
+└────────────────────────────────────────────────────────┘
 ```
-
----
-
-## Cost Analysis
-
-### Free Tier Usage
-
-| Service | Free Tier | Our Usage | Status |
-|---------|-----------|-----------|--------|
-| DexScreener | 300 req/min | ~2 req/min | ✅ Within limits |
-| Helius | 100K credits/mo | ~111 credits/day | ✅ Within limits |
-| Jupiter | 10 req/sec | ~0.1 req/sec | ✅ Within limits |
-| Supabase | 500MB / 2GB/mo | ~50MB / 200MB/mo | ✅ Within limits |
-| Surge.sh | Unlimited | Static files | ✅ Free |
-| GitHub Actions | 2000 min/mo | ~4320 min/mo | ⚠️ Exceeds free tier if run every 15min |
-
-### Estimated Monthly Costs
-
-- **Current (30-min schedule)**: **$0/month** (all free tier)
-- **If reduced to 15-min**: Would exceed GitHub Actions free tier
 
 ---
 
@@ -340,97 +343,129 @@ jobs:
 .openclaw/workspace/
 ├── .github/
 │   └── workflows/
-│       └── tracker.yml          # GitHub Actions pipeline
+│       └── tracker.yml              # GitHub Actions pipeline
 ├── agents/
-│   ├── research_agent.py        # DexScreener fetch
-│   ├── helius_agent.py         # Solana blockchain data
-│   ├── whale_agent.py          # Volume spike detection
-│   ├── jupiter_agent.py        # Real-time prices
-│   ├── thinking_agent.py       # AI scoring
-│   ├── backtest_agent.py       # Score accuracy tracking
-│   └── alert_agent.py          # Telegram notifications
+│   ├── collect_and_score.py       # Main pipeline (includes merge)
+│   ├── solanatracker_agent_v2.py   # Optimized SolanaTracker agent
+│   ├── merge_solanatracker.py      # Standalone merge (deprecated)
+│   └── ...
 ├── config/
-│   └── tokens.json             # Token watchlist (37 tokens)
+│   └── tokens.json                 # Token watchlist (26 active)
 ├── data/
-│   ├── latest.json             # Current token data
-│   ├── opportunities.json      # Scored opportunities
-│   ├── helius_data.json        # Holder/wallet data
-│   ├── jupiter_prices.json     # Real-time prices
-│   ├── whale_activity.json     # Whale movements
-│   └── backtest_history.json   # Historical accuracy
+│   ├── opportunities.json          # Final output (dashboard source)
+│   ├── latest.json                 # Current prices
+│   ├── solanatracker_cache.json    # Persistent cache (static data)
+│   ├── solanatracker_data.json     # Latest fetch (dynamic data)
+│   └── ...
 ├── dashboard/
-│   └── index.html              # Web dashboard
+│   └── index.html                  # Surge.sh dashboard
 ├── database/
-│   ├── supabase_client.py      # Database client
-│   └── migrations/
-│       ├── 002_whale_intelligence.sql
-│       ├── 003_score_history.sql
-│       ├── 004_token_metadata.sql
-│       └── 005_helius_fields.sql
-├── .env                        # Local environment variables
-└── requirements.txt            # Python dependencies
+│   └── supabase_client.py          # Database interface
+└── ARCHITECTURE.md                 # This file
 ```
 
 ---
 
-## Known Issues & Limitations
+## API Keys & Secrets
 
-### Current Limitations
-
-1. **30-minute latency**: Pipeline runs every 30 minutes to stay within GitHub Actions free tier
-2. **Birdeye API broken**: Switched to Helius for holder data
-3. **GMGN API blocked**: Cloudflare blocking requests (on hold)
-4. **No historical charting**: Dashboard shows current state only
-
-### Failed Integrations
-
-| Service | Status | Reason |
-|---------|--------|--------|
-| Birdeye | ❌ Broken | API inconsistent, rate limited |
-| GMGN | ❌ Blocked | Cloudflare 403 Forbidden |
-| DEXScreener WebSocket | ❌ N/A | Not available for Solana |
+| Secret | Purpose | Source |
+|--------|---------|--------|
+| `SOLANATRACKER_API_KEY` | Security & holder data | solanatracker.io |
+| `SUPABASE_URL` | Database endpoint | Supabase |
+| `SUPABASE_SERVICE_KEY` | Database write access | Supabase |
+| `HELIUS_API_KEY` | Backup metadata | Helius |
+| `TELEGRAM_BOT_TOKEN` | Notifications | Telegram |
+| `TELEGRAM_CHAT_ID` | Alert destination | Telegram |
 
 ---
 
-## Future Roadmap
+## Cost Analysis
 
-### Planned Improvements
+### Monthly Costs (Free Tier Only)
 
-1. **Supabase Realtime**: Instant score updates to dashboard
-2. **Historical charts**: Track score performance over time
-3. **Mobile app**: React Native dashboard
-4. **More chains**: Ethereum, Base, Arbitrum support
-5. **AI model improvement**: Train on historical backtest data
-
-### Pending Migrations
-
-- `005_helius_fields.sql` - Add holder_count, fresh_wallet_count fields
-
----
-
-## API Keys (Secrets)
-
-| Key | Service | Free Tier |
-|-----|---------|-----------|
-| `HELIUS_API_KEY` | Helius RPC | 100K credits/mo |
-| `JUPITER_API_KEY` | Jupiter DEX | Unlimited |
-| `SUPABASE_URL` | Supabase | 500MB |
-| `SUPABASE_SERVICE_KEY` | Supabase Admin | - |
-| `TELEGRAM_BOT_TOKEN` | Telegram Bot | Unlimited |
-| `OPENROUTER_API_KEY` | OpenRouter AI | 200 req/day |
+| Service | Free Tier | Usage | Status |
+|---------|-----------|-------|--------|
+| DexScreener | Unlimited | ~720 requests/day | ✅ Within limits |
+| SolanaTracker | 1000 credits | ~130 credits/month | ✅ Within limits |
+| Helius | 100K credits | ~111 credits/day | ✅ Within limits |
+| Supabase | 500MB / 2GB | ~50MB / ~200GB | ✅ Within limits |
+| Surge.sh | Unlimited | Static files | ✅ Free |
+| GitHub Actions | 2000 min | ~1440 min/month | ✅ Within limits |
+| **Total** | | | **$0/month** |
 
 ---
 
-## Summary
+## Performance Metrics
 
-Squirmy Screener is a **free-tier meme coin intelligence system** that:
+### Pipeline Timing
 
-- Tracks **37 Solana tokens** from a configurable watchlist
-- Runs **every 30 minutes** via GitHub Actions
-- Uses **4 free APIs**: DexScreener, Helius, Jupiter, Supabase
-- Produces **AI-scored recommendations**: STRONG_BUY to AVOID
-- Deploys to **Surge.sh** for free static hosting
-- Stores **historical data** in Supabase PostgreSQL
-- Sends **Telegram alerts** for high-score tokens
+| Step | Duration | Notes |
+|------|----------|-------|
+| SolanaTracker Agent | 2-5 min | Depends on cache hits |
+| Research (DexScreener) | 4-5 min | 26 tokens × 6s |
+| Thinking (Scoring) | 1 min | Calculations |
+| Merge & Save | 1 min | Write files |
+| Git Commit | 1 min | Push to GitHub |
+| **Total** | **~10-13 min** | |
 
-**Total monthly cost: $0** (all within free tiers)
+### Dashboard Load
+
+| Component | Time | Source |
+|-----------|------|--------|
+| Initial Data | ~2s | GitHub Raw CDN |
+| Price Updates | Every 30s | DexScreener API |
+| Full Refresh | Every 5 min | GitHub Raw CDN |
+
+---
+
+## Future Improvements
+
+### Planned Enhancements
+
+1. **Real-time Updates**
+   - Supabase Realtime for instant score updates
+   - WebSocket connection for price streaming
+
+2. **Historical Analysis**
+   - Track holder growth over time
+   - Correlate security scores with price performance
+
+3. **Alert Enhancements**
+   - Security score changes
+   - LP burn events
+   - Sudden holder growth
+
+4. **Machine Learning**
+   - Predict score accuracy based on historical data
+   - Identify patterns in successful tokens
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Issue:** SolanaTracker data not showing on dashboard
+**Cause:** Pipeline overwrites opportunities.json after merge
+**Fix:** Merge now integrated into collect_and_score.py save_files()
+
+**Issue:** Rate limiting on SolanaTracker
+**Cause:** Too frequent API calls
+**Fix:** Optimized agent with 2-day cache for dynamic data
+
+**Issue:** High credit usage
+**Cause:** Fetching all data every run
+**Fix:** Separate static (once) vs dynamic (every 2 days) data
+
+---
+
+## References
+
+- **Dashboard:** https://squirmyscreener.surge.sh
+- **GitHub:** https://github.com/jdhuman2021-web/weirdo-tracker
+- **SolanaTracker Docs:** https://docs.solanatracker.io
+- **DexScreener API:** https://docs.dexscreener.com
+
+---
+
+*Architecture v2.0 - Optimized for 1000 SolanaTracker credits/month*
