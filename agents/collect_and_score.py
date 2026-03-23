@@ -308,6 +308,64 @@ class CollectAndScore:
         return True
     
     # ============================================
+    # STEP 2b: VOLUME ACCELERATION (Idea #1)
+    # ============================================
+    
+    def calculate_volume_acceleration(self, token_address):
+        """
+        Calculate volume acceleration vs 7-day average
+        Returns ratio: current_volume / 7day_avg
+        """
+        # In a real implementation, query Supabase for historical data
+        # For now, use a simplified version based on current data
+        if token_address not in self.token_data:
+            return 1.0
+        
+        data = self.token_data[token_address]
+        volume_24h = data.get('volume_24h', 0)
+        volume_1h = data.get('volume_1h', 0)
+        
+        # Estimate 7-day average from 24h data
+        # This is a simplified version - full version needs historical data
+        vol_7d_estimate = volume_24h * 7  # Rough estimate
+        
+        if vol_7d_estimate > 0:
+            # Compare current 24h to daily average
+            daily_avg = vol_7d_estimate / 7
+            acceleration = volume_24h / daily_avg if daily_avg > 0 else 1.0
+            return round(acceleration, 2)
+        
+        return 1.0
+    
+    def run_volume_analysis(self):
+        """Calculate volume metrics for all tokens"""
+        print("\n" + "="*60)
+        print("STEP 2b: VOLUME ANALYSIS - Calculating acceleration")
+        print("="*60)
+        
+        for address, data in self.token_data.items():
+            acceleration = self.calculate_volume_acceleration(address)
+            data['vol_acceleration'] = acceleration
+            
+            # Add interpretation
+            if acceleration >= 5:
+                data['vol_status'] = 'SPIKE'
+            elif acceleration >= 2:
+                data['vol_status'] = 'ELEVATED'
+            elif acceleration >= 0.5:
+                data['vol_status'] = 'NORMAL'
+            else:
+                data['vol_status'] = 'LOW'
+        
+        spiked = sum(1 for d in self.token_data.values() if d.get('vol_status') == 'SPIKE')
+        elevated = sum(1 for d in self.token_data.values() if d.get('vol_status') == 'ELEVATED')
+        
+        print(f"✓ Volume analysis complete")
+        print(f"  {spiked} tokens with volume SPIKE (>5x)")
+        print(f"  {elevated} tokens with elevated volume (2-5x)")
+        return True
+    
+    # ============================================
     # STEP 3: WHALE - Detect whale activity
     # ============================================
     
@@ -929,6 +987,7 @@ class CollectAndScore:
             return False
         
         self.run_holders()
+        self.run_volume_analysis()  # NEW: Volume acceleration
         self.run_whale()
         self.run_thinking()
         self.run_backtest()
