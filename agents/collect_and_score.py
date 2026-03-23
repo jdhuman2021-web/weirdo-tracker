@@ -479,19 +479,38 @@ class CollectAndScore:
             sub_scores['price_score'] = max(sub_scores['price_score'], -15)
             risk_factors.append(f"Thin liquidity (${liquidity:,.0f}) + crash = high risk")
         
-        # 2. VOLUME RATIO (35 points max)
+        # 2. VOLUME RATIO (35 points max) - Age-adjusted scoring
+        # Older established tokens shouldn't be penalized for steady low volume
+        age_days = age_hours / 24
+        security_score = data.get('security_score', 100)
+        
+        # Volume thresholds adjust based on age
+        if age_days < 7:  # Fresh tokens need high volume to prove themselves
+            vol_threshold = 5
+        elif age_days < 30:  # Growing tokens
+            vol_threshold = 2
+        elif age_days < 90:  # Established tokens
+            vol_threshold = 1
+        else:  # Mature tokens - volume naturally lower
+            vol_threshold = 0.5
+        
         if vol_ratio > 10:
             sub_scores['vol_score'] = 35
             reasons.append(f"Volume {vol_ratio:.1f}x - EXTREME!")
         elif vol_ratio > 5:
             sub_scores['vol_score'] = 28
             reasons.append(f"Volume {vol_ratio:.1f}x - viral")
-        elif vol_ratio > 2:
+        elif vol_ratio > vol_threshold:
             sub_scores['vol_score'] = 20
             reasons.append(f"Volume {vol_ratio:.1f}x - healthy")
         elif has_whale:
             sub_scores['vol_score'] = 15
             reasons.append("Whale activity detected")
+        
+        # For established tokens (30+ days) with good security, volume floor
+        if age_days >= 30 and security_score >= 90 and sub_scores['vol_score'] < 10:
+            sub_scores['vol_score'] = 10
+            reasons.append(f"Established ({age_days:.0f}d) - steady volume")
         elif vol_ratio < 0.5 and mcap < 100000:
             sub_scores['vol_score'] = -10
             risk_factors.append("Low volume - potentially dead")
