@@ -1,0 +1,1710 @@
+{
+  "metadata": {
+    "description": "Unified database of whale and smart money wallets on Solana",
+    "sources": [
+      "whale_wallets.json (Birdeye data)",
+      "smart_wallets.json (GMGN Top 100 Smart Money)"
+    ],
+    "last_updated": "2026-03-23",
+    "total_wallets": 171
+  },
+  "wallet_types": {
+    "whale": "Large wallet, high SOL value, significant market influence",
+    "smart_money": "Profitable trader with high win rate, identified by GMGN/OKX",
+    "insider": "Early investor or insider with known token holdings",
+    "kol": "Key Opinion Leader, influencer trader",
+    "dev": "Token developer wallet"
+  },
+  "wallets": [
+    {
+      "address": "BtDaZUqHr2mKH5EYQCztuerHBuBEfQNYdquTDtEZp2Ym",
+      "label": "SPECIAL1",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "SPECIAL1",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AfwNi3FBb1zFpBxMerawpq5fTf7vdGfSRQnfmkU8YT8h",
+      "label": "Fish insider",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "Fish insider",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "3i51cKbLbaKAqvRJdCUaq9hsnvf9kqCfMujNgFj7nRKt",
+      "label": "Fish insider 2",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "Fish insider 2",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ApRnQN2HkbCn7W2WWiT2FEKvuKJp9LugRyAE1a9Hdz1",
+      "label": "Winrate",
+      "type": "smart_money",
+      "source": "whale_wallets",
+      "original_name": "Winrate",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "Be24Gbf5KisDk1LcWWZsBn8dvB816By7YzYF5zWZnRR6",
+      "label": "Chairman the holder",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Chairman the holder",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "ALY8eYje7CnGGBEcgQ8AWR5SctCoL867RznVh2zgKUto",
+      "label": "Fish Decent",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Fish Decent",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BBp4M7AQXDsPwKbNMrd8eXvBSDVGT8sdNhoP6kd8PWBo",
+      "label": "Gold guy",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Gold guy",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "GM7Hrz2bDq33ezMtL6KGidSWZXMWgZ6qBuugkb5H8NvN",
+      "label": "beaver",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "beaver",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "89HbgWduLwoxcofWpmn1EiF9wEdpgkNDEyPjzZ72mkDi",
+      "label": "AI cook",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "AI cook",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "FEGu1issUaiWS7NhSNLwDYRudBSSUHaBenHF14qStv4W",
+      "label": "Crypto Stacks",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Crypto Stacks",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "7JAi6spGX1FFnUNAhkAjJEPWb4iS6BYHVK16RP9fKBZF",
+      "label": "Retrace Ape",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Retrace Ape",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "HAajkdbtE6jQ1SDYL94nZ3HSjYYh6X4HTDE5frkjThwC",
+      "label": "RainbowFish Top holder",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "RainbowFish Top holder",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AdSbk6TK6yNNzTrJ9JY29GZ3hnZBo933JX15ZJ8EqdTD",
+      "label": "opium bird guy",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "opium bird guy",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AgmLJBMDCqWynYnQiPCuj9ewsNNsBJXyzoUhD9LJzN51",
+      "label": "70 mill",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "70 mill",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AXduaBoy8C9ScaNCrkkZoUtLV8CWD96TEqUUhRqv5wEF",
+      "label": "Mr Patient",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Mr Patient",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "Em8J3gBWapfVBGVhVipwQnLrqCvnWBnLajw6XFsFECPF",
+      "label": "Opium Whale",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Opium Whale",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "J3jfq8o7951raAZ1J1kRUEGzgTgTBDR4hyMhnyuDMqp6",
+      "label": "Alpha Cno 1",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "Alpha Cno 1",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "Gtg4qSMkxME783rNdwHYQ11DbQvoXgLodTBLAAa8G5C2",
+      "label": "Win all Day",
+      "type": "smart_money",
+      "source": "whale_wallets",
+      "original_name": "Win all Day",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "B711mkrduBU75rBagvVUfoHLMnc7rW2PxsAaNo2BsXQ",
+      "label": "new fish top",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "new fish top",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK",
+      "label": "WOn sol",
+      "type": "smart_money",
+      "source": "whale_wallets",
+      "original_name": "WOn sol",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "51ktg8vYic3XHpZ7N8AFv7GriVC4ake7TQ5j8RX7N1J5",
+      "label": "Lucca Insider 1",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "Lucca Insider 1",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "AgEkFUGK8FxfkBJCGaL9iRY4mj8zL5KVi1bEofsbu4BW",
+      "label": "Lucca Insider 2",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "Lucca Insider 2",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "H5d8DMkLywD7UJ7gkEM2aSsrGEcbQ9DqhmZ3LjPQdM7V",
+      "label": "Lucca Master 1",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "Lucca Master 1",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8avtb3GZapmpYWUjXoJYCXfATRBhH8SGQkyDSoqF6CPC",
+      "label": "Lucca Master 2",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "Lucca Master 2",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5t8JEn6xyLCXFm5jehbQUj3eBbgiVYUFwtL9PmCJRY9D",
+      "label": "BANKR guy",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "BANKR guy",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "DtjYbZntc2mEm1UrZHNcKguak6h6QM4S5xobnwFgg92Y",
+      "label": "Files",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Files",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "GNrmKZCxYyNiSUsjduwwPJzhed3LATjciiKVuSGrsHEC",
+      "label": "GIANNNNN",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "GIANNNNN",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "9yWTCK2Z1HKJuDwJsAQuSsax789AQxWnrQk6b9zpmiQB",
+      "label": "Toilet Giy 1",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Toilet Giy 1",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "7p17ypqakVM1JYLcPMoBwv2TXvua2HMfeEnfVcpasWZF",
+      "label": "Toilet Guy 2",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Toilet Guy 2",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "GFs77ZfMxeFQ4MLBPZpyy9tcZhroLxgBJEGAm39cQDfg",
+      "label": "Toilet Guy 3",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Toilet Guy 3",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "92cxfvW4dyfENHxFTRzi23Qf6x6HJCEVYmzubakpwKAc",
+      "label": "CNO 2",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "CNO 2",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "J9TYAsWWidbrcZybmLSfrLzryANf4CgJBLdvwdGuC8MB",
+      "label": "Johnson",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Johnson",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "HtXr3o8F9WRwwXxUqgZ3mcmFS1QKPjhvNLh6oDLKGyuQ",
+      "label": "BBQ DEV",
+      "type": "dev",
+      "source": "whale_wallets",
+      "original_name": "BBQ DEV",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "CtBR7Y65jd2B7Ak6pd734KmxNKSzBk6udDkPEeZKwfNP",
+      "label": "BBQ Chad",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "BBQ Chad",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "F5TjPySiUJMdvqMZHnPP85Rc1vErDGV5FR5P2vdVm429",
+      "label": "Zyaf",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Zyaf",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AEeJUPCiGR3yCoukTh1G58o4LYsUEyzrXtfmfMc2kJMX",
+      "label": "dAMIAN",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "dAMIAN",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "5sNnKuWKUtZkdC1eFNyqz3XHpNoCRQ1D1DfHcNHMV7gn",
+      "label": "Crypto Villain",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "Crypto Villain",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BHREKFkPQgAtDs8Vb1UfLkUpjG6ScidTjHaCWFuG2AtX",
+      "label": "RISK",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "RISK",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BtMBMPkoNbnLF9Xn552guQq528KKXcsNBNNBre3oaQtr",
+      "label": "Letterbomb",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Letterbomb",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "3WFhGDDa7HmLiAn1J2uvWUMob1AgaaJRWkH6v2TFa3vU",
+      "label": "Wreckless",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Wreckless",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "Eo6dajUTeUTxXKX4RwV6BPiQXFTa48DuFajPsY1w5DWU",
+      "label": "HODL jeet",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "HODL jeet",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "Dgehc8YMv6dHsiPJVoumvq4pSBkMVvrTgTUg7wdcYJPJ",
+      "label": "Omar",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Omar",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "J6TDXvarvpBdPXTaTU8eJbtso1PUCYKGkVtMKUUY8iEa",
+      "label": "Pain",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Pain",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AR8V6jTt7wnibNCgfm9hRkqZA51pqPf9nwXRXUQMNjSK",
+      "label": "Lambo Pete",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Lambo Pete",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BQVz7fQ1WsQmSTMY3umdPEPPTm1sdcBcX9sP7o6kPRmB",
+      "label": "Limfork",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Limfork",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "71PCu3E4JP5RDBoY6wJteqzxkKNXLyE1byg5BTAL9UtQ",
+      "label": "Ramset",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Ramset",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "5B79fMkcFeRTiwm7ehsZsFiKsC7m7n1Bgv9yLxPp9q2X",
+      "label": "Bandit",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Bandit",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "6S8GezkxYUfZy9JPtYnanbcZTMB87Wjt1qx3c6ELajKC",
+      "label": "Nihrox",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Nihrox",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BaLxyjXzATAnfm7cc5AFhWBpiwnsb71THcnofDLTWAPK",
+      "label": "Peely",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Peely",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "2fg5QD1eD7rzNNCsvnhmXFm5hqNgwTTG8p7kQ6f3rx6f",
+      "label": "Cupsey",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Cupsey",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "qNGhUruCGJpXJdsnV74USHErcbm3CrXRsnP8D6Z34Hh",
+      "label": "1000x Dan",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "1000x Dan",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "CyaE1VxvBrahnPWkqm5VsdCvyS2QmNht2UFrKJHga54o",
+      "label": "Cented",
+      "type": "kol",
+      "source": "whale_wallets",
+      "original_name": "Cented",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "DZAa55HwXgv5hStwaTEJGXZz1DhHejvpb7Yr762urXam",
+      "label": "Ozark",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Ozark",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "J29wicGCdRnV7q2zr1GHkmCcb62JRDCV1cpZG891yPwP",
+      "label": "Rainbow 2nd top holder",
+      "type": "insider",
+      "source": "whale_wallets",
+      "original_name": "Rainbow 2nd top holder",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm",
+      "label": "Gake",
+      "type": "smart_money",
+      "source": "whale_wallets",
+      "original_name": "Gake",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "D1H83ueSw5Nxy5okxH7VBfV4jRnqAK5Mm1tm3JAj3m5t",
+      "label": "Jeets",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Jeets",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "DfMxre4cKmvogbLrPigxmibVTTQDuzjdXojWzjCXXhzj",
+      "label": "Euris",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Euris",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "ASTyfSima4LLAdDgoFGkgqoKowG1LZFDr9fAQrg7iaJZ",
+      "label": "MEXC",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "MEXC",
+      "tier": "other",
+      "notes": "Exchange wallet",
+      "alerts_enabled": true
+    },
+    {
+      "address": "AstaWuJuQiAS3AfqmM3xZxrJhkkZNXtW4VyaGQfqV6JL",
+      "label": "Asta",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Asta",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "7h4qGKdFQpAHV9ZvjzxSHorqwfQu8RtivDijWigEx9uh",
+      "label": "Dilbert Chad",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Dilbert Chad",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "5R5NQ4NQb348uHh1engrsnZZrDaNm32vbKA1cMwgDd2M",
+      "label": "Fish Seller",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Fish Seller",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "G6fUXjMKPJzCY1rveAE6Qm7wy5U3vZgKDJmN1VPAdiZC",
+      "label": "clukz",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "clukz",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "PMJA8UQDyWTFw2Smhyp9jGA6aTaP7jKHR7BPudrgyYN",
+      "label": "Chester",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Chester",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "gangJEP5geDHjPVRhDS5dTF5e6GtRvtNogMEEVs91RV",
+      "label": "Qavec",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Qavec",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "14ZbzwApYQseaf8PJEPBkfpDVm1dGT1WQe6zPBsR8y4o",
+      "label": "Trump Airman",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "Trump Airman",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "BJed5g2jj6td5ZkdgFm3eYB5UrJo1w8XNWHSQyDEWu4U",
+      "label": "quick flip",
+      "type": "smart_money",
+      "source": "whale_wallets",
+      "original_name": "quick flip",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "VJSDW6S74YXR4rRR9P4xwhMvLZJQMhrUb8XMFirUsy1",
+      "label": "The Phantom",
+      "type": "whale",
+      "source": "whale_wallets",
+      "original_name": "The Phantom",
+      "tier": "other",
+      "notes": "",
+      "alerts_enabled": true
+    },
+    {
+      "address": "6FNbu3i6vpigXMatC6SyWKibUAdJyyX8nM8WDtZCNcEz",
+      "label": "GMGN #1 Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6FNbu3i6vpigXMatC6SyWKibUAdJyyX8nM8WDtZCNcEz",
+      "tier": "top_10",
+      "notes": "100% win rate, $106K profit in 30d, 42 trades",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6xUL8CUfV1fzd3UQoDBs7agWNXpwyE5q56css1wHNFFU",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6xUL8CUfV1fzd3UQoDBs7agWNXpwyE5q56css1wHNFFU",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4J5rDTvRbzjuKkB4B9rvNEvDz6f1BEBzUVT5mdctKHoT",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4J5rDTvRbzjuKkB4B9rvNEvDz6f1BEBzUVT5mdctKHoT",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9v6RGY46wf672PtpYMxCJ1nvrVTrukUDn1AjE634rvCf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9v6RGY46wf672PtpYMxCJ1nvrVTrukUDn1AjE634rvCf",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "GpNbukV5nggkJfsEEbKrJaZkdgYcNWCAaD91Mi4MmGQi",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "GpNbukV5nggkJfsEEbKrJaZkdgYcNWCAaD91Mi4MmGQi",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "FTg1gqW7vPm4kdU1LPM7JJnizbgPdRDy2PitKw6mY27j",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "FTg1gqW7vPm4kdU1LPM7JJnizbgPdRDy2PitKw6mY27j",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "69ngexW9UkgRp5KFjLpaK9XNSCxUFmps6jYmqhK3q6m9",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "69ngexW9UkgRp5KFjLpaK9XNSCxUFmps6jYmqhK3q6m9",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "7XgBprwnRfFHd287pnNQj4AZ6Yb9QE5pJ6ChQ3zhsGpJ",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "7XgBprwnRfFHd287pnNQj4AZ6Yb9QE5pJ6ChQ3zhsGpJ",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t",
+      "tier": "top_10",
+      "notes": "Top 10 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5wPWthsivjuGi43WbTo5LdSjDTJ8pXSSHyfXWVojJjUF",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "5wPWthsivjuGi43WbTo5LdSjDTJ8pXSSHyfXWVojJjUF",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "27nKnCT3DD5NLJw3xbq3KDL3thx6KTe6DmrRCbi2uszE",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "27nKnCT3DD5NLJw3xbq3KDL3thx6KTe6DmrRCbi2uszE",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "2zc9rfAQybucpfQxdgW9otWBFnqxDoz5Fva1vD2wmaha",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "2zc9rfAQybucpfQxdgW9otWBFnqxDoz5Fva1vD2wmaha",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6HRZ8qLqmAuJ3anksqAEHLqwN7akoCU1ZjihQyoQbK64",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6HRZ8qLqmAuJ3anksqAEHLqwN7akoCU1ZjihQyoQbK64",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ENRayX3P4At1eBj87TZJvZT1JVCAykwwYB5SjKT6Y2ZA",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "ENRayX3P4At1eBj87TZJvZT1JVCAykwwYB5SjKT6Y2ZA",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "D49JMtrnenWigKNWxrACtyXfybZLjKsufXvdcD1ng8BA",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "D49JMtrnenWigKNWxrACtyXfybZLjKsufXvdcD1ng8BA",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DVFpA1mKBWSEuyuiWXQEdrhkyZ8mSPM2Fe7y1KhbbqxT",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "DVFpA1mKBWSEuyuiWXQEdrhkyZ8mSPM2Fe7y1KhbbqxT",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "7HUpxcqNkUF2sGsNcTPMTWTVXok9mUiG8QcRJHM61jys",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "7HUpxcqNkUF2sGsNcTPMTWTVXok9mUiG8QcRJHM61jys",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8deJ9xeUvXSJwicYptA9mHsU2rN2pDx37KWzkDkEXhU6",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8deJ9xeUvXSJwicYptA9mHsU2rN2pDx37KWzkDkEXhU6",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CeoqFgsd6sob3S1Ka7qDnXj1e76MweXx2cwUrjVqmRmv",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CeoqFgsd6sob3S1Ka7qDnXj1e76MweXx2cwUrjVqmRmv",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6p8cxa2G17qaJf4LnoioyQ2vjmfaY91hc2cYghQiovXf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6p8cxa2G17qaJf4LnoioyQ2vjmfaY91hc2cYghQiovXf",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9NmtJ6MpuH8mzNnbQHvwaVpKbs3T51nr6VMFRTshNCMS",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9NmtJ6MpuH8mzNnbQHvwaVpKbs3T51nr6VMFRTshNCMS",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8r5Y6gRPBLoiT4jSGgpMwPPn4PitdSuKqDGPUx2aU5Wh",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8r5Y6gRPBLoiT4jSGgpMwPPn4PitdSuKqDGPUx2aU5Wh",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "79CmfobG1sLjUZRyT9nUzfwy5xcJuWETMqTMVxFqNFwh",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "79CmfobG1sLjUZRyT9nUzfwy5xcJuWETMqTMVxFqNFwh",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6AtHTM75tnpvazEwMBmd2spbxcQFTBqrNxNKUvTWxUMp",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6AtHTM75tnpvazEwMBmd2spbxcQFTBqrNxNKUvTWxUMp",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "A4vCNjNJxs6UxsHT99oNkNZaoLBBYS7ZF4RwaPwZ7PKp",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "A4vCNjNJxs6UxsHT99oNkNZaoLBBYS7ZF4RwaPwZ7PKp",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8yJFWmVTQq69p6VJxGwpzW7ii7c5J9GRAtHCNMMQPydj",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8yJFWmVTQq69p6VJxGwpzW7ii7c5J9GRAtHCNMMQPydj",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "EKWkKPRGEQzTHW32j7i4hbtzoW6s3ZGAfL7T8RkSvrhJ",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "EKWkKPRGEQzTHW32j7i4hbtzoW6s3ZGAfL7T8RkSvrhJ",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "FfCmMs68EYGkd3mnMf7T7uLRxEh5z1cY7TVpqawQxCEF",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "FfCmMs68EYGkd3mnMf7T7uLRxEh5z1cY7TVpqawQxCEF",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HbzEtahBdLk61kCP9wgqEecvP5oebFaqWHCANJupYM8Q",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HbzEtahBdLk61kCP9wgqEecvP5oebFaqWHCANJupYM8Q",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Ffb9SFFAFgBhiEU1XUj3r4JEz5Rva7SUfEAJWFinpUau",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Ffb9SFFAFgBhiEU1XUj3r4JEz5Rva7SUfEAJWFinpUau",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Eb5u4wu1bjjyeytxiuatuqNGGQLFFHjcW9rLeTiGzrMf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Eb5u4wu1bjjyeytxiuatuqNGGQLFFHjcW9rLeTiGzrMf",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HS8BjVNAT4m36hLnD3GZvc74Y8iMVkx7pYhiMSDv1pWm",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HS8BjVNAT4m36hLnD3GZvc74Y8iMVkx7pYhiMSDv1pWm",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "AVAZvHLR2PcWpDf8BXY4rVxNHYRBytycHkcB5z5QNXYm",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "AVAZvHLR2PcWpDf8BXY4rVxNHYRBytycHkcB5z5QNXYm",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "12L63BUpPKi8ZDdD1Kj5dsyPcozjAc1vTQpVwLbBa19H",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "12L63BUpPKi8ZDdD1Kj5dsyPcozjAc1vTQpVwLbBa19H",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6YQSZp2mnp8BUMyMkT7MPg33YHXtnJVBPvS8wNStiF6H",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6YQSZp2mnp8BUMyMkT7MPg33YHXtnJVBPvS8wNStiF6H",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9ru9BSVFSUqSRQFwdjjnkzQGf9yUdpRTjpjXPKc4BvxX",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9ru9BSVFSUqSRQFwdjjnkzQGf9yUdpRTjpjXPKc4BvxX",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4mbEf27m7XVGSuFpiAQiRxCyX5Epu2qd2gevY2joPmQk",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4mbEf27m7XVGSuFpiAQiRxCyX5Epu2qd2gevY2joPmQk",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Cgzgw9agWXSJPHPWXFoM4W5iKeUi1dNVREfq5u86XMKx",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Cgzgw9agWXSJPHPWXFoM4W5iKeUi1dNVREfq5u86XMKx",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ExCsisSuZuXmnuPMNVUiR7zTejfN3kmZdVidSExQE1vc",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "ExCsisSuZuXmnuPMNVUiR7zTejfN3kmZdVidSExQE1vc",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "BrFcBzjdb6iWgnogjaDws8CxnB6ApWtacCtUtsgzEHCf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "BrFcBzjdb6iWgnogjaDws8CxnB6ApWtacCtUtsgzEHCf",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9oTsfYWULoX9V9X1xJosKquiv2RUxia6XTLZHn6aa5BN",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9oTsfYWULoX9V9X1xJosKquiv2RUxia6XTLZHn6aa5BN",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5mta8pCqi2Zm3kFWLyMXseZtAFpHd5m2vHLh7N7hWyqX",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "5mta8pCqi2Zm3kFWLyMXseZtAFpHd5m2vHLh7N7hWyqX",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "3kebnKw7cPdSkLRfiMEALyZJGZ4wdiSRvmoN4rD1yPzV",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "3kebnKw7cPdSkLRfiMEALyZJGZ4wdiSRvmoN4rD1yPzV",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8Ga6pH8cpxspHEeF9Q3nc6BTgHCxnMwMJvvvecErLux7",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8Ga6pH8cpxspHEeF9Q3nc6BTgHCxnMwMJvvvecErLux7",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Bgm3tCLEcUQweuDcYARyoXioLCQQ3pdMYLMoneKdKP2m",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Bgm3tCLEcUQweuDcYARyoXioLCQQ3pdMYLMoneKdKP2m",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9vuf62XM3nf1TqceYYfd5RUawZ1rvmVYJJRmhc5e9Lgt",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9vuf62XM3nf1TqceYYfd5RUawZ1rvmVYJJRmhc5e9Lgt",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HiJ46Rrgdx7hmsgaibmi9LEM7U5nsHmVD22rngwk4Udc",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HiJ46Rrgdx7hmsgaibmi9LEM7U5nsHmVD22rngwk4Udc",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "7UiWFNRmbwFph7247WTzfxGHqELDigqpsiysb3y3tKQf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "7UiWFNRmbwFph7247WTzfxGHqELDigqpsiysb3y3tKQf",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "E8hK8YbE8iBPywf4Q9TahgAT42Az2jgJL6uCHcpkP196",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "E8hK8YbE8iBPywf4Q9TahgAT42Az2jgJL6uCHcpkP196",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ARGivPcb6uapd5N3EFMAzpWDZ4wRxriMH1kkdeFHYUvS",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "ARGivPcb6uapd5N3EFMAzpWDZ4wRxriMH1kkdeFHYUvS",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5cN5vAuXpRfE56QJTKFxw7m3UkuVVcZMjTwGb2DQZkrG",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "5cN5vAuXpRfE56QJTKFxw7m3UkuVVcZMjTwGb2DQZkrG",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DKwybycDSWidrHfpMjaahUsT1Yid3kig86ncXPAGe7AU",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "DKwybycDSWidrHfpMjaahUsT1Yid3kig86ncXPAGe7AU",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "EceAXcGP69ZKCnXougTSpuHoGrLZT7e9hkxXmDPx8Qcd",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "EceAXcGP69ZKCnXougTSpuHoGrLZT7e9hkxXmDPx8Qcd",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "GYGazbafxrSffoFF6xPUwVmqnV8CziwkD89KijUorhHi",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "GYGazbafxrSffoFF6xPUwVmqnV8CziwkD89KijUorhHi",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "H6azfrDwWFmQav8UMLiofEi73q6uZVv9geNqpy6VQXV9",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "H6azfrDwWFmQav8UMLiofEi73q6uZVv9geNqpy6VQXV9",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ErG9AkyQQvf7j8rha71dtba2zxqmEfPfc819TMzAbnWk",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "ErG9AkyQQvf7j8rha71dtba2zxqmEfPfc819TMzAbnWk",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "B4M9RqyTF9jF5Zb8ZG9ZeLkvWXCeKMAq6TdE9L4NqUr2",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "B4M9RqyTF9jF5Zb8ZG9ZeLkvWXCeKMAq6TdE9L4NqUr2",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HkiCryXaSgvYPHenUv2YYfcoYd8HcNgUUDKZdScpyP6Z",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HkiCryXaSgvYPHenUv2YYfcoYd8HcNgUUDKZdScpyP6Z",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "99qwBygWc1nPo9AvKgLbKDXxSkdmvy5CXTNk5CWVwzGT",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "99qwBygWc1nPo9AvKgLbKDXxSkdmvy5CXTNk5CWVwzGT",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5B3wpkaPZAKSZpYxmyMx5xNpeRZy67WdFNGQJToziAHP",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "5B3wpkaPZAKSZpYxmyMx5xNpeRZy67WdFNGQJToziAHP",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DosUh54Scj73jcPepYmiFPAzmn3oQYyd94FZqwNmBeGC",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "DosUh54Scj73jcPepYmiFPAzmn3oQYyd94FZqwNmBeGC",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Hp7fx5PoK6jg7brkJYiQ1fdAR73fZpwtFZCuUPTY8pVg",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Hp7fx5PoK6jg7brkJYiQ1fdAR73fZpwtFZCuUPTY8pVg",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ArSJoBSqugxk8s1ub56YENhDvHXneCnfXJujzpugkCbT",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "ArSJoBSqugxk8s1ub56YENhDvHXneCnfXJujzpugkCbT",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Et45ydaesDDBN1zjXA9m7iTqgatTnxL6MrMgtWNfCbuX",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Et45ydaesDDBN1zjXA9m7iTqgatTnxL6MrMgtWNfCbuX",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8A4yM724ep3dqv9GQ7Rx3B9QcV8Tjc2H1toHAnEEmAeK",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8A4yM724ep3dqv9GQ7Rx3B9QcV8Tjc2H1toHAnEEmAeK",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "JDkA2zGDoL184ZCxkETmZMUucZve3S9iCpCygK7X383m",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "JDkA2zGDoL184ZCxkETmZMUucZve3S9iCpCygK7X383m",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "7dMyG1PVNpqz9FpxyGAg7kkhVQmQ9zUJHwQw6RHs4vyo",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "7dMyG1PVNpqz9FpxyGAg7kkhVQmQ9zUJHwQw6RHs4vyo",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Eq38QQAc2auEEoXKx2iV7sXhGzmUaVMwf2SzHmw6cg4u",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Eq38QQAc2auEEoXKx2iV7sXhGzmUaVMwf2SzHmw6cg4u",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "7fLjm9dYn9chMXX58Au2H1p3cwoTvh3Ri3erm1bxWXk2",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "7fLjm9dYn9chMXX58Au2H1p3cwoTvh3Ri3erm1bxWXk2",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HF9G11htJrFUGD5cpj8t9Fks7DZ4eJy78YqmrAZquydg",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HF9G11htJrFUGD5cpj8t9Fks7DZ4eJy78YqmrAZquydg",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4bUb5YV7zcvabHsPd7NTpvMmbdMJkTwAtvY269PjNFh8",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4bUb5YV7zcvabHsPd7NTpvMmbdMJkTwAtvY269PjNFh8",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "FvTBarKFhrnhL9Q55bSJnMmAdXisayUb5u96eLejhMF9",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "FvTBarKFhrnhL9Q55bSJnMmAdXisayUb5u96eLejhMF9",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4ZCo5NLb1KxRymHaWh341WidGF3nYqBGanhHoq4HUGaf",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4ZCo5NLb1KxRymHaWh341WidGF3nYqBGanhHoq4HUGaf",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CuEeVczBi4ahyc6kwDodA24CzLVbk5wWUaMnL21da8Ws",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CuEeVczBi4ahyc6kwDodA24CzLVbk5wWUaMnL21da8Ws",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "8MaVa9kdt3NW4Q5HyNAm1X5LbR8PQRVDc1W8NMVK88D5",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "8MaVa9kdt3NW4Q5HyNAm1X5LbR8PQRVDc1W8NMVK88D5",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CPydqKcEEeKTR6wt3L15G8S5Ea4bxjS2vvjiW9vw1UwK",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CPydqKcEEeKTR6wt3L15G8S5Ea4bxjS2vvjiW9vw1UwK",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "34ZEH778zL8ctkLwxxERLX5ZnUu6MuFyX9CWrs8kucMw",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "34ZEH778zL8ctkLwxxERLX5ZnUu6MuFyX9CWrs8kucMw",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6CHhn9g1F7msGdekeJTtAcC6EsaEeHBCn6xz6hKpqhsQ",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6CHhn9g1F7msGdekeJTtAcC6EsaEeHBCn6xz6hKpqhsQ",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CMcHRygKpNG2Jx83T1cTiqAvg55mYXv6uSwjhFzLwQFc",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CMcHRygKpNG2Jx83T1cTiqAvg55mYXv6uSwjhFzLwQFc",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4q7rNU1nRUWY14vaLPpzpc2C756UQE36vaDwphBpLf2s",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4q7rNU1nRUWY14vaLPpzpc2C756UQE36vaDwphBpLf2s",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "AgMroLKUzcvHcvS79xDJmg9ZeuvReyvNxTLunyzqh1nZ",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "AgMroLKUzcvHcvS79xDJmg9ZeuvReyvNxTLunyzqh1nZ",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "FxqnyvqQbqvfzKZ7uNgu3aFfJzD7FPYi4J7foMwYJgMu",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "FxqnyvqQbqvfzKZ7uNgu3aFfJzD7FPYi4J7foMwYJgMu",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Gb8hF3dex5XsDYMFThaCUvLQngshMJbKuU4fc9PjiVp1",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Gb8hF3dex5XsDYMFThaCUvLQngshMJbKuU4fc9PjiVp1",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "6Y9shDFcKwXh16SR1hatzSsWCBQctjY8VCGbyLWY8NFp",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "6Y9shDFcKwXh16SR1hatzSsWCBQctjY8VCGbyLWY8NFp",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "DKgvpfttzmJqZXdavDwTxwSVkajibjzJnN2FA99dyciK",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "4n1pWS2RLCg4tRoWU3RCpf5YT6tP41rBDJ25TEyi5cMK",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "4n1pWS2RLCg4tRoWU3RCpf5YT6tP41rBDJ25TEyi5cMK",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5aR9jGBLnko6YfbnC8heWhFzwtf267StEUSobN6N8Eap",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "5aR9jGBLnko6YfbnC8heWhFzwtf267StEUSobN6N8Eap",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "9nhwAE4d2FPeRngHSvDfz4J5JqCxhAnm6xL88wnNKAbu",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "9nhwAE4d2FPeRngHSvDfz4J5JqCxhAnm6xL88wnNKAbu",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CVu6fpZFZMnWvQfun1yKjje3kV8L14i5knQ9PLKyzLE",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CVu6fpZFZMnWvQfun1yKjje3kV8L14i5knQ9PLKyzLE",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "62LBFpTA85Z4hHYofP79NiSozxHQWTh88MQzmFFRbgQo",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "62LBFpTA85Z4hHYofP79NiSozxHQWTh88MQzmFFRbgQo",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "GTPPYMjBbuAp4hbQTHidEMwS3Gyy34ysR4fYLRd6aPjt",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "GTPPYMjBbuAp4hbQTHidEMwS3Gyy34ysR4fYLRd6aPjt",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "2m5498hY3hpSvm1pVyZwwyU6bpQGFGu3PADSoEoZFXQB",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "2m5498hY3hpSvm1pVyZwwyU6bpQGFGu3PADSoEoZFXQB",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "CySCk3xgpsnkYe1B4XByg75UiHhwM8XEv5FVDCKGGdr4",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "CySCk3xgpsnkYe1B4XByg75UiHhwM8XEv5FVDCKGGdr4",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HPx7GxQjaVvox8kcBvCkUKSSh4oYm4TUeB8fXG9oGuZM",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HPx7GxQjaVvox8kcBvCkUKSSh4oYm4TUeB8fXG9oGuZM",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "HFtjJ4Ud1bn4gv1sZznBffpRDYdLK53vCLoDhm9Ks82R",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "HFtjJ4Ud1bn4gv1sZznBffpRDYdLK53vCLoDhm9Ks82R",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "28ipXVfkdmu1PDowCHbcSfzkpH9edZmSiVoDhY5xGVfR",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "28ipXVfkdmu1PDowCHbcSfzkpH9edZmSiVoDhY5xGVfR",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "3ZXQXrHAqNUcFgApjS9BDBkG8J14h5rxrQNAmAwqqEGH",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "3ZXQXrHAqNUcFgApjS9BDBkG8J14h5rxrQNAmAwqqEGH",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "FTKTNFqeu9wzckDzmsaL1dTgB19BK6fE6DMTHdbETtd1",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "FTKTNFqeu9wzckDzmsaL1dTgB19BK6fE6DMTHdbETtd1",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "Ex5UkpSmcS3zaGyYsv1GFcuRah5U8zvPxp9NBC4KCuVB",
+      "label": "GMGN Smart Money",
+      "type": "smart_money",
+      "source": "smart_wallets",
+      "original_name": "Ex5UkpSmcS3zaGyYsv1GFcuRah5U8zvPxp9NBC4KCuVB",
+      "tier": "top_100",
+      "notes": "Top 100 GMGN smart money wallet",
+      "alerts_enabled": false
+    },
+    {
+      "address": "ASQqasaFCfcerjBZngQJQF87SNbFtZi6hti9hf2btU7g",
+      "label": "DEXTrading Whale",
+      "type": "whale",
+      "source": "smart_wallets",
+      "original_name": "ASQqasaFCfcerjBZngQJQF87SNbFtZi6hti9hf2btU7g",
+      "tier": "other",
+      "notes": "High Win Rate, Flipper, High Volume DEX Trader",
+      "alerts_enabled": false
+    },
+    {
+      "address": "5E2CZs3d8a4jNhDXrBMEb1yC8uiM19pQC5HX8tqSn9Ec",
+      "label": "DEXTrading Whale",
+      "type": "whale",
+      "source": "smart_wallets",
+      "original_name": "5E2CZs3d8a4jNhDXrBMEb1yC8uiM19pQC5HX8tqSn9Ec",
+      "tier": "other",
+      "notes": "Verified DEX trader",
+      "alerts_enabled": false
+    }
+  ]
+}
