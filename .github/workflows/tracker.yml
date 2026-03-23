@@ -39,11 +39,12 @@ jobs:
     - name: Create dirs
       run: mkdir -p data config
     
-    - name: Run SolanaTracker Agent
+    - name: Run SolanaTracker Agent v2 (Optimized)
       id: solanatracker
       run: |
-        echo "=== Running SolanaTracker Agent v1.0 ==="
-        python3 agents/solanatracker_agent.py 2>&1 | tee solanatracker.log
+        echo "=== Running SolanaTracker Agent v2.0 ==="
+        echo "Strategy: Static data (once) + Dynamic refresh (every 2 days)"
+        python3 agents/solanatracker_agent_v2.py 2>&1 | tee solanatracker.log
         exit_code=$?
         echo "SolanaTracker exit code: $exit_code"
         exit $exit_code
