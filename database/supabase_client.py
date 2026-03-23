@@ -345,6 +345,47 @@ class SupabaseClient:
 
 
     # ============================================
+    # OPPORTUNITY SNAPSHOTS
+    # ============================================
+    
+    def insert_opportunity_snapshot(self, total_tokens: int, tokens_scored: int,
+                                    avg_score: float, median_score: float,
+                                    strong_buy_count: int, buy_count: int,
+                                    speculative_count: int, watch_count: int,
+                                    avoid_count: int, health_score: float,
+                                    bullish_ratio: float, total_volume_24h: float,
+                                    volume_spike_count: int, top_5_opportunities: list,
+                                    market_regime: str) -> Optional[str]:
+        """Save complete opportunity snapshot for trend analysis"""
+        if not self.is_connected():
+            return None
+        
+        try:
+            import json
+            result = self.client.table('opportunity_snapshots').insert({
+                'total_tokens': total_tokens,
+                'tokens_scored': tokens_scored,
+                'avg_score': avg_score,
+                'median_score': median_score,
+                'strong_buy_count': strong_buy_count,
+                'buy_count': buy_count,
+                'speculative_count': speculative_count,
+                'watch_count': watch_count,
+                'avoid_count': avoid_count,
+                'health_score': health_score,
+                'bullish_ratio': bullish_ratio,
+                'total_volume_24h': total_volume_24h,
+                'volume_spike_count': volume_spike_count,
+                'top_5_opportunities': json.dumps(top_5_opportunities),
+                'market_regime': market_regime
+            }).execute()
+            
+            return result.data[0]['id'] if result.data else None
+        except Exception as e:
+            print(f"ERROR inserting opportunity snapshot: {e}")
+            return None
+
+    # ============================================
     # ASYNC METHODS FOR WEBSOCKET AGENT
     # ============================================
     
