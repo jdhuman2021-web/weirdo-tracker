@@ -876,7 +876,7 @@ class CollectAndScore:
             'opportunities': opportunities
         }
         with open(data_dir / "opportunities.json", 'w', encoding='utf-8') as f:
-            json.dump(opportunities, f, indent=2)
+            json.dump(opportunities_output, f, indent=2)
         print(f"✓ Saved opportunities.json")
         
         # Save alerts.json
