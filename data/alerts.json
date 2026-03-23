@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-03-23T08:43:36.893729",
-  "total_alerts": 1,
+  "timestamp": "2026-03-21T16:06:30.901377",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 3.12,
-      "score": 68
+      "symbol": "JUICE",
+      "vol_ratio": 3.23,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "BQC",
+      "vol_ratio": 4.44,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "INU",
+      "vol_ratio": 5.2,
+      "score": 30
     }
   ]
 }
