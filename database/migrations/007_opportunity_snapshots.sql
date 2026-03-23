@@ -64,8 +64,8 @@ SELECT
     AVG(strong_buy_count) AS avg_strong_buys,
     AVG(buy_count) AS avg_buys,
     AVG(avoid_count) AS avg_avoids,
-    AVG(total_volume_24h) AS avg_total_volume,
-    MAX(top_5_opportunities) AS best_opportunities
+    AVG(total_volume_24h) AS avg_total_volume
+    -- Note: top_5_opportunities is JSONB, use latest snapshot instead
 FROM opportunity_snapshots
 WHERE captured_at >= NOW() - INTERVAL '30 days'
 GROUP BY DATE_TRUNC('day', captured_at)
