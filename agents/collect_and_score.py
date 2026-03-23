@@ -760,7 +760,7 @@ class CollectAndScore:
             
             merged = 0
             for opp in opportunities:
-                address = opp.get('address', '').lower()
+                address = opp.get('address', '')  # Remove .lower()!
                 if address in lookup:
                     data = lookup[address]
                     
