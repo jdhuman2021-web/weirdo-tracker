@@ -1000,6 +1000,18 @@
                         <div class="stat-value" id="statVolRatio">-</div>
                         <div class="stat-label">Vol/Liq</div>
                     </div>
+                    <div class="stat-card" style="background: var(--accent-dim); border: 1px solid var(--accent);">
+                        <div class="stat-value" id="statSecurity">-</div>
+                        <div class="stat-label">Security</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2);">
+                        <div class="stat-value" id="statHolders">-</div>
+                        <div class="stat-label">Holders</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(102,144,255,0.05); border: 1px solid rgba(102,144,255,0.2);">
+                        <div class="stat-value" id="statBuySell">-</div>
+                        <div class="stat-label">Buy/Sell</div>
+                    </div>
                 </div>
             </div>
             
@@ -1149,6 +1161,20 @@
             document.getElementById('statAge').textContent = token.age_hours ? token.age_hours + 'h' : 'N/A';
             const volRatio = token.volume_24h / (token.liquidity_usd || 1);
             document.getElementById('statVolRatio').textContent = volRatio.toFixed(1) + 'x';
+            
+            // SolanaTracker data
+            const securityScore = token.security_score || 0;
+            const securityColor = securityScore >= 90 ? '#00ff88' : securityScore >= 70 ? '#ffb340' : '#ff5566';
+            document.getElementById('statSecurity').textContent = securityScore;
+            document.getElementById('statSecurity').style.color = securityColor;
+            
+            const holders = token.holder_count || 0;
+            document.getElementById('statHolders').textContent = formatNumber(holders);
+            
+            const buySell = token.buy_sell_ratio || 1;
+            const buySellColor = buySell >= 1.2 ? '#00ff88' : buySell >= 0.8 ? '#ffb340' : '#ff5566';
+            document.getElementById('statBuySell').textContent = buySell.toFixed(2);
+            document.getElementById('statBuySell').style.color = buySellColor;
             
             // Copy button
             const copyBtn = document.getElementById('copyBtn');
