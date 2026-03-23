@@ -751,10 +751,10 @@ class CollectAndScore:
             with open(st_path, 'r', encoding='utf-8') as f:
                 st_data = json.load(f)
             
-            # Create lookup
+            # Create lookup (keep original case)
             lookup = {}
             for result in st_data.get('results', []):
-                address = result.get('address', '').lower()
+                address = result.get('address', '')
                 if address:
                     lookup[address] = result.get('data', {})
             

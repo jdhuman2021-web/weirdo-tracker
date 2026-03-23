@@ -55,17 +55,21 @@ jobs:
       run: |
         echo "=== Running Collect and Score v1.0 ==="
         echo "Pipeline: Research → Helius → Whale → Thinking → Backtest → Alert"
+        set +e  # Don't fail on jq errors
         python3 agents/collect_and_score.py 2>&1 | tee pipeline.log
-        exit_code=$?
+        exit_code=${PIPESTATUS[0]}
         echo "Pipeline exit code: $exit_code"
         
-        # Extract summary
-        if [ -f data/opportunities.json ]; then
+        # Extract summary (robust jq - don't fail script)
+        if [ -f data/opportunities.json ] && [ -s data/opportunities.json ]; then
           echo "=== Score Distribution ==="
-          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
+          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json 2>/dev/null || echo "JSON parse skipped"
         fi
         
-        exit $exit_code
+        # Only fail if pipeline itself failed (not jq)
+        if [ $exit_code -ne 0 ]; then
+          exit $exit_code
+        fi
     
     - name: Commit and Push Data
       run: |
