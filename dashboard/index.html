@@ -562,7 +562,7 @@
         .stat-card {
             background: var(--bg-tertiary);
             border-radius: var(--radius-sm);
-            padding: 8px 6px;
+            padding: 6px 8px;
             text-align: center;
             transition: var(--transition-fast);
         }
@@ -572,7 +572,7 @@
         }
         
         .stat-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
             color: var(--text-primary);
@@ -981,10 +981,6 @@
                         <div class="stat-label">Volume 24h</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="statLiquidity">-</div>
-                        <div class="stat-label">Liquidity</div>
-                    </div>
-                    <div class="stat-card">
                         <div class="stat-value" id="statMcap">-</div>
                         <div class="stat-label">Market Cap</div>
                     </div>
@@ -997,18 +993,10 @@
                         <div class="stat-label">Age</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="statVolRatio">-</div>
-                        <div class="stat-label">Vol/Liq</div>
-                    </div>
-                    <div class="stat-card" style="background: var(--accent-dim); border: 1px solid var(--accent);">
-                        <div class="stat-value" id="statSecurity">-</div>
-                        <div class="stat-label">Security</div>
-                    </div>
-                    <div class="stat-card" style="background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2);">
                         <div class="stat-value" id="statHolders">-</div>
                         <div class="stat-label">Holders</div>
                     </div>
-                    <div class="stat-card" style="background: rgba(102,144,255,0.05); border: 1px solid rgba(102,144,255,0.2);">
+                    <div class="stat-card">
                         <div class="stat-value" id="statBuySell">-</div>
                         <div class="stat-label">Buy/Sell</div>
                     </div>
@@ -1155,21 +1143,10 @@
             // Update stats
             document.getElementById('statsGrid').style.display = 'grid';
             document.getElementById('statVolume').textContent = '$' + formatNumber(token.volume_24h);
-            document.getElementById('statLiquidity').textContent = '$' + formatNumber(token.liquidity_usd);
             document.getElementById('statMcap').textContent = '$' + formatNumber(token.market_cap);
-            document.getElementById('statScore').textContent = token.score + '/100';
+            document.getElementById('statScore').textContent = token.score;
             document.getElementById('statAge').textContent = token.age_hours ? token.age_hours + 'h' : 'N/A';
-            const volRatio = token.volume_24h / (token.liquidity_usd || 1);
-            document.getElementById('statVolRatio').textContent = volRatio.toFixed(1) + 'x';
-            
-            // SolanaTracker data
-            const securityScore = token.security_score || 0;
-            const securityColor = securityScore >= 90 ? '#00ff88' : securityScore >= 70 ? '#ffb340' : '#ff5566';
-            document.getElementById('statSecurity').textContent = securityScore;
-            document.getElementById('statSecurity').style.color = securityColor;
-            
-            const holders = token.holder_count || 0;
-            document.getElementById('statHolders').textContent = formatNumber(holders);
+            document.getElementById('statHolders').textContent = formatNumber(token.holder_count || 0);
             
             const buySell = token.buy_sell_ratio || 1;
             const buySellColor = buySell >= 1.2 ? '#00ff88' : buySell >= 0.8 ? '#ffb340' : '#ff5566';
@@ -1181,20 +1158,261 @@
             copyBtn.style.display = 'block';
             copyBtn.dataset.address = token.address;
             
+            // Build enhanced analysis
+            const analysis = buildEnhancedAnalysis(token);
+            
             // Analysis
             const signalBadge = document.getElementById('signalBadge');
             signalBadge.className = 'signal-badge signal-' + token.signal.toLowerCase();
             signalBadge.textContent = token.label || token.signal;
             
-            document.getElementById('reasonsList').innerHTML = (token.reasons || ['Analyzing...']).map(r => 
+            document.getElementById('reasonsList').innerHTML = analysis.reasons.map(r => 
                 `<div class="reason-item">${r}</div>`
             ).join('');
             
-            document.getElementById('risksList').innerHTML = (token.risk_factors || ['No major risks']).map(r => 
+            document.getElementById('risksList').innerHTML = analysis.risks.map(r => 
                 `<div class="reason-item">${r}</div>`
             ).join('');
             
             renderTokenList();
+        }
+        
+        // Build Enhanced Analysis with more bullet points
+        function buildEnhancedAnalysis(token) {
+            const reasons = [];
+            const risks = [];
+            
+            // === VOLUME ANALYSIS ===
+            const volRatio = token.volume_24h / (token.liquidity_usd || 1);
+            if (volRatio > 10) {
+                reasons.push(`🔥 EXTREME volume: ${volRatio.toFixed(1)}x liquidity - viral attention`);
+            } else if (volRatio > 5) {
+                reasons.push(`📈 Very high volume: ${volRatio.toFixed(1)}x liquidity - strong interest`);
+            } else if (volRatio > 2) {
+                reasons.push(`💧 Healthy volume: ${volRatio.toFixed(1)}x liquidity`);
+            } else if (volRatio < 0.5) {
+                risks.push(`💤 Very low volume: ${volRatio.toFixed(1)}x liquidity - interest fading`);
+            }
+            
+            // Volume acceleration
+            if (token.vol_acceleration) {
+                if (token.vol_acceleration >= 5) {
+                    reasons.push(`⚡ Volume SPIKE: ${token.vol_acceleration.toFixed(1)}x above normal`);
+                } else if (token.vol_acceleration >= 2) {
+                    reasons.push(`📊 Volume elevated: ${token.vol_acceleration.toFixed(1)}x normal`);
+                } else if (token.vol_acceleration < 0.5) {
+                    risks.push(`📉 Volume declining: ${token.vol_acceleration.toFixed(1)}x normal`);
+                }
+            }
+            
+            // === PRICE MOMENTUM ===
+            const price1h = token.price_change_1h || 0;
+            const price24h = token.price_change_24h || 0;
+            
+            if (price1h > 10) {
+                reasons.push(`🚀 Strong 1h pump: +${price1h.toFixed(1)}%`);
+            } else if (price1h > 5) {
+                reasons.push(`📈 Positive 1h momentum: +${price1h.toFixed(1)}%`);
+            } else if (price1h < -10) {
+                risks.push(`📉 Heavy 1h selling: ${price1h.toFixed(1)}%`);
+            } else if (price1h < -5) {
+                risks.push(`🔻 1h price pressure: ${price1h.toFixed(1)}%`);
+            }
+            
+            if (price24h > 50) {
+                reasons.push(`🏆 MASSIVE 24h gain: +${price24h.toFixed(1)}%`);
+            } else if (price24h > 20) {
+                reasons.push(`💰 Strong 24h performance: +${price24h.toFixed(1)}%`);
+            } else if (price24h > 0) {
+                reasons.push(`✅ In profit: +${price24h.toFixed(1)}% 24h`);
+            } else if (price24h < -30) {
+                risks.push(`💸 Heavy losses: ${price24h.toFixed(1)}% 24h`);
+            } else if (price24h < -15) {
+                risks.push(`📊 Significant dip: ${price24h.toFixed(1)}% 24h`);
+            }
+            
+            // === LIQUIDITY ===
+            const liquidity = token.liquidity_usd || 0;
+            if (liquidity > 100000) {
+                reasons.push(`💎 Deep liquidity: $${formatNumber(liquidity)}`);
+            } else if (liquidity > 50000) {
+                reasons.push(`💧 Good liquidity: $${formatNumber(liquidity)}`);
+            } else if (liquidity < 10000) {
+                risks.push(`⚠️ Low liquidity: $${formatNumber(liquidity)} - slippage risk`);
+            }
+            
+            // === SECURITY RISKS ===
+            const lpBurn = token.lp_burn || 0;
+            if (lpBurn < 50) {
+                risks.push(`⚠️ LP only ${lpBurn}% burned - owner can drain pool`);
+            }
+            
+            // === HOLDERS ===
+            const holders = token.holder_count || 0;
+            if (holders > 10000) {
+                reasons.push(`👥 Strong holder base: ${formatNumber(holders)}`);
+            } else if (holders > 1000) {
+                reasons.push(`👤 Decent holders: ${formatNumber(holders)}`);
+            } else if (holders < 100) {
+                risks.push(`🐋 Concentrated ownership - only ${holders} holders`);
+            }
+            
+            // === BUY/SELL RATIO ===
+            const buySell = token.buy_sell_ratio || 1;
+            if (buySell >= 1.5) {
+                reasons.push(`🟢 Strong buy pressure: ${buySell.toFixed(2)}x ratio`);
+            } else if (buySell >= 1.2) {
+                reasons.push(`💚 Buying pressure: ${buySell.toFixed(2)}x ratio`);
+            } else if (buySell <= 0.5) {
+                risks.push(`🔴 Heavy selling: ${buySell.toFixed(2)}x ratio`);
+            } else if (buySell < 0.8) {
+                risks.push(`📉 More sellers than buyers: ${buySell.toFixed(2)}x`);
+            }
+            
+            // === MARKET CAP ===
+            const mcap = token.market_cap || 0;
+            if (mcap < 50000) {
+                reasons.push(`💎 Micro cap gem potential: $${formatNumber(mcap)}`);
+            } else if (mcap < 200000) {
+                reasons.push(`🎯 Small cap opportunity: $${formatNumber(mcap)}`);
+            } else if (mcap > 10000000) {
+                risks.push(`🏛️ Large cap - limited upside: $${formatNumber(mcap)}`);
+            }
+            
+            // === AGE/TIMING ===
+            const ageHours = token.age_hours || 0;
+            if (ageHours >= 24 && ageHours <= 72) {
+                reasons.push(`⏰ Sweet spot age: ${Math.round(ageHours)}h - proven but not stale`);
+            } else if (ageHours < 6) {
+                risks.push(`🆕 Very fresh - unproven, higher risk`);
+            } else if (ageHours > 720) {
+                reasons.push(`📅 Mature token: ${Math.round(ageHours/24)} days`);
+            }
+            
+            // === SUB-SCORES INSIGHTS ===
+            if (token.vol_score >= 30) {
+                reasons.push(`📊 Strong volume component: ${token.vol_score}/35`);
+            }
+            if (token.whale_score >= 15) {
+                reasons.push(`🐋 Active whale participation: ${token.whale_score}/20`);
+            }
+            if (token.price_score >= 15) {
+                reasons.push(`💰 Strong price momentum: ${token.price_score}/20`);
+            }
+            
+            // === COMBINED RISKS ===
+            // High MC + Low Volume = dump risk
+            if (mcap > 500000 && volRatio < 0.5) {
+                risks.push(`📉 High MC ($ ${formatNumber(mcap)}) + low volume = dump risk`);
+            }
+            
+            // Whale selling + price down
+            if (token.whale_score >= 10 && price24h < -10) {
+                risks.push(`🐋 Whale selling detected + price down ${price24h.toFixed(1)}%`);
+            }
+            
+            // Micro cap + no socials
+            if (mcap < 100000 && !token.socials?.twitter && !token.socials?.website) {
+                risks.push(`🕳️ Micro cap + no socials = unverified`);
+            }
+            
+            // Rapid dump detection (-30% in 1h)
+            if (price1h < -20 && price24h < -30) {
+                risks.push(`💸 RAPID DUMP: -${Math.abs(price1h).toFixed(1)}% 1h, -${Math.abs(price24h).toFixed(1)}% 24h`);
+            }
+            
+            // Volume collapsing
+            if (token.vol_acceleration && token.vol_acceleration < 0.2) {
+                risks.push(`💨 Volume collapsing: ${(token.vol_acceleration * 100).toFixed(0)}% of normal`);
+            }
+            
+            // Age > 30 days + no growth
+            if (ageHours > 720 && holders < 500 && mcap < 50000) {
+                risks.push(`🧓 Old token (${~~(ageHours/24)}d) but low holders = likely abandoned`);
+            }
+            
+            // Extremely low liquidity
+            if (liquidity < 5000) {
+                risks.push(`💧 Extremely low liquidity: $${formatNumber(liquidity)} - EXIT RISK`);
+            }
+            
+            // Volume/Liquidity mismatch
+            if (volRatio > 20 && liquidity < 20000) {
+                risks.push(`⚠️ High volume but tiny pool - volatility extreme`);
+            }
+            
+            // Very fresh + large MC = suspicious
+            if (ageHours < 12 && mcap > 500000) {
+                risks.push(`🆕 Fresh token (<12h) but large MC = potentialManip`);
+            }
+            
+            // No volume in 24h despite age
+            if (volRatio < 0.1 && ageHours > 48) {
+                risks.push(`💤 Dead token - no volume in 24h+`);
+            }
+            
+            // Massive market cap
+            if (mcap > 50000000) {
+                risks.push(`🏛️ Large market cap - limited upside`);
+            }
+            
+            // Extreme buy/sell imbalance
+            if (buySell < 0.3) {
+                risks.push(`🔴 Extreme sell pressure: ${buySell.toFixed(2)}x ratio`);
+            }
+            
+            // Negative 24h with no recovery
+            if (price24h < -40 && price1h > -1) {
+                risks.push(`📉 Crashed -${Math.abs(price24h).toFixed(1)}% but stabilising - potential bounce or death`);
+            }
+            
+            // === COMBINED SIGNALS ===
+            // Volume + Price combo
+            if (volRatio > 3 && price24h > 10) {
+                reasons.push(`🔥📈 Volume and price surging together - momentum play`);
+            }
+            
+            // Dip detection
+            if (price24h < -20 && volRatio > 2) {
+                reasons.push(`💸 Dip opportunity - heavy volume with price dip`);
+            }
+            
+            // Whale + Buy pressure
+            if (token.whale_score >= 15 && buySell > 1.2) {
+                reasons.push(`🐋💚 Whales accumulating + buy pressure confirmed`);
+            }
+            
+            // Recovery bounce
+            if (price1h > 5 && price24h < -10) {
+                reasons.push(`🔄 Recovery bounce: +${price1h.toFixed(1)}% 1h after ${price24h.toFixed(1)}% drop`);
+            }
+            
+            // Strong fundamentals + momentum
+            if (holders > 5000 && volRatio > 3 && buySell > 1.2) {
+                reasons.push(`💎 Strong fundamentals + momentum confirmed`);
+            }
+            
+            // Fresh token with traction
+            if (ageHours < 48 && holders > 1000 && volRatio > 2) {
+                reasons.push(`🆕 Fresh token gaining traction: ${formatNumber(holders)} holders in ${Math.round(ageHours)}h`);
+            }
+            
+            // Mature + stable growth
+            if (ageHours > 168 && price24h > 5 && volRatio > 1) {
+                reasons.push(`📈 Mature token with stable growth`);
+            }
+            
+            // Fallback if no reasons
+            if (reasons.length === 0) {
+                reasons.push(`📊 Analyzing...`);
+            }
+            
+            // Fallback if no risks
+            if (risks.length === 0) {
+                risks.push(`✅ No major risks detected`);
+            }
+            
+            return { reasons, risks };
         }
         
         // Copy Address
