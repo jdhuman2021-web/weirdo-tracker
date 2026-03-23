@@ -97,21 +97,22 @@ jobs:
       run: |
         echo "=== Pipeline Summary ==="
         echo "Result: ${{ steps.pipeline.outcome }}"
+        set +e  # Don't fail on jq errors
         
-        if [ -f data/latest.json ]; then
+        if [ -f data/latest.json ] && [ -s data/latest.json ]; then
           echo ""
           echo "=== Tokens Fetched ==="
-          jq '.metadata.tokens_fetched' data/latest.json
+          jq '.metadata.tokens_fetched' data/latest.json 2>/dev/null || echo "N/A"
         fi
         
-        if [ -f data/opportunities.json ]; then
+        if [ -f data/opportunities.json ] && [ -s data/opportunities.json ]; then
           echo ""
           echo "=== Score Distribution ==="
-          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json
+          jq '.metadata | {strong_buys, buys, speculative, watch, avoid}' data/opportunities.json 2>/dev/null || echo "N/A"
         fi
         
-        if [ -f data/alerts.json ]; then
+        if [ -f data/alerts.json ] && [ -s data/alerts.json ]; then
           echo ""
           echo "=== Alerts ==="
-          jq '{total: .total_alerts, sent: .alerts_sent}' data/alerts.json
+          jq '{total: .total_alerts, sent: .alerts_sent}' data/alerts.json 2>/dev/null || echo "N/A"
         fi
