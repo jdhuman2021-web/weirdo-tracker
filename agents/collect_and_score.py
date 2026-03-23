@@ -810,9 +810,10 @@ class CollectAndScore:
                 if address in lookup:
                     data = lookup[address]
                     
-                    # Security
-                    opp['security_score'] = data.get('security_score', 50)
-                    opp['lp_burn'] = data.get('lp_burn', 0)
+                    # Security - defaults to 100 if not found (user vets all coins personally)
+                    opp['security_score'] = data.get('security_score', 100)
+                    # LP burn defaults to 100 if not found (user vets all coins personally)
+                    opp['lp_burn'] = data.get('lp_burn', 100)
                     
                     # Holders
                     opp['holder_count'] = data.get('holders', opp.get('holder_count', 0))
