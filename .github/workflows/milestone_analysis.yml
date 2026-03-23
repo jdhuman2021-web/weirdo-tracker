@@ -1,0 +1,36 @@
+name: Milestone Analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      day:
+        description: 'Milestone day (1, 5, 10, 15, 20, 30)'
+        required: true
+        default: '1'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install deps
+      run: pip install numpy
+    
+    - name: Run Milestone Analysis
+      run: |
+        echo "Running Day ${{ github.event.inputs.day }} Analysis..."
+        python3 agents/milestone_analysis.py ${{ github.event.inputs.day }} | tee milestone_report.txt
+    
+    - name: Save Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: milestone-day-${{ github.event.inputs.day }}-report
+        path: milestone_report.txt
