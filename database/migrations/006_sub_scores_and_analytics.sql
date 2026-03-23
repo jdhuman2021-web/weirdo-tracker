@@ -93,44 +93,17 @@ ORDER BY hour DESC;
 
 -- ============================================
 -- View: Volume Acceleration Calculation (Idea #1)
+-- Simplified version - uses direct token_address
 -- ============================================
 
-CREATE OR REPLACE VIEW token_volume_stats AS
-SELECT
-    t.symbol,
-    t.id AS token_id,
-    (
-        SELECT AVG(volume_24h) 
-        FROM price_snapshots 
-        WHERE token_id = t.id 
-        AND timestamp >= NOW() - INTERVAL '7 days'
-    ) AS vol_7d_avg,
-    (
-        SELECT volume_24h 
-        FROM price_snapshots 
-        WHERE token_id = t.id 
-        ORDER BY timestamp DESC 
-        LIMIT 1
-    ) AS vol_current,
-    ROUND(
-        (
-            SELECT volume_24h 
-            FROM price_snapshots 
-            WHERE token_id = t.id 
-            ORDER BY timestamp DESC 
-            LIMIT 1
-        ) / NULLIF((
-            SELECT AVG(volume_24h) 
-            FROM price_snapshots 
-            WHERE token_id = t.id 
-            AND timestamp >= NOW() - INTERVAL '7 days'
-        ), 0), 2
-    ) AS vol_acceleration
-FROM tokens t
-WHERE t.status = 'active';
+-- NOTE: This view requires price_snapshots to have token_address
+-- If your schema uses token_id, adjust accordingly
+
+-- For now, skip this view and implement in Python
+-- CREATE OR REPLACE VIEW token_volume_stats AS ...
 
 -- ============================================
 -- Success message
 -- ============================================
 
-SELECT 'Migration 006 completed - Sub-scores and quick-win analytics ready!' as status;
+SELECT 'Migration 006 completed - Sub-scores ready!\nNote: Volume acceleration view skipped - implement in Python agent' as status;
