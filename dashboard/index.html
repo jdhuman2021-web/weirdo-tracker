@@ -403,17 +403,13 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
         }
         
         .change-up {
-            background: rgba(0,255,136,0.1);
             color: var(--accent);
         }
         
         .change-down {
-            background: rgba(255,85,102,0.1);
             color: var(--danger);
         }
         
@@ -1006,16 +1002,30 @@
             <!-- Analysis Section -->
             <div class="analysis-section">
                 <div class="analysis-card">
-                    <h3>📊 AI Analysis</h3>
-                    <div class="signal-badge signal-watch" id="signalBadge">ANALYZING...</div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                        <h3 style="margin: 0;">📊 AI Analysis</h3>
+                        <div class="signal-badge signal-watch" id="signalBadge" style="margin: 0;">ANALYZING...</div>
+                    </div>
                     <div class="reason-list" id="reasonsList">
                         <div class="reason-item">Loading analysis...</div>
                     </div>
                 </div>
-                <div class="analysis-card">
-                    <h3>⚠️ Risk Factors</h3>
-                    <div class="reason-list" id="risksList">
-                        <div class="reason-item">Analyzing risks...</div>
+                <div class="analysis-card" style="display: flex; flex-direction: column;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                            <h3 style="margin: 0;">⚠️ Risk Factors</h3>
+                        </div>
+                        <div class="reason-list" id="risksList">
+                            <div class="reason-item">Analyzing risks...</div>
+                        </div>
+                    </div>
+                    <!-- Recommendation Box -->
+                    <div id="recommendationSection" style="display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                            <h3 style="margin: 0;">🎯 Recommendation</h3>
+                            <div class="signal-badge signal-watch" id="recBadge" style="margin: 0;">-</div>
+                        </div>
+                        <div id="recContent"></div>
                     </div>
                 </div>
             </div>
@@ -1174,7 +1184,142 @@
                 `<div class="reason-item">${r}</div>`
             ).join('');
             
+            // Build recommendation
+            const recommendation = buildRecommendation(token, analysis);
+            const recSection = document.getElementById('recommendationSection');
+            if (recommendation) {
+                recSection.style.display = 'block';
+                const recBadge = document.getElementById('recBadge');
+                recBadge.className = 'signal-badge signal-' + recommendation.signal.toLowerCase();
+                recBadge.textContent = recommendation.label;
+                document.getElementById('recContent').innerHTML = recommendation.html;
+            } else {
+                recSection.style.display = 'none';
+            }
+            
             renderTokenList();
+        }
+        
+        // Build Trading Recommendation
+        function buildRecommendation(token, analysis) {
+            const score = token.score || 0;
+            const buySell = token.buy_sell_ratio || 1;
+            const price1h = token.price_change_1h || 0;
+            const price24h = token.price_change_24h || 0;
+            const volRatio = token.volume_24h / (token.liquidity_usd || 1);
+            const liquidity = token.liquidity_usd || 0;
+            const mcap = token.market_cap || 0;
+            const holders = token.holder_count || 0;
+            
+            // Determine signal and confidence
+            let signal = 'watch';
+            let confidence = 'LOW';
+            let entryNote = '';
+            let targetNote = '';
+            let stopNote = '';
+            let reason = '';
+            
+            // STRONG BUY conditions
+            if (score >= 85 && buySell >= 1.5 && price1h > -5) {
+                signal = 'strong-buy';
+                confidence = holders > 1000 ? 'HIGH' : 'MEDIUM';
+                reason = 'Strong score + buy pressure + whale activity';
+            }
+            // BUY conditions
+            else if (score >= 70 && buySell >= 1.2 && price24h > -20) {
+                signal = 'buy';
+                confidence = 'MEDIUM';
+                reason = 'Good fundamentals with buying pressure';
+            }
+            // HOLD conditions
+            else if (score >= 55 && score < 70) {
+                signal = 'speculative';
+                confidence = 'LOW';
+                reason = 'Mid-range score - unclear direction';
+            }
+            // SELL conditions
+            else if (score < 40 || (buySell < 0.5 && price24h < -20)) {
+                signal = 'avoid';
+                confidence = 'HIGH';
+                reason = 'Weak score + heavy selling pressure';
+            }
+            // AVOID conditions
+            else if (score < 30 || analysis.risks.length > 4) {
+                signal = 'avoid';
+                confidence = 'HIGH';
+                reason = 'Multiple red flags detected';
+            }
+            // Default
+            else {
+                signal = 'watch';
+                confidence = 'LOW';
+                reason = 'Mixed signals - wait for clarity';
+            }
+            
+            // Build price targets (rough estimates)
+            const currentPrice = token.price_usd || 1;
+            
+            if (signal === 'strong-buy' || signal === 'buy') {
+                // Entry zone based on recent price action
+                const entryLow = currentPrice * 0.97;
+                const entryHigh = currentPrice * 1.02;
+                entryNote = `Entry: $${entryLow.toFixed(6)} - $${entryHigh.toFixed(6)}`;
+                
+                // Target: 20-50% based on score
+                const targetPct = signal === 'strong-buy' ? 0.35 : 0.20;
+                const target = currentPrice * (1 + targetPct);
+                targetNote = `Target: $${target.toFixed(6)} (+${(targetPct * 100).toFixed(0)}%)`;
+                
+                // Stop: -15% from entry
+                const stop = entryLow * 0.85;
+                stopNote = `Stop: $${stop.toFixed(6)} (-15%)`;
+            } else if (signal === 'avoid') {
+                entryNote = 'Not recommended for entry';
+                targetNote = 'Risk/Reward not favorable';
+                stopNote = 'Multiple risk factors present';
+            } else {
+                entryNote = 'Wait for better entry';
+                targetNote = 'Monitor for signals';
+                stopNote = 'Set personal stop-loss';
+            }
+            
+            // Signal labels
+            const labels = {
+                'strong-buy': 'STRONG BUY',
+                'buy': 'BUY',
+                'speculative': 'HOLD',
+                'watch': 'WATCH',
+                'avoid': 'AVOID'
+            };
+            
+            const html = `
+                <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+                    <div>
+                        <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Confidence</span>
+                        <span style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-left: 6px;">${confidence}</span>
+                    </div>
+                    <div>
+                        <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Entry</span>
+                        <span style="font-size: 13px; font-weight: 600; color: var(--text-primary); margin-left: 6px;">${entryNote}</span>
+                    </div>
+                    <div>
+                        <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Target</span>
+                        <span style="font-size: 13px; font-weight: 600; color: var(--accent); margin-left: 6px;">${targetNote}</span>
+                    </div>
+                    <div>
+                        <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Stop</span>
+                        <span style="font-size: 13px; font-weight: 600; color: var(--danger); margin-left: 6px;">${stopNote}</span>
+                        <span style="font-size: 11px; color: var(--text-secondary); margin-left: 8px;">• ${reason}</span>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                signal: signal,
+                label: labels[signal],
+                confidence: confidence,
+                html: html
+            };
         }
         
         // Build Enhanced Analysis with more bullet points
