@@ -434,7 +434,10 @@ class CollectAndScore:
             'liquidity_score': 0,
             'mcap_score': 0,
             'age_score': 0,
-            'whale_score': 0
+            'whale_score': 0,
+            'security_score': 0,
+            'holder_score': 0,
+            'momentum_score': 0
         }
         reasons = []
         risk_factors = []
@@ -544,6 +547,39 @@ class CollectAndScore:
             if vol_1h_ratio > 2 and price_1h < -10:
                 sub_scores['whale_score'] -= 15
                 risk_factors.append(f"Whale selling detected")
+        
+        # 7. SECURITY SCORE (10 points max) - SolanaTracker
+        security_score = data.get('security_score', 50)
+        if security_score >= 95:
+            sub_scores['security_score'] = 10
+            reasons.append(f"Premium security: {security_score}")
+        elif security_score < 50:
+            sub_scores['security_score'] = -5
+            risk_factors.append(f"Low security: {security_score}")
+        
+        # 8. HOLDER COUNT (10 points max) - SolanaTracker
+        holder_count = data.get('holder_count', 0)
+        if holder_count >= 5000:
+            sub_scores['holder_score'] = 10
+        elif holder_count >= 2000:
+            sub_scores['holder_score'] = 7
+        elif holder_count >= 500:
+            sub_scores['holder_score'] = 4
+        elif holder_count > 0 and holder_count < 100:
+            sub_scores['holder_score'] = -5
+            risk_factors.append(f"Low holders: {holder_count}")
+        
+        # 9. BUY/SELL PRESSURE (10 points max) - SolanaTracker
+        buy_sell_ratio = data.get('buy_sell_ratio', 1.0)
+        if buy_sell_ratio >= 2.0:
+            sub_scores['momentum_score'] = 10
+            reasons.append(f"Strong buying: {buy_sell_ratio:.1f}x buy pressure")
+        elif buy_sell_ratio >= 1.5:
+            sub_scores['momentum_score'] = 7
+            reasons.append(f"Buying pressure: {buy_sell_ratio:.1f}x")
+        elif buy_sell_ratio < 0.5:
+            sub_scores['momentum_score'] = -5
+            risk_factors.append(f"Selling pressure: {buy_sell_ratio:.1f}x")
         
         # Calculate total
         total_score = sum(sub_scores.values())
