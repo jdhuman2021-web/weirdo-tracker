@@ -653,6 +653,75 @@ class CollectAndScore:
         return True
     
     # ============================================
+    # MERGE - Integrate SolanaTracker data
+    # ============================================
+    
+    def merge_solanatracker_data(self, opportunities):
+        """Merge SolanaTracker data into opportunities"""
+        st_path = Path(__file__).parent.parent / "data" / "solanatracker_data.json"
+        
+        if not st_path.exists():
+            print("No SolanaTracker data to merge")
+            return opportunities
+        
+        try:
+            with open(st_path, 'r', encoding='utf-8') as f:
+                st_data = json.load(f)
+            
+            # Create lookup
+            lookup = {}
+            for result in st_data.get('results', []):
+                address = result.get('address', '').lower()
+                if address:
+                    lookup[address] = result.get('data', {})
+            
+            merged = 0
+            for opp in opportunities:
+                address = opp.get('address', '').lower()
+                if address in lookup:
+                    data = lookup[address]
+                    
+                    # Security
+                    opp['security_score'] = data.get('security_score', 50)
+                    opp['lp_burn'] = data.get('lp_burn', 0)
+                    
+                    # Holders
+                    opp['holder_count'] = data.get('holders', opp.get('holder_count', 0))
+                    opp['token_supply'] = data.get('token_supply', 0)
+                    
+                    # Socials
+                    socials = opp.get('socials', {})
+                    if data.get('twitter'):
+                        socials['twitter'] = data['twitter']
+                    if data.get('telegram'):
+                        socials['telegram'] = data['telegram']
+                    if data.get('website'):
+                        socials['website'] = data['website']
+                    if data.get('image'):
+                        socials['image'] = data['image']
+                    opp['socials'] = socials
+                    
+                    # Transactions
+                    opp['txns_buys'] = data.get('buys', 0)
+                    opp['txns_sells'] = data.get('sells', 0)
+                    opp['buy_sell_ratio'] = data.get('buy_sell_ratio', 1.0)
+                    
+                    # Token age
+                    if data.get('creation_time'):
+                        created = datetime.fromtimestamp(data['creation_time'])
+                        now = datetime.utcnow()
+                        opp['age_days'] = round((now - created).total_seconds() / (60*60*24), 1)
+                    
+                    merged += 1
+            
+            print(f"Merged SolanaTracker data for {merged}/{len(opportunities)} tokens")
+            return opportunities
+            
+        except Exception as e:
+            print(f"Error merging SolanaTracker data: {e}")
+            return opportunities
+    
+    # ============================================
     # SAVE - Write all data to files
     # ============================================
     
@@ -706,18 +775,22 @@ class CollectAndScore:
         print(f"✓ Saved whale_activity.json")
         
         # Save opportunities.json
-        opportunities = {
+        # First, merge SolanaTracker data if available
+        opportunities = self.merge_solanatracker_data(self.opportunities)
+        
+        opportunities_output = {
             'metadata': {
                 'timestamp': datetime.utcnow().isoformat(),
-                'total_opportunities': len(self.opportunities),
-                'strong_buys': len([o for o in self.opportunities if o['signal'] == 'STRONG_BUY']),
-                'buys': len([o for o in self.opportunities if o['signal'] == 'BUY']),
-                'speculative': len([o for o in self.opportunities if o['signal'] == 'SPECULATIVE']),
-                'watch': len([o for o in self.opportunities if o['signal'] == 'WATCH']),
-                'avoid': len([o for o in self.opportunities if o['signal'] == 'AVOID']),
-                'agent': 'collect_and_score_v1.0'
+                'total_opportunities': len(opportunities),
+                'strong_buys': len([o for o in opportunities if o['signal'] == 'STRONG_BUY']),
+                'buys': len([o for o in opportunities if o['signal'] == 'BUY']),
+                'speculative': len([o for o in opportunities if o['signal'] == 'SPECULATIVE']),
+                'watch': len([o for o in opportunities if o['signal'] == 'WATCH']),
+                'avoid': len([o for o in opportunities if o['signal'] == 'AVOID']),
+                'agent': 'collect_and_score_v1.0',
+                'solanatracker_merged': True
             },
-            'opportunities': self.opportunities
+            'opportunities': opportunities
         }
         with open(data_dir / "opportunities.json", 'w', encoding='utf-8') as f:
             json.dump(opportunities, f, indent=2)
