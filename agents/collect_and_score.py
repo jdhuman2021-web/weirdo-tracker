@@ -626,13 +626,13 @@ class CollectAndScore:
     
     def get_signal(self, score):
         """Convert score to signal"""
-        if score >= 85:
+        if score >= 75:
             return "STRONG_BUY", "🔥 Strong Buy"
-        elif score >= 70:
+        elif score >= 60:
             return "BUY", "💚 Buy"
-        elif score >= 55:
+        elif score >= 45:
             return "SPECULATIVE", "⚠️ Speculative"
-        elif score >= 40:
+        elif score >= 30:
             return "WATCH", "❄️ Watch"
         else:
             return "AVOID", "🛑 Avoid"
@@ -745,10 +745,10 @@ class CollectAndScore:
             # High scores - only alert if NEW strong buy
             score = opp.get('score', 0)
             symbol = opp.get('symbol', '')
-            if score >= 85:
+            if score >= 75:
                 last_alerted = alert_state.get(symbol, {}).get('last_score', 0)
-                # Only alert if this is a NEW strong buy (was below 85 before)
-                if last_alerted < 85:
+                # Only alert if this is a NEW strong buy (was below 75 before)
+                if last_alerted < 75:
                     self.alerts.append({
                         'type': 'STRONG_BUY',
                         'symbol': symbol,

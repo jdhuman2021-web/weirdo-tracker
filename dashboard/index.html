@@ -1162,10 +1162,10 @@
         
         // Get token score class for watchlist
         function getTokenScoreClass(score) {
-            if (score >= 85) return 'score-excellent';
-            if (score >= 70) return 'score-good';
-            if (score >= 55) return 'score-speculative';
-            if (score >= 40) return 'score-watch';
+            if (score >= 75) return 'score-excellent';
+            if (score >= 60) return 'score-good';
+            if (score >= 45) return 'score-speculative';
+            if (score >= 30) return 'score-watch';
             return 'score-avoid';
         }
         
@@ -1268,13 +1268,13 @@
             let reason = '';
             
             // STRONG BUY conditions
-            if (score >= 85 && buySell >= 1.5 && price1h > -5) {
+            if (score >= 75 && buySell >= 1.5 && price1h > -5) {
                 signal = 'strong-buy';
                 confidence = holders > 1000 ? 'HIGH' : 'MEDIUM';
                 reason = 'Strong score + buy pressure + whale activity';
             }
             // BUY conditions
-            else if (score >= 70 && buySell >= 1.2 && price24h > -20) {
+            else if (score >= 60 && buySell >= 1.2 && price24h > -20) {
                 signal = 'buy';
                 confidence = 'MEDIUM';
                 reason = 'Good fundamentals with buying pressure';
