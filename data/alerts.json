@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-03-24T11:16:39.836622",
-  "total_alerts": 0,
+  "timestamp": "2026-03-24T14:15:34.828084",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 5.72,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 9.42,
+      "score": 39
+    }
+  ]
 }
