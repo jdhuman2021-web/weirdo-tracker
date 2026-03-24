@@ -413,6 +413,36 @@
             color: var(--danger);
         }
         
+        /* Change Period Toggle Buttons */
+        .change-toggles {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            padding: 2px;
+        }
+        
+        .change-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .change-toggle:hover {
+            color: var(--text-primary);
+        }
+        
+        .change-toggle.active {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+        
         /* Main Content */
         .main-content {
             display: flex;
@@ -620,7 +650,7 @@
             margin-bottom: 12px;
         }
         
-        .signal-strong-buy { background: rgba(0,255,136,0.15); color: var(--accent); border: 1px solid rgba(0,255,136,0.3); }
+        .signal-strong-buy { background: rgba(255,105,180,0.15); color: #ff69b4; border: 1px solid rgba(255,105,180,0.3); }
         .signal-buy { background: rgba(0,221,119,0.12); color: #00dd77; border: 1px solid rgba(0,221,119,0.25); }
         .signal-speculative { background: rgba(255,179,64,0.12); color: var(--warning); border: 1px solid rgba(255,179,64,0.25); }
         .signal-watch { background: rgba(102,144,255,0.12); color: var(--info); border: 1px solid rgba(102,144,255,0.25); }
@@ -932,6 +962,11 @@
                 <div class="card-header">
                     <span class="card-title">🪱 Tokens</span>
                     <div class="card-actions">
+                        <div class="change-toggles">
+                            <button class="change-toggle" data-period="1h" onclick="setChangePeriod('1h')">1h</button>
+                            <button class="change-toggle" data-period="6h" onclick="setChangePeriod('6h')">6h</button>
+                            <button class="change-toggle active" data-period="24h" onclick="setChangePeriod('24h')">24h</button>
+                        </div>
                         <select class="sort-select" id="sortSelect" onchange="sortTokens()">
                             <option value="score">Score</option>
                             <option value="symbol">Name</option>
@@ -1041,6 +1076,17 @@
         let sidebarCollapsed = false;
         let sortColumn = 'score';
         let sortAscending = false; // false = descending (high to low)
+        let changePeriod = '24h'; // '1h', '6h', or '24h'
+        
+        // Set change period toggle
+        function setChangePeriod(period) {
+            changePeriod = period;
+            // Update button states
+            document.querySelectorAll('.change-toggle').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.period === period);
+            });
+            renderTokenList();
+        }
         
         // Load Data
         async function loadData() {
@@ -1093,8 +1139,10 @@
             });
             
             list.innerHTML = sorted.map(token => {
-                const changeClass = (token.price_change_24h || 0) >= 0 ? 'change-up' : 'change-down';
-                const changeSign = (token.price_change_24h || 0) >= 0 ? '+' : '';
+                // Get price change based on selected period
+                const priceChange = token[`price_change_${changePeriod}`] ?? token.price_change_24h ?? 0;
+                const changeClass = priceChange >= 0 ? 'change-up' : 'change-down';
+                const changeSign = priceChange >= 0 ? '+' : '';
                 const isActive = selectedToken?.symbol === token.symbol ? 'active' : '';
                 const scoreClass = getTokenScoreClass(token.score);
                 
@@ -1106,7 +1154,7 @@
                             </div>
                             <div class="token-meta">$${formatNumber(token.market_cap)} • ${token.signal}</div>
                         </div>
-                        <div class="token-change ${changeClass}">${changeSign}${(token.price_change_24h || 0).toFixed(1)}%</div>
+                        <div class="token-change ${changeClass}">${changeSign}${priceChange.toFixed(1)}%</div>
                     </div>
                 `;
             }).join('');

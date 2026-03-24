@@ -728,29 +728,48 @@ class CollectAndScore:
     # ============================================
     
     def check_alerts(self):
-        """Check for alert conditions"""
+        """Check for alert conditions - only alert on NEW strong buy signals"""
         self.alerts = []
         
+        # Load alert state to avoid spam
+        alert_state_path = Path(__file__).parent.parent / "data" / "alert_state.json"
+        alert_state = {}
+        if alert_state_path.exists():
+            with open(alert_state_path, 'r', encoding='utf-8') as f:
+                alert_state = json.load(f)
+        
         for opp in self.opportunities:
-            # High scores
-            if opp.get('score', 0) >= 85:
-                self.alerts.append({
-                    'type': 'STRONG_BUY',
-                    'symbol': opp['symbol'],
-                    'score': opp['score'],
-                    'price': opp.get('price_usd', 0),
-                    'reasons': opp.get('reasons', [])[:2]
-                })
+            # High scores - only alert if NEW strong buy
+            score = opp.get('score', 0)
+            symbol = opp.get('symbol', '')
+            if score >= 85:
+                last_alerted = alert_state.get(symbol, {}).get('last_score', 0)
+                # Only alert if this is a NEW strong buy (was below 85 before)
+                if last_alerted < 85:
+                    self.alerts.append({
+                        'type': 'STRONG_BUY',
+                        'symbol': symbol,
+                        'score': score,
+                        'price': opp.get('price_usd', 0),
+                        'reasons': opp.get('reasons', [])[:2]
+                    })
+                # Update state
+                alert_state[symbol] = {'last_score': score, 'last_alerted': datetime.utcnow().isoformat()}
             
             # Whale activity
             whale_info = self.whale_data.get(opp['address'], {})
             if whale_info.get('whale_activity_detected') and whale_info.get('vol_1h_ratio', 0) > 3:
                 self.alerts.append({
                     'type': 'WHALE',
-                    'symbol': opp['symbol'],
+                    'symbol': symbol,
                     'vol_ratio': whale_info.get('vol_1h_ratio'),
-                    'score': opp['score']
+                    'score': score
                 })
+        
+        # Save alert state
+        alert_state_path.parent.mkdir(exist_ok=True)
+        with open(alert_state_path, 'w', encoding='utf-8') as f:
+            json.dump(alert_state, f, indent=2)
         
         return len(self.alerts)
     
