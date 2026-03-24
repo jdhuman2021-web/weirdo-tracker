@@ -555,7 +555,10 @@ class CollectAndScore:
         elif mcap < 200000:
             sub_scores['mcap_score'] = 8
         elif mcap > 10000000:
-            sub_scores['mcap_score'] = -5
+            # Only penalize if liquidity is also low (quality filter)
+            if liquidity < 50000:
+                sub_scores['mcap_score'] = -5
+            # High liquidity + high security = quality large cap, no penalty
         
         # 5. AGE TIMING (5 points)
         if 6 <= age_hours <= 48:
@@ -614,6 +617,11 @@ class CollectAndScore:
         elif buy_sell_ratio < 0.5:
             sub_scores['momentum_score'] = -5
             risk_factors.append(f"Selling pressure: {buy_sell_ratio:.1f}x")
+        
+        # Whale accumulation pattern: sell pressure but price rising = whales absorbing
+        if buy_sell_ratio < 1.0 and price_24h > 5:
+            sub_scores['momentum_score'] += 5
+            reasons.append(f"Whale accumulation: sell pressure but +{price_24h:.0f}%")
         
         # Calculate total
         total_score = sum(sub_scores.values())
