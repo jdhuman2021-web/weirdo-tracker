@@ -554,11 +554,6 @@ class CollectAndScore:
             reasons.append("Micro-cap gem potential")
         elif mcap < 200000:
             sub_scores['mcap_score'] = 8
-        elif mcap > 10000000:
-            # Only penalize if liquidity is also low (quality filter)
-            if liquidity < 50000:
-                sub_scores['mcap_score'] = -5
-            # High liquidity + high security = quality large cap, no penalty
         
         # 5. AGE TIMING (5 points)
         if 6 <= age_hours <= 48:
