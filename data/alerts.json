@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-03-26T05:30:18.802210",
-  "total_alerts": 0,
+  "timestamp": "2026-03-26T08:14:32.302766",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 14.25,
+      "score": 63
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.15,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 4.92,
+      "score": 11
+    }
+  ]
 }
