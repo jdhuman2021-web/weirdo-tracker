@@ -1189,9 +1189,9 @@
             if (!token) return;
             selectedToken = token;
             
-            // Update chart
-            const dexUrl = `https://dexscreener.com/solana/${token.address}?embed=true&theme=dark&chart=1`;
-            document.getElementById('chartContainer').innerHTML = `<iframe src="${dexUrl}" loading="lazy"></iframe>`;
+            // GeckoTerminal embed (allows iframe embedding)
+            const geckoUrl = `https://www.geckoterminal.com/solana/pools/${token.address}?embed=1&chart=1&theme=dark&trading_view_enabled=1`;
+            document.getElementById('chartContainer').innerHTML = `<iframe src="${geckoUrl}" style="width:100%;height:100%;border:none;" loading="lazy"></iframe>`;
             
             // Update title with social links
             const socialLinks = getSocialLinksHTML(token);
