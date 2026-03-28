@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-03-28T19:52:48.202583",
-  "total_alerts": 2,
+  "timestamp": "2026-03-28T21:05:29.525441",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "TripleT",
-      "vol_ratio": 5.9,
-      "score": 65
+      "symbol": "NOTHING",
+      "vol_ratio": 6.13,
+      "score": 60
     },
     {
       "type": "WHALE",
       "symbol": "JUICE",
-      "vol_ratio": 7.56,
+      "vol_ratio": 3.17,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 9.08,
       "score": 55
     }
   ]
