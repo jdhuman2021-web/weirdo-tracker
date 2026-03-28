@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-03-28T14:08:59.214738",
-  "total_alerts": 1,
+  "timestamp": "2026-03-28T15:58:38.720108",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 5.9,
-      "score": 56
+      "symbol": "GOYIM",
+      "vol_ratio": 5.42,
+      "score": 53
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 4.84,
+      "score": 45
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VAULT",
+      "vol_ratio": 3.03,
+      "score": 25
     }
   ]
 }
