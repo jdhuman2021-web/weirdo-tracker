@@ -1,29 +1,31 @@
 {
-  "timestamp": "2026-04-02T15:49:27.171179",
-  "total_alerts": 3,
+  "timestamp": "2026-04-02T18:15:22.943240",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "STRONG_BUY",
-      "symbol": "Jellybean",
-      "score": 78,
-      "price": 0.0001355,
-      "reasons": [
-        "Price in dip zone",
-        "Whale activity detected"
-      ]
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 6.06,
+      "score": 70
     },
     {
       "type": "WHALE",
-      "symbol": "Jellybean",
-      "vol_ratio": 5.33,
-      "score": 78
+      "symbol": "PUNCH",
+      "vol_ratio": 3.49,
+      "score": 65
     },
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 3.22,
-      "score": 73
+      "symbol": "Momo-chan",
+      "vol_ratio": 5.58,
+      "score": 56
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VAULT",
+      "vol_ratio": 6.63,
+      "score": 45
     }
   ]
 }
