@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-04-03T20:06:37.535784",
-  "total_alerts": 2,
+  "timestamp": "2026-04-03T22:02:18.453690",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 3.26,
-      "score": 59
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.62,
+      "score": 50
     },
     {
       "type": "WHALE",
       "symbol": "VAULT",
-      "vol_ratio": 8.7,
+      "vol_ratio": 3.02,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 3.2,
       "score": 20
     }
   ]
