@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-04-04T15:57:41.349669",
-  "total_alerts": 0,
+  "timestamp": "2026-04-04T17:23:55.165588",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 8.85,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 8.1,
+      "score": 37
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 9.22,
+      "score": 36
+    }
+  ]
 }
