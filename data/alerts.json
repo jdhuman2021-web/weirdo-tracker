@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-04-04T11:09:04.846379",
-  "total_alerts": 1,
+  "timestamp": "2026-04-04T12:07:52.716561",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.23,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
       "symbol": "NOTHING",
-      "vol_ratio": 3.01,
+      "vol_ratio": 6.17,
       "score": 50
     }
   ]
