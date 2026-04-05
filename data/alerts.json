@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-04-04T23:06:44.879057",
-  "total_alerts": 0,
+  "timestamp": "2026-04-05T05:56:46.710520",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 3.08,
+      "score": 61
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 4.11,
+      "score": 15
+    }
+  ]
 }
