@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-04-07T06:04:07.033620",
-  "total_alerts": 0,
+  "timestamp": "2026-04-07T09:58:22.499439",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 4.53,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 4.83,
+      "score": 20
+    }
+  ]
 }
