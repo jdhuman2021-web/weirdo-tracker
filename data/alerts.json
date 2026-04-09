@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-09T10:46:34.643286",
-  "total_alerts": 1,
+  "timestamp": "2026-04-09T16:11:20.900607",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 4.51,
+      "symbol": "NOTHING",
+      "vol_ratio": 4.42,
       "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 4.65,
+      "score": 20
     }
   ]
 }
