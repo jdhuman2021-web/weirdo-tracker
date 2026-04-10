@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-10T06:27:04.104148",
-  "total_alerts": 1,
+  "timestamp": "2026-04-10T10:22:08.152697",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "NOGAMBLING",
+      "vol_ratio": 24.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
       "symbol": "VAULT",
-      "vol_ratio": 5.3,
-      "score": 15
+      "vol_ratio": 9.47,
+      "score": 20
     }
   ]
 }
