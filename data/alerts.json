@@ -1,18 +1,36 @@
 {
-  "timestamp": "2026-04-10T20:02:48.169220",
-  "total_alerts": 2,
+  "timestamp": "2026-04-10T22:02:35.955912",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 3.07,
-      "score": 35
+      "symbol": "NOTHING",
+      "vol_ratio": 4.9,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 6.34,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 7.45,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 3.86,
+      "score": 30
     },
     {
       "type": "WHALE",
       "symbol": "Artemis II",
-      "vol_ratio": 8.41,
+      "vol_ratio": 4.5,
       "score": 25
     }
   ]
