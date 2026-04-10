@@ -1,18 +1,30 @@
 {
-  "timestamp": "2026-04-10T10:22:08.152697",
-  "total_alerts": 2,
+  "timestamp": "2026-04-10T14:38:09.350255",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOGAMBLING",
-      "vol_ratio": 24.0,
-      "score": 25
+      "symbol": "GOYIM",
+      "vol_ratio": 5.44,
+      "score": 57
     },
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 9.47,
+      "symbol": "NOTHING",
+      "vol_ratio": 3.16,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 8.26,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 4.92,
       "score": 20
     }
   ]
