@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-14T06:20:29.524583",
-  "total_alerts": 1,
+  "timestamp": "2026-04-14T10:52:41.519270",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 8.61,
-      "score": 30
+      "symbol": "CHIBI",
+      "vol_ratio": 4.02,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 3.23,
+      "score": 25
     }
   ]
 }
