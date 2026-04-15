@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-04-15T21:18:18.240910",
-  "total_alerts": 1,
+  "timestamp": "2026-04-15T22:14:00.302267",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 9.47,
+      "symbol": "JUICE",
+      "vol_ratio": 4.17,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 3.62,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 3.17,
       "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 21.17,
+      "score": 15
     }
   ]
 }
