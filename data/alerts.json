@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-15T15:02:00.448118",
-  "total_alerts": 1,
+  "timestamp": "2026-04-15T16:13:32.542612",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 3.9,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
       "symbol": "Deadwhale",
-      "vol_ratio": 4.75,
-      "score": 25
+      "vol_ratio": 3.22,
+      "score": 5
     }
   ]
 }
