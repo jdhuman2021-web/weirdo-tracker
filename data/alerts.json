@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-16T08:17:05.363573",
-  "total_alerts": 1,
+  "timestamp": "2026-04-16T10:00:03.220096",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 3.35,
-      "score": 52
+      "symbol": "Lost",
+      "vol_ratio": 4.72,
+      "score": 51
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 3.79,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 5.4,
+      "score": 10
     }
   ]
 }
