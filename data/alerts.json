@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-17T11:56:05.745064",
-  "total_alerts": 1,
+  "timestamp": "2026-04-17T13:21:10.791977",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "MAX",
-      "vol_ratio": 3.27,
-      "score": 68
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.28,
+      "score": 51
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 6.13,
+      "score": 25
     }
   ]
 }
