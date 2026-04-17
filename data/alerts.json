@@ -1,29 +1,19 @@
 {
-  "timestamp": "2026-04-17T06:06:55.302081",
-  "total_alerts": 3,
+  "timestamp": "2026-04-17T08:16:12.924530",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "STRONG_BUY",
-      "symbol": "Buttcoin",
-      "score": 78,
-      "price": 0.008664,
-      "reasons": [
-        "Price in dip zone",
-        "Volume 1.5x - healthy"
-      ]
-    },
-    {
       "type": "WHALE",
-      "symbol": "Buttcoin",
-      "vol_ratio": 3.11,
-      "score": 78
-    },
-    {
-      "type": "WHALE",
-      "symbol": "TripleT",
-      "vol_ratio": 3.74,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.12,
       "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 4.08,
+      "score": 15
     }
   ]
 }
