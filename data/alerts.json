@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-17T14:44:42.588161",
-  "total_alerts": 1,
+  "timestamp": "2026-04-17T16:04:08.981648",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 3.83,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
       "symbol": "VAULT",
-      "vol_ratio": 22.58,
-      "score": 15
+      "vol_ratio": 9.28,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 3.54,
+      "score": 20
     }
   ]
 }
