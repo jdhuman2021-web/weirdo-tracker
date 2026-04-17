@@ -1,19 +1,29 @@
 {
-  "timestamp": "2026-04-17T03:55:05.150845",
-  "total_alerts": 2,
+  "timestamp": "2026-04-17T06:06:55.302081",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "WHALE",
-      "symbol": "MAX",
-      "vol_ratio": 4.42,
-      "score": 55
+      "type": "STRONG_BUY",
+      "symbol": "Buttcoin",
+      "score": 78,
+      "price": 0.008664,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 1.5x - healthy"
+      ]
     },
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 4.62,
-      "score": 52
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.11,
+      "score": 78
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 3.74,
+      "score": 55
     }
   ]
 }
