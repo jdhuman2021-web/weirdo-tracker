@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-16T23:13:04.922865",
-  "total_alerts": 1,
+  "timestamp": "2026-04-17T00:09:06.409035",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Jellybean",
-      "vol_ratio": 4.17,
-      "score": 65
+      "symbol": "NOTHING",
+      "vol_ratio": 6.16,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 20.7,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 22.67,
+      "score": 55
     }
   ]
 }
