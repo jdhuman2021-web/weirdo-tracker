@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-04-18T08:53:30.000798",
-  "total_alerts": 0,
+  "timestamp": "2026-04-18T09:51:24.363596",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 7.83,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 14.95,
+      "score": 20
+    }
+  ]
 }
