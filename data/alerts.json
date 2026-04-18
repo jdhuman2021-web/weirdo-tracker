@@ -1,35 +1,19 @@
 {
-  "timestamp": "2026-04-18T22:37:36.778948",
-  "total_alerts": 4,
+  "timestamp": "2026-04-18T23:38:08.234087",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "STRONG_BUY",
-      "symbol": "HODL",
-      "score": 78,
-      "price": 0.003773,
-      "reasons": [
-        "Price in dip zone",
-        "Volume 1.7x - healthy"
-      ]
-    },
-    {
-      "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 4.84,
-      "score": 78
-    },
-    {
       "type": "WHALE",
       "symbol": "Deadwhale",
-      "vol_ratio": 3.41,
+      "vol_ratio": 3.91,
       "score": 20
     },
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 12.83,
-      "score": 15
+      "symbol": "CAPYBARA",
+      "vol_ratio": 3.79,
+      "score": 20
     }
   ]
 }
