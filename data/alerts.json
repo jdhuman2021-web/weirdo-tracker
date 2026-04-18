@@ -1,60 +1,80 @@
 {
-  "timestamp": "2026-04-18T20:03:01.864996",
-  "total_alerts": 9,
+  "timestamp": "2026-04-18T20:51:06.029569",
+  "total_alerts": 11,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 3.68,
-      "score": 60
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Buttcoin",
-      "vol_ratio": 5.02,
-      "score": 55
-    },
-    {
-      "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 6.86,
-      "score": 55
+      "type": "STRONG_BUY",
+      "symbol": "PUNCH",
+      "score": 78,
+      "price": 0.003818,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 2.2x - healthy"
+      ]
     },
     {
       "type": "WHALE",
       "symbol": "PUNCH",
-      "vol_ratio": 6.3,
-      "score": 40
+      "vol_ratio": 4.55,
+      "score": 78
+    },
+    {
+      "type": "STRONG_BUY",
+      "symbol": "HODL",
+      "score": 78,
+      "price": 0.003726,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 1.1x - healthy"
+      ]
     },
     {
       "type": "WHALE",
       "symbol": "HODL",
-      "vol_ratio": 9.05,
-      "score": 40
+      "vol_ratio": 6.58,
+      "score": 78
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.13,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.22,
+      "score": 55
     },
     {
       "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 4.38,
-      "score": 30
+      "vol_ratio": 5.58,
+      "score": 40
     },
     {
       "type": "WHALE",
       "symbol": "Rosie",
-      "vol_ratio": 4.7,
-      "score": 26
+      "vol_ratio": 3.86,
+      "score": 36
     },
     {
       "type": "WHALE",
       "symbol": "Momo-chan",
-      "vol_ratio": 4.34,
+      "vol_ratio": 5.53,
       "score": 25
     },
     {
       "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 7.42,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
       "symbol": "dapang",
-      "vol_ratio": 11.77,
+      "vol_ratio": 13.53,
       "score": 15
     }
   ]
