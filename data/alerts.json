@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-04-18T14:08:26.405788",
-  "total_alerts": 0,
+  "timestamp": "2026-04-18T15:10:24.903342",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 3.35,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 4.02,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 7.53,
+      "score": 15
+    }
+  ]
 }
