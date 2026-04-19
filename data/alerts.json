@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-04-18T23:38:08.234087",
-  "total_alerts": 2,
+  "timestamp": "2026-04-19T02:37:50.389570",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 3.91,
-      "score": 20
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.69,
+      "score": 56
     },
     {
       "type": "WHALE",
-      "symbol": "CAPYBARA",
-      "vol_ratio": 3.79,
-      "score": 20
+      "symbol": "Lobstar",
+      "vol_ratio": 5.16,
+      "score": 45
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 3.77,
+      "score": 15
     }
   ]
 }
