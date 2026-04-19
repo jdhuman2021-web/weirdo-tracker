@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-04-19T21:39:05.931131",
-  "total_alerts": 2,
+  "timestamp": "2026-04-19T22:38:38.099499",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 6.41,
-      "score": 60
+      "symbol": "PIZZA",
+      "vol_ratio": 3.44,
+      "score": 52
     },
     {
       "type": "WHALE",
       "symbol": "JUICE",
-      "vol_ratio": 4.1,
-      "score": 52
+      "vol_ratio": 19.22,
+      "score": 37
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.87,
+      "score": 31
     }
   ]
 }
