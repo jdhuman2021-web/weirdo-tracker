@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-04-19T10:12:10.729483",
-  "total_alerts": 1,
+  "timestamp": "2026-04-19T11:11:08.085725",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 22.13,
+      "symbol": "PIZZA",
+      "vol_ratio": 3.08,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 20.59,
       "score": 20
     }
   ]
