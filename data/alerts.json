@@ -1,25 +1,35 @@
 {
-  "timestamp": "2026-04-19T02:37:50.389570",
-  "total_alerts": 3,
+  "timestamp": "2026-04-19T05:32:17.716730",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
+      "type": "STRONG_BUY",
+      "symbol": "TripleT",
+      "score": 78,
+      "price": 0.002852,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 1.5x - healthy"
+      ]
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 5.35,
+      "score": 78
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 6.5,
+      "score": 70
+    },
+    {
       "type": "WHALE",
       "symbol": "TERAFAB",
-      "vol_ratio": 3.69,
-      "score": 56
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 5.16,
-      "score": 45
-    },
-    {
-      "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 3.77,
-      "score": 15
+      "vol_ratio": 3.95,
+      "score": 41
     }
   ]
 }
