@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-04-21T08:20:45.539301",
-  "total_alerts": 2,
+  "timestamp": "2026-04-21T10:03:46.216466",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 13.66,
+      "symbol": "NOTHING",
+      "vol_ratio": 3.05,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.58,
       "score": 25
     },
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 5.07,
+      "symbol": "VAULT",
+      "vol_ratio": 8.59,
       "score": 15
     }
   ]
