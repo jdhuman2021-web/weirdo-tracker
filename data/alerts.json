@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-21T22:42:05.492482",
-  "total_alerts": 1,
+  "timestamp": "2026-04-21T23:38:30.836740",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.14,
-      "score": 5
+      "symbol": "JUICE",
+      "vol_ratio": 11.64,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 4.43,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 6.05,
+      "score": 20
     }
   ]
 }
