@@ -1,31 +1,31 @@
 {
-  "timestamp": "2026-04-21T14:19:10.857232",
+  "timestamp": "2026-04-21T15:58:57.707005",
   "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.4,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
       "symbol": "Rosie",
-      "vol_ratio": 3.44,
-      "score": 31
+      "vol_ratio": 8.23,
+      "score": 36
     },
     {
       "type": "WHALE",
       "symbol": "CAPYBARA",
-      "vol_ratio": 5.36,
+      "vol_ratio": 6.51,
       "score": 20
     },
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 3.13,
+      "symbol": "SWING",
+      "vol_ratio": 16.88,
       "score": 15
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.13,
-      "score": 10
     }
   ]
 }
