@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-04-22T09:09:47.802224",
-  "total_alerts": 2,
+  "timestamp": "2026-04-22T10:51:30.477289",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "TERAFAB",
-      "vol_ratio": 5.95,
-      "score": 36
+      "vol_ratio": 4.11,
+      "score": 61
     },
     {
       "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 11.5,
+      "symbol": "JUICE",
+      "vol_ratio": 3.26,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.22,
       "score": 25
     }
   ]
