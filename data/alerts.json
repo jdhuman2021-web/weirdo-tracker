@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-23T05:33:13.583703",
-  "total_alerts": 1,
+  "timestamp": "2026-04-23T07:18:49.889268",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 9.4,
-      "score": 36
+      "symbol": "PIZZA",
+      "vol_ratio": 4.85,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 15.58,
+      "score": 37
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 7.22,
+      "score": 25
     }
   ]
 }
