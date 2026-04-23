@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-22T23:48:30.742924",
-  "total_alerts": 1,
+  "timestamp": "2026-04-23T02:36:52.191185",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "PIZZA",
-      "vol_ratio": 4.9,
-      "score": 36
+      "vol_ratio": 4.82,
+      "score": 56
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 4.17,
+      "score": 15
     }
   ]
 }
