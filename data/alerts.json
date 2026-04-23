@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-04-23T14:05:59.215174",
-  "total_alerts": 1,
+  "timestamp": "2026-04-23T16:20:49.307578",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 4.06,
+      "vol_ratio": 5.68,
       "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 22.54,
+      "score": 45
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 3.4,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.6,
+      "score": 20
     }
   ]
 }
