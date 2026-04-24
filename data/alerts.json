@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-24T02:36:23.601788",
-  "total_alerts": 1,
+  "timestamp": "2026-04-24T05:38:31.812504",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 4.48,
-      "score": 15
+      "symbol": "CHIBI",
+      "vol_ratio": 3.93,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 9.68,
+      "score": 25
     }
   ]
 }
