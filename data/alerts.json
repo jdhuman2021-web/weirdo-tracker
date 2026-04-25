@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-25T03:43:56.166954",
-  "total_alerts": 1,
+  "timestamp": "2026-04-25T05:51:35.207067",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "Lobstar",
-      "vol_ratio": 3.11,
-      "score": 55
+      "vol_ratio": 5.31,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 6.29,
+      "score": 20
     }
   ]
 }
