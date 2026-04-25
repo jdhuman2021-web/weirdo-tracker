@@ -1,13 +1,37 @@
 {
-  "timestamp": "2026-04-25T15:12:16.948792",
-  "total_alerts": 1,
+  "timestamp": "2026-04-25T16:09:03.828550",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.83,
+      "score": 63
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 5.41,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 8.12,
+      "score": 54
+    },
+    {
+      "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 4.5,
+      "vol_ratio": 4.52,
       "score": 45
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VAULT",
+      "vol_ratio": 7.36,
+      "score": 15
     }
   ]
 }
