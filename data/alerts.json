@@ -1,25 +1,25 @@
 {
-  "timestamp": "2026-04-25T17:13:08.959203",
+  "timestamp": "2026-04-25T18:08:49.511118",
   "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.67,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.34,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
       "symbol": "Lobstar",
-      "vol_ratio": 4.52,
-      "score": 40
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.86,
-      "score": 39
-    },
-    {
-      "type": "WHALE",
-      "symbol": "TERAFAB",
-      "vol_ratio": 5.79,
-      "score": 31
+      "vol_ratio": 4.09,
+      "score": 43
     }
   ]
 }
