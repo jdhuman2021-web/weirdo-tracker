@@ -1,19 +1,43 @@
 {
-  "timestamp": "2026-04-28T13:15:36.647157",
-  "total_alerts": 2,
+  "timestamp": "2026-04-28T15:48:02.758920",
+  "total_alerts": 6,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 8.02,
-      "score": 20
+      "symbol": "NOTHING",
+      "vol_ratio": 4.61,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 5.14,
+      "score": 31
     },
     {
       "type": "WHALE",
       "symbol": "7",
-      "vol_ratio": 3.09,
+      "vol_ratio": 4.0,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 4.65,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 10.9,
       "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VAULT",
+      "vol_ratio": 3.83,
+      "score": 5
     }
   ]
 }
