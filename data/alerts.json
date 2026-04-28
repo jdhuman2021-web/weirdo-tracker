@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-28T22:35:19.057134",
-  "total_alerts": 1,
+  "timestamp": "2026-04-28T23:58:45.251206",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 4.04,
-      "score": 35
+      "symbol": "JUICE",
+      "vol_ratio": 5.14,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 5.92,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 5.95,
+      "score": 25
     }
   ]
 }
