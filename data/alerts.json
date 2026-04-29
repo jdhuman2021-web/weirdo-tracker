@@ -1,19 +1,37 @@
 {
-  "timestamp": "2026-04-29T14:29:05.163661",
-  "total_alerts": 2,
+  "timestamp": "2026-04-29T16:17:19.253894",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 3.85,
-      "score": 55
+      "symbol": "snowball",
+      "vol_ratio": 4.34,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 6.68,
-      "score": 15
+      "symbol": "JUICE",
+      "vol_ratio": 7.66,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 3.3,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 9.75,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 23.91,
+      "score": 25
     }
   ]
 }
