@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-29T19:33:01.764795",
-  "total_alerts": 1,
+  "timestamp": "2026-04-29T20:45:40.467253",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VAULT",
-      "vol_ratio": 17.07,
-      "score": 5
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.3,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 10.67,
+      "score": 20
     }
   ]
 }
