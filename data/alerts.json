@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-04-30T11:31:09.378352",
-  "total_alerts": 0,
+  "timestamp": "2026-04-30T13:10:52.787838",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 7.07,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 13.25,
+      "score": 37
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.11,
+      "score": 36
+    }
+  ]
 }
