@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-04-30T00:18:14.862042",
-  "total_alerts": 1,
+  "timestamp": "2026-04-30T04:15:40.960814",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Jellybean",
-      "vol_ratio": 5.61,
-      "score": 65
+      "symbol": "GOYIM",
+      "vol_ratio": 16.76,
+      "score": 37
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 4.19,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 3.7,
+      "score": 25
     }
   ]
 }
