@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-01T19:23:55.583331",
-  "total_alerts": 0,
+  "timestamp": "2026-05-01T20:32:00.424039",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 6.66,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.23,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 5.01,
+      "score": 50
+    }
+  ]
 }
