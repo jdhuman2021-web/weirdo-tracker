@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-04-30T23:32:06.324380",
-  "total_alerts": 1,
+  "timestamp": "2026-05-01T01:25:33.402866",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 3.32,
-      "score": 15
+      "symbol": "JUICE",
+      "vol_ratio": 5.1,
+      "score": 70
+    },
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.46,
+      "score": 65
     }
   ]
 }
