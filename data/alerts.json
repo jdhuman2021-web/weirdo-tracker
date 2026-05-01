@@ -1,19 +1,37 @@
 {
-  "timestamp": "2026-05-01T12:16:11.478252",
-  "total_alerts": 2,
+  "timestamp": "2026-05-01T14:03:45.464790",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "CHIBI",
-      "vol_ratio": 3.03,
-      "score": 56
+      "vol_ratio": 8.43,
+      "score": 41
     },
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 7.6,
-      "score": 40
+      "symbol": "Optimistic",
+      "vol_ratio": 8.46,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 8.5,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 18.73,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 8.37,
+      "score": 20
     }
   ]
 }
