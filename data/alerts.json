@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-02T04:03:48.963732",
-  "total_alerts": 1,
+  "timestamp": "2026-05-02T06:21:39.144373",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "snowball",
-      "vol_ratio": 6.22,
-      "score": 55
+      "symbol": "VIBECOIN",
+      "vol_ratio": 12.22,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 11.16,
+      "score": 25
     }
   ]
 }
