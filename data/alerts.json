@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-05-02T17:17:29.849776",
-  "total_alerts": 2,
+  "timestamp": "2026-05-02T18:13:12.596557",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 3.52,
-      "score": 55
+      "symbol": "MAX",
+      "vol_ratio": 5.63,
+      "score": 65
     },
     {
       "type": "WHALE",
       "symbol": "NOTHING",
-      "vol_ratio": 4.22,
+      "vol_ratio": 4.75,
       "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 22.9,
+      "score": 35
     }
   ]
 }
