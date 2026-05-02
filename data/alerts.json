@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-05-02T19:38:35.756520",
-  "total_alerts": 0,
+  "timestamp": "2026-05-02T20:44:33.628917",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 17.7,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 6.15,
+      "score": 25
+    }
+  ]
 }
