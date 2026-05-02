@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-05-02T20:44:33.628917",
-  "total_alerts": 2,
+  "timestamp": "2026-05-02T21:43:15.224001",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "Lobstar",
-      "vol_ratio": 17.7,
+      "vol_ratio": 6.82,
       "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 6.15,
-      "score": 25
+      "symbol": "PIZZA",
+      "vol_ratio": 4.47,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 6.6,
+      "score": 55
     }
   ]
 }
