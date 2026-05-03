@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-03T08:11:46.676900",
-  "total_alerts": 0,
+  "timestamp": "2026-05-03T10:58:21.539960",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.6,
+      "score": 56
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.74,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 4.38,
+      "score": 20
+    }
+  ]
 }
