@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-05-03T14:32:19.761227",
-  "total_alerts": 2,
+  "timestamp": "2026-05-03T15:15:15.011287",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 5.26,
+      "vol_ratio": 4.15,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 4.11,
-      "score": 20
+      "symbol": "NOTHING",
+      "vol_ratio": 4.67,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.49,
+      "score": 50
     }
   ]
 }
