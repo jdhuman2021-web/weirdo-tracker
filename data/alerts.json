@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-05-04T02:48:00.577392",
-  "total_alerts": 1,
+  "timestamp": "2026-05-04T06:15:54.354374",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 6.75,
+      "symbol": "PIZZA",
+      "vol_ratio": 3.34,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 13.45,
       "score": 25
     }
   ]
