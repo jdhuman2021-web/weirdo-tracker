@@ -1,19 +1,43 @@
 {
-  "timestamp": "2026-05-04T17:18:01.126238",
-  "total_alerts": 2,
+  "timestamp": "2026-05-04T19:07:51.818562",
+  "total_alerts": 6,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 12.0,
+      "symbol": "GOYIM",
+      "vol_ratio": 8.17,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 9.49,
       "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 9.66,
-      "score": 20
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.52,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 9.55,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 6.38,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 15.25,
+      "score": 25
     }
   ]
 }
