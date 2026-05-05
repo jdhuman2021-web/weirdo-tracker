@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-05-05T17:08:00.783993",
-  "total_alerts": 1,
+  "timestamp": "2026-05-05T18:57:25.933162",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 6.48,
-      "score": 20
+      "symbol": "Jellybean",
+      "vol_ratio": 3.58,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 6.88,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 6.34,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 5.98,
+      "score": 25
     }
   ]
 }
