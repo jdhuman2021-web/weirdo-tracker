@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-05-06T08:32:32.361850",
-  "total_alerts": 1,
+  "timestamp": "2026-05-06T10:38:29.081511",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "VIBECOIN",
-      "vol_ratio": 3.07,
-      "score": 55
+      "vol_ratio": 4.02,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 5.46,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 7.83,
+      "score": 15
     }
   ]
 }
