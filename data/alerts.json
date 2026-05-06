@@ -1,18 +1,30 @@
 {
-  "timestamp": "2026-05-06T02:46:26.042226",
-  "total_alerts": 2,
+  "timestamp": "2026-05-06T06:00:44.151484",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 3.67,
-      "score": 47
+      "symbol": "HODL",
+      "vol_ratio": 6.94,
+      "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "SWING",
-      "vol_ratio": 23.05,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 5.4,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 21.27,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 4.15,
       "score": 25
     }
   ]
