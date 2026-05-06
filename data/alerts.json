@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-05-06T20:56:37.925488",
-  "total_alerts": 2,
+  "timestamp": "2026-05-06T22:01:14.941606",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "TripleT",
-      "vol_ratio": 3.73,
+      "symbol": "NOTHING",
+      "vol_ratio": 9.16,
       "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 6.08,
-      "score": 30
+      "symbol": "Jellybean",
+      "vol_ratio": 3.73,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 4.1,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.55,
+      "score": 35
     }
   ]
 }
