@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-07T15:46:00.975271",
-  "total_alerts": 1,
+  "timestamp": "2026-05-07T17:51:04.404748",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 15.62,
-      "score": 52
+      "symbol": "Jellybean",
+      "vol_ratio": 4.06,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 8.61,
+      "score": 40
     }
   ]
 }
