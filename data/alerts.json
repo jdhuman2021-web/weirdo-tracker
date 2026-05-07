@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-05-07T17:51:04.404748",
-  "total_alerts": 2,
+  "timestamp": "2026-05-07T19:45:49.962255",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Jellybean",
-      "vol_ratio": 4.06,
-      "score": 60
+      "symbol": "CAPYBARA",
+      "vol_ratio": 10.57,
+      "score": 25
     },
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 8.61,
-      "score": 40
+      "symbol": "Artemis II",
+      "vol_ratio": 10.38,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 6.3,
+      "score": 20
     }
   ]
 }
