@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-09T01:21:08.231901",
-  "total_alerts": 0,
+  "timestamp": "2026-05-09T04:50:53.620237",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.99,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.07,
+      "score": 28
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 14.94,
+      "score": 25
+    }
+  ]
 }
