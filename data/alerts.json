@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-09T12:13:33.826686",
-  "total_alerts": 0,
+  "timestamp": "2026-05-09T14:02:11.481226",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 3.19,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 6.29,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 10.14,
+      "score": 25
+    }
+  ]
 }
