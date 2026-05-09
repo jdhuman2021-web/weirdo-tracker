@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-09T07:10:03.046086",
-  "total_alerts": 1,
+  "timestamp": "2026-05-09T09:02:06.540495",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 4.38,
-      "score": 33
+      "symbol": "HODL",
+      "vol_ratio": 3.07,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 13.24,
+      "score": 30
     }
   ]
 }
