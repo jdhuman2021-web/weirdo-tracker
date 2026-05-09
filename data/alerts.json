@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-09T21:00:20.422943",
-  "total_alerts": 1,
+  "timestamp": "2026-05-09T21:47:39.706292",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.64,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
       "symbol": "Jellybean",
-      "vol_ratio": 10.18,
-      "score": 52
+      "vol_ratio": 6.93,
+      "score": 42
     }
   ]
 }
