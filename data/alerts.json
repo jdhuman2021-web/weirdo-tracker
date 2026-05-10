@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-05-10T14:55:35.737283",
-  "total_alerts": 1,
+  "timestamp": "2026-05-10T15:56:49.348740",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 5.2,
-      "score": 25
+      "symbol": "PUNCH",
+      "vol_ratio": 3.31,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 3.72,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 23.67,
+      "score": 43
     }
   ]
 }
