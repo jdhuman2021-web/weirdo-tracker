@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-05-10T11:03:40.880432",
-  "total_alerts": 0,
+  "timestamp": "2026-05-10T12:02:56.355495",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 3.85,
+      "score": 60
+    }
+  ]
 }
