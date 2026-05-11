@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-05-11T04:47:46.244555",
-  "total_alerts": 1,
+  "timestamp": "2026-05-11T08:29:10.383462",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 5.37,
-      "score": 42
+      "symbol": "Deadwhale",
+      "vol_ratio": 6.35,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 4.46,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 24.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.23,
+      "score": 20
     }
   ]
 }
