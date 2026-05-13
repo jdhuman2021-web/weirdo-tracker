@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-05-13T15:30:19.987346",
-  "total_alerts": 2,
+  "timestamp": "2026-05-13T17:38:35.532995",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 5.18,
-      "score": 30
+      "symbol": "MAX",
+      "vol_ratio": 5.12,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.59,
+      "score": 55
     },
     {
       "type": "WHALE",
       "symbol": "Momo-chan",
-      "vol_ratio": 4.95,
+      "vol_ratio": 8.28,
       "score": 25
     }
   ]
