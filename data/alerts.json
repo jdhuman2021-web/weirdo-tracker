@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-05-13T22:49:21.425797",
-  "total_alerts": 0,
+  "timestamp": "2026-05-14T00:00:57.603600",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 5.42,
+      "score": 50
+    }
+  ]
 }
