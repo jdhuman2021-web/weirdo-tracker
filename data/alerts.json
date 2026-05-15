@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-15T11:59:29.394637",
-  "total_alerts": 0,
+  "timestamp": "2026-05-15T14:07:47.383383",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 24.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 5.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 13.57,
+      "score": 10
+    }
+  ]
 }
