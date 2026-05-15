@@ -1,6 +1,37 @@
 {
-  "timestamp": "2026-05-15T16:23:01.125243",
-  "total_alerts": 0,
+  "timestamp": "2026-05-15T18:07:48.745302",
+  "total_alerts": 5,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 6.18,
+      "score": 61
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 4.19,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 3.29,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 3.01,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 15.78,
+      "score": 10
+    }
+  ]
 }
