@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-05-16T21:15:49.421598",
-  "total_alerts": 1,
+  "timestamp": "2026-05-16T22:15:13.654899",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 6.15,
-      "score": 56
+      "symbol": "Jellybean",
+      "vol_ratio": 4.99,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 10.72,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.95,
+      "score": 20
     }
   ]
 }
