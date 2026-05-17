@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-05-17T20:16:49.891651",
-  "total_alerts": 0,
+  "timestamp": "2026-05-17T21:30:40.023871",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 9.92,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 6.31,
+      "score": 55
+    }
+  ]
 }
