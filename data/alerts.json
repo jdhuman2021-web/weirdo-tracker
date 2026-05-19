@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-05-19T08:30:14.719481",
-  "total_alerts": 0,
+  "timestamp": "2026-05-19T11:43:44.293238",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 21.01,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 14.67,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 11.87,
+      "score": 30
+    }
+  ]
 }
