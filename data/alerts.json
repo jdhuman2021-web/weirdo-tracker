@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-21T21:15:36.175096",
-  "total_alerts": 1,
+  "timestamp": "2026-05-21T22:53:03.196351",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 16.63,
-      "score": 30
+      "symbol": "MAX",
+      "vol_ratio": 3.32,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 4.12,
+      "score": 55
     }
   ]
 }
