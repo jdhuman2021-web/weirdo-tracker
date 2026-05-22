@@ -1,45 +1,29 @@
 {
-  "timestamp": "2026-05-22T08:24:54.443813",
-  "total_alerts": 5,
+  "timestamp": "2026-05-22T11:27:53.010649",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "STRONG_BUY",
       "symbol": "PIZZA",
       "score": 79,
-      "price": 0.0001635,
+      "price": 0.000155,
       "reasons": [
         "Price in dip zone",
-        "Volume 2.2x - healthy"
+        "Volume 3.1x - healthy"
       ]
     },
     {
       "type": "WHALE",
       "symbol": "PIZZA",
-      "vol_ratio": 3.38,
+      "vol_ratio": 5.71,
       "score": 79
     },
     {
-      "type": "STRONG_BUY",
-      "symbol": "NOTHING",
-      "score": 78,
-      "price": 0.0009567,
-      "reasons": [
-        "Price in dip zone",
-        "Volume 0.9x - healthy"
-      ]
-    },
-    {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 3.89,
-      "score": 78
-    },
-    {
-      "type": "WHALE",
-      "symbol": "CAPYBARA",
-      "vol_ratio": 23.59,
-      "score": 25
+      "symbol": "CHIBI",
+      "vol_ratio": 3.86,
+      "score": 56
     }
   ]
 }
