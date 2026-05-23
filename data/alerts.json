@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-05-23T12:03:07.051551",
-  "total_alerts": 0,
+  "timestamp": "2026-05-23T14:00:03.249480",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 6.15,
+      "score": 50
+    }
+  ]
 }
