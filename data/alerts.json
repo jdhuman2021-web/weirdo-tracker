@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-24T12:03:53.471515",
-  "total_alerts": 1,
+  "timestamp": "2026-05-24T13:58:10.945153",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 10.64,
+      "score": 46
+    },
+    {
+      "type": "WHALE",
       "symbol": "CHIBI",
-      "vol_ratio": 4.74,
-      "score": 61
+      "vol_ratio": 3.19,
+      "score": 46
     }
   ]
 }
