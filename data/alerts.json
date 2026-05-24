@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-05-24T08:46:34.925372",
-  "total_alerts": 1,
+  "timestamp": "2026-05-24T10:45:21.742644",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.42,
+      "symbol": "CHIBI",
+      "vol_ratio": 3.93,
+      "score": 61
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 24.0,
       "score": 25
     }
   ]
