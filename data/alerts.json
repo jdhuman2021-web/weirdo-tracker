@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-05-24T15:06:44.692846",
-  "total_alerts": 1,
+  "timestamp": "2026-05-24T16:36:36.996040",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 7.8,
-      "score": 60
+      "symbol": "Jellybean",
+      "vol_ratio": 3.25,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 5.27,
+      "score": 26
     }
   ]
 }
