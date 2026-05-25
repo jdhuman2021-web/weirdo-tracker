@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-05-24T23:01:21.848529",
-  "total_alerts": 0,
+  "timestamp": "2026-05-25T00:06:04.267366",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 3.82,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 18.29,
+      "score": 20
+    }
+  ]
 }
