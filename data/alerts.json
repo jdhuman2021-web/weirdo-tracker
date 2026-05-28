@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-05-27T23:48:24.272179",
-  "total_alerts": 0,
+  "timestamp": "2026-05-28T03:01:47.738881",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 3.14,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 7.81,
+      "score": 60
+    }
+  ]
 }
