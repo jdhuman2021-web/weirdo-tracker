@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-05-30T10:03:27.898949",
-  "total_alerts": 0,
+  "timestamp": "2026-05-30T11:41:43.057170",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 19.2,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 23.55,
+      "score": 20
+    }
+  ]
 }
