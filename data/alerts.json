@@ -1,13 +1,49 @@
 {
-  "timestamp": "2026-05-31T21:02:13.358947",
-  "total_alerts": 1,
+  "timestamp": "2026-05-31T22:08:29.858328",
+  "total_alerts": 7,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.05,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.04,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.12,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 4.11,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
       "symbol": "JUICE",
-      "vol_ratio": 4.61,
+      "vol_ratio": 7.68,
       "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 14.51,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 23.94,
+      "score": 20
     }
   ]
 }
