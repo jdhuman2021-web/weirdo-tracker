@@ -1,6 +1,37 @@
 {
-  "timestamp": "2026-06-02T09:52:03.121711",
-  "total_alerts": 0,
+  "timestamp": "2026-06-02T14:05:00.356727",
+  "total_alerts": 5,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 6.48,
+      "score": 63
+    },
+    {
+      "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 4.81,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 12.13,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 15.59,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 4.55,
+      "score": 15
+    }
+  ]
 }
