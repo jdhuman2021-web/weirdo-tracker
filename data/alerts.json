@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-04T11:33:42.486604",
-  "total_alerts": 1,
+  "timestamp": "2026-06-04T14:18:39.748642",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 4.67,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 15.01,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
       "symbol": "Momo-chan",
-      "vol_ratio": 8.0,
-      "score": 15
+      "vol_ratio": 20.32,
+      "score": 20
     }
   ]
 }
