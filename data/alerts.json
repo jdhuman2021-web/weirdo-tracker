@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-06-05T13:55:01.564400",
-  "total_alerts": 2,
+  "timestamp": "2026-06-05T16:32:38.426479",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 5.7,
+      "score": 56
+    },
+    {
+      "type": "WHALE",
       "symbol": "Lost",
-      "vol_ratio": 9.65,
+      "vol_ratio": 5.3,
       "score": 25
     },
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 6.45,
-      "score": 5
+      "symbol": "CAPYBARA",
+      "vol_ratio": 18.26,
+      "score": 20
     }
   ]
 }
