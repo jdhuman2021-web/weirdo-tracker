@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-06T15:54:00.419361",
-  "total_alerts": 1,
+  "timestamp": "2026-06-06T17:15:53.651393",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 4.87,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
       "symbol": "PIZZA",
-      "vol_ratio": 14.82,
-      "score": 23
+      "vol_ratio": 6.55,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 22.85,
+      "score": 20
     }
   ]
 }
