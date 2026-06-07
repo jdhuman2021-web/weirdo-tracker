@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-07T18:06:42.154519",
-  "total_alerts": 1,
+  "timestamp": "2026-06-07T19:58:19.815304",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.75,
-      "score": 56
+      "symbol": "Lobstar",
+      "vol_ratio": 9.13,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 17.31,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 4.5,
+      "score": 25
     }
   ]
 }
