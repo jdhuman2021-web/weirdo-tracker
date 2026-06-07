@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-06-07T15:27:40.507403",
-  "total_alerts": 1,
+  "timestamp": "2026-06-07T16:54:51.894313",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "testicle",
-      "vol_ratio": 3.11,
-      "score": 60
+      "symbol": "dapang",
+      "vol_ratio": 20.64,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 19.86,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 22.97,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 7.53,
+      "score": 8
     }
   ]
 }
