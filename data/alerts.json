@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-06-07T01:40:56.491087",
-  "total_alerts": 0,
+  "timestamp": "2026-06-07T06:26:56.105647",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 3.45,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.91,
+      "score": 23
+    }
+  ]
 }
