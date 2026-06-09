@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-09T13:47:36.522524",
-  "total_alerts": 1,
+  "timestamp": "2026-06-09T16:34:33.332832",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 5.74,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
       "symbol": "CAPYBARA",
-      "vol_ratio": 15.64,
-      "score": 50
+      "vol_ratio": 14.79,
+      "score": 40
     }
   ]
 }
