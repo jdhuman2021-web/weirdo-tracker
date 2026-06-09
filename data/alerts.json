@@ -1,19 +1,37 @@
 {
-  "timestamp": "2026-06-09T16:34:33.332832",
-  "total_alerts": 2,
+  "timestamp": "2026-06-09T18:37:11.767646",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "Buttcoin",
-      "vol_ratio": 5.74,
-      "score": 60
+      "vol_ratio": 5.16,
+      "score": 65
     },
     {
       "type": "WHALE",
-      "symbol": "CAPYBARA",
-      "vol_ratio": 14.79,
-      "score": 40
+      "symbol": "NOTHING",
+      "vol_ratio": 10.13,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 7.02,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 17.79,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
