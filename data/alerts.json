@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-10T03:38:41.926834",
-  "total_alerts": 1,
+  "timestamp": "2026-06-10T08:10:17.777244",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 3.54,
-      "score": 20
+      "symbol": "Deadwhale",
+      "vol_ratio": 4.81,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
