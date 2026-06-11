@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-11T11:30:00.833067",
-  "total_alerts": 1,
+  "timestamp": "2026-06-11T15:07:24.595682",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 8.9,
-      "score": 25
+      "symbol": "MAX",
+      "vol_ratio": 3.12,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 3.38,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 4.2,
+      "score": 31
     }
   ]
 }
