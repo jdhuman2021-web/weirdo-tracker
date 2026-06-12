@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-06-12T11:04:14.484612",
-  "total_alerts": 0,
+  "timestamp": "2026-06-12T14:16:51.299381",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 4.77,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 14.42,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 4.67,
+      "score": 20
+    }
+  ]
 }
