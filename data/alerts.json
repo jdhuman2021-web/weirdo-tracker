@@ -1,31 +1,25 @@
 {
-  "timestamp": "2026-06-13T15:20:18.258450",
-  "total_alerts": 4,
+  "timestamp": "2026-06-13T16:59:00.089692",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 6.98,
+      "vol_ratio": 3.32,
       "score": 65
     },
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 18.32,
-      "score": 35
+      "symbol": "NOTHING",
+      "vol_ratio": 3.09,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.13,
+      "symbol": "JUICE",
+      "vol_ratio": 6.46,
       "score": 25
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 6.42,
-      "score": 20
     }
   ]
 }
