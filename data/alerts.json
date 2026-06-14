@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-06-14T05:19:32.658546",
-  "total_alerts": 0,
+  "timestamp": "2026-06-14T08:57:05.250413",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 23.17,
+      "score": 20
+    }
+  ]
 }
