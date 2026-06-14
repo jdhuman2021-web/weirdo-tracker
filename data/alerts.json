@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-06-14T08:57:05.250413",
-  "total_alerts": 1,
+  "timestamp": "2026-06-14T11:33:41.596059",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CAPYBARA",
-      "vol_ratio": 23.17,
+      "symbol": "snowball",
+      "vol_ratio": 5.72,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 7.49,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.96,
       "score": 20
     }
   ]
