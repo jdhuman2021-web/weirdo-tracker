@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-06-15T02:03:41.407032",
-  "total_alerts": 0,
+  "timestamp": "2026-06-15T07:34:33.216844",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.63,
+      "score": 51
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 12.91,
+      "score": 25
+    }
+  ]
 }
