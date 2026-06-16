@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-06-16T09:32:13.173887",
-  "total_alerts": 0,
+  "timestamp": "2026-06-16T14:35:01.497972",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.86,
+      "score": 51
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 4.84,
+      "score": 26
+    }
+  ]
 }
