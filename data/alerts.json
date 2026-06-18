@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-06-18T00:21:34.141088",
-  "total_alerts": 0,
+  "timestamp": "2026-06-18T05:20:17.669527",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 3.41,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 5.52,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 13.1,
+      "score": 30
+    }
+  ]
 }
