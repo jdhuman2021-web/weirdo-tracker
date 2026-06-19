@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-06-19T09:22:55.437396",
-  "total_alerts": 1,
+  "timestamp": "2026-06-19T13:02:20.847779",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 3.62,
+      "symbol": "Rosie",
+      "vol_ratio": 9.09,
       "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 23.99,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.48,
+      "score": 15
     }
   ]
 }
