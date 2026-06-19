@@ -1,25 +1,31 @@
 {
-  "timestamp": "2026-06-19T13:02:20.847779",
-  "total_alerts": 3,
+  "timestamp": "2026-06-19T16:14:24.788753",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 9.09,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 5.11,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.43,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 3.11,
       "score": 31
     },
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 23.99,
+      "symbol": "dapang",
+      "vol_ratio": 12.58,
       "score": 30
-    },
-    {
-      "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 4.48,
-      "score": 15
     }
   ]
 }
