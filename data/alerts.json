@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-06-21T14:11:10.250864",
-  "total_alerts": 1,
+  "timestamp": "2026-06-21T16:18:46.497993",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 22.82,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 5.03,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 3.26,
-      "score": 20
+      "vol_ratio": 3.48,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 3.52,
+      "score": 26
     }
   ]
 }
