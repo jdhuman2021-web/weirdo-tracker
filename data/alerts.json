@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-06-21T20:15:57.527499",
-  "total_alerts": 1,
+  "timestamp": "2026-06-21T21:57:35.705201",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "testicle",
-      "vol_ratio": 17.48,
+      "vol_ratio": 3.97,
       "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 23.1,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 13.28,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 6.12,
+      "score": 20
     }
   ]
 }
