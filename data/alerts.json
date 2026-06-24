@@ -1,13 +1,37 @@
 {
-  "timestamp": "2026-06-24T15:25:44.027037",
-  "total_alerts": 1,
+  "timestamp": "2026-06-24T17:30:48.414578",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 23.45,
+      "symbol": "Buttcoin",
+      "vol_ratio": 4.74,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 4.59,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.65,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 7.18,
       "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 6.26,
+      "score": 5
     }
   ]
 }
