@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-06-26T21:20:27.603816",
-  "total_alerts": 0,
+  "timestamp": "2026-06-26T22:48:17.778450",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 9.76,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 9.44,
+      "score": 25
+    }
+  ]
 }
