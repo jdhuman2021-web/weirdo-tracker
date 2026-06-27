@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-27T07:52:30.376371",
-  "total_alerts": 1,
+  "timestamp": "2026-06-27T10:10:44.273448",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.0,
-      "score": 56
+      "symbol": "Lobstar",
+      "vol_ratio": 3.54,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
