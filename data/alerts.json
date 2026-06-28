@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-28T20:15:42.597238",
-  "total_alerts": 1,
+  "timestamp": "2026-06-28T21:41:49.725967",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 3.32,
-      "score": 47
+      "symbol": "Deadwhale",
+      "vol_ratio": 8.37,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 3.49,
+      "score": 35
     }
   ]
 }
