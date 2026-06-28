@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-28T10:44:19.082905",
-  "total_alerts": 1,
+  "timestamp": "2026-06-28T12:19:39.221912",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 19.2,
-      "score": 20
+      "symbol": "Rosie",
+      "vol_ratio": 4.41,
+      "score": 43
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 3.38,
+      "score": 26
     }
   ]
 }
