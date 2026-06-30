@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-06-30T18:22:50.545938",
-  "total_alerts": 1,
+  "timestamp": "2026-06-30T20:32:54.991008",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 6.54,
-      "score": 15
+      "symbol": "GOYIM",
+      "vol_ratio": 4.59,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 6.67,
+      "score": 25
     }
   ]
 }
