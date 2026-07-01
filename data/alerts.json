@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-07-01T01:43:39.250475",
-  "total_alerts": 1,
+  "timestamp": "2026-07-01T06:29:11.894000",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Jellybean",
-      "vol_ratio": 7.61,
-      "score": 26
+      "symbol": "snowball",
+      "vol_ratio": 7.45,
+      "score": 63
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 6.65,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
