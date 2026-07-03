@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-03T01:13:28.681061",
-  "total_alerts": 0,
+  "timestamp": "2026-07-03T05:17:33.984898",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 3.52,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 4.7,
+      "score": 26
+    }
+  ]
 }
