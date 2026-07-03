@@ -1,19 +1,43 @@
 {
-  "timestamp": "2026-07-03T18:50:26.467634",
-  "total_alerts": 2,
+  "timestamp": "2026-07-03T20:17:03.323683",
+  "total_alerts": 6,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 3.69,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.82,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
       "symbol": "NOTHING",
-      "vol_ratio": 3.11,
+      "vol_ratio": 3.64,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "TripleT",
-      "vol_ratio": 3.36,
-      "score": 55
+      "symbol": "testicle",
+      "vol_ratio": 23.93,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 5.54,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 15.75,
+      "score": 25
     }
   ]
 }
