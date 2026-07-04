@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-07-04T18:35:05.148653",
-  "total_alerts": 0,
+  "timestamp": "2026-07-04T20:11:56.223612",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 3.47,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.95,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 15.93,
+      "score": 30
+    }
+  ]
 }
