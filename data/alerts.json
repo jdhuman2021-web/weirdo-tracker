@@ -1,30 +1,24 @@
 {
-  "timestamp": "2026-07-04T15:45:09.491819",
-  "total_alerts": 4,
+  "timestamp": "2026-07-04T17:06:36.091670",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 5.02,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
       "symbol": "GOYIM",
-      "vol_ratio": 4.47,
+      "vol_ratio": 19.74,
       "score": 36
     },
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.61,
-      "score": 26
-    },
-    {
-      "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 5.63,
-      "score": 25
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 4.57,
+      "symbol": "Momo-chan",
+      "vol_ratio": 24.0,
       "score": 25
     }
   ]
