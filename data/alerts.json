@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-07-04T01:11:39.952472",
-  "total_alerts": 2,
+  "timestamp": "2026-07-04T05:12:05.309759",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 3.18,
+      "symbol": "NOTHING2",
+      "vol_ratio": 5.99,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 3.44,
       "score": 31
     },
     {
       "type": "WHALE",
-      "symbol": "7",
-      "vol_ratio": 23.77,
-      "score": 25
+      "symbol": "TERAFAB",
+      "vol_ratio": 5.55,
+      "score": 20
     }
   ]
 }
