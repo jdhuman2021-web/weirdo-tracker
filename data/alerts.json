@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-07-06T21:14:04.082802",
-  "total_alerts": 1,
+  "timestamp": "2026-07-06T22:49:28.160846",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.43,
+      "symbol": "Lockdown",
+      "vol_ratio": 22.09,
       "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 18.17,
+      "score": 16
     }
   ]
 }
