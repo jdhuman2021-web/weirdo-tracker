@@ -1,6 +1,37 @@
 {
-  "timestamp": "2026-07-07T11:28:03.674124",
-  "total_alerts": 0,
+  "timestamp": "2026-07-07T13:37:03.214892",
+  "total_alerts": 5,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 7.04,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 8.02,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 3.79,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 7.67,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 19.1,
+      "score": 10
+    }
+  ]
 }
