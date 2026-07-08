@@ -1,13 +1,35 @@
 {
-  "timestamp": "2026-07-08T01:07:05.286964",
-  "total_alerts": 1,
+  "timestamp": "2026-07-08T04:48:41.964307",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
+      "type": "STRONG_BUY",
+      "symbol": "TripleT",
+      "score": 78,
+      "price": 0.01209,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 1.5x - healthy"
+      ]
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 6.94,
+      "score": 78
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 8.67,
+      "score": 36
+    },
+    {
       "type": "WHALE",
       "symbol": "PIZZA",
-      "vol_ratio": 15.77,
-      "score": 36
+      "vol_ratio": 4.95,
+      "score": 21
     }
   ]
 }
