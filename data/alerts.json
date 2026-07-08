@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-07-08T11:50:23.036291",
-  "total_alerts": 1,
+  "timestamp": "2026-07-08T14:04:10.836466",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PUNCH",
-      "vol_ratio": 3.39,
-      "score": 73
+      "symbol": "HODL",
+      "vol_ratio": 3.3,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.79,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 23.83,
+      "score": 20
     }
   ]
 }
