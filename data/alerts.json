@@ -1,31 +1,25 @@
 {
-  "timestamp": "2026-07-08T16:09:59.841487",
-  "total_alerts": 4,
+  "timestamp": "2026-07-08T18:02:52.992042",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 4.87,
+      "vol_ratio": 12.0,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.51,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 4.85,
-      "score": 47
-    },
-    {
-      "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 12.64,
-      "score": 31
-    },
-    {
-      "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 4.51,
-      "score": 15
+      "vol_ratio": 3.08,
+      "score": 30
     }
   ]
 }
