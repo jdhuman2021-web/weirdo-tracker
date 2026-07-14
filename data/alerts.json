@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-14T22:37:32.317479",
-  "total_alerts": 0,
+  "timestamp": "2026-07-14T23:56:21.729895",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 13.95,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 4.14,
+      "score": 26
+    }
+  ]
 }
