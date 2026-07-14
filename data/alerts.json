@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-07-14T12:13:58.098107",
-  "total_alerts": 2,
+  "timestamp": "2026-07-14T14:28:09.425034",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 13.42,
-      "score": 32
+      "symbol": "HODL",
+      "vol_ratio": 5.06,
+      "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 8.42,
-      "score": 5
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.89,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 7.79,
+      "score": 32
     }
   ]
 }
