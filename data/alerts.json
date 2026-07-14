@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-07-14T18:42:17.402521",
-  "total_alerts": 1,
+  "timestamp": "2026-07-14T20:13:20.541393",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 8.95,
+      "symbol": "NOTHING",
+      "vol_ratio": 3.41,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 7.34,
       "score": 30
     }
   ]
