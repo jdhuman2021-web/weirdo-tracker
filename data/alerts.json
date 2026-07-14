@@ -1,25 +1,37 @@
 {
-  "timestamp": "2026-07-14T16:00:08.732494",
-  "total_alerts": 3,
+  "timestamp": "2026-07-14T17:17:49.022986",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "testicle",
-      "vol_ratio": 3.82,
+      "symbol": "MAX",
+      "vol_ratio": 3.26,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "TERAFAB",
-      "vol_ratio": 6.51,
+      "symbol": "testicle",
+      "vol_ratio": 6.92,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 12.04,
+      "score": 32
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 4.2,
       "score": 30
     },
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 23.1,
-      "score": 25
+      "symbol": "CHIBI",
+      "vol_ratio": 9.79,
+      "score": 21
     }
   ]
 }
