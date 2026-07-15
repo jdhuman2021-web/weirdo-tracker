@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-07-15T02:17:58.539867",
-  "total_alerts": 1,
+  "timestamp": "2026-07-15T05:18:01.142731",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Momo-chan",
-      "vol_ratio": 24.0,
-      "score": 25
+      "symbol": "TripleT",
+      "vol_ratio": 3.47,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 4.92,
+      "score": 60
     }
   ]
 }
