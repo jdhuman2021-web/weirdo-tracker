@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-07-16T18:09:02.123116",
-  "total_alerts": 1,
+  "timestamp": "2026-07-16T19:44:20.476270",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 7.95,
-      "score": 52
+      "symbol": "Rosie",
+      "vol_ratio": 21.68,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
