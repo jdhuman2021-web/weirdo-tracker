@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-07-16T09:15:58.186496",
-  "total_alerts": 1,
+  "timestamp": "2026-07-16T11:20:34.815750",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 17.75,
+      "symbol": "CHIBI",
+      "vol_ratio": 6.23,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 13.12,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.52,
       "score": 20
     }
   ]
