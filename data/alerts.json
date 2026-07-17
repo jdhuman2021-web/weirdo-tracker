@@ -1,24 +1,36 @@
 {
-  "timestamp": "2026-07-17T12:46:06.933925",
-  "total_alerts": 3,
+  "timestamp": "2026-07-17T14:46:17.223119",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 6.38,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
       "symbol": "Jellybean",
-      "vol_ratio": 3.62,
+      "vol_ratio": 11.06,
       "score": 31
     },
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 24.0,
-      "score": 30
+      "symbol": "GOYIM",
+      "vol_ratio": 21.2,
+      "score": 31
     },
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 24.0,
+      "symbol": "CHIBI",
+      "vol_ratio": 5.6,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 9.0,
       "score": 25
     }
   ]
