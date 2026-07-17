@@ -1,25 +1,31 @@
 {
-  "timestamp": "2026-07-17T22:25:00.318760",
-  "total_alerts": 3,
+  "timestamp": "2026-07-17T23:26:57.022615",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 3.04,
-      "score": 65
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.12,
+      "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 10.19,
-      "score": 31
+      "symbol": "7",
+      "vol_ratio": 24.0,
+      "score": 25
     },
     {
       "type": "WHALE",
       "symbol": "Lost",
-      "vol_ratio": 7.71,
+      "vol_ratio": 8.21,
       "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 5.41,
+      "score": 15
     }
   ]
 }
