@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-07-19T21:54:19.434677",
-  "total_alerts": 1,
+  "timestamp": "2026-07-19T22:53:37.248843",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lockdown",
-      "vol_ratio": 24.0,
-      "score": 20
+      "symbol": "HODL",
+      "vol_ratio": 4.16,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 3.45,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.46,
+      "score": 25
     }
   ]
 }
