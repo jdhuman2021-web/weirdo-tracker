@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-07-19T23:59:25.604625",
-  "total_alerts": 2,
+  "timestamp": "2026-07-20T02:50:32.987769",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 24.0,
-      "score": 40
+      "symbol": "MAX",
+      "vol_ratio": 5.89,
+      "score": 52
     },
     {
       "type": "WHALE",
       "symbol": "GOYIM",
-      "vol_ratio": 8.34,
-      "score": 28
+      "vol_ratio": 12.72,
+      "score": 38
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 9.7,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 20.98,
+      "score": 25
     }
   ]
 }
