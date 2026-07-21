@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-21T09:13:06.228647",
-  "total_alerts": 0,
+  "timestamp": "2026-07-21T11:26:24.006107",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 3.98,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 12.1,
+      "score": 31
+    }
+  ]
 }
