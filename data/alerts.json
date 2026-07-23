@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-07-23T18:48:54.093607",
-  "total_alerts": 1,
+  "timestamp": "2026-07-23T20:14:33.757301",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 3.86,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 19.55,
+      "score": 57
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 8.12,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 14.36,
       "score": 20
     }
   ]
