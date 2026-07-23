@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-23T10:00:58.983886",
-  "total_alerts": 0,
+  "timestamp": "2026-07-23T11:54:58.787957",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 4.06,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.41,
+      "score": 30
+    }
+  ]
 }
