@@ -1,12 +1,36 @@
 {
-  "timestamp": "2026-07-24T11:20:20.913710",
-  "total_alerts": 1,
+  "timestamp": "2026-07-24T13:00:29.477302",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.76,
+      "symbol": "snowball",
+      "vol_ratio": 3.1,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 23.86,
+      "score": 27
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.88,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 5.48,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 24.0,
       "score": 25
     }
   ]
