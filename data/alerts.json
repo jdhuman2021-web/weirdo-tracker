@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-26T15:43:42.867833",
-  "total_alerts": 0,
+  "timestamp": "2026-07-26T17:01:50.784427",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 16.82,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.27,
+      "score": 25
+    }
+  ]
 }
