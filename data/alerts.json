@@ -1,25 +1,19 @@
 {
-  "timestamp": "2026-07-26T21:00:02.323296",
-  "total_alerts": 3,
+  "timestamp": "2026-07-26T22:02:40.891181",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "TripleT",
-      "vol_ratio": 3.63,
+      "vol_ratio": 3.8,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 5.19,
       "score": 55
-    },
-    {
-      "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 12.19,
-      "score": 36
-    },
-    {
-      "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 23.22,
-      "score": 27
     }
   ]
 }
