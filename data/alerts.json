@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-07-26T23:07:24.617624",
-  "total_alerts": 2,
+  "timestamp": "2026-07-27T01:11:22.219641",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "snowball",
-      "vol_ratio": 7.88,
-      "score": 65
+      "symbol": "GOYIM",
+      "vol_ratio": 4.16,
+      "score": 36
     },
     {
       "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 7.04,
-      "score": 55
+      "symbol": "Optimistic",
+      "vol_ratio": 3.88,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.77,
+      "score": 25
     }
   ]
 }
