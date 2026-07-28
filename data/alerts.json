@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-07-28T22:06:50.377800",
-  "total_alerts": 2,
+  "timestamp": "2026-07-28T23:34:06.248143",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 5.11,
+      "symbol": "TripleT",
+      "vol_ratio": 5.49,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 6.01,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 7.48,
-      "score": 52
+      "symbol": "Lockdown",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
