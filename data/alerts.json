@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-07-28T00:11:22.151033",
-  "total_alerts": 0,
+  "timestamp": "2026-07-28T03:50:01.938682",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 3.21,
+      "score": 25
+    }
+  ]
 }
