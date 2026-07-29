@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-07-29T15:15:06.592983",
-  "total_alerts": 1,
+  "timestamp": "2026-07-29T16:53:09.307941",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 4.68,
-      "score": 30
+      "symbol": "NOTHING",
+      "vol_ratio": 4.22,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 5.67,
+      "score": 31
     }
   ]
 }
