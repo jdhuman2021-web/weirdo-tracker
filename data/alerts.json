@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-07-31T01:07:28.664221",
-  "total_alerts": 0,
+  "timestamp": "2026-07-31T05:01:38.497289",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 4.08,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 14.25,
+      "score": 25
+    }
+  ]
 }
