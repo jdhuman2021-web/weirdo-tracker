@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-07-31T21:41:28.440194",
-  "total_alerts": 0,
+  "timestamp": "2026-07-31T23:01:50.722532",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 3.36,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 12.64,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 9.32,
+      "score": 5
+    }
+  ]
 }
