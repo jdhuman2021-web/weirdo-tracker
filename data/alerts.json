@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-08-02T17:11:43.418971",
-  "total_alerts": 1,
+  "timestamp": "2026-08-02T18:33:08.505584",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "TERAFAB",
-      "vol_ratio": 3.01,
-      "score": 30
+      "symbol": "Lobstar",
+      "vol_ratio": 4.31,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 18.34,
+      "score": 60
     }
   ]
 }
