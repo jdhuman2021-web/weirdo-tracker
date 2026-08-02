@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-08-02T19:49:00.148042",
-  "total_alerts": 1,
+  "timestamp": "2026-08-02T20:56:54.523917",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 15.6,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 5.3,
-      "score": 30
+      "vol_ratio": 6.08,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.09,
+      "score": 25
     }
   ]
 }
