@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-08-05T23:00:10.146970",
-  "total_alerts": 1,
+  "timestamp": "2026-08-06T00:04:26.692462",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 11.74,
-      "score": 55
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.85,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 7.93,
+      "score": 33
     }
   ]
 }
