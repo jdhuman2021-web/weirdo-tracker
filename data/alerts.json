@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-06T11:43:48.085040",
-  "total_alerts": 0,
+  "timestamp": "2026-08-06T14:07:00.686486",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 6.43,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 6.54,
+      "score": 30
+    }
+  ]
 }
