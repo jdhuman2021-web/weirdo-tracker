@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-07T08:15:34.501930",
-  "total_alerts": 0,
+  "timestamp": "2026-08-07T09:35:10.989466",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 16.75,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 11.83,
+      "score": 30
+    }
+  ]
 }
