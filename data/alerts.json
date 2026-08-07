@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-08-07T00:27:31.160619",
-  "total_alerts": 2,
+  "timestamp": "2026-08-07T03:31:32.391745",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "VIBECOIN",
-      "vol_ratio": 9.41,
-      "score": 57
+      "vol_ratio": 9.17,
+      "score": 52
     },
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 10.36,
-      "score": 25
+      "symbol": "HODL",
+      "vol_ratio": 4.38,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 4.75,
+      "score": 20
     }
   ]
 }
