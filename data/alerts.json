@@ -1,31 +1,37 @@
 {
-  "timestamp": "2026-08-08T16:34:21.117496",
-  "total_alerts": 4,
+  "timestamp": "2026-08-08T17:08:29.551053",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.34,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
       "symbol": "MAX",
-      "vol_ratio": 3.54,
-      "score": 60
-    },
-    {
-      "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 4.76,
-      "score": 50
-    },
-    {
-      "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 3.32,
-      "score": 47
+      "vol_ratio": 13.27,
+      "score": 55
     },
     {
       "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 4.29,
+      "vol_ratio": 3.82,
       "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 11.58,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
