@@ -1,34 +1,30 @@
 {
-  "timestamp": "2026-08-08T15:41:31.561671",
+  "timestamp": "2026-08-08T16:34:21.117496",
   "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "STRONG_BUY",
-      "symbol": "TERAFAB",
-      "score": 76,
-      "price": 8.753e-05,
-      "reasons": [
-        "Price dip with reversal - bounce potential",
-        "Volume 1.9x - healthy"
-      ]
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.54,
+      "score": 60
     },
     {
       "type": "WHALE",
       "symbol": "HODL",
-      "vol_ratio": 4.64,
+      "vol_ratio": 4.76,
       "score": 50
     },
     {
       "type": "WHALE",
       "symbol": "VIBECOIN",
-      "vol_ratio": 3.09,
+      "vol_ratio": 3.32,
       "score": 47
     },
     {
       "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 4.21,
+      "vol_ratio": 4.29,
       "score": 30
     }
   ]
