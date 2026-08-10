@@ -1,6 +1,31 @@
 {
-  "timestamp": "2026-08-10T13:58:47.334949",
-  "total_alerts": 0,
+  "timestamp": "2026-08-10T14:59:52.249724",
+  "total_alerts": 4,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 14.18,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 10.6,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 8.44,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 16.59,
+      "score": 20
+    }
+  ]
 }
