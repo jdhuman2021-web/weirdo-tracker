@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-08-11T04:52:36.568948",
-  "total_alerts": 0,
+  "timestamp": "2026-08-11T05:55:49.913372",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 6.07,
+      "score": 28
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 16.15,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 3.25,
+      "score": 20
+    }
+  ]
 }
