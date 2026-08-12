@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-08-12T01:50:25.325910",
-  "total_alerts": 0,
+  "timestamp": "2026-08-12T04:09:35.961965",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 3.42,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 15.17,
+      "score": 38
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
