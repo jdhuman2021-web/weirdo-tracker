@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-08-13T05:21:00.922135",
-  "total_alerts": 1,
+  "timestamp": "2026-08-13T07:00:47.541357",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "testicle",
-      "vol_ratio": 5.44,
+      "symbol": "snowball",
+      "vol_ratio": 3.67,
       "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 4.38,
+      "score": 35
     }
   ]
 }
