@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-08-13T07:00:47.541357",
-  "total_alerts": 2,
+  "timestamp": "2026-08-13T08:24:37.331477",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "snowball",
-      "vol_ratio": 3.67,
+      "symbol": "PUNCH",
+      "vol_ratio": 4.54,
       "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 4.38,
-      "score": 35
+      "symbol": "VIBECOIN",
+      "vol_ratio": 11.04,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.71,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 6.67,
+      "score": 31
     }
   ]
 }
