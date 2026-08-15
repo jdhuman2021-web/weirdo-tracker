@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-08-15T16:53:57.861151",
-  "total_alerts": 0,
+  "timestamp": "2026-08-15T17:22:33.381379",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 15.32,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.14,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 7.75,
+      "score": 33
+    }
+  ]
 }
