@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-08-15T08:28:34.503313",
-  "total_alerts": 1,
+  "timestamp": "2026-08-15T08:58:47.521774",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 5.15,
+      "score": 38
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 5.74,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
       "symbol": "Optimistic",
-      "vol_ratio": 4.95,
+      "vol_ratio": 5.04,
       "score": 25
     }
   ]
