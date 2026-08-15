@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-08-14T23:51:17.560701",
-  "total_alerts": 0,
+  "timestamp": "2026-08-15T01:10:00.704578",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.33,
+      "score": 52
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 3.99,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
