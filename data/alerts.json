@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-08-15T17:22:33.381379",
-  "total_alerts": 3,
+  "timestamp": "2026-08-15T17:48:47.256733",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "snowball",
-      "vol_ratio": 15.32,
+      "vol_ratio": 15.79,
       "score": 65
     },
     {
       "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 10.5,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
       "symbol": "Buttcoin",
-      "vol_ratio": 3.14,
+      "vol_ratio": 3.17,
       "score": 55
     },
     {
