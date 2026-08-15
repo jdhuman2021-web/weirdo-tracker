@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-08-15T22:22:21.555716",
-  "total_alerts": 2,
+  "timestamp": "2026-08-15T22:50:39.095948",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "PUNCH",
-      "vol_ratio": 8.78,
+      "vol_ratio": 3.3,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.48,
       "score": 60
     },
     {
