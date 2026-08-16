@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-16T21:21:31.639732",
-  "total_alerts": 0,
+  "timestamp": "2026-08-16T21:48:21.842991",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 8.2,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 3.26,
+      "score": 26
+    }
+  ]
 }
