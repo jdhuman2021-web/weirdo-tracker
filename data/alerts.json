@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-08-17T23:24:06.689153",
-  "total_alerts": 2,
+  "timestamp": "2026-08-17T23:50:16.114759",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "PUNCH",
-      "vol_ratio": 3.67,
+      "vol_ratio": 4.56,
       "score": 60
     },
     {
       "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 6.64,
+      "score": 47
+    },
+    {
+      "type": "WHALE",
       "symbol": "TERAFAB",
-      "vol_ratio": 4.21,
-      "score": 28
+      "vol_ratio": 8.98,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 5.04,
+      "score": 20
     }
   ]
 }
