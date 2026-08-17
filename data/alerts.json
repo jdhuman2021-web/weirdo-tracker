@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-08-17T02:44:25.583840",
-  "total_alerts": 1,
+  "timestamp": "2026-08-17T03:51:57.509760",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.51,
-      "score": 20
+      "symbol": "MAX",
+      "vol_ratio": 11.02,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 24.0,
+      "score": 42
     }
   ]
 }
