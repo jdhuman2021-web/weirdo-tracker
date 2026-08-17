@@ -1,18 +1,30 @@
 {
-  "timestamp": "2026-08-17T06:54:14.207255",
-  "total_alerts": 2,
+  "timestamp": "2026-08-17T07:55:04.860636",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 3.42,
-      "score": 31
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.4,
+      "score": 52
     },
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 3.29,
+      "symbol": "NOTHING",
+      "vol_ratio": 3.73,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 13.13,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 23.93,
       "score": 20
     }
   ]
