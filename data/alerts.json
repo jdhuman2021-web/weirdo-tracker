@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-08-17T14:28:35.049193",
-  "total_alerts": 1,
+  "timestamp": "2026-08-17T14:57:21.801824",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "HODL",
-      "vol_ratio": 3.37,
+      "vol_ratio": 3.16,
       "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.91,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 8.4,
+      "score": 20
     }
   ]
 }
