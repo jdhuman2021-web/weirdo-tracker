@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-18T05:30:42.315684",
-  "total_alerts": 0,
+  "timestamp": "2026-08-18T05:59:06.505852",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 6.08,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 24.0,
+      "score": 32
+    }
+  ]
 }
