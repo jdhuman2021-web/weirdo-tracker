@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-08-19T17:29:07.242257",
-  "total_alerts": 4,
+  "timestamp": "2026-08-19T17:54:18.068004",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.28,
+      "score": 68
+    },
+    {
+      "type": "WHALE",
       "symbol": "HODL",
-      "vol_ratio": 4.99,
+      "vol_ratio": 3.06,
       "score": 60
     },
     {
       "type": "WHALE",
       "symbol": "MAX",
-      "vol_ratio": 5.64,
+      "vol_ratio": 4.89,
       "score": 60
     },
     {
@@ -23,9 +29,9 @@
     },
     {
       "type": "WHALE",
-      "symbol": "CAPYBARA",
-      "vol_ratio": 22.43,
-      "score": 25
+      "symbol": "TERAFAB",
+      "vol_ratio": 5.25,
+      "score": 31
     }
   ]
 }
