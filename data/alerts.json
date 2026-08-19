@@ -1,6 +1,31 @@
 {
-  "timestamp": "2026-08-19T12:45:35.744069",
-  "total_alerts": 0,
+  "timestamp": "2026-08-19T13:45:36.587509",
+  "total_alerts": 4,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 5.44,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 8.28,
+      "score": 40
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 14.19,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
