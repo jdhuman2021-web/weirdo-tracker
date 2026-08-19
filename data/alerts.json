@@ -1,25 +1,25 @@
 {
-  "timestamp": "2026-08-19T20:57:38.823716",
+  "timestamp": "2026-08-19T21:26:55.867092",
   "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.12,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
       "symbol": "Lobstar",
-      "vol_ratio": 3.17,
+      "vol_ratio": 3.21,
       "score": 40
     },
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.07,
-      "score": 33
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 19.2,
-      "score": 25
+      "symbol": "PIZZA",
+      "vol_ratio": 3.05,
+      "score": 38
     }
   ]
 }
