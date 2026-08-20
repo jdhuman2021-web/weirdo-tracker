@@ -1,19 +1,37 @@
 {
-  "timestamp": "2026-08-20T18:00:42.326153",
-  "total_alerts": 2,
+  "timestamp": "2026-08-20T18:42:26.990218",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 4.68,
-      "score": 55
+      "symbol": "Rosie",
+      "vol_ratio": 15.99,
+      "score": 38
     },
     {
       "type": "WHALE",
       "symbol": "Deadwhale",
       "vol_ratio": 14.89,
       "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 4.94,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 23.85,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 4.01,
+      "score": 25
     }
   ]
 }
