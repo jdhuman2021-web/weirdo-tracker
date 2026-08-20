@@ -1,25 +1,19 @@
 {
-  "timestamp": "2026-08-20T20:01:19.165856",
+  "timestamp": "2026-08-20T20:34:40.417989",
   "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "TripleT",
-      "vol_ratio": 4.26,
-      "score": 60
+      "vol_ratio": 4.33,
+      "score": 65
     },
     {
       "type": "WHALE",
       "symbol": "Rosie",
-      "vol_ratio": 7.19,
+      "vol_ratio": 3.77,
       "score": 46
-    },
-    {
-      "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.14,
-      "score": 38
     },
     {
       "type": "WHALE",
@@ -30,8 +24,14 @@
     {
       "type": "WHALE",
       "symbol": "GOYIM",
-      "vol_ratio": 13.38,
+      "vol_ratio": 7.72,
       "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 14.51,
+      "score": 20
     }
   ]
 }
