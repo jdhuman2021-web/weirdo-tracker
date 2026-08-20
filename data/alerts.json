@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-20T08:39:03.455552",
-  "total_alerts": 0,
+  "timestamp": "2026-08-20T09:36:25.291838",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING",
+      "vol_ratio": 3.09,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 4.41,
+      "score": 40
+    }
+  ]
 }
