@@ -1,6 +1,31 @@
 {
-  "timestamp": "2026-08-20T12:47:40.441649",
-  "total_alerts": 0,
+  "timestamp": "2026-08-20T13:47:23.499157",
+  "total_alerts": 4,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 3.52,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 23.53,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 16.67,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 12.4,
+      "score": 18
+    }
+  ]
 }
