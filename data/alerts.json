@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-08-21T23:25:22.800873",
-  "total_alerts": 1,
+  "timestamp": "2026-08-21T23:52:30.195918",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "testicle",
+      "vol_ratio": 3.91,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 4.9,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
       "symbol": "PIZZA",
-      "vol_ratio": 3.82,
+      "vol_ratio": 3.81,
       "score": 36
     }
   ]
