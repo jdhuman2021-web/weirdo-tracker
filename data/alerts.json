@@ -1,18 +1,30 @@
 {
-  "timestamp": "2026-08-21T13:47:11.210703",
-  "total_alerts": 2,
+  "timestamp": "2026-08-21T14:36:56.439283",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 4.61,
-      "score": 65
+      "symbol": "HODL",
+      "vol_ratio": 5.48,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.41,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 3.03,
+      "score": 31
     },
     {
       "type": "WHALE",
       "symbol": "Deadwhale",
-      "vol_ratio": 4.35,
+      "vol_ratio": 4.36,
       "score": 30
     }
   ]
