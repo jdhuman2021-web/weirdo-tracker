@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-08-22T02:38:28.730169",
-  "total_alerts": 2,
+  "timestamp": "2026-08-22T03:43:54.905215",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "MAX",
-      "vol_ratio": 8.47,
-      "score": 45
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.48,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "PUNCH",
-      "vol_ratio": 3.15,
+      "symbol": "Deadwhale",
+      "vol_ratio": 7.54,
       "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 7.43,
+      "score": 25
     }
   ]
 }
