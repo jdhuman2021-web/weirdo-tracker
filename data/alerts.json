@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-22T13:58:26.241417",
-  "total_alerts": 0,
+  "timestamp": "2026-08-22T14:23:05.039682",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 4.32,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "SWING",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
