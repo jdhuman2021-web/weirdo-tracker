@@ -1,25 +1,31 @@
 {
-  "timestamp": "2026-08-23T19:48:52.821663",
-  "total_alerts": 3,
+  "timestamp": "2026-08-23T20:23:36.286214",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 3.96,
+      "symbol": "snowball",
+      "vol_ratio": 6.31,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 3.59,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 17.81,
+      "symbol": "Jellybean",
+      "vol_ratio": 3.07,
       "score": 31
     },
     {
       "type": "WHALE",
-      "symbol": "Lost",
-      "vol_ratio": 18.33,
-      "score": 5
+      "symbol": "PIZZA",
+      "vol_ratio": 5.56,
+      "score": 31
     }
   ]
 }
