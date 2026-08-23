@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-08-23T19:00:53.040088",
-  "total_alerts": 1,
+  "timestamp": "2026-08-23T19:25:58.455635",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 3.78,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 17.81,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
       "symbol": "Lost",
-      "vol_ratio": 13.87,
-      "score": 30
+      "vol_ratio": 21.61,
+      "score": 5
     }
   ]
 }
