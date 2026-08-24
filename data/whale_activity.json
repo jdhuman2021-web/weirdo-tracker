@@ -1,11 +1,18 @@
 {
   "metadata": {
-    "timestamp": "2026-08-24T12:52:32.642816",
-    "tokens_analyzed": 4,
-    "tokens_with_whale_activity": 2,
+    "timestamp": "2026-08-24T13:58:10.403872",
+    "tokens_analyzed": 7,
+    "tokens_with_whale_activity": 3,
     "agent": "collect_and_score_v1.0"
   },
   "whale_activity": {
+    "91E4cACQcnWDf7wYmwwM81HjLvCe6FR6vDT518ospump": {
+      "vol_ratio": 0.01,
+      "vol_1h_ratio": 0.0,
+      "vol_5m_ratio": 0,
+      "whale_activity_detected": false,
+      "whale_confidence": "low"
+    },
     "2odHeumkiJx46YyNHeZvDjMwsoNhpAgFQuipT96npump": {
       "vol_ratio": 0.0,
       "vol_1h_ratio": 23.98,
@@ -13,24 +20,38 @@
       "whale_activity_detected": true,
       "whale_confidence": "high"
     },
-    "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump": {
-      "vol_ratio": 0.3,
-      "vol_1h_ratio": 1.99,
-      "vol_5m_ratio": 0.01,
+    "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump": {
+      "vol_ratio": 0.02,
+      "vol_1h_ratio": 18.35,
+      "vol_5m_ratio": 0.0,
       "whale_activity_detected": true,
-      "whale_confidence": "medium"
+      "whale_confidence": "high"
     },
-    "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB": {
-      "vol_ratio": 0.24,
+    "EJzqpRPxgZZVoVVuCXuQBNXp7mQzeH6FENMfuLRbpump": {
+      "vol_ratio": 0.0,
       "vol_1h_ratio": 0.0,
       "vol_5m_ratio": 0,
       "whale_activity_detected": false,
       "whale_confidence": "low"
     },
-    "n3ShrNZRCoMrw5Gww7rPMxVbDq3to3YwsGkDz19pump": {
-      "vol_ratio": 0.13,
-      "vol_1h_ratio": 0.0,
-      "vol_5m_ratio": 0,
+    "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump": {
+      "vol_ratio": 0.11,
+      "vol_1h_ratio": 1.12,
+      "vol_5m_ratio": 8.52,
+      "whale_activity_detected": true,
+      "whale_confidence": "high"
+    },
+    "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump": {
+      "vol_ratio": 0.01,
+      "vol_1h_ratio": 0.01,
+      "vol_5m_ratio": 0.0,
+      "whale_activity_detected": false,
+      "whale_confidence": "low"
+    },
+    "EncFm8nRh1VBwcRmGugTUzoGsC1n2srWesKDkiMAYWLt": {
+      "vol_ratio": 0.06,
+      "vol_1h_ratio": 1.37,
+      "vol_5m_ratio": 0.0,
       "whale_activity_detected": false,
       "whale_confidence": "low"
     }
