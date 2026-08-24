@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-08-24T05:40:03.303722",
-  "total_alerts": 1,
+  "timestamp": "2026-08-24T06:57:45.022310",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "GOYIM",
-      "vol_ratio": 13.61,
+      "vol_ratio": 8.65,
       "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Artemis II",
+      "vol_ratio": 24.0,
+      "score": 25
     }
   ]
 }
