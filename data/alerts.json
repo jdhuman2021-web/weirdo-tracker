@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-08-24T01:13:20.035672",
-  "total_alerts": 2,
+  "timestamp": "2026-08-24T02:48:48.906312",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 6.37,
-      "score": 60
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.45,
+      "score": 50
     },
     {
       "type": "WHALE",
       "symbol": "Rosie",
-      "vol_ratio": 5.45,
-      "score": 28
+      "vol_ratio": 14.61,
+      "score": 36
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.97,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Optimistic",
+      "vol_ratio": 12.15,
+      "score": 30
     }
   ]
 }
