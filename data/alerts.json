@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-08-25T16:38:52.620475",
-  "total_alerts": 0,
+  "timestamp": "2026-08-25T17:33:47.391037",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "MAX",
+      "vol_ratio": 3.59,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 4.76,
+      "score": 26
+    }
+  ]
 }
