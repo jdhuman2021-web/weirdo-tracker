@@ -1,19 +1,35 @@
 {
-  "timestamp": "2026-08-29T14:00:37.200196",
-  "total_alerts": 2,
+  "timestamp": "2026-08-29T17:35:31.097785",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 3.37,
-      "score": 40
+      "type": "STRONG_BUY",
+      "symbol": "VIBECOIN",
+      "score": 78,
+      "price": 0.003786,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 0.6x - healthy"
+      ]
     },
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 24.0,
-      "score": 30
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.94,
+      "score": 78
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 3.48,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 5.14,
+      "score": 31
     }
   ]
 }
