@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-08-30T17:45:03.854887",
-  "total_alerts": 2,
+  "timestamp": "2026-08-30T20:38:09.369708",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 5.95,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.18,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
       "symbol": "NOTHING2",
-      "vol_ratio": 24.0,
+      "vol_ratio": 5.8,
       "score": 43
     },
     {
       "type": "WHALE",
-      "symbol": "GOYIM",
-      "vol_ratio": 6.48,
-      "score": 35
+      "symbol": "CHIBI",
+      "vol_ratio": 12.09,
+      "score": 23
     }
   ]
 }
