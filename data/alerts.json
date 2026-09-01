@@ -1,31 +1,41 @@
 {
-  "timestamp": "2026-09-01T11:10:35.777263",
-  "total_alerts": 4,
+  "timestamp": "2026-09-01T15:34:31.986980",
+  "total_alerts": 5,
   "alerts_sent": 0,
   "alerts": [
     {
+      "type": "STRONG_BUY",
+      "symbol": "testicle",
+      "score": 78,
+      "price": 0.0007679,
+      "reasons": [
+        "Price in dip zone",
+        "Volume 0.8x - healthy"
+      ]
+    },
+    {
       "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 4.55,
-      "score": 60
+      "symbol": "testicle",
+      "vol_ratio": 3.06,
+      "score": 78
     },
     {
       "type": "WHALE",
       "symbol": "Lobstar",
-      "vol_ratio": 7.67,
-      "score": 55
+      "vol_ratio": 5.29,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 4.43,
+      "symbol": "MAX",
+      "vol_ratio": 4.46,
       "score": 50
     },
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 4.83,
-      "score": 5
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.54,
+      "score": 31
     }
   ]
 }
