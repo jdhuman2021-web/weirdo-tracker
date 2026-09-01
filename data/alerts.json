@@ -1,6 +1,13 @@
 {
-  "timestamp": "2026-08-31T21:01:48.884890",
-  "total_alerts": 0,
+  "timestamp": "2026-09-01T00:33:01.428822",
+  "total_alerts": 1,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 24.0,
+      "score": 30
+    }
+  ]
 }
