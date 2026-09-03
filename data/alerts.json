@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-09-03T20:34:23.103047",
-  "total_alerts": 1,
+  "timestamp": "2026-09-03T22:52:08.292864",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "TripleT",
-      "vol_ratio": 6.81,
-      "score": 60
+      "symbol": "snowball",
+      "vol_ratio": 5.97,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 3.3,
+      "score": 28
     }
   ]
 }
