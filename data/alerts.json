@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-09-02T22:26:03.802253",
-  "total_alerts": 1,
+  "timestamp": "2026-09-03T00:33:54.444501",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 4.34,
-      "score": 38
+      "symbol": "PUNCH",
+      "vol_ratio": 6.22,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 5.78,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 22.26,
+      "score": 25
     }
   ]
 }
