@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-09-04T20:21:13.822204",
-  "total_alerts": 2,
+  "timestamp": "2026-09-04T22:31:24.067775",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 9.49,
-      "score": 60
+      "symbol": "Jellybean",
+      "vol_ratio": 15.03,
+      "score": 33
     },
     {
       "type": "WHALE",
       "symbol": "CHIBI",
-      "vol_ratio": 3.32,
+      "vol_ratio": 4.17,
       "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 14.08,
+      "score": 25
     }
   ]
 }
