@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-09-05T17:32:08.368360",
-  "total_alerts": 1,
+  "timestamp": "2026-09-05T19:23:58.209659",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Rosie",
-      "vol_ratio": 21.7,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 5.71,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.15,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 3.83,
       "score": 38
     }
   ]
