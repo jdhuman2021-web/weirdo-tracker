@@ -1,19 +1,31 @@
 {
-  "timestamp": "2026-09-05T23:16:21.707754",
-  "total_alerts": 2,
+  "timestamp": "2026-09-06T01:16:29.485065",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 7.89,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
       "symbol": "Rosie",
-      "vol_ratio": 10.33,
+      "vol_ratio": 3.42,
       "score": 38
     },
     {
       "type": "WHALE",
-      "symbol": "JUICE",
-      "vol_ratio": 15.61,
-      "score": 25
+      "symbol": "TERAFAB",
+      "vol_ratio": 6.29,
+      "score": 33
+    },
+    {
+      "type": "WHALE",
+      "symbol": "7",
+      "vol_ratio": 6.86,
+      "score": 20
     }
   ]
 }
