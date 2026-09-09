@@ -1,35 +1,13 @@
 {
-  "timestamp": "2026-09-09T21:53:33.716607",
-  "total_alerts": 4,
+  "timestamp": "2026-09-09T23:53:48.133991",
+  "total_alerts": 1,
   "alerts_sent": 0,
   "alerts": [
     {
-      "type": "STRONG_BUY",
-      "symbol": "VIBECOIN",
-      "score": 75,
-      "price": 0.002988,
-      "reasons": [
-        "Price dip with reversal - bounce potential",
-        "Whale activity detected"
-      ]
-    },
-    {
       "type": "WHALE",
       "symbol": "MAX",
-      "vol_ratio": 3.69,
-      "score": 55
-    },
-    {
-      "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 3.47,
-      "score": 50
-    },
-    {
-      "type": "WHALE",
-      "symbol": "TERAFAB",
-      "vol_ratio": 4.08,
-      "score": 33
+      "vol_ratio": 5.69,
+      "score": 52
     }
   ]
 }
