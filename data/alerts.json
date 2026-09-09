@@ -1,13 +1,31 @@
 {
-  "timestamp": "2026-09-09T06:26:01.072247",
-  "total_alerts": 1,
+  "timestamp": "2026-09-09T11:45:55.160979",
+  "total_alerts": 4,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "CHIBI",
-      "vol_ratio": 4.91,
-      "score": 33
+      "symbol": "snowball",
+      "vol_ratio": 21.34,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOGAMBLING",
+      "vol_ratio": 24.0,
+      "score": 29
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.23,
+      "score": 28
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 5.43,
+      "score": 15
     }
   ]
 }
