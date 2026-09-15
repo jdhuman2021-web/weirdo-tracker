@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-09-15T07:15:28.173059",
-  "total_alerts": 0,
+  "timestamp": "2026-09-15T12:51:21.347685",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 24.0,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 23.79,
+      "score": 20
+    }
+  ]
 }
