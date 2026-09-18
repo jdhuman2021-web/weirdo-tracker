@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-09-18T18:56:09.832518",
-  "total_alerts": 2,
+  "timestamp": "2026-09-18T21:29:19.639660",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "dapang",
-      "vol_ratio": 11.81,
-      "score": 32
+      "symbol": "MAX",
+      "vol_ratio": 4.74,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "PIZZA",
-      "vol_ratio": 5.14,
-      "score": 25
+      "symbol": "snowball",
+      "vol_ratio": 23.67,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 23.91,
+      "score": 35
     }
   ]
 }
