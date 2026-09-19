@@ -1,12 +1,18 @@
 {
-  "timestamp": "2026-09-19T14:42:18.085764",
-  "total_alerts": 1,
+  "timestamp": "2026-09-19T17:49:54.676615",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 3.07,
+      "symbol": "Buttcoin",
+      "vol_ratio": 6.59,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 4.81,
       "score": 55
     }
   ]
