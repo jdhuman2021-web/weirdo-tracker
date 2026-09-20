@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-09-19T22:27:10.879832",
-  "total_alerts": 1,
+  "timestamp": "2026-09-20T00:19:04.038288",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 3.53,
-      "score": 50
+      "symbol": "Lobstar",
+      "vol_ratio": 9.04,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 24.0,
+      "score": 32
     }
   ]
 }
