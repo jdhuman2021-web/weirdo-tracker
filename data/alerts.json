@@ -1,6 +1,25 @@
 {
-  "timestamp": "2026-10-02T08:54:44.577932",
-  "total_alerts": 0,
+  "timestamp": "2026-10-02T15:27:29.673346",
+  "total_alerts": 3,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 17.97,
+      "score": 38
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 24.0,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
