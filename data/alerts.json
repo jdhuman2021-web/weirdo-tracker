@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-10-04T17:21:49.938648",
-  "total_alerts": 1,
+  "timestamp": "2026-10-04T20:26:32.423198",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "TERAFAB",
-      "vol_ratio": 7.83,
-      "score": 31
+      "symbol": "HODL",
+      "vol_ratio": 3.17,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.39,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.28,
+      "score": 50
     }
   ]
 }
