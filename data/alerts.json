@@ -1,6 +1,31 @@
 {
-  "timestamp": "2026-10-07T11:19:12.305707",
-  "total_alerts": 0,
+  "timestamp": "2026-10-07T17:58:35.466687",
+  "total_alerts": 4,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 3.57,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.37,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CAPYBARA",
+      "vol_ratio": 24.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 24.0,
+      "score": 25
+    }
+  ]
 }
