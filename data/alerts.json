@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-10-07T22:47:10.761690",
-  "total_alerts": 2,
+  "timestamp": "2026-10-08T02:34:45.291820",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "VIBECOIN",
-      "vol_ratio": 4.74,
+      "vol_ratio": 4.15,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "Lobstar",
-      "vol_ratio": 7.06,
-      "score": 35
+      "symbol": "Artemis II",
+      "vol_ratio": 24.0,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 17.04,
+      "score": 20
     }
   ]
 }
