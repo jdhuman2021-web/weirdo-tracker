@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-10-09T16:30:44.146237",
-  "total_alerts": 1,
+  "timestamp": "2026-10-09T21:11:25.739788",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 4.02,
-      "score": 60
+      "symbol": "PIZZA",
+      "vol_ratio": 24.0,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 3.85,
+      "score": 15
     }
   ]
 }
