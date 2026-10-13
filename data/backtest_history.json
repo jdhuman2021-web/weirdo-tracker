@@ -1,769 +1,6 @@
 {
   "snapshots": [
     {
-      "timestamp": "2026-09-12T21:16:50.111067",
-      "tokens": [
-        {
-          "symbol": "MAX",
-          "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
-          "score": 57,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0002451,
-          "market_cap": 245042.0,
-          "volume_24h": 4135.66,
-          "liquidity_usd": 96514.66,
-          "price_change_24h": 0.56
-        },
-        {
-          "symbol": "NOTHING",
-          "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
-          "score": 45,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0003233,
-          "market_cap": 323273.0,
-          "volume_24h": 95029.19,
-          "liquidity_usd": 106802.46,
-          "price_change_24h": 25.87
-        },
-        {
-          "symbol": "TripleT",
-          "address": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump",
-          "score": 45,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.01045,
-          "market_cap": 10453302.0,
-          "volume_24h": 2358772.98,
-          "liquidity_usd": 690525.03,
-          "price_change_24h": 53.87
-        },
-        {
-          "symbol": "HODL",
-          "address": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump",
-          "score": 40,
-          "signal": "WATCH",
-          "price_usd": 0.002766,
-          "market_cap": 2766726.0,
-          "volume_24h": 222238.33,
-          "liquidity_usd": 276217.05,
-          "price_change_24h": 75.39
-        },
-        {
-          "symbol": "Buttcoin",
-          "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
-          "score": 40,
-          "signal": "WATCH",
-          "price_usd": 0.01231,
-          "market_cap": 12314574.0,
-          "volume_24h": 771712.4,
-          "liquidity_usd": 840086.1,
-          "price_change_24h": 2.08
-        },
-        {
-          "symbol": "TERAFAB",
-          "address": "EncFm8nRh1VBwcRmGugTUzoGsC1n2srWesKDkiMAYWLt",
-          "score": 38,
-          "signal": "WATCH",
-          "price_usd": 3.897e-05,
-          "market_cap": 38968.0,
-          "volume_24h": 2077.86,
-          "liquidity_usd": 26209.11,
-          "price_change_24h": 3.68
-        },
-        {
-          "symbol": "testicle",
-          "address": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.0003724,
-          "market_cap": 372414.0,
-          "volume_24h": 162290.28,
-          "liquidity_usd": 162359.51,
-          "price_change_24h": -9.08
-        },
-        {
-          "symbol": "Jellybean",
-          "address": "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 4.075e-05,
-          "market_cap": 40581.0,
-          "volume_24h": 71.92,
-          "liquidity_usd": 34726.81,
-          "price_change_24h": -1.97
-        },
-        {
-          "symbol": "Rosie",
-          "address": "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 3.872e-05,
-          "market_cap": 38716.0,
-          "volume_24h": 1026.69,
-          "liquidity_usd": 28515.55,
-          "price_change_24h": -6.77
-        },
-        {
-          "symbol": "GOYIM",
-          "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 4.459e-05,
-          "market_cap": 44588.0,
-          "volume_24h": 883.6,
-          "liquidity_usd": 38497.26,
-          "price_change_24h": -8.33
-        },
-        {
-          "symbol": "CHIBI",
-          "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 3.355e-05,
-          "market_cap": 33548.0,
-          "volume_24h": 1101.49,
-          "liquidity_usd": 26125.48,
-          "price_change_24h": -14.62
-        },
-        {
-          "symbol": "Deadwhale",
-          "address": "91E4cACQcnWDf7wYmwwM81HjLvCe6FR6vDT518ospump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 5.346e-06,
-          "market_cap": 5344.0,
-          "volume_24h": 0.37,
-          "liquidity_usd": 8216.07,
-          "price_change_24h": -1.33
-        },
-        {
-          "symbol": "Lobstar",
-          "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.0001046,
-          "market_cap": 104599.0,
-          "volume_24h": 1820.57,
-          "liquidity_usd": 70232.6,
-          "price_change_24h": -6.58
-        },
-        {
-          "symbol": "snowball",
-          "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.0001444,
-          "market_cap": 136996.0,
-          "volume_24h": 319.71,
-          "liquidity_usd": 78401.65,
-          "price_change_24h": -1.52
-        },
-        {
-          "symbol": "PUNCH",
-          "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 0.0004112,
-          "market_cap": 411158.0,
-          "volume_24h": 11074.98,
-          "liquidity_usd": 163746.95,
-          "price_change_24h": -4.39
-        },
-        {
-          "symbol": "JUICE",
-          "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.256e-05,
-          "market_cap": 12018.0,
-          "volume_24h": 0.39,
-          "liquidity_usd": 14412.26,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "PIZZA",
-          "address": "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 2.112e-05,
-          "market_cap": 20699.0,
-          "volume_24h": 74.73,
-          "liquidity_usd": 19134.99,
-          "price_change_24h": -2.64
-        },
-        {
-          "symbol": "VIBECOIN",
-          "address": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 0.002466,
-          "market_cap": 2465710.0,
-          "volume_24h": 16368.01,
-          "liquidity_usd": 136830.78,
-          "price_change_24h": -10.8
-        },
-        {
-          "symbol": "Lockdown",
-          "address": "57wDExcxN6hAtYgcXoAXqSxrdCMwY4HNioWNM1Mtpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 3.079e-06,
-          "market_cap": 3066.0,
-          "volume_24h": 30.02,
-          "liquidity_usd": 5152.04,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "7",
-          "address": "84cAEWqiDsV5xXh6CB69Hi3HcnumBbdjH4THfyorpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 6.837e-06,
-          "market_cap": 6833.0,
-          "volume_24h": 5.3,
-          "liquidity_usd": 10022.37,
-          "price_change_24h": -0.56
-        },
-        {
-          "symbol": "dapang",
-          "address": "CpP36fvZmbcDUH9tQihQZTcvH2ApwRzHh2pPojyWpump",
-          "score": 22,
-          "signal": "AVOID",
-          "price_usd": 4.264e-06,
-          "market_cap": 4242.0,
-          "volume_24h": 36.93,
-          "liquidity_usd": 6904.35,
-          "price_change_24h": -1.04
-        },
-        {
-          "symbol": "SWING",
-          "address": "2izfNJ5bACaQDKyqGUYicSKhFE963TnkBo9tWxiqpump",
-          "score": 20,
-          "signal": "AVOID",
-          "price_usd": 3.264e-06,
-          "market_cap": 3260.0,
-          "volume_24h": 1.28,
-          "liquidity_usd": 5692.9,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "Optimistic",
-          "address": "2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump",
-          "score": 20,
-          "signal": "AVOID",
-          "price_usd": 1.327e-05,
-          "market_cap": 13261.0,
-          "volume_24h": 167.93,
-          "liquidity_usd": 15385.65,
-          "price_change_24h": -0.23
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-09-12T23:13:22.405125",
-      "tokens": [
-        {
-          "symbol": "PUNCH",
-          "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
-          "score": 45,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0004112,
-          "market_cap": 411180.0,
-          "volume_24h": 10286.4,
-          "liquidity_usd": 164002.65,
-          "price_change_24h": -0.92
-        },
-        {
-          "symbol": "TripleT",
-          "address": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump",
-          "score": 45,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.009684,
-          "market_cap": 9683482.0,
-          "volume_24h": 2709114.92,
-          "liquidity_usd": 665740.82,
-          "price_change_24h": 49.07
-        },
-        {
-          "symbol": "HODL",
-          "address": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump",
-          "score": 40,
-          "signal": "WATCH",
-          "price_usd": 0.002823,
-          "market_cap": 2823201.0,
-          "volume_24h": 243440.56,
-          "liquidity_usd": 279343.25,
-          "price_change_24h": 75.8
-        },
-        {
-          "symbol": "NOTHING",
-          "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
-          "score": 40,
-          "signal": "WATCH",
-          "price_usd": 0.0003639,
-          "market_cap": 363856.0,
-          "volume_24h": 105786.95,
-          "liquidity_usd": 113388.63,
-          "price_change_24h": 40.84
-        },
-        {
-          "symbol": "testicle",
-          "address": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.0003521,
-          "market_cap": 352070.0,
-          "volume_24h": 163573.32,
-          "liquidity_usd": 158037.2,
-          "price_change_24h": -15.52
-        },
-        {
-          "symbol": "Buttcoin",
-          "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.01202,
-          "market_cap": 12024906.0,
-          "volume_24h": 582669.2,
-          "liquidity_usd": 830603.42,
-          "price_change_24h": -12.2
-        },
-        {
-          "symbol": "Jellybean",
-          "address": "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 4.097e-05,
-          "market_cap": 40806.0,
-          "volume_24h": 68.52,
-          "liquidity_usd": 34844.78,
-          "price_change_24h": -0.78
-        },
-        {
-          "symbol": "CHIBI",
-          "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 3.355e-05,
-          "market_cap": 33548.0,
-          "volume_24h": 1101.49,
-          "liquidity_usd": 26125.48,
-          "price_change_24h": -14.62
-        },
-        {
-          "symbol": "TERAFAB",
-          "address": "EncFm8nRh1VBwcRmGugTUzoGsC1n2srWesKDkiMAYWLt",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 3.899e-05,
-          "market_cap": 38989.0,
-          "volume_24h": 2104.15,
-          "liquidity_usd": 26280.9,
-          "price_change_24h": 3.74
-        },
-        {
-          "symbol": "MAX",
-          "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
-          "score": 32,
-          "signal": "WATCH",
-          "price_usd": 0.0002463,
-          "market_cap": 246227.0,
-          "volume_24h": 4511.29,
-          "liquidity_usd": 96724.72,
-          "price_change_24h": 1.04
-        },
-        {
-          "symbol": "Deadwhale",
-          "address": "91E4cACQcnWDf7wYmwwM81HjLvCe6FR6vDT518ospump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 5.346e-06,
-          "market_cap": 5344.0,
-          "volume_24h": 0.37,
-          "liquidity_usd": 8216.07,
-          "price_change_24h": -1.33
-        },
-        {
-          "symbol": "Lobstar",
-          "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.0001058,
-          "market_cap": 105833.0,
-          "volume_24h": 2083.11,
-          "liquidity_usd": 70642.76,
-          "price_change_24h": -4.86
-        },
-        {
-          "symbol": "snowball",
-          "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.0001447,
-          "market_cap": 137230.0,
-          "volume_24h": 315.41,
-          "liquidity_usd": 78538.03,
-          "price_change_24h": -0.79
-        },
-        {
-          "symbol": "Rosie",
-          "address": "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump",
-          "score": 28,
-          "signal": "AVOID",
-          "price_usd": 3.872e-05,
-          "market_cap": 38716.0,
-          "volume_24h": 1026.69,
-          "liquidity_usd": 28515.55,
-          "price_change_24h": -6.77
-        },
-        {
-          "symbol": "GOYIM",
-          "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
-          "score": 28,
-          "signal": "AVOID",
-          "price_usd": 4.42e-05,
-          "market_cap": 44198.0,
-          "volume_24h": 872.12,
-          "liquidity_usd": 38372.86,
-          "price_change_24h": -7.23
-        },
-        {
-          "symbol": "JUICE",
-          "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.256e-05,
-          "market_cap": 12018.0,
-          "volume_24h": 0.39,
-          "liquidity_usd": 14412.26,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "PIZZA",
-          "address": "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.856e-05,
-          "market_cap": 18187.0,
-          "volume_24h": 725.28,
-          "liquidity_usd": 17953.13,
-          "price_change_24h": -13.31
-        },
-        {
-          "symbol": "VIBECOIN",
-          "address": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 0.00246,
-          "market_cap": 2459872.0,
-          "volume_24h": 13760.57,
-          "liquidity_usd": 136776.37,
-          "price_change_24h": -3.01
-        },
-        {
-          "symbol": "Lockdown",
-          "address": "57wDExcxN6hAtYgcXoAXqSxrdCMwY4HNioWNM1Mtpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 3.121e-06,
-          "market_cap": 3107.0,
-          "volume_24h": 30.6,
-          "liquidity_usd": 5191.69,
-          "price_change_24h": 1.35
-        },
-        {
-          "symbol": "7",
-          "address": "84cAEWqiDsV5xXh6CB69Hi3HcnumBbdjH4THfyorpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 6.837e-06,
-          "market_cap": 6833.0,
-          "volume_24h": 5.3,
-          "liquidity_usd": 10022.37,
-          "price_change_24h": -0.56
-        },
-        {
-          "symbol": "dapang",
-          "address": "CpP36fvZmbcDUH9tQihQZTcvH2ApwRzHh2pPojyWpump",
-          "score": 22,
-          "signal": "AVOID",
-          "price_usd": 4.264e-06,
-          "market_cap": 4242.0,
-          "volume_24h": 36.93,
-          "liquidity_usd": 6904.35,
-          "price_change_24h": -1.04
-        },
-        {
-          "symbol": "Optimistic",
-          "address": "2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump",
-          "score": 20,
-          "signal": "AVOID",
-          "price_usd": 1.327e-05,
-          "market_cap": 13261.0,
-          "volume_24h": 167.93,
-          "liquidity_usd": 15385.65,
-          "price_change_24h": -0.23
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-09-13T01:21:28.613509",
-      "tokens": [
-        {
-          "symbol": "PUNCH",
-          "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
-          "score": 55,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0004272,
-          "market_cap": 427160.0,
-          "volume_24h": 13818.32,
-          "liquidity_usd": 167366.08,
-          "price_change_24h": 2.14
-        },
-        {
-          "symbol": "VIBECOIN",
-          "address": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
-          "score": 55,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.002561,
-          "market_cap": 2560118.0,
-          "volume_24h": 12609.21,
-          "liquidity_usd": 139700.17,
-          "price_change_24h": -4.94
-        },
-        {
-          "symbol": "testicle",
-          "address": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump",
-          "score": 53,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0003524,
-          "market_cap": 352379.0,
-          "volume_24h": 109199.01,
-          "liquidity_usd": 158291.43,
-          "price_change_24h": -21.9
-        },
-        {
-          "symbol": "NOTHING2",
-          "address": "7mtXLUoAcT9Sxrf1K5PjSmfkPbYMyMP5pmrdFFixbonk",
-          "score": 53,
-          "signal": "SPECULATIVE",
-          "price_usd": 6.641e-05,
-          "market_cap": 66414.0,
-          "volume_24h": 0.14,
-          "liquidity_usd": 105115.77,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "NOTHING",
-          "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
-          "score": 50,
-          "signal": "SPECULATIVE",
-          "price_usd": 0.0003683,
-          "market_cap": 368252.0,
-          "volume_24h": 105312.2,
-          "liquidity_usd": 114201.47,
-          "price_change_24h": 37.74
-        },
-        {
-          "symbol": "CHIBI",
-          "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
-          "score": 38,
-          "signal": "WATCH",
-          "price_usd": 3.472e-05,
-          "market_cap": 34710.0,
-          "volume_24h": 1402.24,
-          "liquidity_usd": 26555.58,
-          "price_change_24h": -11.67
-        },
-        {
-          "symbol": "MAX",
-          "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
-          "score": 37,
-          "signal": "WATCH",
-          "price_usd": 0.0002448,
-          "market_cap": 244751.0,
-          "volume_24h": 4869.92,
-          "liquidity_usd": 96529.3,
-          "price_change_24h": -0.57
-        },
-        {
-          "symbol": "HODL",
-          "address": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.002936,
-          "market_cap": 2936290.0,
-          "volume_24h": 255483.28,
-          "liquidity_usd": 285216.66,
-          "price_change_24h": 81.01
-        },
-        {
-          "symbol": "Buttcoin",
-          "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.01171,
-          "market_cap": 11712174.0,
-          "volume_24h": 631767.09,
-          "liquidity_usd": 820796.24,
-          "price_change_24h": -12.97
-        },
-        {
-          "symbol": "TripleT",
-          "address": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump",
-          "score": 35,
-          "signal": "WATCH",
-          "price_usd": 0.00967,
-          "market_cap": 9669550.0,
-          "volume_24h": 2774572.41,
-          "liquidity_usd": 666231.2,
-          "price_change_24h": 43.76
-        },
-        {
-          "symbol": "TERAFAB",
-          "address": "EncFm8nRh1VBwcRmGugTUzoGsC1n2srWesKDkiMAYWLt",
-          "score": 33,
-          "signal": "WATCH",
-          "price_usd": 3.808e-05,
-          "market_cap": 38078.0,
-          "volume_24h": 2672.35,
-          "liquidity_usd": 25992.42,
-          "price_change_24h": 1.02
-        },
-        {
-          "symbol": "Deadwhale",
-          "address": "91E4cACQcnWDf7wYmwwM81HjLvCe6FR6vDT518ospump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 5.346e-06,
-          "market_cap": 5344.0,
-          "volume_24h": 0.37,
-          "liquidity_usd": 8216.07,
-          "price_change_24h": -1.33
-        },
-        {
-          "symbol": "Lobstar",
-          "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.0001074,
-          "market_cap": 107408.0,
-          "volume_24h": 2074.35,
-          "liquidity_usd": 71214.45,
-          "price_change_24h": -3.34
-        },
-        {
-          "symbol": "snowball",
-          "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
-          "score": 30,
-          "signal": "WATCH",
-          "price_usd": 0.000143,
-          "market_cap": 135626.0,
-          "volume_24h": 326.49,
-          "liquidity_usd": 78171.19,
-          "price_change_24h": -1.95
-        },
-        {
-          "symbol": "Jellybean",
-          "address": "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump",
-          "score": 28,
-          "signal": "AVOID",
-          "price_usd": 4.097e-05,
-          "market_cap": 40806.0,
-          "volume_24h": 63.96,
-          "liquidity_usd": 34844.78,
-          "price_change_24h": -0.54
-        },
-        {
-          "symbol": "Rosie",
-          "address": "9QSjVAg5rDfBZPhvKwZcB63St3r6bqohP3Adurkjpump",
-          "score": 28,
-          "signal": "AVOID",
-          "price_usd": 3.872e-05,
-          "market_cap": 38716.0,
-          "volume_24h": 1026.69,
-          "liquidity_usd": 28515.55,
-          "price_change_24h": -6.77
-        },
-        {
-          "symbol": "GOYIM",
-          "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
-          "score": 28,
-          "signal": "AVOID",
-          "price_usd": 4.496e-05,
-          "market_cap": 44956.0,
-          "volume_24h": 908.01,
-          "liquidity_usd": 38709.65,
-          "price_change_24h": -6.6
-        },
-        {
-          "symbol": "JUICE",
-          "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.256e-05,
-          "market_cap": 12018.0,
-          "volume_24h": 0.39,
-          "liquidity_usd": 14412.26,
-          "price_change_24h": 0.0
-        },
-        {
-          "symbol": "PIZZA",
-          "address": "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.844e-05,
-          "market_cap": 18066.0,
-          "volume_24h": 760.99,
-          "liquidity_usd": 17911.75,
-          "price_change_24h": -13.89
-        },
-        {
-          "symbol": "Optimistic",
-          "address": "2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 1.327e-05,
-          "market_cap": 13261.0,
-          "volume_24h": 149.15,
-          "liquidity_usd": 15385.65,
-          "price_change_24h": 0.52
-        },
-        {
-          "symbol": "Lockdown",
-          "address": "57wDExcxN6hAtYgcXoAXqSxrdCMwY4HNioWNM1Mtpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 3.121e-06,
-          "market_cap": 3107.0,
-          "volume_24h": 30.6,
-          "liquidity_usd": 5191.69,
-          "price_change_24h": 1.35
-        },
-        {
-          "symbol": "7",
-          "address": "84cAEWqiDsV5xXh6CB69Hi3HcnumBbdjH4THfyorpump",
-          "score": 25,
-          "signal": "AVOID",
-          "price_usd": 6.837e-06,
-          "market_cap": 6833.0,
-          "volume_24h": 5.3,
-          "liquidity_usd": 10022.37,
-          "price_change_24h": -0.56
-        },
-        {
-          "symbol": "dapang",
-          "address": "CpP36fvZmbcDUH9tQihQZTcvH2ApwRzHh2pPojyWpump",
-          "score": 22,
-          "signal": "AVOID",
-          "price_usd": 4.264e-06,
-          "market_cap": 4242.0,
-          "volume_24h": 36.93,
-          "liquidity_usd": 6904.35,
-          "price_change_24h": -1.04
-        }
-      ]
-    },
-    {
       "timestamp": "2026-09-13T06:36:08.064136",
       "tokens": [
         {
@@ -42707,6 +41944,242 @@
           "volume_24h": 47.47,
           "liquidity_usd": 10448.41,
           "price_change_24h": -1.28
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-10-13T01:53:00.180230",
+      "tokens": [
+        {
+          "symbol": "Buttcoin",
+          "address": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump",
+          "score": 45,
+          "signal": "SPECULATIVE",
+          "price_usd": 0.007747,
+          "market_cap": 7745688.0,
+          "volume_24h": 58261.57,
+          "liquidity_usd": 697156.06,
+          "price_change_24h": -5.89
+        },
+        {
+          "symbol": "TERAFAB",
+          "address": "EncFm8nRh1VBwcRmGugTUzoGsC1n2srWesKDkiMAYWLt",
+          "score": 44,
+          "signal": "WATCH",
+          "price_usd": 6.2e-05,
+          "market_cap": 61983.0,
+          "volume_24h": 5388.3,
+          "liquidity_usd": 33783.38,
+          "price_change_24h": -28.61
+        },
+        {
+          "symbol": "MAX",
+          "address": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump",
+          "score": 35,
+          "signal": "WATCH",
+          "price_usd": 0.0001486,
+          "market_cap": 148546.0,
+          "volume_24h": 3761.16,
+          "liquidity_usd": 76685.74,
+          "price_change_24h": -16.24
+        },
+        {
+          "symbol": "testicle",
+          "address": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump",
+          "score": 35,
+          "signal": "WATCH",
+          "price_usd": 0.0002569,
+          "market_cap": 256920.0,
+          "volume_24h": 3748.66,
+          "liquidity_usd": 138684.84,
+          "price_change_24h": -10.81
+        },
+        {
+          "symbol": "Lobstar",
+          "address": "AVF9F4C4j8b1Kh4BmNHqybDaHgnZpJ7W7yLvL7hUpump",
+          "score": 35,
+          "signal": "WATCH",
+          "price_usd": 7.979e-05,
+          "market_cap": 79756.0,
+          "volume_24h": 271.86,
+          "liquidity_usd": 62289.56,
+          "price_change_24h": -6.58
+        },
+        {
+          "symbol": "NOTHING2",
+          "address": "7mtXLUoAcT9Sxrf1K5PjSmfkPbYMyMP5pmrdFFixbonk",
+          "score": 33,
+          "signal": "WATCH",
+          "price_usd": 9.544e-05,
+          "market_cap": 95444.0,
+          "volume_24h": 42.16,
+          "liquidity_usd": 117015.11,
+          "price_change_24h": -3.86
+        },
+        {
+          "symbol": "PUNCH",
+          "address": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump",
+          "score": 30,
+          "signal": "WATCH",
+          "price_usd": 0.0002677,
+          "market_cap": 267716.0,
+          "volume_24h": 5149.44,
+          "liquidity_usd": 135042.04,
+          "price_change_24h": -12.14
+        },
+        {
+          "symbol": "HODL",
+          "address": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump",
+          "score": 30,
+          "signal": "WATCH",
+          "price_usd": 0.00152,
+          "market_cap": 1520421.0,
+          "volume_24h": 8064.81,
+          "liquidity_usd": 213247.05,
+          "price_change_24h": 4.78
+        },
+        {
+          "symbol": "NOTHING",
+          "address": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump",
+          "score": 30,
+          "signal": "WATCH",
+          "price_usd": 0.0001775,
+          "market_cap": 177471.0,
+          "volume_24h": 1889.19,
+          "liquidity_usd": 81843.41,
+          "price_change_24h": -6.65
+        },
+        {
+          "symbol": "snowball",
+          "address": "Gbu7JAKhTVtGyRryg8cYPiKNhonXpUqbrZuCDjfUpump",
+          "score": 30,
+          "signal": "WATCH",
+          "price_usd": 0.0001276,
+          "market_cap": 120090.0,
+          "volume_24h": 64.52,
+          "liquidity_usd": 74362.9,
+          "price_change_24h": -9.07
+        },
+        {
+          "symbol": "Jellybean",
+          "address": "412zDygnwP9DzitnQVgRKUFFTDmrYScFch6P2k39pump",
+          "score": 28,
+          "signal": "AVOID",
+          "price_usd": 3.507e-05,
+          "market_cap": 34925.0,
+          "volume_24h": 58.42,
+          "liquidity_usd": 33425.75,
+          "price_change_24h": -3.64
+        },
+        {
+          "symbol": "GOYIM",
+          "address": "9S8edqWxoWz5LYLnxWUmWBJnePg35WfdYQp7HQkUpump",
+          "score": 28,
+          "signal": "AVOID",
+          "price_usd": 4.122e-05,
+          "market_cap": 41221.0,
+          "volume_24h": 0.91,
+          "liquidity_usd": 38298.96,
+          "price_change_24h": -3.82
+        },
+        {
+          "symbol": "dapang",
+          "address": "CpP36fvZmbcDUH9tQihQZTcvH2ApwRzHh2pPojyWpump",
+          "score": 27,
+          "signal": "AVOID",
+          "price_usd": 4.407e-06,
+          "market_cap": 4385.0,
+          "volume_24h": 0.1,
+          "liquidity_usd": 7313.73,
+          "price_change_24h": 0.0
+        },
+        {
+          "symbol": "Deadwhale",
+          "address": "91E4cACQcnWDf7wYmwwM81HjLvCe6FR6vDT518ospump",
+          "score": 25,
+          "signal": "AVOID",
+          "price_usd": 5.711e-06,
+          "market_cap": 5709.0,
+          "volume_24h": 13.31,
+          "liquidity_usd": 8908.19,
+          "price_change_24h": -0.11
+        },
+        {
+          "symbol": "JUICE",
+          "address": "2LzLh5pHg3nDQz6goTLAvDXfDbSBgAR8qem3bdXdpump",
+          "score": 25,
+          "signal": "AVOID",
+          "price_usd": 1.24e-05,
+          "market_cap": 11869.0,
+          "volume_24h": 29.59,
+          "liquidity_usd": 15105.94,
+          "price_change_24h": 0.69
+        },
+        {
+          "symbol": "PIZZA",
+          "address": "G9ivB7K41a4G8m1k4QdxxN4L5eGKL7Mr12S26B85pump",
+          "score": 25,
+          "signal": "AVOID",
+          "price_usd": 2.569e-05,
+          "market_cap": 25171.0,
+          "volume_24h": 93.99,
+          "liquidity_usd": 22158.61,
+          "price_change_24h": 0.54
+        },
+        {
+          "symbol": "TripleT",
+          "address": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump",
+          "score": 25,
+          "signal": "AVOID",
+          "price_usd": 0.006706,
+          "market_cap": 6706134.0,
+          "volume_24h": 78897.12,
+          "liquidity_usd": 586437.15,
+          "price_change_24h": -0.49
+        },
+        {
+          "symbol": "VIBECOIN",
+          "address": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
+          "score": 25,
+          "signal": "AVOID",
+          "price_usd": 0.001828,
+          "market_cap": 1827766.0,
+          "volume_24h": 12715.84,
+          "liquidity_usd": 119358.62,
+          "price_change_24h": -15.68
+        },
+        {
+          "symbol": "Optimistic",
+          "address": "2pjcq9k2X5oSArNKiVeQ2ENB63eJt8pwCabciGQGpump",
+          "score": 20,
+          "signal": "AVOID",
+          "price_usd": 1.089e-05,
+          "market_cap": 10881.0,
+          "volume_24h": 24.2,
+          "liquidity_usd": 14499.22,
+          "price_change_24h": -1.23
+        },
+        {
+          "symbol": "CHIBI",
+          "address": "2TpMjYXnrgxoeVCq2i6EAR8vNWqe5MNvHCz3bENNpump",
+          "score": 20,
+          "signal": "AVOID",
+          "price_usd": 2.49e-05,
+          "market_cap": 24895.0,
+          "volume_24h": 91.2,
+          "liquidity_usd": 23202.88,
+          "price_change_24h": -5.99
+        },
+        {
+          "symbol": "7",
+          "address": "84cAEWqiDsV5xXh6CB69Hi3HcnumBbdjH4THfyorpump",
+          "score": 20,
+          "signal": "AVOID",
+          "price_usd": 6.658e-06,
+          "market_cap": 6653.0,
+          "volume_24h": 6.27,
+          "liquidity_usd": 10233.4,
+          "price_change_24h": -2.82
         }
       ]
     }
