@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-10-17T10:12:57.392299",
-  "total_alerts": 1,
+  "timestamp": "2026-10-17T13:54:19.022250",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 16.0,
-      "score": 35
+      "symbol": "PUNCH",
+      "vol_ratio": 4.24,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 6.18,
+      "score": 33
     }
   ]
 }
