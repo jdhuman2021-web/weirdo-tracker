@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-10-19T01:37:07.512391",
-  "total_alerts": 0,
+  "timestamp": "2026-10-19T07:22:42.591105",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 15.25,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 8.33,
+      "score": 15
+    }
+  ]
 }
