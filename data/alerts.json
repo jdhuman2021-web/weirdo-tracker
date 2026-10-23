@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-10-23T11:05:04.945719",
-  "total_alerts": 0,
+  "timestamp": "2026-10-23T15:53:25.402813",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 5.94,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lost",
+      "vol_ratio": 12.66,
+      "score": 25
+    }
+  ]
 }
