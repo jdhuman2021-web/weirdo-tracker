@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-10-25T05:45:02.485347",
-  "total_alerts": 1,
+  "timestamp": "2026-10-25T10:48:07.163150",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "Optimistic",
-      "vol_ratio": 23.6,
+      "symbol": "PIZZA",
+      "vol_ratio": 14.69,
       "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.72,
+      "score": 26
     }
   ]
 }
