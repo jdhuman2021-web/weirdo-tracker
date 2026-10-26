@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-10-26T13:57:01.892533",
-  "total_alerts": 1,
+  "timestamp": "2026-10-26T19:48:30.952973",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
       "symbol": "testicle",
-      "vol_ratio": 4.17,
+      "vol_ratio": 16.91,
       "score": 63
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 7.26,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lobstar",
+      "vol_ratio": 19.51,
+      "score": 20
     }
   ]
 }
