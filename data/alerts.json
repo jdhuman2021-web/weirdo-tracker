@@ -1,6 +1,31 @@
 {
-  "timestamp": "2026-10-27T23:58:37.657474",
-  "total_alerts": 0,
+  "timestamp": "2026-10-28T04:04:42.153193",
+  "total_alerts": 4,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 4.4,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Momo-chan",
+      "vol_ratio": 23.95,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "JUICE",
+      "vol_ratio": 6.37,
+      "score": 20
+    },
+    {
+      "type": "WHALE",
+      "symbol": "CHIBI",
+      "vol_ratio": 6.35,
+      "score": 20
+    }
+  ]
 }
