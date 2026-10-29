@@ -1,19 +1,25 @@
 {
-  "timestamp": "2026-10-29T15:27:40.191397",
-  "total_alerts": 2,
+  "timestamp": "2026-10-29T20:29:47.839817",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PUNCH",
-      "vol_ratio": 5.91,
-      "score": 55
+      "symbol": "HODL",
+      "vol_ratio": 8.04,
+      "score": 60
     },
     {
       "type": "WHALE",
-      "symbol": "Deadwhale",
-      "vol_ratio": 23.93,
-      "score": 30
+      "symbol": "NOTHING",
+      "vol_ratio": 12.88,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.5,
+      "score": 50
     }
   ]
 }
