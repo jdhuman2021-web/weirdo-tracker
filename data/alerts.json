@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-10-30T18:47:29.404186",
-  "total_alerts": 0,
+  "timestamp": "2026-10-30T22:50:40.782953",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 3.36,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.2,
+      "score": 50
+    }
+  ]
 }
