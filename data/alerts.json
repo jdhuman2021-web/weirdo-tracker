@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-11-04T06:54:27.618235",
-  "total_alerts": 1,
+  "timestamp": "2026-11-04T15:08:45.905019",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "PUNCH",
-      "vol_ratio": 3.54,
+      "symbol": "TripleT",
+      "vol_ratio": 3.69,
       "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 3.61,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 23.63,
+      "score": 33
     }
   ]
 }
