@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-11-06T18:17:05.102573",
-  "total_alerts": 0,
+  "timestamp": "2026-11-06T23:27:27.165628",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.79,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "PIZZA",
+      "vol_ratio": 8.48,
+      "score": 25
+    }
+  ]
 }
