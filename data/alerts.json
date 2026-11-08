@@ -1,13 +1,47 @@
 {
-  "timestamp": "2026-11-08T11:32:17.658294",
-  "total_alerts": 1,
+  "timestamp": "2026-11-08T17:17:57.766374",
+  "total_alerts": 6,
   "alerts_sent": 0,
   "alerts": [
     {
+      "type": "STRONG_BUY",
+      "symbol": "NOTHING",
+      "score": 75,
+      "price": 0.0001436,
+      "reasons": [
+        "Price stable",
+        "Whale activity detected"
+      ]
+    },
+    {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 4.4,
-      "score": 50
+      "symbol": "NOTHING",
+      "vol_ratio": 11.21,
+      "score": 75
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 4.94,
+      "score": 38
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.57,
+      "score": 31
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 3.79,
+      "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOGAMBLING",
+      "vol_ratio": 24.0,
+      "score": 24
     }
   ]
 }
