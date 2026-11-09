@@ -1,13 +1,25 @@
 {
-  "timestamp": "2026-11-08T21:22:05.097521",
-  "total_alerts": 1,
+  "timestamp": "2026-11-09T01:11:19.780766",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 4.54,
+      "score": 26
+    },
+    {
+      "type": "WHALE",
       "symbol": "CHIBI",
-      "vol_ratio": 10.63,
+      "vol_ratio": 9.02,
       "score": 25
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Lockdown",
+      "vol_ratio": 6.98,
+      "score": 15
     }
   ]
 }
