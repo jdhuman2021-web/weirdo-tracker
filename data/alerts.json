@@ -1,37 +1,25 @@
 {
-  "timestamp": "2026-11-10T17:33:47.178011",
-  "total_alerts": 5,
+  "timestamp": "2026-11-10T22:34:14.300070",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING",
-      "vol_ratio": 4.68,
+      "symbol": "VIBECOIN",
+      "vol_ratio": 3.08,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 7.52,
       "score": 55
     },
     {
       "type": "WHALE",
-      "symbol": "VIBECOIN",
-      "vol_ratio": 5.35,
+      "symbol": "Buttcoin",
+      "vol_ratio": 4.26,
       "score": 50
-    },
-    {
-      "type": "WHALE",
-      "symbol": "HODL",
-      "vol_ratio": 7.93,
-      "score": 40
-    },
-    {
-      "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 3.71,
-      "score": 30
-    },
-    {
-      "type": "WHALE",
-      "symbol": "Momo-chan",
-      "vol_ratio": 24.0,
-      "score": 25
     }
   ]
 }
