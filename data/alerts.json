@@ -1,18 +1,24 @@
 {
-  "timestamp": "2026-11-11T09:47:23.981219",
-  "total_alerts": 2,
+  "timestamp": "2026-11-11T17:46:22.350577",
+  "total_alerts": 3,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "snowball",
-      "vol_ratio": 17.4,
-      "score": 35
+      "symbol": "NOTHING",
+      "vol_ratio": 3.33,
+      "score": 65
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 23.45,
+      "score": 25
     },
     {
       "type": "WHALE",
       "symbol": "CHIBI",
-      "vol_ratio": 3.46,
+      "vol_ratio": 17.49,
       "score": 25
     }
   ]
