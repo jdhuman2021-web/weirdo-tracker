@@ -1,6 +1,53 @@
 {
-  "timestamp": "2026-11-14T14:00:48.615698",
-  "total_alerts": 0,
+  "timestamp": "2026-11-14T19:01:45.079080",
+  "total_alerts": 7,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "STRONG_BUY",
+      "symbol": "HODL",
+      "score": 75,
+      "price": 0.01402,
+      "reasons": [
+        "Price dip with reversal - bounce potential",
+        "Whale activity detected"
+      ]
+    },
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 6.67,
+      "score": 75
+    },
+    {
+      "type": "WHALE",
+      "symbol": "NOTHING2",
+      "vol_ratio": 22.7,
+      "score": 35
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Deadwhale",
+      "vol_ratio": 16.0,
+      "score": 30
+    },
+    {
+      "type": "WHALE",
+      "symbol": "GOYIM",
+      "vol_ratio": 7.49,
+      "score": 28
+    },
+    {
+      "type": "WHALE",
+      "symbol": "dapang",
+      "vol_ratio": 10.28,
+      "score": 27
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Rosie",
+      "vol_ratio": 14.59,
+      "score": 25
+    }
+  ]
 }
