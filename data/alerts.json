@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-11-18T02:11:21.379553",
-  "total_alerts": 0,
+  "timestamp": "2026-11-18T10:33:28.084584",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "PUNCH",
+      "vol_ratio": 5.06,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TripleT",
+      "vol_ratio": 4.36,
+      "score": 50
+    }
+  ]
 }
