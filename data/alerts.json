@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-11-20T17:10:21.087086",
-  "total_alerts": 0,
+  "timestamp": "2026-11-20T23:19:54.672924",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "Buttcoin",
+      "vol_ratio": 10.05,
+      "score": 60
+    },
+    {
+      "type": "WHALE",
+      "symbol": "snowball",
+      "vol_ratio": 6.09,
+      "score": 26
+    }
+  ]
 }
