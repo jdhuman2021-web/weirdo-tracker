@@ -1,6 +1,19 @@
 {
-  "timestamp": "2026-11-24T18:42:30.962185",
-  "total_alerts": 0,
+  "timestamp": "2026-11-25T02:59:55.577341",
+  "total_alerts": 2,
   "alerts_sent": 0,
-  "alerts": []
+  "alerts": [
+    {
+      "type": "WHALE",
+      "symbol": "HODL",
+      "vol_ratio": 3.28,
+      "score": 50
+    },
+    {
+      "type": "WHALE",
+      "symbol": "Jellybean",
+      "vol_ratio": 3.96,
+      "score": 25
+    }
+  ]
 }
