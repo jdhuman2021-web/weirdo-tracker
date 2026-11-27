@@ -1,13 +1,19 @@
 {
-  "timestamp": "2026-11-27T04:50:50.112220",
-  "total_alerts": 1,
+  "timestamp": "2026-11-27T14:45:44.055415",
+  "total_alerts": 2,
   "alerts_sent": 0,
   "alerts": [
     {
       "type": "WHALE",
-      "symbol": "NOTHING2",
-      "vol_ratio": 21.33,
-      "score": 40
+      "symbol": "TripleT",
+      "vol_ratio": 3.61,
+      "score": 55
+    },
+    {
+      "type": "WHALE",
+      "symbol": "TERAFAB",
+      "vol_ratio": 3.17,
+      "score": 36
     }
   ]
 }
